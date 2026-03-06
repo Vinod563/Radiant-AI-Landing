@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:nerova.webflow.io)",
+      "Bash(BASE_URL=http://localhost:3000 node -e \":*)",
+      "Bash(\"/Users/vinodkumarmourya/Downloads/files webflow/logs/PROJECT_LOG.md\":*)",
+      "Bash(\"/Users/vinodkumarmourya/Downloads/files webflow/memory/MEMORY.md\":*)",
+      "Read(//Users/vinodkumarmourya/Downloads/files webflow/**)",
+      "Read(//tmp/**)",
+      "Read(//private/tmp/**)",
+      "Read(//Users/vinodkumarmourya/**)",
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/public/screenshots/enterprise-icx.png\" \"/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/public/screenshots/cx-workbench.png\" \"/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/public/screenshots/ai-fabric.png\" \"/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/public/screenshots/anomaly-detection.png\")"
+    ],
+    "additionalDirectories": [
+      "/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/src/components/icx",
+      "/Users/vinodkumarmourya/Desktop"
+    ]
+  }
+}
