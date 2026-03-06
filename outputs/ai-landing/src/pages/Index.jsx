@@ -7,6 +7,7 @@ import Solutions from '../components/home/Solutions.jsx'
 import Infrastructure from '../components/home/Infrastructure.jsx'
 import CaseStudy from '../components/home/CaseStudy.jsx'
 import SocialProof from '../components/home/SocialProof.jsx'
+import MarketCarousel from '../components/home/MarketCarousel.jsx'
 import CTA from '../components/home/CTA.jsx'
 
 export default function Index() {
@@ -22,6 +23,7 @@ export default function Index() {
       <Platform />
       <div className="divider" />
       <Infrastructure />
+      <MarketCarousel />
       <CaseStudy />
       <SocialProof />
       <CTA />

@@ -36,8 +36,8 @@ This is a **fully automated, multi-layer system** that creates React-based pages
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │              LAYER 3: REFERENCE SITE ANALYSIS                │
-│ ✓ Load content/reference-websites/nerova-*.md             │
-│ ✓ Reference: https://nerova.webflow.io/ (15 pages)               │
+│ ✓ Load content/reference-websites/devblock-*.md            │
+│ ✓ Reference: https://devblock.net/ (12 pages)                    │
 │ ✓ Extract design patterns, colors, typography               │
 │ ✓ Identify layout structures & interaction patterns         │
 └─────────────────────────────────────────────────────────────┘
@@ -397,50 +397,44 @@ Status: ✅ All 18 pages fetched and saved
 ```
 
 ### `/fetch ref`
-**Purpose:** Fetch content from reference website (Nerova - https://nerova.webflow.io/)
+**Purpose:** Fetch content from reference website (DevBlock - https://devblock.net/)
 **Full Process:**
 ```
-1.  web_fetch('https://nerova.webflow.io/')
-2.  web_fetch('https://nerova.webflow.io/about-us')
-3.  web_fetch('https://nerova.webflow.io/service')
-4.  web_fetch('https://nerova.webflow.io/project')
-5.  web_fetch('https://nerova.webflow.io/case-study')
-6.  web_fetch('https://nerova.webflow.io/blog')
-7.  web_fetch('https://nerova.webflow.io/contact-us')
-8.  web_fetch('https://nerova.webflow.io/projects/brightnest')
-9.  web_fetch('https://nerova.webflow.io/projects/stellarworks')
-10. web_fetch('https://nerova.webflow.io/projects/novalaunch')
-11. web_fetch('https://nerova.webflow.io/projects/pixelwave')
-12. web_fetch('https://nerova.webflow.io/case-studies/hyperion-3d-io')
-13. web_fetch('https://nerova.webflow.io/case-studies/boldmoves-ai')
-14. web_fetch('https://nerova.webflow.io/case-studies/studio-focus')
-15. web_fetch('https://nerova.webflow.io/template-info/style-guide')
+1.  web_fetch('https://devblock.net/')
+2.  web_fetch('https://devblock.net/about')
+3.  web_fetch('https://devblock.net/services/capabilities-overview')
+4.  web_fetch('https://devblock.net/services/product-design')
+5.  web_fetch('https://devblock.net/services/ai')
+6.  web_fetch('https://devblock.net/services/devops')
+7.  web_fetch('https://devblock.net/services/spatial-design')
+8.  web_fetch('https://devblock.net/work')
+9.  web_fetch('https://devblock.net/products/cad-lite')
+10. web_fetch('https://devblock.net/blog')
+11. web_fetch('https://devblock.net/careers')
+12. web_fetch('https://devblock.net/contact')
 
-16. Analyze design patterns
-17. Extract colors, typography, layouts
-18. Save to content/reference-websites/
-19. Update design direction in master context
-20. Report design insights
+13. Analyze design patterns
+14. Extract colors, typography, layouts
+15. Save to content/reference-websites/
+16. Update design direction in master context
+17. Report design insights
 
-Content Files (15 pages):
-  - nerova-homepage.md
-  - nerova-about.md
-  - nerova-services.md
-  - nerova-projects.md
-  - nerova-case-studies.md
-  - nerova-blog.md
-  - nerova-contact.md
-  - nerova-project-brightnest.md
-  - nerova-project-stellarworks.md
-  - nerova-project-novalaunch.md
-  - nerova-project-pixelwave.md
-  - nerova-case-study-hyperion.md
-  - nerova-case-study-boldmoves.md
-  - nerova-case-study-studio-focus.md
-  - nerova-style-guide.md
+Content Files (12 pages):
+  - devblock-homepage.md
+  - devblock-about.md
+  - devblock-services.md
+  - devblock-work.md
+  - devblock-contact.md
+  - devblock-blog.md
+  - devblock-careers.md
+  - devblock-service-product-design.md
+  - devblock-service-ai.md
+  - devblock-service-devops.md
+  - devblock-service-spatial-design.md
+  - devblock-product-cad-lite.md
 
-Last Fetched: 2026-03-03
-Status: ✅ All 15 pages fetched and saved
+Last Fetched: 2026-03-06
+Status: ✅ All 12 pages fetched and saved
 ```
 
 ### `/refresh`
@@ -553,7 +547,7 @@ Output: Complete React-based page in outputs/
 
 Content:
 ✓ Main website (stage.radiant.digital): 18 pages fetched 2026-02-20
-✓ Reference site (nerova.webflow.io): 15 pages fetched 2026-02-20
+✓ Reference site (devblock.net): 12 pages fetched 2026-03-06
 ✓ Master context version: 2.0
 
 Pages Created:
@@ -853,7 +847,7 @@ All generated pages MUST use these exact brand tokens. These values come from th
 
 ## 📐 REFERENCE SITE LAYOUT STRUCTURES & INTERACTION PATTERNS
 
-These patterns are extracted from the Nerova reference website (https://nerova.webflow.io/) and must be adapted with Radiant Digital's brand identity.
+These patterns are extracted from the DevBlock reference website (https://devblock.net/) and must be adapted with Radiant Digital's brand identity.
 
 ### Page Flow Templates (Adapt Per Page Type)
 
@@ -977,7 +971,7 @@ Vision → Capabilities → Industries → Process → Action
 
 ## ✍️ CONTENT WRITING GUIDELINES
 
-All generated page copy must follow these patterns derived from Radiant Digital's brand voice and Nerova's proven content writing approach.
+All generated page copy must follow these patterns derived from Radiant Digital's brand voice and DevBlock's proven content writing approach.
 
 ### Brand Voice (Radiant Digital)
 - **Professional yet approachable** - confident without arrogance
@@ -1485,21 +1479,21 @@ Ready to create pages!"
 User: "/fetch ref"
 
 Claude:
-"✓ Fetching content from https://nerova.webflow.io/
-✓ 15 pages fetched and analyzed
+"✓ Fetching content from https://devblock.net/
+✓ 12 pages fetched and analyzed
 
 📝 Design Insights:
-- Tagline: "Intelligence. Creativity. Momentum."
-- Tone: Bold, minimal, premium dark-mode aesthetic
-- Structure: Hero → Social Proof → Services → Portfolio → Case Studies → Stats → Testimonials → Team → Blog → Final CTA
-- 4 core services: Creative Branding, SEO & Growth, Paid Media, Social Media
-- Case study format: Challenge → Solution (4 phases) → Results with metrics
-- CTA style: "Get Started" (primary), "Let's Talk" + "Book a Free Call" (secondary)
-- Clients: BrightNest, StellarWorks, NovaLaunch, PixelWave, Hyperion 3d.io, BoldMoves.ai
-- Design: Dark backgrounds, purple/pink gradients, Figtree + Playfair Display fonts
-- Pricing: Transparent tiers ($99 / $999 / $2,500/month)
+- Tagline: "Human-Driven, AI-Enhanced, Digital Solutions"
+- Tone: Clean, modern corporate with animated backgrounds
+- Structure: Hero → Service Overview → Case Studies → Client Logos → Testimonials → CTA → Footer
+- 5 core services: Product Design, AI, DevOps, Spatial Design, Capabilities Overview
+- Project format: Card-based showcases with hover-state image swaps
+- CTA style: "See Our Services →" (primary), arrow CTAs throughout
+- Clients: Elixr, BeautyTap, MINTX, LinkIt!
+- Design: Light/dark mode CSS variables, vivid cyan, purple gradients, modern sans-serif
+- AI Pricing: Transparent tiers ($10K / $25K / $50K)
 
-📍 Saved to: content/reference-websites/ (15 .md files)
+📍 Saved to: content/reference-websites/ (12 .md files)
 
 Ready to apply design patterns!"
 ```
@@ -1578,5 +1572,5 @@ Every generated page includes:
 **Last Updated:** 2026-02-20
 **Content Status:**
 - Main Website (Radiant Digital): ✅ 18 pages fetched (2026-02-20)
-- Reference Website (Nerova): ✅ 15 pages fetched (2026-02-20)
+- Reference Website (DevBlock): ✅ 12 pages fetched (2026-03-06)
 **Status:** Production Ready ✨

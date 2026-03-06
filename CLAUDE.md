@@ -9,7 +9,7 @@ This is the Radiant Digital automated website generation workspace. It uses a 12
 ## Directory Structure
 ```
 content/current-website/       - 18 Radiant Digital website pages (MD)
-content/reference-websites/    - 15 Nerova reference pages (MD)
+content/reference-websites/    - 12 DevBlock reference pages (MD)
 content/master-context/        - Master context (radiant-digital-context.md)
 screenshots/{desktop,tablet,mobile,archive}/ - Visual verification
 logs/                          - PROJECT_LOG.md, security/audit reports
@@ -21,7 +21,7 @@ docs/                          - Documentation
 
 ## Content Sources
 - **Main Website:** https://stage.radiant.digital/ (18 pages)
-- **Reference Website:** https://nerova.webflow.io/ (15 pages)
+- **Reference Website:** https://devblock.net/ (12 pages)
 - **Master Context:** content/master-context/radiant-digital-context.md
 
 ---
@@ -57,23 +57,20 @@ Fetch all 18 pages from Radiant Digital's website and save as markdown:
 5. Report summary of what was fetched and any changes detected
 
 ### `/fetch ref`
-Fetch all key pages from the Nerova reference website and save as markdown:
+Fetch all key pages from the DevBlock reference website and save as markdown:
 1. Use WebFetch to fetch each of these URLs:
-   - https://nerova.webflow.io/
-   - https://nerova.webflow.io/about-us
-   - https://nerova.webflow.io/service
-   - https://nerova.webflow.io/project
-   - https://nerova.webflow.io/case-study
-   - https://nerova.webflow.io/blog
-   - https://nerova.webflow.io/contact-us
-   - https://nerova.webflow.io/projects/brightnest
-   - https://nerova.webflow.io/projects/stellarworks
-   - https://nerova.webflow.io/projects/novalaunch
-   - https://nerova.webflow.io/projects/pixelwave
-   - https://nerova.webflow.io/case-studies/hyperion-3d-io
-   - https://nerova.webflow.io/case-studies/boldmoves-ai
-   - https://nerova.webflow.io/case-studies/studio-focus
-   - https://nerova.webflow.io/template-info/style-guide
+   - https://devblock.net/
+   - https://devblock.net/about
+   - https://devblock.net/services/capabilities-overview
+   - https://devblock.net/services/product-design
+   - https://devblock.net/services/ai
+   - https://devblock.net/services/devops
+   - https://devblock.net/services/spatial-design
+   - https://devblock.net/work
+   - https://devblock.net/products/cad-lite
+   - https://devblock.net/blog
+   - https://devblock.net/careers
+   - https://devblock.net/contact
 2. Extract design patterns, colors, typography, layout structures
 3. Save each as a structured markdown file in `content/reference-websites/`
 4. Report design insights extracted
@@ -86,7 +83,7 @@ Add a new section to or update an existing section in an already-generated page.
 
 **Layer 1 - Context Analysis:** Read `content/master-context/radiant-digital-context.md`
 **Layer 2 - Business Requirements:** Extract goals, audience, messaging relevant to the section
-**Layer 3 - Reference Analysis:** Read `content/reference-websites/nerova-*.md` for design patterns applicable to the section
+**Layer 3 - Reference Analysis:** Read `content/reference-websites/devblock-*.md` for design patterns applicable to the section
 **Layer 4 - Skill Activation:** Apply frontend design principles, content strategy, React best practices
 **Layer 5 - Planning:** Determine where the section fits in the component hierarchy, plan content and design
 **Layer 6 - React Generation:** Generate or update the React component:
@@ -113,7 +110,7 @@ Generate a complete React application following ALL 12 LAYERS defined in ENHANCE
 
 **Layer 1 - Context Analysis:** Read `content/master-context/radiant-digital-context.md`
 **Layer 2 - Business Requirements:** Extract goals, audience, messaging from context
-**Layer 3 - Reference Analysis:** Read `content/reference-websites/nerova-*.md` for design patterns
+**Layer 3 - Reference Analysis:** Read `content/reference-websites/devblock-*.md` for design patterns
 **Layer 4 - Skill Activation:** Apply frontend design principles, content strategy, React best practices
 **Layer 5 - Planning:** Create component hierarchy, content plan, design system
 **Layer 6 - React Generation:** Generate functional React components with:

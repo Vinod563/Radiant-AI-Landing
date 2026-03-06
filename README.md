@@ -39,22 +39,19 @@ radiant-automation-v2/
 │   │   ├── tracklynk.md
 │   │   └── privly.md
 │   │
-│   ├── reference-websites/                (15 Nerova pages as MD)
-│   │   ├── nerova-homepage.md
-│   │   ├── nerova-about.md
-│   │   ├── nerova-services.md
-│   │   ├── nerova-projects.md
-│   │   ├── nerova-case-studies.md
-│   │   ├── nerova-blog.md
-│   │   ├── nerova-contact.md
-│   │   ├── nerova-project-brightnest.md
-│   │   ├── nerova-project-stellarworks.md
-│   │   ├── nerova-project-novalaunch.md
-│   │   ├── nerova-project-pixelwave.md
-│   │   ├── nerova-case-study-hyperion.md
-│   │   ├── nerova-case-study-boldmoves.md
-│   │   ├── nerova-case-study-studio-focus.md
-│   │   └── nerova-style-guide.md
+│   ├── reference-websites/                (12 DevBlock pages as MD)
+│   │   ├── devblock-homepage.md
+│   │   ├── devblock-about.md
+│   │   ├── devblock-services.md
+│   │   ├── devblock-work.md
+│   │   ├── devblock-contact.md
+│   │   ├── devblock-blog.md
+│   │   ├── devblock-careers.md
+│   │   ├── devblock-service-product-design.md
+│   │   ├── devblock-service-ai.md
+│   │   ├── devblock-service-devops.md
+│   │   ├── devblock-service-spatial-design.md
+│   │   └── devblock-product-cad-lite.md
 │   │
 │   └── master-context/                    (Single source of truth)
 │
@@ -96,16 +93,16 @@ radiant-automation-v2/
 - **Markets:** Commercial, Federal, State & Local, Education
 - **Tagline:** "Transformation is the journey. Digital enablement is the map."
 
-### Reference Website: Nerova
-- **URL:** https://nerova.webflow.io/
-- **Pages Fetched:** 15
-- **Last Fetched:** 2026-03-03
-- **Company:** Nerova – creative branding & digital growth agency
-- **Tagline:** "Intelligence. Creativity. Momentum."
-- **Services:** Creative Branding, SEO & Growth Optimization, Paid Media Campaigns, Social Media Presence
-- **Clients:** BrightNest, StellarWorks, NovaLaunch, PixelWave, Hyperion 3d.io, BoldMoves.ai
-- **Design Style:** Dark/black backgrounds, purple-pink gradients, Figtree + Playfair Display fonts, scroll-triggered animations
-- **Pricing:** Transparent tiers ($99 / $999 / $2,500/month)
+### Reference Website: DevBlock
+- **URL:** https://devblock.net/
+- **Pages Fetched:** 12
+- **Last Fetched:** 2026-03-06
+- **Company:** DevBlock – technology consulting firm (product design, AI, DevOps, spatial design)
+- **Tagline:** "Human-Driven, AI-Enhanced, Digital Solutions"
+- **Services:** Product Design, AI, DevOps, Spatial Design, Capabilities Overview
+- **Clients:** Elixr, BeautyTap, MINTX, LinkIt!
+- **Design Style:** Clean modern corporate, animated backgrounds, light/dark mode, vivid cyan/purple gradients, modern sans-serif
+- **AI Pricing:** Transparent tiers ($10K / $25K / $50K)
 
 ---
 
@@ -113,7 +110,7 @@ radiant-automation-v2/
 
 ```bash
 1. /fetch main              # Fetch 18 pages from stage.radiant.digital
-2. /fetch ref               # Fetch 15 pages from nerova.webflow.io
+2. /fetch ref               # Fetch 12 pages from devblock.net
 3. /create home             # Generate homepage (all 12 layers)
 ```
 
@@ -126,7 +123,7 @@ radiant-automation-v2/
 ```bash
 # Content
 /fetch main              → Fetch 18 pages from stage.radiant.digital
-/fetch ref               → Fetch 15 pages from nerova.webflow.io
+/fetch ref               → Fetch 12 pages from devblock.net
 /refresh                 → Update all content (main + ref)
 
 # Screenshots
@@ -156,7 +153,7 @@ When you say: **"Create a homepage"**
 ```
 Layer 1:  Context Analysis        ✓ Load 18 Radiant Digital pages
 Layer 2:  Business Requirements   ✓ Review goals & messaging
-Layer 3:  Reference Analysis      ✓ Apply Nerova design patterns
+Layer 3:  Reference Analysis      ✓ Apply DevBlock design patterns
 Layer 4:  Skill Activation        ✓ Load skills
 Layer 5:  Planning                ✓ Component plan
 Layer 6:  React Generation        ✓ Build components
@@ -197,11 +194,11 @@ Layer 12: Delivery                ✓ Package & deliver
 ## 🎯 Your First 3 Actions
 
 1. **Read:** `ENHANCED_AUTOMATION_SYSTEM_v2.md`
-2. **Fetch:** `/fetch main` (18 pages) + `/fetch ref` (15 pages)
+2. **Fetch:** `/fetch main` (18 pages) + `/fetch ref` (12 pages)
 3. **Create:** `/create home`
 
 ---
 
 **System is ready! Type `/help` to begin.** 🚀
 
-**Version:** 2.0 | **Status:** ✅ Production Ready | **Content:** ✅ 33 pages fetched
+**Version:** 2.0 | **Status:** ✅ Production Ready | **Content:** ✅ 30 pages fetched

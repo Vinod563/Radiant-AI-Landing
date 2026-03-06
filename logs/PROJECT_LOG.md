@@ -2,6 +2,61 @@
 
 ---
 
+### 2026-03-06 - Reference Website Updated to DevBlock
+**Action:** Reference website changed from Nerova (https://nerova.webflow.io/) to DevBlock (https://devblock.net/)
+**Command:** Manual update
+**Details:**
+- Fetched 12 pages from devblock.net (homepage, about, services/capabilities, services/product-design, services/ai, services/devops, services/spatial-design, work, products/cad-lite, blog, careers, contact)
+- All nerova-*.md files deleted from content/reference-websites/
+- 12 new devblock-*.md files created in content/reference-websites/
+- CLAUDE.md updated: `/fetch ref` URLs, reference analysis glob patterns, page counts
+- ENHANCED_AUTOMATION_SYSTEM_v2.md updated: Layer 3 references, `/fetch ref` URLs/file list, status section, example output
+- README.md updated: folder structure, reference website info, command descriptions, page counts
+- QUICK_START.md updated: reference website info, file listings, command descriptions
+- .claude/settings.json updated: WebFetch domain permission changed to devblock.net
+
+**Files Deleted (12):**
+- content/reference-websites/nerova-homepage.md
+- content/reference-websites/nerova-about.md
+- content/reference-websites/nerova-services.md
+- content/reference-websites/nerova-projects.md
+- content/reference-websites/nerova-case-studies.md
+- content/reference-websites/nerova-blog.md
+- content/reference-websites/nerova-contact.md
+- content/reference-websites/nerova-project-brightnest.md
+- content/reference-websites/nerova-project-stellarworks.md
+- content/reference-websites/nerova-case-study-hyperion.md
+- content/reference-websites/nerova-case-study-boldmoves.md
+- content/reference-websites/nerova-style-guide.md
+
+**Files Created (12):**
+- content/reference-websites/devblock-homepage.md
+- content/reference-websites/devblock-about.md
+- content/reference-websites/devblock-services.md
+- content/reference-websites/devblock-work.md
+- content/reference-websites/devblock-contact.md
+- content/reference-websites/devblock-blog.md
+- content/reference-websites/devblock-careers.md
+- content/reference-websites/devblock-service-product-design.md
+- content/reference-websites/devblock-service-ai.md
+- content/reference-websites/devblock-service-devops.md
+- content/reference-websites/devblock-service-spatial-design.md
+- content/reference-websites/devblock-product-cad-lite.md
+
+**Design Insights Extracted:**
+- Tagline: "Human-Driven, AI-Enhanced, Digital Solutions"
+- Services: Product Design, AI, DevOps, Spatial Design
+- AI Pricing: $10K / $25K / $50K transparent tiers
+- Design: Clean modern corporate, animated backgrounds, light/dark mode CSS variables
+- Layout: Hero-driven, card-based project showcases, hover-state interactions
+- Page flow: Hero → Service Overview → Case Studies → Client Logos → Testimonials → CTA → Footer
+- Clients: Elixr, BeautyTap, MINTX, LinkIt!
+- Offices: Seattle WA, Ho Chi Minh City Vietnam
+
+**Result:** ✅ SUCCESS — Reference website fully migrated from Nerova to DevBlock
+
+---
+
 ### 2026-03-03 - Reference Website Updated to Nerova
 **Action:** `/fetch ref` — Reference website swapped from Nerova to Nerova (https://nerova.webflow.io/)
 **Command:** `/fetch ref`

@@ -12,7 +12,7 @@ Fetches 18 pages from https://stage.radiant.digital/ and saves to `content/curre
 ```
 /fetch ref
 ```
-Fetches 15 pages from https://nerova.webflow.io/ and saves to `content/reference-websites/`
+Fetches 12 pages from https://devblock.net/ and saves to `content/reference-websites/`
 
 ### Step 3: Create Page
 ```
@@ -50,26 +50,23 @@ content/current-website/
 ```
 **Last Fetched:** 2026-02-20
 
-### Reference Website (Nerova) - 15 Pages
+### Reference Website (DevBlock) - 12 Pages
 ```
 content/reference-websites/
-├── nerova-homepage.md                 Main landing page
-├── nerova-about.md                    About / team / mission
-├── nerova-services.md                 4 core services + pricing
-├── nerova-projects.md                 Project portfolio index
-├── nerova-case-studies.md             Case studies index
-├── nerova-blog.md                     Blog posts
-├── nerova-contact.md                  Contact form & details
-├── nerova-project-brightnest.md       BrightNest project detail
-├── nerova-project-stellarworks.md     StellarWorks project detail
-├── nerova-project-novalaunch.md       NovaLaunch project detail
-├── nerova-project-pixelwave.md        PixelWave project detail
-├── nerova-case-study-hyperion.md      Hyperion 3d.io case study
-├── nerova-case-study-boldmoves.md     BoldMoves.ai case study
-├── nerova-case-study-studio-focus.md  Studio Focus case study
-└── nerova-style-guide.md              Design system & style guide
+├── devblock-homepage.md               Main landing page
+├── devblock-about.md                  About / team / mission / values
+├── devblock-services.md               Capabilities overview
+├── devblock-work.md                   Projects portfolio (Elixr, BeautyTap, MINTX, LinkIt!)
+├── devblock-contact.md                Contact form & office locations
+├── devblock-blog.md                   Blog posts (21 articles)
+├── devblock-careers.md                Job listings & culture
+├── devblock-service-product-design.md Product design service detail
+├── devblock-service-ai.md             AI service detail + pricing
+├── devblock-service-devops.md         DevOps service detail
+├── devblock-service-spatial-design.md Spatial design (Vision Pro)
+└── devblock-product-cad-lite.md       CAD-LITE dispatch product
 ```
-**Last Fetched:** 2026-03-03
+**Last Fetched:** 2026-03-06
 
 ---
 
@@ -77,7 +74,7 @@ content/reference-websites/
 
 ```
 /fetch main          Fetch 18 pages from stage.radiant.digital
-/fetch ref           Fetch 15 pages from nerova.webflow.io
+/fetch ref           Fetch 12 pages from devblock.net
 /refresh             Fetch both main + ref
 /create home         Create homepage
 /create about        Create about page

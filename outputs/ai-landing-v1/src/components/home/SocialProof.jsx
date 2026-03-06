@@ -1,24 +1,24 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Shield, Award, Globe, TrendingUp, Building2, Landmark, Wifi, HeartPulse, Cpu, Briefcase } from 'lucide-react'
+import { Award, TrendingUp, Cpu, Briefcase } from 'lucide-react'
 
 const clients = [
-  { name: 'Lockheed Martin', sector: 'Defense & Aerospace', icon: Shield, accent: '#596AE0',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Lockheed_Martin_logo.svg/440px-Lockheed_Martin_logo.svg.png' },
-  { name: 'Boeing', sector: 'Aviation & Defense', icon: Globe, accent: '#F0974E',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Boeing_full_logo.svg/440px-Boeing_full_logo.svg.png' },
-  { name: 'Verizon', sector: 'Telecommunications', icon: Wifi, accent: '#91C46B',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Verizon_2015_logo_-vector.svg/440px-Verizon_2015_logo_-vector.svg.png' },
-  { name: 'Wells Fargo', sector: 'Financial Services', icon: Landmark, accent: '#596AE0',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Wells_Fargo_Bank.svg/440px-Wells_Fargo_Bank.svg.png' },
-  { name: 'HHS', sector: 'Federal Health', icon: HeartPulse, accent: '#F0974E',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/US-DeptOfHHS-Logo.svg/300px-US-DeptOfHHS-Logo.svg.png' },
-  { name: 'USDA', sector: 'Federal Government', icon: Building2, accent: '#91C46B',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Seal_of_the_United_States_Department_of_Agriculture.svg/300px-Seal_of_the_United_States_Department_of_Agriculture.svg.png' },
-  { name: 'Deloitte', sector: 'Consulting & Advisory', icon: Briefcase, accent: '#91C46B',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Deloitte.svg/440px-Deloitte.svg.png' },
-  { name: 'Accenture', sector: 'Technology Services', icon: Cpu, accent: '#596AE0',
-    logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Accenture.svg/440px-Accenture.svg.png' },
+  { name: 'Lockheed Martin', sector: 'Defense & Aerospace', accent: '#596AE0',
+    logo: 'https://logo.clearbit.com/lockheedmartin.com' },
+  { name: 'Boeing', sector: 'Aviation & Defense', accent: '#F0974E',
+    logo: 'https://logo.clearbit.com/boeing.com' },
+  { name: 'Verizon', sector: 'Telecommunications', accent: '#91C46B',
+    logo: 'https://logo.clearbit.com/verizon.com' },
+  { name: 'Wells Fargo', sector: 'Financial Services', accent: '#596AE0',
+    logo: 'https://logo.clearbit.com/wellsfargo.com' },
+  { name: 'HHS', sector: 'Federal Health', accent: '#F0974E',
+    logo: 'https://logo.clearbit.com/hhs.gov' },
+  { name: 'USDA', sector: 'Federal Government', accent: '#91C46B',
+    logo: 'https://logo.clearbit.com/usda.gov' },
+  { name: 'Deloitte', sector: 'Consulting & Advisory', accent: '#91C46B',
+    logo: 'https://logo.clearbit.com/deloitte.com' },
+  { name: 'Accenture', sector: 'Technology Services', accent: '#596AE0',
+    logo: 'https://logo.clearbit.com/accenture.com' },
 ]
 
 const stats = [
@@ -147,20 +147,11 @@ export default function SocialProof() {
                     style={{ background: `linear-gradient(90deg, ${c.accent}30, transparent)` }} />
 
                   {/* Info row */}
-                  <div className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center"
-                      style={{
-                        background: `${c.accent}12`,
-                        border: `1px solid ${c.accent}20`,
-                      }}>
-                      <c.icon className="w-4 h-4" style={{ color: c.accent }} />
+                  <div>
+                    <div className="font-display font-semibold text-sm text-text-primary leading-tight">
+                      {c.name}
                     </div>
-                    <div>
-                      <div className="font-display font-semibold text-sm text-text-primary leading-tight">
-                        {c.name}
-                      </div>
-                      <div className="text-text-muted text-xs">{c.sector}</div>
-                    </div>
+                    <div className="text-text-muted text-xs mt-0.5">{c.sector}</div>
                   </div>
                 </div>
               </div>

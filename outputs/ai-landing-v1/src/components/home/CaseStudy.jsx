@@ -149,65 +149,40 @@ export default function CaseStudy() {
             style={{ background: 'linear-gradient(90deg, transparent 5%, #a855f7 20%, #596AE0 40%, #F0974E 60%, #91C46B 80%, transparent 95%)', opacity: 0.25 }} />
         </div>
 
-        {/* Video — full width */}
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-8 py-16">
-          <div className="rounded-2xl overflow-hidden"
-            style={{ border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 32px 80px rgba(0,0,0,0.5), 0 0 80px rgba(89,106,224,0.08), 0 0 40px rgba(145,196,107,0.06)' }}>
-            <div className="aspect-video flex items-center justify-center relative overflow-hidden"
-              style={{ background: 'linear-gradient(145deg, #000a14 0%, #050818 50%, #0a0510 100%)' }}>
-              {/* Inner color glow */}
-              <div className="absolute inset-0 pointer-events-none"
-                style={{ background: 'radial-gradient(ellipse at 35% 40%, rgba(145,196,107,0.1) 0%, transparent 50%), radial-gradient(ellipse at 65% 60%, rgba(89,106,224,0.08) 0%, transparent 50%), radial-gradient(ellipse at 50% 80%, rgba(240,151,78,0.06) 0%, transparent 50%)' }} />
+        {/* Video — full width edge-to-edge, no container */}
+        <div className="relative w-full flex items-center justify-center overflow-hidden" style={{ aspectRatio: '16/7.2' }}>
+          {/* Thumbnail image */}
+          <img
+            src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1920&h=1080&fit=crop&q=80"
+            alt="Team collaborating on AI-driven operations dashboard"
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+          {/* Gradient overlay */}
+          <div className="absolute inset-0"
+            style={{ background: 'linear-gradient(135deg, rgba(10,5,32,0.55) 0%, rgba(89,106,224,0.15) 40%, rgba(145,196,107,0.1) 70%, rgba(10,5,32,0.55) 100%)' }} />
+          {/* Vignette edges */}
+          <div className="absolute inset-0"
+            style={{ background: 'radial-gradient(ellipse at center, transparent 40%, rgba(0,0,0,0.5) 100%)' }} />
+          {/* Bottom fade for text */}
+          <div className="absolute bottom-0 left-0 right-0 h-40"
+            style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)' }} />
 
-              {/* Abstract wave lines */}
-              <svg className="absolute inset-0 w-full h-full opacity-[0.08]" viewBox="0 0 800 450" fill="none" preserveAspectRatio="xMidYMid slice">
-                <path d="M-50 300 Q150 100 350 220 Q550 340 800 140" stroke="url(#vl1)" strokeWidth="1.5" />
-                <path d="M-50 350 Q200 150 400 280 Q600 410 850 180" stroke="url(#vl2)" strokeWidth="1" />
-                <path d="M-50 200 Q120 50 320 170 Q520 290 800 80" stroke="url(#vl3)" strokeWidth="0.8" />
-                <defs>
-                  <linearGradient id="vl1" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#91C46B" />
-                    <stop offset="100%" stopColor="#596AE0" />
-                  </linearGradient>
-                  <linearGradient id="vl2" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#F0974E" />
-                    <stop offset="100%" stopColor="#a855f7" />
-                  </linearGradient>
-                  <linearGradient id="vl3" x1="0" y1="0" x2="1" y2="0">
-                    <stop offset="0%" stopColor="#596AE0" />
-                    <stop offset="100%" stopColor="#00c87d" />
-                  </linearGradient>
-                </defs>
-              </svg>
+          {/* Play button */}
+          <button className="relative z-10 w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 group hover:scale-110"
+            style={{
+              background: 'linear-gradient(135deg, #91C46B 0%, #596AE0 100%)',
+              boxShadow: '0 0 50px rgba(145,196,107,0.4), 0 0 100px rgba(89,106,224,0.2)',
+            }}>
+            <Play size={28} className="text-white ml-0.5 group-hover:scale-110 transition-transform" fill="white" />
+          </button>
 
-              {/* Decorative bars */}
-              <div className="absolute bottom-0 left-0 right-0 flex items-end gap-0.5 h-20 px-8">
-                {[
-                  { h: 30, c: 'rgba(89,106,224,0.25)' },
-                  { h: 50, c: 'rgba(89,106,224,0.3)' },
-                  { h: 40, c: 'rgba(168,85,247,0.3)' },
-                  { h: 70, c: 'rgba(168,85,247,0.35)' },
-                  { h: 55, c: 'rgba(240,151,78,0.3)' },
-                  { h: 90, c: 'rgba(240,151,78,0.4)' },
-                  { h: 68, c: 'rgba(145,196,107,0.35)' },
-                  { h: 100, c: 'rgba(145,196,107,0.5)' },
-                  { h: 75, c: 'rgba(0,200,125,0.4)' },
-                  { h: 85, c: 'rgba(145,196,107,0.4)' },
-                  { h: 60, c: 'rgba(89,106,224,0.3)' },
-                ].map((b, i) => (
-                  <div key={i} style={{ height: `${b.h}%`, background: b.c }} className="flex-1 rounded-t-sm" />
-                ))}
-              </div>
-
-              {/* Play button */}
-              <button className="relative z-10 w-20 h-20 rounded-full transition-all group"
-                style={{
-                  background: 'linear-gradient(135deg, #91C46B 0%, #596AE0 100%)',
-                  boxShadow: '0 0 50px rgba(145,196,107,0.3), 0 0 100px rgba(89,106,224,0.15)',
-                }}>
-                <Play size={24} className="text-white ml-1 mx-auto group-hover:scale-110 transition-transform" />
-              </button>
+          {/* Video label */}
+          <div className="absolute bottom-6 left-6 lg:bottom-10 lg:left-12 z-10">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
+              <span className="text-brand-green text-xs font-semibold tracking-widest uppercase">Watch Case Study</span>
             </div>
+            <p className="text-white text-lg lg:text-xl font-display font-bold">How Radiant Saved Verizon 10,000+ Hours with AI</p>
           </div>
         </div>
       </motion.div>
