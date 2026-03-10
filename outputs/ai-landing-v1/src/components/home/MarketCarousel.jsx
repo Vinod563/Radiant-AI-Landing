@@ -11,6 +11,7 @@ import {
   ChevronRight,
   Shield,
   Banknote,
+
 } from 'lucide-react'
 
 const markets = [
@@ -22,7 +23,12 @@ const markets = [
     gradientTo: '#596AE0',
     image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&h=900&fit=crop&q=80',
     clients: 'Verizon, Major TMT Enterprises',
-    desc: 'AI-driven network intelligence, service capacity scaling, and outage response optimization.',
+    desc: 'Scale network capacity without proportional cost increases through AI-powered intelligent automation.',
+    metrics: [
+      { value: '5X', label: 'Capacity Scaling' },
+      { value: '40%', label: 'Faster Deployment' },
+      { value: '99.9%', label: 'Uptime SLA' },
+    ],
   },
   {
     title: 'Healthcare & Life Science',
@@ -32,7 +38,12 @@ const markets = [
     gradientTo: '#e05990',
     image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=900&fit=crop&q=80',
     clients: 'NIH, MD Anderson, CHOP',
-    desc: 'Clinical data analytics, patient experience platforms, and health management applications.',
+    desc: 'Privacy-first AI that scales clinical workflows — from diagnostics to patient experience — with HIPAA governance built in.',
+    metrics: [
+      { value: '35%', label: 'Cost Reduction' },
+      { value: '70%', label: 'Less Manual Work' },
+      { value: '30%', label: 'Ops Efficiency Gain' },
+    ],
   },
   {
     title: 'Financial Services & Insurance',
@@ -42,7 +53,12 @@ const markets = [
     gradientTo: '#F0974E',
     image: 'https://images.unsplash.com/photo-1560472355-536de3962603?w=600&h=900&fit=crop&q=80',
     clients: 'Navy Federal Credit Union',
-    desc: 'Fraud detection, regulatory compliance automation, and customer experience transformation.',
+    desc: 'Outcome-linked AI for fraud detection, compliance automation, and customer journey transformation — with audit trails from day one.',
+    metrics: [
+      { value: '40%', label: 'Conversion Lift' },
+      { value: '25%', label: 'CSAT Improvement' },
+      { value: '70%', label: 'Sync Time Reduced' },
+    ],
   },
   {
     title: 'Federal Government',
@@ -52,7 +68,12 @@ const markets = [
     gradientTo: '#596AE0',
     image: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=900&fit=crop&q=80',
     clients: 'DoD, HHS, DHS, Treasury',
-    desc: 'Mission-critical AI solutions with FedRAMP compliance and security clearance operations.',
+    desc: 'Beyond pilots — scaling agentic AI for mission-critical operations with FedRAMP compliance and human-in-the-loop governance.',
+    metrics: [
+      { value: '45%', label: 'Infra Cost Reduction' },
+      { value: '40%', label: 'Faster Delivery' },
+      { value: '70%', label: 'Ops Efficiency Gain' },
+    ],
   },
   {
     title: 'State & Local Government',
@@ -62,7 +83,12 @@ const markets = [
     gradientTo: '#91C46B',
     image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=900&fit=crop&q=80',
     clients: 'FL DCF, FL DEO, FL DOT',
-    desc: 'Modernized citizen services, accountability systems, and disaster recovery planning.',
+    desc: 'Citizen-centric digital transformation that delivers better outcomes on smaller budgets — agentic AI for permits, benefits, and case processing.',
+    metrics: [
+      { value: '30%', label: 'Cost Savings' },
+      { value: '70%', label: 'Faster Processing' },
+      { value: '25%', label: 'Citizen CSAT Lift' },
+    ],
   },
   {
     title: 'Education',
@@ -72,7 +98,12 @@ const markets = [
     gradientTo: '#a855f7',
     image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=900&fit=crop&q=80',
     clients: 'UT Austin, Baylor University',
-    desc: 'Digital campus transformation, student experience platforms, and research data systems.',
+    desc: 'AI-first campus transformation — student success prediction, research analytics, and FERPA-compliant data governance at scale.',
+    metrics: [
+      { value: '35%', label: 'Cost Reduction' },
+      { value: '50%', label: 'Faster Data Access' },
+      { value: '70%', label: 'Engagement Lift' },
+    ],
   },
   {
     title: 'Oil & Gas',
@@ -82,7 +113,12 @@ const markets = [
     gradientTo: '#F0974E',
     image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=600&h=900&fit=crop&q=80',
     clients: 'Halliburton',
-    desc: 'Industrial IoT with Tracklynk, connected worker safety, and real-time asset tracking.',
+    desc: 'Connected worker safety meets predictive maintenance — Tracklynk IoT plus AI-driven asset intelligence across remote operations.',
+    metrics: [
+      { value: '60%', label: 'Maintenance Uplift' },
+      { value: '70%', label: 'Downtime Reduced' },
+      { value: '99.9%', label: 'Safety Uptime' },
+    ],
   },
   {
     title: 'Defense & Intelligence',
@@ -92,7 +128,12 @@ const markets = [
     gradientTo: '#2DD4BF',
     image: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=600&h=900&fit=crop&q=80',
     clients: 'Department of Defense',
-    desc: 'Secure AI operations, classified environment automation, and mission support systems.',
+    desc: 'Mission-critical AI with zero-trust governance — humans orchestrate agents, never autonomous decisions in classified environments.',
+    metrics: [
+      { value: '40%', label: 'Faster Deployment' },
+      { value: '99.9%', label: 'System Uptime' },
+      { value: '35%', label: 'Infra Cost Savings' },
+    ],
   },
 ]
 
@@ -139,11 +180,11 @@ export default function MarketCarousel() {
             Industries We Serve
           </p>
           <h2 className="font-display font-bold text-display-xl text-text-primary mb-5">
-            Customized by{' '}
-            <span className="text-brand-green">Industry</span>
+            Built for Your{' '}
+            <span className="text-brand-green">Domain</span>
           </h2>
           <p className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed">
-            Purpose-built AI solutions adapted for the unique challenges, regulations, and opportunities of each market we serve.
+            Every industry has its own rules, risks, and opportunities. We bring AI solutions shaped by deep sector expertise — so you scale faster with governance built in.
           </p>
         </motion.div>
 
@@ -315,7 +356,7 @@ function MarketCard({ market }) {
           </div>
         </div>
 
-        {/* BACK — Flat gradient with description & clients */}
+        {/* BACK — Metrics-driven with description & clients */}
         <div className="flip-back">
           <div
             className="w-full h-full flex flex-col p-7 lg:p-8"
@@ -333,27 +374,50 @@ function MarketCard({ market }) {
               style={{ background: market.accent }}
             />
 
-            {/* Icon */}
+            {/* Icon + Title */}
             <div className="relative z-10">
               <div
-                className="w-14 h-14 rounded-xl flex items-center justify-center mb-5"
+                className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
                 style={{
                   background: `${market.accent}30`,
                   border: `1.5px solid ${market.accent}50`,
                 }}
               >
-                <Icon size={26} style={{ color: market.accent }} />
+                <Icon size={22} style={{ color: market.accent }} />
               </div>
 
-              {/* Title */}
-              <h3 className="font-display font-bold text-white text-xl lg:text-2xl leading-snug mb-6">
+              <h3 className="font-display font-bold text-white text-lg lg:text-xl leading-snug mb-3">
                 {market.title}
               </h3>
 
               {/* Description */}
-              <p className="text-white/90 text-base leading-relaxed mb-8">
+              <p className="text-white/80 text-sm leading-relaxed mb-5">
                 {market.desc}
               </p>
+            </div>
+
+            {/* Metrics Grid */}
+            <div className="relative z-10 grid grid-cols-3 gap-2 mb-5">
+              {market.metrics.map((metric) => (
+                <div
+                  key={metric.label}
+                  className="rounded-xl p-3 text-center"
+                  style={{
+                    background: 'rgba(0,0,0,0.35)',
+                    border: `1px solid ${market.accent}30`,
+                  }}
+                >
+                  <div
+                    className="font-display font-bold text-xl lg:text-2xl leading-none mb-1"
+                    style={{ color: market.accent }}
+                  >
+                    {metric.value}
+                  </div>
+                  <div className="text-white/60 text-[10px] uppercase tracking-wider font-medium leading-tight">
+                    {metric.label}
+                  </div>
+                </div>
+              ))}
             </div>
 
             {/* Spacer */}
@@ -362,13 +426,13 @@ function MarketCard({ market }) {
             {/* Clients */}
             <div className="relative z-10">
               <div
-                className="px-5 py-4 rounded-xl"
+                className="px-4 py-3 rounded-xl"
                 style={{
                   background: 'rgba(0,0,0,0.3)',
                   border: '1px solid rgba(255,255,255,0.12)',
                 }}
               >
-                <div className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1.5 font-semibold">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1 font-semibold">
                   Key Clients
                 </div>
                 <div className="text-white text-sm font-medium">
