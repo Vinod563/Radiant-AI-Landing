@@ -8,20 +8,24 @@ This is the Radiant Digital automated website generation workspace. It uses a 12
 
 ## Directory Structure
 ```
-content/current-website/       - 18 Radiant Digital website pages (MD)
-content/reference-websites/    - 12 DevBlock reference pages (MD)
-content/master-context/        - Master context (radiant-digital-context.md)
+content/current-website/                     - 18 Radiant Digital website pages (MD)
+content/reference-websites/
+  devblock/                                  - 12 DevBlock pages (DESIGN: UI, layout, styling, animations)
+  onixnet/                                   - 12 Onixnet pages (CONTENT: metrics, storytelling, Minto, BCG)
+content/master-context/                      - Master context (radiant-digital-context.md)
 screenshots/{desktop,tablet,mobile,archive}/ - Visual verification
-logs/                          - PROJECT_LOG.md, security/audit reports
+logs/                                        - PROJECT_LOG.md, security/audit reports
 templates/{pages,components,sections}/       - Reusable templates
-outputs/                       - Generated React apps
-scripts/                       - Helper scripts
-docs/                          - Documentation
+outputs/                                     - Generated React apps
+scripts/                                     - Helper scripts
+docs/                                        - Documentation
 ```
 
 ## Content Sources
 - **Main Website:** https://stage.radiant.digital/ (18 pages)
-- **Reference Website:** https://devblock.net/ (12 pages)
+- **Design Reference:** https://devblock.net/ (12 pages) — UI, layout, styling, animations
+- **Content Reference:** https://www.onixnet.com/ (12 pages) — metrics-driven content, storytelling, Minto framework
+- **Strategy Reference:** BCG Agentic AI Insights — market positioning, value pools, enterprise demand data
 - **Master Context:** content/master-context/radiant-digital-context.md
 
 ---
@@ -56,8 +60,8 @@ Fetch all 18 pages from Radiant Digital's website and save as markdown:
 4. Update `content/master-context/radiant-digital-context.md` with any changes
 5. Report summary of what was fetched and any changes detected
 
-### `/fetch ref`
-Fetch all key pages from the DevBlock reference website and save as markdown:
+### `/fetch ref design`
+Fetch all key pages from the DevBlock DESIGN reference website and save as markdown:
 1. Use WebFetch to fetch each of these URLs:
    - https://devblock.net/
    - https://devblock.net/about
@@ -72,20 +76,45 @@ Fetch all key pages from the DevBlock reference website and save as markdown:
    - https://devblock.net/careers
    - https://devblock.net/contact
 2. Extract design patterns, colors, typography, layout structures
-3. Save each as a structured markdown file in `content/reference-websites/`
+3. Save each as a structured markdown file in `content/reference-websites/devblock/`
 4. Report design insights extracted
 
+### `/fetch ref content`
+Fetch all key pages from the Onixnet CONTENT reference website and save as markdown:
+1. Use WebFetch to fetch each of these URLs:
+   - https://www.onixnet.com/
+   - https://www.onixnet.com/about
+   - https://www.onixnet.com/solutions
+   - https://www.onixnet.com/solutions/ai-ml-artificial-intelligence-machine-learning/
+   - https://www.onixnet.com/data-analytics
+   - https://www.onixnet.com/google-cloud
+   - https://www.onixnet.com/google-workspace
+   - https://www.onixnet.com/managed-services
+   - https://www.onixnet.com/customer-stories
+   - https://www.onixnet.com/partners
+   - https://www.onixnet.com/blog
+   - https://www.onixnet.com/contact
+2. Extract content writing patterns, metrics presentation, headline formulas, storytelling structure
+3. Save each as a structured markdown file in `content/reference-websites/onixnet/`
+4. Report content strategy insights extracted
+
+### `/fetch ref`
+Execute `/fetch ref design` and `/fetch ref content` sequentially.
+
 ### `/refresh`
-Execute `/fetch main` and `/fetch ref` sequentially, then regenerate master context.
+Execute `/fetch main`, `/fetch ref design`, and `/fetch ref content` sequentially, then regenerate master context.
 
 ### `/update [page-type] [section-name]`
 Add a new section to or update an existing section in an already-generated page. Follows the same 12-layer process as `/create`:
 
 **Layer 1 - Context Analysis:** Read `content/master-context/radiant-digital-context.md`
 **Layer 2 - Business Requirements:** Extract goals, audience, messaging relevant to the section
-**Layer 3 - Reference Analysis:** Read `content/reference-websites/devblock-*.md` for design patterns applicable to the section
-**Layer 4 - Skill Activation:** Apply frontend design principles, content strategy, React best practices
-**Layer 5 - Planning:** Determine where the section fits in the component hierarchy, plan content and design
+**Layer 3 - Reference Analysis:**
+  - Read `content/reference-websites/devblock/*.md` for DESIGN patterns (UI, layout, styling, animations)
+  - Read `content/reference-websites/onixnet/*.md` for CONTENT patterns (metrics-driven copy, Minto structure, storytelling)
+  - Read `content/reference-websites/onixnet/bcg-agentic-ai-insights.md` for strategic positioning and market data
+**Layer 4 - Skill Activation:** Apply frontend design principles, Minto Pyramid content strategy, metrics-driven writing, React best practices
+**Layer 5 - Planning:** Determine where the section fits in the component hierarchy, plan content using SCQA framework and design using DevBlock patterns
 **Layer 6 - React Generation:** Generate or update the React component:
   - If adding: Create new component file in `src/components/[PageName]/`
   - If updating: Edit the existing component file
@@ -110,9 +139,12 @@ Generate a complete React application following ALL 12 LAYERS defined in ENHANCE
 
 **Layer 1 - Context Analysis:** Read `content/master-context/radiant-digital-context.md`
 **Layer 2 - Business Requirements:** Extract goals, audience, messaging from context
-**Layer 3 - Reference Analysis:** Read `content/reference-websites/devblock-*.md` for design patterns
-**Layer 4 - Skill Activation:** Apply frontend design principles, content strategy, React best practices
-**Layer 5 - Planning:** Create component hierarchy, content plan, design system
+**Layer 3 - Reference Analysis:**
+  - Read `content/reference-websites/devblock/*.md` for DESIGN patterns (UI, layout, styling, animations)
+  - Read `content/reference-websites/onixnet/*.md` for CONTENT patterns (metrics-driven copy, Minto structure, storytelling)
+  - Read `content/reference-websites/onixnet/bcg-agentic-ai-insights.md` for strategic positioning and market data
+**Layer 4 - Skill Activation:** Apply frontend design principles, Minto Pyramid content strategy, metrics-driven writing, React best practices
+**Layer 5 - Planning:** Create component hierarchy, content plan using SCQA framework, design system using DevBlock patterns
 **Layer 6 - React Generation:** Generate functional React components with:
   - Vite + React setup
   - Tailwind CSS styling
@@ -196,7 +228,24 @@ outputs/[page-name]/
 - AI-first and innovation-forward
 - Outcome-focused with quantified results
 - Partnership-oriented ("guide," "embark," "together")
-- Key phrases: "Let's embark", "Customer centric to the core", "AI-first digital transformation partner"
+- Agentic AI leadership — beyond pilots to enterprise-scale deployment
+- Outcome-linked engagement — commercial models aligned to client success
+- Governance built-in — audit trails, compliance, human-in-the-loop by default
+- Key phrases: "Let's embark", "Customer centric to the core", "AI-first digital transformation partner", "We don't bill hours — we deliver outcomes", "Beyond pilots — scaling agentic AI", "The proof is in the numbers"
+
+## Content Writing Framework
+All content follows the **Minto Pyramid Principle** (see `content/reference-websites/onixnet/minto-framework-guide.md`):
+- **Answer first:** Headlines state the conclusion, body provides reasoning, metrics provide proof
+- **SCQA pattern:** Situation → Complication → Question → Answer for every section
+- **Group in threes:** 3 value propositions, 3 service pillars, 3 proof points per claim
+- **Metrics-driven:** Lead every section with a number or outcome (Onixnet model)
+- **Content formula:** `[Business Problem] → [Solution Approach] → [Quantified Outcome] → [Trust Signal]`
+
+## Reference System
+- **DevBlock** (`content/reference-websites/devblock/`) → How it should LOOK (UI, layout, animations, styling)
+- **Onixnet** (`content/reference-websites/onixnet/`) → How it should READ (metrics-first, outcome-driven copy, storytelling)
+- **Minto Framework** (`content/reference-websites/onixnet/minto-framework-guide.md`) → How it should be STRUCTURED (answer first, SCQA, groups of 3)
+- **BCG Insights** (`content/reference-websites/onixnet/bcg-agentic-ai-insights.md`) → What it should SAY (agentic AI positioning, market proof points)
 
 ## Logging
 Every action must append to `logs/PROJECT_LOG.md` with timestamp, action, files affected, and result status.

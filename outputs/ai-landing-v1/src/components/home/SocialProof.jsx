@@ -2,40 +2,38 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Award, TrendingUp, Cpu, Briefcase } from 'lucide-react'
 
-const clients = [
-  { name: 'Lockheed Martin', sector: 'Defense & Aerospace', accent: '#596AE0',
-    logo: 'https://logo.clearbit.com/lockheedmartin.com' },
-  { name: 'Boeing', sector: 'Aviation & Defense', accent: '#F0974E',
-    logo: 'https://logo.clearbit.com/boeing.com' },
-  { name: 'Verizon', sector: 'Telecommunications', accent: '#91C46B',
-    logo: 'https://logo.clearbit.com/verizon.com' },
-  { name: 'Wells Fargo', sector: 'Financial Services', accent: '#596AE0',
-    logo: 'https://logo.clearbit.com/wellsfargo.com' },
-  { name: 'HHS', sector: 'Federal Health', accent: '#F0974E',
-    logo: 'https://logo.clearbit.com/hhs.gov' },
-  { name: 'USDA', sector: 'Federal Government', accent: '#91C46B',
-    logo: 'https://logo.clearbit.com/usda.gov' },
-  { name: 'Deloitte', sector: 'Consulting & Advisory', accent: '#91C46B',
-    logo: 'https://logo.clearbit.com/deloitte.com' },
-  { name: 'Accenture', sector: 'Technology Services', accent: '#596AE0',
-    logo: 'https://logo.clearbit.com/accenture.com' },
+/* Client logos sourced from Radiant Digital website */
+const clientLogos = [
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/21.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/22.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/25.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/26.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/28.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/29.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/24.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/31.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/35.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/36.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/37.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/39.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/23.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/30-1.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/38.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/11-1-1.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/27-1.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/32-1.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/34-1.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2024/11/33-1.svg',
+  'https://stage.radiant.digital/wp-content/uploads/2025/01/new-logo-add.svg',
 ]
 
 const stats = [
-  { value: '18+', label: 'Years of Delivery', icon: Award },
+  { value: '18+', label: 'Years Delivering AI', icon: Award },
   { value: '50+', label: 'Enterprise Clients', icon: Briefcase },
-  { value: '$2B+', label: 'Programs Supported', icon: TrendingUp },
-  { value: '6', label: 'Industries Served', icon: Cpu },
+  { value: '$2B+', label: 'Programs Powered', icon: TrendingUp },
+  { value: '40%', label: 'Avg Cost Reduction', icon: Cpu },
 ]
 
-const industries = [
-  'Defense & Intelligence',
-  'Federal Civilian',
-  'Financial Services',
-  'Healthcare & Life Sciences',
-  'Telecommunications',
-  'Energy & Utilities',
-]
 
 export default function SocialProof() {
   const ref = useRef(null)
@@ -66,16 +64,15 @@ export default function SocialProof() {
           transition={{ duration: 0.65 }}
           className="text-center mb-20"
         >
-          <div className="kicker justify-center">Trusted Customer</div>
+          <div className="kicker justify-center">Proven Trust</div>
           <h2 className="font-display font-black leading-[0.92] tracking-tight mb-4"
             style={{ fontSize: 'clamp(2rem, 4.5vw, 3.6rem)' }}>
-            The World's Most Demanding<br />
-            Enterprises{' '}
-            <span className="grad-text">Choose Radiant.</span>
+            50+ Enterprises.<br />
+            $2B+ in Programs.{' '}
+            <span className="grad-text">Real Results.</span>
           </h2>
           <p className="text-text-secondary text-base max-w-2xl mx-auto mt-4 leading-relaxed">
-            From defense agencies to Fortune 500 companies, the world's most security-conscious
-            organizations trust Radiant to deliver mission-critical digital solutions.
+            The proof is in who keeps coming back. Fortune 500s and federal agencies choose Radiant because we tie every engagement to measurable business impact — not billable hours.
           </p>
         </motion.div>
 
@@ -103,7 +100,7 @@ export default function SocialProof() {
           ))}
         </motion.div>
 
-        {/* ── Auto-sliding client marquee ── */}
+        {/* ── Auto-sliding client logo marquee ── */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -118,66 +115,19 @@ export default function SocialProof() {
 
           {/* Marquee track — duplicated for seamless loop */}
           <div className="flex w-max marquee-track hover:[animation-play-state:paused]">
-            {[...clients, ...clients].map((c, i) => (
+            {[...clientLogos, ...clientLogos].map((logo, i) => (
               <div
-                key={`${c.name}-${i}`}
-                className="mag-card group relative flex-shrink-0 mx-3"
-                style={{ width: '310px' }}
+                key={`logo-${i}`}
+                className="flex-shrink-0 mx-5 flex items-center justify-center h-28"
+                style={{ width: '216px' }}
               >
-                {/* Accent top bar */}
-                <div className="absolute top-0 left-0 right-0 h-[2px]"
-                  style={{
-                    background: `linear-gradient(90deg, ${c.accent}, transparent)`,
-                    opacity: 0.5,
-                  }} />
-
-                <div className="relative z-10 p-6">
-                  {/* Logo area */}
-                  <div className="h-16 flex items-center mb-5">
-                    <img
-                      src={c.logo}
-                      alt={`${c.name} logo`}
-                      className="max-h-12 max-w-[180px] object-contain brightness-0 invert opacity-70
-                        group-hover:opacity-100 transition-opacity duration-500"
-                    />
-                  </div>
-
-                  {/* Divider */}
-                  <div className="h-px mb-4"
-                    style={{ background: `linear-gradient(90deg, ${c.accent}30, transparent)` }} />
-
-                  {/* Info row */}
-                  <div>
-                    <div className="font-display font-semibold text-sm text-text-primary leading-tight">
-                      {c.name}
-                    </div>
-                    <div className="text-text-muted text-xs mt-0.5">{c.sector}</div>
-                  </div>
-                </div>
+                <img
+                  src={logo}
+                  alt="Client logo"
+                  className="max-h-20 max-w-[196px] w-full object-contain brightness-0 invert opacity-60
+                    hover:opacity-100 transition-opacity duration-500"
+                />
               </div>
-            ))}
-          </div>
-        </motion.div>
-
-        {/* ── Industries served ── */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.55 }}
-        >
-          <div className="hr-label mb-8">Industries We Serve</div>
-
-          <div className="flex flex-wrap justify-center gap-3">
-            {industries.map((ind, i) => (
-              <motion.span
-                key={ind}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.35, delay: 0.65 + i * 0.06 }}
-                className="tag"
-              >
-                {ind}
-              </motion.span>
             ))}
           </div>
         </motion.div>
@@ -186,7 +136,7 @@ export default function SocialProof() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, delay: 1 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
           className="mt-16 pt-10"
         >
           <div className="divider mb-10" />

@@ -2,6 +2,47 @@
 
 ---
 
+### 2026-03-10 - Reference Websites Reorganized + Onixnet Pages Fetched
+**Action:** Reorganized reference-websites into devblock/ and onixnet/ subfolders; fetched 12 Onixnet pages; updated all root MD files
+
+**Folder Structure:**
+- `content/reference-websites/devblock/` — 12 DevBlock files (DESIGN reference)
+- `content/reference-websites/onixnet/` — 14 Onixnet files (CONTENT reference: 12 pages + minto + bcg)
+
+**New Onixnet Files (10):** onixnet-about.md, onixnet-solutions.md, onixnet-ai-ml.md, onixnet-data-analytics.md, onixnet-google-cloud.md, onixnet-google-workspace.md, onixnet-managed-services.md, onixnet-customer-stories.md, onixnet-partners.md, onixnet-blog.md
+
+**Root Files Updated:** CLAUDE.md, ENHANCED_AUTOMATION_SYSTEM_v2.md, radiant-digital-context.md
+**Commands Updated:** `/fetch ref` split into `/fetch ref design` + `/fetch ref content`
+
+---
+
+### 2026-03-10 - Content References Expanded (Onixnet + BCG + Minto Framework)
+**Action:** Added content strategy references alongside existing DevBlock design references
+**Command:** Manual update
+
+**New Reference Files Created (4):**
+- `content/reference-websites/onixnet-homepage.md` — Metrics-driven content patterns, headline formulas, CTA strategy from Onixnet
+- `content/reference-websites/onixnet-content-strategy.md` — Storytelling framework, case study structure, metrics display patterns
+- `content/reference-websites/minto-framework-guide.md` — Minto Pyramid Principle applied to web content (SCQA, answer-first, grouping in threes)
+- `content/reference-websites/bcg-agentic-ai-insights.md` — BCG's 3 net-new value pools, 4 expectation gaps, 5 winning imperatives mapped to Radiant services
+
+**Master Context Updated:**
+- `content/master-context/radiant-digital-context.md` — Added sections 20-23:
+  - §20 Content Writing Framework (Minto Pyramid)
+  - §21 Metrics-Driven Content Strategy (Onixnet Model)
+  - §22 Agentic AI Strategic Positioning (BCG-Aligned)
+  - §23 Reference Website Index (design refs + content refs)
+- Updated brand voice with new messaging themes and phrases
+- Added BCG market metrics for content use
+
+**Reference Strategy:**
+- DevBlock = Design, UI, layout, styling, animation reference
+- Onixnet = Content writing, metrics presentation, storytelling reference
+- Minto Framework = Content structure methodology (SCQA, answer-first)
+- BCG Research = Strategic positioning, market data, agentic AI themes
+
+---
+
 ### 2026-03-06 - Reference Website Updated to DevBlock
 **Action:** Reference website changed from Nerova (https://nerova.webflow.io/) to DevBlock (https://devblock.net/)
 **Command:** Manual update

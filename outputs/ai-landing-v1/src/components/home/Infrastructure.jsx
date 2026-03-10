@@ -1,13 +1,15 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { SiGooglecloud, SiNvidia, SiOpenai, SiAnthropic } from 'react-icons/si'
+import { FaAws, FaMicrosoft } from 'react-icons/fa'
 
 const partners = [
-  { name: 'AWS',             note: 'Cloud Infrastructure', logo: 'https://logo.clearbit.com/aws.amazon.com' },
-  { name: 'Google Cloud',    note: 'AI & ML Platform',     logo: 'https://logo.clearbit.com/cloud.google.com' },
-  { name: 'Microsoft Azure', note: 'Enterprise Cloud',     logo: 'https://logo.clearbit.com/azure.microsoft.com' },
-  { name: 'NVIDIA',          note: 'GPU Acceleration',     logo: 'https://logo.clearbit.com/nvidia.com' },
-  { name: 'OpenAI',          note: 'Foundation Models',    logo: 'https://logo.clearbit.com/openai.com' },
-  { name: 'Anthropic',       note: 'Safety-First AI',      logo: 'https://logo.clearbit.com/anthropic.com' },
+  { name: 'AWS',             note: 'Cloud Infrastructure', icon: FaAws },
+  { name: 'Google Cloud',    note: 'AI & ML Platform',     icon: SiGooglecloud },
+  { name: 'Microsoft Azure', note: 'Enterprise Cloud',     icon: FaMicrosoft },
+  { name: 'NVIDIA',          note: 'GPU Acceleration',     icon: SiNvidia },
+  { name: 'OpenAI',          note: 'Foundation Models',    icon: SiOpenai },
+  { name: 'Anthropic',       note: 'Safety-First AI',      icon: SiAnthropic },
 ]
 
 export default function Infrastructure() {
@@ -35,11 +37,7 @@ export default function Infrastructure() {
               className="mag-card p-5 flex flex-col items-center group cursor-default"
             >
               <div className="h-10 flex items-center justify-center mb-3">
-                <img
-                  src={p.logo}
-                  alt={`${p.name} logo`}
-                  className="max-h-10 max-w-[80px] object-contain brightness-0 invert opacity-50 group-hover:opacity-90 transition-opacity duration-400"
-                />
+                <p.icon className="w-8 h-8 text-white/50 group-hover:text-white/90 transition-colors duration-400" />
               </div>
               <div className="font-display font-bold text-sm text-text-secondary group-hover:text-text-primary transition-colors mb-1">{p.name}</div>
               <div className="text-[0.6rem] text-text-muted">{p.note}</div>

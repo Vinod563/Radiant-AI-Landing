@@ -36,19 +36,27 @@ This is a **fully automated, multi-layer system** that creates React-based pages
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │              LAYER 3: REFERENCE SITE ANALYSIS                │
-│ ✓ Load content/reference-websites/devblock-*.md            │
-│ ✓ Reference: https://devblock.net/ (12 pages)                    │
-│ ✓ Extract design patterns, colors, typography               │
+│ DESIGN: Load content/reference-websites/devblock/*.md      │
+│ ✓ DevBlock (https://devblock.net/) — 12 pages              │
+│ ✓ Extract design patterns, colors, typography, layouts      │
 │ ✓ Identify layout structures & interaction patterns         │
+│                                                              │
+│ CONTENT: Load content/reference-websites/onixnet/*.md      │
+│ ✓ Onixnet (https://www.onixnet.com/) — 12 pages            │
+│ ✓ Extract metrics-driven content patterns & storytelling    │
+│ ✓ Apply Minto Pyramid (SCQA, answer-first, group in 3s)    │
+│ ✓ Apply BCG agentic AI positioning & market data            │
 └─────────────────────────────────────────────────────────────┘
                             ↓
 ┌─────────────────────────────────────────────────────────────┐
 │                  LAYER 4: SKILL ACTIVATION                   │
 │ ✓ Load BRAND DESIGN SYSTEM from this document               │
-│ ✓ Load REFERENCE SITE LAYOUT PATTERNS from this document    │
-│ ✓ Load CONTENT WRITING GUIDELINES from this document        │
+│ ✓ Load REFERENCE SITE LAYOUT PATTERNS (DevBlock)            │
+│ ✓ Load CONTENT WRITING GUIDELINES (Onixnet + Minto)         │
+│ ✓ Load BCG AGENTIC AI POSITIONING data                      │
 │ ✓ Apply frontend-design skill (distinctive aesthetics)      │
-│ ✓ Content writing expertise activated                       │
+│ ✓ Minto Pyramid content strategy activated                   │
+│ ✓ Metrics-driven writing expertise activated                 │
 │ ✓ React component best practices loaded                     │
 └─────────────────────────────────────────────────────────────┘
                             ↓
@@ -396,8 +404,8 @@ Last Fetched: 2026-02-20
 Status: ✅ All 18 pages fetched and saved
 ```
 
-### `/fetch ref`
-**Purpose:** Fetch content from reference website (DevBlock - https://devblock.net/)
+### `/fetch ref design`
+**Purpose:** Fetch DESIGN reference from DevBlock (https://devblock.net/)
 **Full Process:**
 ```
 1.  web_fetch('https://devblock.net/')
@@ -413,13 +421,13 @@ Status: ✅ All 18 pages fetched and saved
 11. web_fetch('https://devblock.net/careers')
 12. web_fetch('https://devblock.net/contact')
 
-13. Analyze design patterns
+13. Analyze design patterns (UI, layout, styling, animations)
 14. Extract colors, typography, layouts
-15. Save to content/reference-websites/
+15. Save to content/reference-websites/devblock/
 16. Update design direction in master context
 17. Report design insights
 
-Content Files (12 pages):
+Content Files (12 pages) → content/reference-websites/devblock/:
   - devblock-homepage.md
   - devblock-about.md
   - devblock-services.md
@@ -437,16 +445,69 @@ Last Fetched: 2026-03-06
 Status: ✅ All 12 pages fetched and saved
 ```
 
+### `/fetch ref content`
+**Purpose:** Fetch CONTENT reference from Onixnet (https://www.onixnet.com/)
+**Full Process:**
+```
+1.  web_fetch('https://www.onixnet.com/')
+2.  web_fetch('https://www.onixnet.com/about')
+3.  web_fetch('https://www.onixnet.com/solutions')
+4.  web_fetch('https://www.onixnet.com/solutions/ai-ml-artificial-intelligence-machine-learning/')
+5.  web_fetch('https://www.onixnet.com/data-analytics')
+6.  web_fetch('https://www.onixnet.com/google-cloud')
+7.  web_fetch('https://www.onixnet.com/google-workspace')
+8.  web_fetch('https://www.onixnet.com/managed-services')
+9.  web_fetch('https://www.onixnet.com/customer-stories')
+10. web_fetch('https://www.onixnet.com/partners')
+11. web_fetch('https://www.onixnet.com/blog')
+12. web_fetch('https://www.onixnet.com/contact')
+
+13. Extract content writing patterns, metrics presentation, headline formulas
+14. Apply Minto Pyramid analysis (SCQA patterns, answer-first structure)
+15. Save to content/reference-websites/onixnet/
+16. Update content strategy in master context
+17. Report content strategy insights
+
+Content Files (12 pages + 2 strategy docs) → content/reference-websites/onixnet/:
+  - onixnet-homepage.md
+  - onixnet-about.md
+  - onixnet-solutions.md
+  - onixnet-ai-ml.md
+  - onixnet-data-analytics.md
+  - onixnet-google-cloud.md
+  - onixnet-google-workspace.md
+  - onixnet-managed-services.md
+  - onixnet-customer-stories.md
+  - onixnet-partners.md
+  - onixnet-blog.md
+  - onixnet-content-strategy.md (deep storytelling & metrics patterns)
+  - minto-framework-guide.md (Minto Pyramid templates for web content)
+  - bcg-agentic-ai-insights.md (BCG strategic positioning & market data)
+
+Last Fetched: 2026-03-10
+Status: ✅ All 12 pages + 2 strategy docs fetched and saved
+```
+
+### `/fetch ref`
+**Purpose:** Fetch both DESIGN and CONTENT references
+**Full Process:**
+```
+1. Execute /fetch ref design
+2. Execute /fetch ref content
+3. Report combined insights
+```
+
 ### `/refresh`
-**Purpose:** Refresh both main and reference content
+**Purpose:** Refresh main content and both reference sources
 **Full Process:**
 ```
 1. Execute /fetch main
-2. Execute /fetch ref
-3. Regenerate master context
-4. Archive previous version
-5. Create CHANGELOG entry
-6. Report all changes
+2. Execute /fetch ref design
+3. Execute /fetch ref content
+4. Regenerate master context
+5. Archive previous version
+6. Create CHANGELOG entry
+7. Report all changes
 ```
 
 ### `/clear screenshots`
@@ -547,7 +608,8 @@ Output: Complete React-based page in outputs/
 
 Content:
 ✓ Main website (stage.radiant.digital): 18 pages fetched 2026-02-20
-✓ Reference site (devblock.net): 12 pages fetched 2026-03-06
+✓ Design reference (devblock.net): 12 pages fetched 2026-03-06
+✓ Content reference (onixnet.com): 12 pages + 2 strategy docs fetched 2026-03-10
 ✓ Master context version: 2.0
 
 Pages Created:
@@ -847,7 +909,7 @@ All generated pages MUST use these exact brand tokens. These values come from th
 
 ## 📐 REFERENCE SITE LAYOUT STRUCTURES & INTERACTION PATTERNS
 
-These patterns are extracted from the DevBlock reference website (https://devblock.net/) and must be adapted with Radiant Digital's brand identity.
+These DESIGN patterns are extracted from the DevBlock reference website (https://devblock.net/) and must be adapted with Radiant Digital's brand identity. For CONTENT patterns (metrics-driven copy, Minto Pyramid structure, storytelling), see `content/reference-websites/onixnet/`.
 
 ### Page Flow Templates (Adapt Per Page Type)
 

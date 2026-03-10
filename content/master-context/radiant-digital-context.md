@@ -1,7 +1,9 @@
 # Radiant Digital - Master Context Document
 
-**Last Updated:** 2026-02-20
+**Last Updated:** 2026-03-10
 **Source:** Current website content (stage.radiant.digital)
+**Content References:** Onixnet (metrics-driven content), BCG Agentic AI Research, Minto Pyramid Framework
+**Design References:** DevBlock (UI/layout/styling)
 
 ---
 
@@ -585,6 +587,9 @@ AI adoption, cloud transformation, business process automation, customer experie
 - Measurable outcomes and quantified results
 - Partnership-oriented ("guide," "embark," "together")
 - Human-centered despite technology focus
+- **Agentic AI leadership** — beyond pilots to enterprise-scale deployment
+- **Outcome-linked engagement** — commercial models aligned to client success
+- **Governance built-in** — audit trails, compliance, human-in-the-loop by default
 
 ### Frequently Used Phrases
 - "We're packed to guide your digital journey"
@@ -593,3 +598,134 @@ AI adoption, cloud transformation, business process automation, customer experie
 - "Let's embark"
 - "Customer centric to the core"
 - "AI-first digital transformation partner"
+- "We don't bill hours — we deliver outcomes"
+- "Enterprise-grade governance from day one"
+- "Beyond pilots — scaling agentic AI"
+- "The proof is in the numbers"
+
+---
+
+## 20. Content Writing Framework (Minto Pyramid)
+
+All website content follows the Minto Pyramid Principle:
+
+### Structure: Answer First, Then Support
+1. **Main Point (Hero):** State the conclusion/answer upfront
+2. **Key Arguments (Sections):** 3 supporting arguments max
+3. **Evidence (Metrics):** Data, case studies, testimonials backing each argument
+
+### SCQA Pattern for Every Section
+- **Situation:** What's the current state?
+- **Complication:** What's the problem/challenge?
+- **Question:** What needs to be solved? (often implied)
+- **Answer:** How Radiant solves it + quantified proof
+
+### Content Rules
+- Every headline must pass the "So what?" test
+- Group value propositions in threes
+- MECE: each section distinct, together comprehensive
+- Numbers stop the scroll — place metrics where eyes rest
+- Translate features into business outcomes (always)
+
+See: `content/reference-websites/onixnet/minto-framework-guide.md` for templates
+
+---
+
+## 21. Metrics-Driven Content Strategy (Onixnet Model)
+
+### Content Formula
+```
+[Business Problem] → [Solution Approach] → [Quantified Outcome] → [Trust Signal]
+```
+
+### Metric Display Rules
+1. **Hero:** 2-3 headline metrics for immediate credibility
+2. **Trust Bar:** Logo carousel + award/certification count
+3. **Mid-Page:** Results metrics grid (3-4 columns)
+4. **Case Studies:** Before/after with % improvements
+5. **CTA Sections:** Reinforcing summary metric
+
+### Metric Formatting
+- "X" multiplier for dramatic impact (e.g., "5X" not "5 times")
+- "+" suffix for scale (e.g., "500+" not "over 500")
+- Bold the number, regular weight for descriptor
+- Always pair metrics with context: Number + Unit + Explanation
+
+### Content Priority Stack
+1. Lead with the outcome (what the client gets)
+2. Support with the approach (how we do it)
+3. Prove with evidence (metrics, case studies)
+4. Anchor with trust (logos, awards, certifications)
+
+See: `content/reference-websites/onixnet/onixnet-homepage.md` and `onixnet-content-strategy.md`
+
+---
+
+## 22. Agentic AI Strategic Positioning (BCG-Aligned)
+
+### Three Net-New Value Pools (Service Alignment)
+
+| Value Pool | Description | Radiant Service Area |
+|-----------|-------------|---------------------|
+| **Build-Deploy-Run** | Agent workflow engineering, ERP/CRM integration, journey embedding | Product Dev & Integration + AI Practice |
+| **Expanded Scope** | New outsourceable categories, data-powered services | Analytics & AI + Workforce Solutions |
+| **Oversight & Governance** | Drift detection, HITL escalation, audit trails, compliance | Cloud Transformation + Digital Strategy |
+
+### Market Opportunity Metrics (for content use)
+
+| Metric | Value | Usage |
+|--------|-------|-------|
+| Enterprises scaling agentic AI | 1 in 3 | Hero stat, credibility |
+| Want providers to implement use cases | 75% | Market demand proof |
+| Agentic AI appearing in sourcing bids | 40%+ | Urgency signal |
+| Enterprises expecting 30-40% productivity gains | Majority | Set expectations high |
+| Enterprises with no TCO improvement from AI deals | 60% | Differentiation: "We guarantee ours do" |
+| Buyers preferring outcome-linked contracts | 70%+ | Commercial model differentiator |
+| AI-native roles CAGR | 40-50% | Talent section proof point |
+
+### Four Gaps to Exploit in Content
+
+1. **Priority Gap:** Highlight IT ops, cybersecurity, app implementation as core strengths
+2. **Efficiency Gap:** Commit to 30-40% productivity ranges (match enterprise expectations)
+3. **Proof Gap:** Every engagement includes measurable TCO benchmarks
+4. **Commercial Gap:** Outcome-linked engagement models as default
+
+### Five Content Themes (BCG Imperatives)
+
+1. **AI Fabric:** Agentic capabilities woven across all 6 service areas
+2. **Proven Impact:** Every page leads with validated ROI
+3. **Partner Ecosystem:** Technology partnerships showcased with depth
+4. **AI-Augmented Delivery:** Humans orchestrate agents, not execute tasks
+5. **AI-Native Talent:** Growing at 40-50% CAGR — we invest in the right mix
+
+See: `content/reference-websites/onixnet/bcg-agentic-ai-insights.md` for full strategic framework
+
+---
+
+## 23. Reference Website Index
+
+### Design & UI References (`content/reference-websites/devblock/`)
+| Reference | Purpose | File |
+|-----------|---------|------|
+| DevBlock Homepage | Layout, animations, hero patterns | `devblock/devblock-homepage.md` |
+| DevBlock Services | Service page structure, card layouts | `devblock/devblock-services.md` |
+| DevBlock About | About page patterns, team sections | `devblock/devblock-about.md` |
+| DevBlock Work | Portfolio/case study presentation | `devblock/devblock-work.md` |
+
+### Content & Messaging References (`content/reference-websites/onixnet/`)
+| Reference | Purpose | File |
+|-----------|---------|------|
+| Onixnet Homepage | Metrics-driven content, trust signals | `onixnet/onixnet-homepage.md` |
+| Onixnet About | Company storytelling patterns | `onixnet/onixnet-about.md` |
+| Onixnet Solutions | Service page content structure | `onixnet/onixnet-solutions.md` |
+| Onixnet AI/ML | AI service messaging patterns | `onixnet/onixnet-ai-ml.md` |
+| Onixnet Data Analytics | Data service content patterns | `onixnet/onixnet-data-analytics.md` |
+| Onixnet Google Cloud | Partnership page structure | `onixnet/onixnet-google-cloud.md` |
+| Onixnet Workspace | Product service page patterns | `onixnet/onixnet-google-workspace.md` |
+| Onixnet Managed Services | Ongoing service page patterns | `onixnet/onixnet-managed-services.md` |
+| Onixnet Customer Stories | Case study presentation | `onixnet/onixnet-customer-stories.md` |
+| Onixnet Partners | Partner ecosystem page | `onixnet/onixnet-partners.md` |
+| Onixnet Blog | Thought leadership structure | `onixnet/onixnet-blog.md` |
+| Onixnet Content Strategy | Storytelling, case study structure | `onixnet/onixnet-content-strategy.md` |
+| Minto Pyramid Guide | Content structure framework (SCQA) | `onixnet/minto-framework-guide.md` |
+| BCG Agentic AI | Strategic positioning, market data | `onixnet/bcg-agentic-ai-insights.md` |

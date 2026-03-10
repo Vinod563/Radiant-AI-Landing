@@ -1,7 +1,9 @@
 # Radiant Digital - Master Context Document
 
-**Last Updated:** 2026-02-20
+**Last Updated:** 2026-03-10
 **Source:** Current website content (stage.radiant.digital)
+**Content References:** Onixnet (metrics-driven content), BCG Agentic AI Research, Minto Pyramid Framework
+**Design References:** DevBlock (UI/layout/styling)
 
 ---
 
@@ -316,6 +318,7 @@ Verizon, Navy Federal Credit Union, Halliburton, EPA, USCIS, NIH, NIH-NCI, MD An
 - Internet of Things (IoT)
 - Generative AI
 - Robotic Process Automation (RPA)
+- **Agentic AI** — Build-Deploy-Run, expanded addressable scope, oversight & governance
 
 ---
 
@@ -424,6 +427,9 @@ AI adoption, cloud transformation, business process automation, customer experie
 - Measurable outcomes and quantified results
 - Partnership-oriented ("guide," "embark," "together")
 - Human-centered despite technology focus
+- **Agentic AI leadership** — beyond pilots to enterprise-scale deployment
+- **Outcome-linked engagement** — commercial models aligned to client success
+- **Governance built-in** — audit trails, compliance, human-in-the-loop by default
 
 ### Frequently Used Phrases
 - "We're packed to guide your digital journey"
@@ -432,3 +438,7 @@ AI adoption, cloud transformation, business process automation, customer experie
 - "Let's embark"
 - "Customer centric to the core"
 - "AI-first digital transformation partner"
+- "We don't bill hours — we deliver outcomes"
+- "Enterprise-grade governance from day one"
+- "Beyond pilots — scaling agentic AI"
+- "The proof is in the numbers"

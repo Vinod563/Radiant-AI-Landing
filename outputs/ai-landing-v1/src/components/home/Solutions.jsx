@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
-import { motion, useInView, AnimatePresence } from 'framer-motion'
-import { ArrowRight, BarChart3, Layers, Brain, ShieldAlert, Rocket, FileText, Zap } from 'lucide-react'
+import { motion, useInView } from 'framer-motion'
+import { ArrowRight, BarChart3, Layers, Brain, ShieldAlert, Rocket, FileText } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const solutions = [
@@ -12,108 +12,108 @@ const solutions = [
     gradient: 'linear-gradient(180deg, #010F1E 0%, #021a0c 15%, #032d14 35%, #065c22 55%, #39d353 75%, #065c22 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)',
     screenshot: '/screenshots/enterprise-icx.png',
-    desc: 'AI-powered customer experience intelligence. Unify every CX signal into one predictive platform with real-time insights across all touchpoints.',
-    tags: ['Enterprise', 'CX', 'Analytics'],
+    desc: 'AI-powered CX insight-to-ROI platform that unifies data to proactively eliminate experience friction — turning customer signals into measurable business outcomes.',
+    tags: ['Enterprise', 'CX', 'Insight-to-ROI'],
     href: '/icx-solution', featured: true,
     icon: BarChart3,
     details: [
-      'Unified CX signal ingestion from 50+ sources',
-      'Real-time sentiment analysis & NPS prediction',
-      'AI-driven root cause detection across touchpoints',
-      'Executive dashboards with actionable insights',
+      'Unified data platform across all CX touchpoints',
+      'Proactive friction detection & elimination',
+      'Insight-to-ROI pipeline with measurable outcomes',
+      'Real-time experience monitoring & alerting',
     ],
   },
   {
     num: '02', title: 'CX Workbench',
-    label: 'Orchestration Suite',
+    label: 'Journey Intelligence',
     accent: '#F0974E',
     bg: '#2d1200',
     gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0800 15%, #2d1200 35%, #6b2d00 55%, #f0974e 75%, #6b2d00 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #1a0a00 0%, #3d1e00 50%, #7a3800 100%)',
     screenshot: '/screenshots/cx-workbench.png',
-    desc: 'Coordinate every team, tool, and workflow from a single canvas — eliminating handoff friction and accelerating resolution across your entire CX operation.',
-    tags: ['Orchestration', 'AI', 'Automation'],
+    desc: 'AI-powered workflow tool that accelerates manual tagging of customer interactions on digital channels using Figma screen analysis and business rules — enabling teams to visualize customer journeys and understand experience details.',
+    tags: ['Workflow', 'Figma Analysis', 'Journey Mapping'],
     href: '#',
     icon: Layers,
     details: [
-      'Drag-and-drop workflow orchestration canvas',
-      'Cross-team task routing with AI prioritization',
-      'Real-time collaboration & handoff tracking',
-      'Automated SLA monitoring and escalation',
+      'AI-accelerated interaction tagging on digital channels',
+      'Figma screen analysis with business rule engine',
+      'Customer journey visualization & mapping',
+      'Experience detail extraction & pattern recognition',
     ],
   },
   {
-    num: '03', title: 'AI Fabric',
-    label: 'Infrastructure Layer',
+    num: '03', title: 'AI Billing Workbench',
+    label: 'Billing Intelligence',
     accent: '#596AE0',
     bg: '#080d2e',
     gradient: 'linear-gradient(180deg, #010F1E 0%, #030818 15%, #080d2e 35%, #131a5c 55%, #596ae0 75%, #131a5c 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #050818 0%, #0c1040 50%, #1a2270 100%)',
     screenshot: '/screenshots/ai-fabric.png',
-    desc: 'The enterprise AI operating layer that connects people, processes, and systems — delivering governed, scalable intelligence without ripping out existing infrastructure.',
-    tags: ['Infrastructure', 'Enterprise', 'Integration'],
+    desc: 'AI-powered platform that detects billing anomalies, groups them into patterns, and guides teams to resolve issues before they impact customers — protecting revenue and trust at scale.',
+    tags: ['Billing', 'Anomaly Detection', 'Resolution'],
     href: '#',
-    icon: Brain,
+    icon: ShieldAlert,
     details: [
-      'Plug-and-play AI model registry & governance',
-      'Federated learning across organizational silos',
-      'API mesh connecting 200+ enterprise systems',
-      'Automated compliance & audit trail generation',
+      'Real-time billing anomaly detection engine',
+      'Intelligent pattern grouping & classification',
+      'Guided resolution workflows for support teams',
+      'Proactive issue resolution before customer impact',
     ],
   },
   {
-    num: '04', title: 'Anomaly Detection',
-    label: 'Security & Monitoring',
+    num: '04', title: 'Magic Globe',
+    label: 'Launch Intelligence',
     accent: '#F05030',
     bg: '#2d0800',
     gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0400 15%, #2d0800 35%, #5c1400 55%, #f05030 75%, #5c1400 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)',
     screenshot: '/screenshots/anomaly-detection.png',
-    desc: 'Real-time AI monitoring and fraud detection that flags outliers, surfaces patterns, and escalates threats before they reach the P&L.',
-    tags: ['Security', 'Analytics', 'Real-time'],
+    desc: 'AI-powered platform that integrates sales, returns, quality, and customer data to predict device launch risk, identify root causes, and provide go/no-go recommendations before and after launch.',
+    tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
     href: '#',
-    icon: ShieldAlert,
+    icon: Rocket,
     details: [
-      'Sub-second anomaly detection across data streams',
-      'Multi-dimensional pattern recognition engine',
-      'Automated threat scoring & escalation workflows',
-      'Self-learning baselines that adapt to your business',
+      'Integrated sales, returns, quality & customer data',
+      'Device launch risk prediction & scoring',
+      'AI-driven root cause identification',
+      'Go/no-go recommendations pre & post launch',
     ],
   },
   {
-    num: '05', title: 'Rapid AI',
-    label: 'Deployment Accelerator',
+    num: '05', title: 'BI Fabric',
+    label: 'Analytics Platform',
     accent: '#00c87d',
     bg: '#00261a',
     gradient: 'linear-gradient(180deg, #010F1E 0%, #000f0a 15%, #00261a 35%, #004d2e 55%, #00c87d 75%, #004d2e 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #001208 0%, #003020 50%, #005838 100%)',
-    desc: 'Go from proof-of-concept to production-ready AI in 6 weeks. Pre-built model templates, validation pipelines, and deployment rails do the heavy lifting.',
-    tags: ['Deployment', 'Speed', 'MLOps'],
+    desc: 'Centralized analytics and reporting solution that connects data sources into a governed environment — enabling faster, data-driven decision-making across the enterprise.',
+    tags: ['Analytics', 'BI', 'Data Governance'],
     href: '#',
-    icon: Rocket,
+    icon: Brain,
     details: [
-      'Pre-built templates for 30+ enterprise AI use cases',
-      'Automated model validation & bias testing pipelines',
-      'One-click deployment to cloud or on-prem',
-      'Built-in monitoring, rollback & A/B testing',
+      'Centralized data source connectivity & unification',
+      'Governed analytics environment with access controls',
+      'Self-service reporting & dashboard builder',
+      'Faster data-driven decision-making at every level',
     ],
   },
   {
-    num: '06', title: 'DocuFlow',
+    num: '06', title: 'Automarc',
     label: 'Document Intelligence',
     accent: '#a855f7',
     bg: '#100030',
     gradient: 'linear-gradient(180deg, #010F1E 0%, #060014 15%, #100030 35%, #220060 55%, #7030d0 75%, #220060 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #080014 0%, #160038 50%, #2a0068 100%)',
-    desc: 'Eliminate manual document handling with 99.2% extraction accuracy. Contracts, invoices, reports — classified, extracted, and routed automatically.',
-    tags: ['Documents', 'Automation', 'NLP'],
+    desc: 'AI-powered document workflow automation that extracts, classifies, and processes content to reduce manual effort and improve accuracy — formerly DocuFlow, now purpose-built for technical writing at scale.',
+    tags: ['Documents', 'Automation', 'Technical Writing'],
     href: '#',
     icon: FileText,
     details: [
-      'Multi-format ingestion: PDF, images, emails, scans',
-      'Context-aware entity extraction with 99.2% accuracy',
-      'Automated classification, routing & approval workflows',
-      'Knowledge graph integration for semantic search',
+      'AI-powered content extraction & classification',
+      'Automated document processing workflows',
+      'Technical writing acceleration & consistency',
+      'Reduced manual effort with improved accuracy',
     ],
   },
 ]
@@ -353,7 +353,6 @@ function FloatingScreenshot({ solution, isHovered }) {
    ───────────────────────────────────────────── */
 function SolutionBlock({ s }) {
   const [hovered, setHovered] = useState(false)
-  const [expanded, setExpanded] = useState(false)
   const blockRef = useRef(null)
   const inView = useInView(blockRef, { once: true, margin: '-100px' })
   const Icon = s.icon
@@ -477,17 +476,10 @@ function SolutionBlock({ s }) {
               </motion.span>
             ))}
             <div className="flex-1" />
-            {s.href !== '#' ? (
-              <Link to={s.href} className="btn-primary group/link">
-                <span>View Solution</span>
-                <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
-              </Link>
-            ) : (
-              <span className="text-xs font-display font-medium uppercase tracking-widest"
-                style={{ color: 'rgba(255,255,255,0.18)' }}>
-                In Development
-              </span>
-            )}
+            <Link to={s.href !== '#' ? s.href : '#'} className="btn-primary group/link">
+              <span>View Solution</span>
+              <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
+            </Link>
           </motion.div>
 
           {/* ── THE FLOATING SCREENSHOT ── */}
@@ -500,62 +492,6 @@ function SolutionBlock({ s }) {
             <FloatingScreenshot solution={s} isHovered={hovered} />
           </motion.div>
 
-          {/* ── Capabilities row below screenshot ── */}
-          <motion.div
-            className="mt-14 max-w-6xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.6, delay: 0.45 }}
-          >
-            <button
-              onClick={() => setExpanded(!expanded)}
-              className="flex items-center gap-2.5 text-sm font-display font-semibold mb-6 group/exp w-fit"
-              style={{ color: `${s.accent}dd` }}
-            >
-              <motion.div animate={{ rotate: expanded ? 90 : 0 }} transition={{ duration: 0.2 }}>
-                <ArrowRight size={14} />
-              </motion.div>
-              <span className="border-b pb-0.5 transition-colors"
-                style={{ borderColor: `${s.accent}35` }}>
-                {expanded ? 'Hide' : 'Explore'} Capabilities
-              </span>
-            </button>
-
-            <AnimatePresence>
-              {expanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.4, ease: 'easeInOut' }}
-                  className="overflow-hidden"
-                >
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {s.details.map((detail, di) => (
-                      <motion.div key={di}
-                        className="rounded-xl p-4"
-                        style={{
-                          background: 'rgba(255,255,255,0.03)',
-                          border: `1px solid ${s.accent}12`,
-                        }}
-                        initial={{ opacity: 0, y: 12 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: di * 0.07 }}
-                        whileHover={{
-                          y: -3,
-                          borderColor: `${s.accent}30`,
-                          background: `rgba(255,255,255,0.05)`,
-                        }}
-                      >
-                        <Zap size={14} className="mb-2.5" style={{ color: s.accent }} />
-                        <span className="text-text-secondary text-sm leading-relaxed">{detail}</span>
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </motion.div>
 
         </div>
       </div>

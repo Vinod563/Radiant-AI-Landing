@@ -10,7 +10,11 @@
       "Read(//private/tmp/**)",
       "Read(//Users/vinodkumarmourya/**)",
       "Bash(sips -g pixelWidth -g pixelHeight \"/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/public/screenshots/enterprise-icx.png\" \"/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/public/screenshots/cx-workbench.png\" \"/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/public/screenshots/ai-fabric.png\" \"/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/public/screenshots/anomaly-detection.png\")",
-      "Bash(sips -g pixelWidth -g pixelHeight /tmp/market-full-page-long.png)"
+      "Bash(sips -g pixelWidth -g pixelHeight /tmp/market-full-page-long.png)",
+      "WebFetch(domain:www.onixnet.com)",
+      "Bash(mv content/reference-websites/onixnet-*.md content/reference-websites/onixnet/)",
+      "Bash(mv content/reference-websites/minto-framework-guide.md content/reference-websites/onixnet/)",
+      "Bash(mv content/reference-websites/bcg-agentic-ai-insights.md content/reference-websites/onixnet/)"
     ],
     "additionalDirectories": [
       "/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/src/components/icx",

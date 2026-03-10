@@ -5,7 +5,7 @@
 **Version:** 2.0
 **Status:** Production Ready
 **Purpose:** Automated React-based website generation with security checks and visual verification
-**Last Updated:** 2026-02-20
+**Last Updated:** 2026-03-10
 
 ---
 
@@ -39,21 +39,39 @@ radiant-automation-v2/
 │   │   ├── tracklynk.md
 │   │   └── privly.md
 │   │
-│   ├── reference-websites/                (12 DevBlock pages as MD)
-│   │   ├── devblock-homepage.md
-│   │   ├── devblock-about.md
-│   │   ├── devblock-services.md
-│   │   ├── devblock-work.md
-│   │   ├── devblock-contact.md
-│   │   ├── devblock-blog.md
-│   │   ├── devblock-careers.md
-│   │   ├── devblock-service-product-design.md
-│   │   ├── devblock-service-ai.md
-│   │   ├── devblock-service-devops.md
-│   │   ├── devblock-service-spatial-design.md
-│   │   └── devblock-product-cad-lite.md
+│   ├── reference-websites/
+│   │   ├── devblock/                      (12 pages — DESIGN: UI, layout, styling)
+│   │   │   ├── devblock-homepage.md
+│   │   │   ├── devblock-about.md
+│   │   │   ├── devblock-services.md
+│   │   │   ├── devblock-work.md
+│   │   │   ├── devblock-contact.md
+│   │   │   ├── devblock-blog.md
+│   │   │   ├── devblock-careers.md
+│   │   │   ├── devblock-service-product-design.md
+│   │   │   ├── devblock-service-ai.md
+│   │   │   ├── devblock-service-devops.md
+│   │   │   ├── devblock-service-spatial-design.md
+│   │   │   └── devblock-product-cad-lite.md
+│   │   │
+│   │   └── onixnet/                       (14 files — CONTENT: metrics, storytelling, strategy)
+│   │       ├── onixnet-homepage.md
+│   │       ├── onixnet-about.md
+│   │       ├── onixnet-solutions.md
+│   │       ├── onixnet-ai-ml.md
+│   │       ├── onixnet-data-analytics.md
+│   │       ├── onixnet-google-cloud.md
+│   │       ├── onixnet-google-workspace.md
+│   │       ├── onixnet-managed-services.md
+│   │       ├── onixnet-customer-stories.md
+│   │       ├── onixnet-partners.md
+│   │       ├── onixnet-blog.md
+│   │       ├── onixnet-content-strategy.md
+│   │       ├── minto-framework-guide.md
+│   │       └── bcg-agentic-ai-insights.md
 │   │
 │   └── master-context/                    (Single source of truth)
+│       └── radiant-digital-context.md
 │
 ├── screenshots/                           📸 Visual verification
 │   ├── desktop/  (1920x1080)
@@ -93,16 +111,28 @@ radiant-automation-v2/
 - **Markets:** Commercial, Federal, State & Local, Education
 - **Tagline:** "Transformation is the journey. Digital enablement is the map."
 
-### Reference Website: DevBlock
+### Design Reference: DevBlock
 - **URL:** https://devblock.net/
 - **Pages Fetched:** 12
 - **Last Fetched:** 2026-03-06
+- **Purpose:** DESIGN reference — UI, layout, styling, animations
 - **Company:** DevBlock – technology consulting firm (product design, AI, DevOps, spatial design)
 - **Tagline:** "Human-Driven, AI-Enhanced, Digital Solutions"
-- **Services:** Product Design, AI, DevOps, Spatial Design, Capabilities Overview
-- **Clients:** Elixr, BeautyTap, MINTX, LinkIt!
-- **Design Style:** Clean modern corporate, animated backgrounds, light/dark mode, vivid cyan/purple gradients, modern sans-serif
-- **AI Pricing:** Transparent tiers ($10K / $25K / $50K)
+- **Design Style:** Clean modern corporate, animated backgrounds, light/dark mode, vivid cyan/purple gradients
+
+### Content Reference: Onixnet
+- **URL:** https://www.onixnet.com/
+- **Pages Fetched:** 12 pages + 2 strategy docs
+- **Last Fetched:** 2026-03-10
+- **Purpose:** CONTENT reference — metrics-driven copy, storytelling, headline formulas
+- **Company:** Onix – leading cloud solution provider (Google Cloud partner)
+- **Content Style:** Metrics-first, outcome-driven, trust-forward, C-suite-targeted
+- **Key Patterns:** "16X Partner of the Year," "500+ agents," "Fortune 500 expertise"
+
+### Strategy Reference: BCG Agentic AI + Minto Framework
+- **Purpose:** Strategic positioning and content structure methodology
+- **BCG:** 3 value pools, 4 expectation gaps, 5 winning imperatives for agentic AI market
+- **Minto:** Pyramid Principle (SCQA, answer-first, group in threes) applied to web content
 
 ---
 
@@ -110,7 +140,7 @@ radiant-automation-v2/
 
 ```bash
 1. /fetch main              # Fetch 18 pages from stage.radiant.digital
-2. /fetch ref               # Fetch 12 pages from devblock.net
+2. /fetch ref               # Fetch design (DevBlock) + content (Onixnet) references
 3. /create home             # Generate homepage (all 12 layers)
 ```
 
@@ -123,8 +153,10 @@ radiant-automation-v2/
 ```bash
 # Content
 /fetch main              → Fetch 18 pages from stage.radiant.digital
-/fetch ref               → Fetch 12 pages from devblock.net
-/refresh                 → Update all content (main + ref)
+/fetch ref design        → Fetch 12 pages from devblock.net (DESIGN)
+/fetch ref content       → Fetch 12 pages from onixnet.com (CONTENT)
+/fetch ref               → Fetch both design + content references
+/refresh                 → Update all content (main + design ref + content ref)
 
 # Screenshots
 /clear screenshots       → Remove all
@@ -135,6 +167,10 @@ radiant-automation-v2/
 /create about           → Create about page
 /create services        → Create services page
 /create contact         → Create contact page
+
+# Section Updates
+/update home hero       → Update a section on an existing page
+/update about leadership → Add new section to existing page
 
 # Status
 /status                 → Show project status
@@ -153,9 +189,9 @@ When you say: **"Create a homepage"**
 ```
 Layer 1:  Context Analysis        ✓ Load 18 Radiant Digital pages
 Layer 2:  Business Requirements   ✓ Review goals & messaging
-Layer 3:  Reference Analysis      ✓ Apply DevBlock design patterns
-Layer 4:  Skill Activation        ✓ Load skills
-Layer 5:  Planning                ✓ Component plan
+Layer 3:  Reference Analysis      ✓ DevBlock DESIGN + Onixnet CONTENT + BCG STRATEGY
+Layer 4:  Skill Activation        ✓ Load skills + Minto + metrics-driven writing
+Layer 5:  Planning                ✓ Component plan (SCQA content + DevBlock layout)
 Layer 6:  React Generation        ✓ Build components
 Layer 7:  Security Checks         ✓ Scan vulnerabilities
 Layer 8:  Server Launch           ✓ Start localhost
@@ -169,14 +205,27 @@ Layer 12: Delivery                ✓ Package & deliver
 
 ---
 
+## 🔑 Reference System
+
+| Reference | Folder | Answers | Source |
+|-----------|--------|---------|--------|
+| **DevBlock** | `devblock/` | How it should LOOK | devblock.net |
+| **Onixnet** | `onixnet/` | How it should READ | onixnet.com |
+| **Minto** | `onixnet/` | How it should be STRUCTURED | Minto Pyramid |
+| **BCG** | `onixnet/` | What it should SAY | BCG Research |
+
+---
+
 ## ✨ Key Features
 
 ✅ **Multi-layer analysis** before generation
+✅ **Dual reference system** — design (DevBlock) + content (Onixnet)
+✅ **Minto Pyramid** content structure (SCQA, answer-first)
+✅ **BCG-aligned** agentic AI positioning
+✅ **Metrics-driven** copy on every page
 ✅ **Always React components**, never HTML
 ✅ **Security checks** built-in
 ✅ **Screenshot automation** with analysis
-✅ **Command shortcuts** for speed
-✅ **Visual verification** before delivery
 ✅ **Auto-revision** if issues found
 
 ---
@@ -194,11 +243,11 @@ Layer 12: Delivery                ✓ Package & deliver
 ## 🎯 Your First 3 Actions
 
 1. **Read:** `ENHANCED_AUTOMATION_SYSTEM_v2.md`
-2. **Fetch:** `/fetch main` (18 pages) + `/fetch ref` (12 pages)
+2. **Fetch:** `/fetch main` (18 pages) + `/fetch ref` (24 pages across design + content)
 3. **Create:** `/create home`
 
 ---
 
 **System is ready! Type `/help` to begin.** 🚀
 
-**Version:** 2.0 | **Status:** ✅ Production Ready | **Content:** ✅ 30 pages fetched
+**Version:** 2.0 | **Status:** ✅ Production Ready | **Content:** ✅ 44 files across 3 sources

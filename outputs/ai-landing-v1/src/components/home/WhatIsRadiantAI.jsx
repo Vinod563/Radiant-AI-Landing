@@ -6,7 +6,7 @@ const layers = [
   {
     num: '01',
     title: 'AI Solutions',
-    lead: 'Pre-built enterprise AI solutions that deliver measurable impact without months of development.',
+    lead: 'Enterprises need AI that works on day one — not proof-of-concepts that stall. Our pre-built solutions deploy in weeks and deliver 40% avg cost reduction from the start.',
     tags: ['Enterprise ICX', 'CX Workbench', 'AI Fabric', 'Anomaly Detection', 'Rapid AI', 'DocuFlow'],
     color: 'text-brand-green',
     accent: '#91C46B',
@@ -16,7 +16,7 @@ const layers = [
   {
     num: '02',
     title: 'AI Platforms',
-    lead: 'Core infrastructure that powers enterprise AI deployment at scale, with security baked in.',
+    lead: 'Most AI platforms force trade-offs between speed and security. Ours doesn\'t — battle-tested infrastructure that scales to millions of interactions with governance built in.',
     tags: ['Secure Agent Framework', 'Cognitive Experience', 'Semantic Content Engine', 'Dynamic Knowledge Graph'],
     color: 'text-brand-orange',
     accent: '#F0974E',
@@ -25,8 +25,18 @@ const layers = [
   },
   {
     num: '03',
+    title: 'AI Agents',
+    lead: 'Agentic AI creates 3 net-new value pools. Our agents unlock all three — building, deploying, and running AI across your enterprise with autonomous orchestration.',
+    tags: ['Platform Builders', 'Solution Drivers', 'Delivery Accelerators', 'AgentOps', 'Task-Specific Agents'],
+    color: 'text-pink-400',
+    accent: '#F472B6',
+    border: 'border-pink-400/25',
+    gradient: 'linear-gradient(145deg, #0f0515 0%, #2d0a3a 25%, #5c1a6e 50%, #a030a0 70%, #f472b6 88%, #fda4d4 100%)',
+  },
+  {
+    num: '04',
     title: 'AI Capabilities',
-    lead: 'Full-spectrum AI capabilities — NLP, generative AI, multi-agent systems — powering every layer.',
+    lead: 'Leaders expect 30-40% efficiency gains, but most realize only 6-15%. Our full-spectrum AI capabilities close that gap — NLP, generative AI, and multi-agent systems delivering real results.',
     tags: ['NLP Pipelines', 'Predictive Systems', 'Generative AI', 'Multi-Agent Systems', 'Cloud Native AI'],
     color: 'text-brand-purple',
     accent: '#596AE0',
@@ -34,9 +44,9 @@ const layers = [
     gradient: 'linear-gradient(145deg, #01050f 0%, #080d2e 25%, #131a5c 50%, #2233b0 70%, #596ae0 88%, #8fa3f5 100%)',
   },
   {
-    num: '04',
+    num: '05',
     title: 'Enablers',
-    lead: 'Six core service pillars that power every AI initiative — from digital strategy and cloud infrastructure to skilled workforce delivery.',
+    lead: 'AI transformation requires more than technology — it demands strategy, talent, and change management. Six service pillars ensure your AI initiative succeeds end-to-end.',
     tags: ['Digital Strategy & Experience', 'Analytics, Data Science & AI', 'Cloud Transformation', 'Product Dev & Integration', 'Organizational Transformation', 'Skilled Workforce Solutions'],
     color: 'text-brand-teal',
     accent: '#2DD4BF',
@@ -79,13 +89,13 @@ export default function WhatIsRadiantAI() {
             <h2 className="font-display font-black leading-[0.95] tracking-tight"
               style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5rem)' }}>
               One Framework.<br />
-              <span className="grad-text">Infinite Enterprise</span><br />
-              Possibilities.
+              <span className="grad-text">Five Layers.</span><br />
+              Proven ROI.
             </h2>
           </div>
           <div>
             <p className="text-text-secondary text-lg leading-relaxed">
-              Radiant AI is our applied intelligence framework — a 7-layer architecture that enables secure, enterprise-grade AI solutions across your entire organization. From rapid prototyping to full-scale deployment in 6 weeks.
+              Disconnected tools create disconnected results. Radiant AI is a 5-layer architecture — solutions, platforms, agents, capabilities, and enablers — engineered so every layer compounds value, turning fragmented AI efforts into a single outcome-driven engine.
             </p>
           </div>
         </motion.div>

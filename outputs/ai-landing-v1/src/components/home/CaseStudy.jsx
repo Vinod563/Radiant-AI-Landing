@@ -3,10 +3,10 @@ import { motion, useInView } from 'framer-motion'
 import { Play, Quote } from 'lucide-react'
 
 const metrics = [
-  { val: '10K+', label: 'Man-Hours Saved',            color: 'grad-text' },
-  { val: '43%',  label: 'Operational Efficiency Lift', color: 'text-brand-green' },
-  { val: '20%',  label: 'Cost Reduction',             color: 'grad-text' },
-  { val: '6 wks',label: 'Time to Full Deployment',    color: 'text-brand-orange' },
+  { val: '10K+', label: 'Hours Automated Annually',   color: 'grad-text' },
+  { val: '43%',  label: 'Operational Efficiency Gain', color: 'text-brand-green' },
+  { val: '$2.1M',label: 'Annual Cost Savings',         color: 'grad-text' },
+  { val: '6 wks',label: 'From Kickoff to Production',  color: 'text-brand-orange' },
 ]
 
 export default function CaseStudy() {
@@ -16,7 +16,7 @@ export default function CaseStudy() {
   return (
     <section id="case-study" className="py-32 bg-brand-dark relative overflow-hidden">
       {/* Editorial bg number */}
-      <div className="editorial-bg-num absolute -left-4 top-0 opacity-[0.02]">V</div>
+      <div className="editorial-bg-num absolute -left-4 top-0 opacity-[0.02]">T</div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         {/* Top headline */}
@@ -26,12 +26,12 @@ export default function CaseStudy() {
           transition={{ duration: 0.7 }}
           className="mb-16"
         >
-          <span className="kicker">Featured Impact</span>
+          <span className="kicker">Proof, Not Promises</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight max-w-3xl"
             style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5rem)' }}>
-            10,000 Hours.<br />
-            Six Weeks.<br />
-            <span className="grad-text">Real ROI.</span>
+            $2.1M Saved.<br />
+            43% More Efficient.<br />
+            <span className="grad-text">In 6 Weeks.</span>
           </h2>
         </motion.div>
 
@@ -45,10 +45,10 @@ export default function CaseStudy() {
           >
             {/* Client callout */}
             <div className="flex items-center gap-5 p-6 mag-card border border-white/[0.08] mb-8">
-              <div className="w-14 h-14 rounded-2xl bg-brand-green flex items-center justify-center font-display font-black text-2xl text-brand-dark flex-shrink-0">V</div>
+              <div className="w-14 h-14 rounded-2xl bg-brand-green flex items-center justify-center font-display font-black text-2xl text-brand-dark flex-shrink-0">T</div>
               <div>
-                <div className="font-display font-bold text-text-primary">Verizon</div>
-                <div className="text-text-muted text-sm">Fortune 500 · Telecom</div>
+                <div className="font-display font-bold text-text-primary">Leading Telecom Enterprise</div>
+                <div className="text-text-muted text-sm">Fortune 500 · Telecommunications</div>
               </div>
               <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-green/10 border border-brand-green/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
@@ -57,16 +57,16 @@ export default function CaseStudy() {
             </div>
 
             <p className="text-text-secondary text-lg leading-relaxed mb-8">
-              Radiant automated Verizon's operations workflows — eliminating 10,000+ manual hours and delivering a 43% operational efficiency lift through AI-driven orchestration, deployed in under 6 weeks.
+              Leading Telecom Enterprise needed AI that delivered measurable ROI, not another pilot. Radiant deployed agentic workflows that automated 10,000+ manual hours — a 43% efficiency gain and $2.1M in annual savings, live in production within 6 weeks.
             </p>
 
             {/* Pull quote */}
             <div className="relative pl-6 border-l-2 border-brand-green/40">
               <Quote size={20} className="absolute -top-1 -left-2.5 text-brand-green" />
               <p className="text-text-primary text-base italic font-light leading-relaxed">
-                "Radiant's AI Fabric didn't just automate tasks — it fundamentally changed how our operations team works."
+                "We expected efficiency gains. What we got was a fundamental shift — our operations team now focuses on strategy, not firefighting."
               </p>
-              <span className="text-text-muted text-xs mt-2 block">— Operations Director, Verizon Enterprise</span>
+              <span className="text-text-muted text-xs mt-2 block">— Operations Director, Fortune 500 Telecom</span>
             </div>
           </motion.div>
 
@@ -182,7 +182,7 @@ export default function CaseStudy() {
               <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
               <span className="text-brand-green text-xs font-semibold tracking-widest uppercase">Watch Case Study</span>
             </div>
-            <p className="text-white text-lg lg:text-xl font-display font-bold">How Radiant Saved Verizon 10,000+ Hours with AI</p>
+            <p className="text-white text-lg lg:text-xl font-display font-bold">How a Leading Telecom Enterprise Achieved 43% Efficiency Gain in 6 Weeks</p>
           </div>
         </div>
       </motion.div>

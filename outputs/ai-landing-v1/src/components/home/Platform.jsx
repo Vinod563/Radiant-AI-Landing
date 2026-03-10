@@ -5,30 +5,30 @@ const platforms = [
   {
     num: '01',
     gradient: 'linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 20%, #0a4a6e 40%, #00bcd4 60%, #e040fb 80%, #ff1493 100%)',
-    title: 'Secure Agent Framework',
-    desc: 'Our team of experts can help you leverage the latest AI technologies to automate processes, analyze data, and gain valuable insights to drive business growth.',
-    features: ['Enterprise Orchestration', 'Governance Controls', 'Multi-Agent Layer', 'Compliance Automation'],
+    title: 'Persona-Based Microagent Framework',
+    desc: 'Deploy task-specific agents in days, not months. Minimal training data, low maintenance, and seamless orchestration through AgentOps — unlocking the autonomous Build-Deploy-Run value pool that defines the next wave of enterprise AI.',
+    features: ['Deploy in Days', 'Minimal Training Data', 'AgentOps Orchestration', '70% Less Maintenance'],
   },
   {
     num: '02',
     gradient: 'linear-gradient(135deg, #1a0800 0%, #3d1500 20%, #8b3000 40%, #e65c00 60%, #f9a825 80%, #ff7043 100%)',
     title: 'Cognitive Experience',
-    desc: 'We specialize in developing intelligent interfaces using AI to enable context-aware, transparent, and adaptive experiences across every customer touchpoint.',
-    features: ['Intelligent UX Systems', 'Conversational AI', 'Context-Aware Interfaces', 'AI at Scale'],
+    desc: 'Your users expect consumer-grade AI interactions with enterprise-grade security. Role-aware, conversational, multi-modal — with governance and compliance built in, not bolted on.',
+    features: ['Role-Aware UX', 'Conversational AI', 'Multi-Modal', 'Zero-Trust Governance'],
   },
   {
     num: '03',
     gradient: 'linear-gradient(135deg, #000d1a 0%, #001a4d 25%, #003380 50%, #0066cc 70%, #00bfff 90%, #7df9ff 100%)',
-    title: 'Agentic Data Framework',
-    desc: 'Your data AI-ready from day one — structured pipelines, semantic understanding, and secure data foundations that power every model in your enterprise stack.',
-    features: ['Structured Data Pipelines', 'Semantic Search', 'AI-Ready Foundation', 'Secure Ingestion'],
+    title: 'Semantic Context Engine',
+    desc: 'Data without context is noise. Our semantic layer connects operational data to business outcomes through knowledge graphs — turning natural language queries into actionable, revenue-driving insights.',
+    features: ['Knowledge Graphs', 'Context-Aware AI', 'Natural Language Queries', 'Revenue-Aligned Insights'],
   },
   {
     num: '04',
     gradient: 'linear-gradient(135deg, #001a00 0%, #003300 20%, #006600 40%, #009900 60%, #39d353 80%, #b8ffb8 100%)',
-    title: 'Semantic Content Engine',
-    desc: 'Intelligence that knows what your data means — dynamic knowledge graphs, semantic reasoning, and contextual layers that turn raw content into actionable insight.',
-    features: ['Knowledge Graph', 'Semantic Reasoning', 'Contextual Intelligence', 'Content Enrichment'],
+    title: 'Agentic Data Framework',
+    desc: 'Fragmented data is the #1 blocker for enterprise AI. Our AI Fabric unifies it — ontology mapping, automated cleansing, and governed migration that turns data chaos into AI-ready assets.',
+    features: ['Ontology Mapping', 'Auto Data Cleansing', 'Unified Data Layer', 'Governed Migration'],
   },
 ]
 
@@ -63,11 +63,11 @@ export default function Platform() {
           <span className="kicker">Platforms</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-5"
             style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)' }}>
-            Built on a Secure,<br />
-            <span className="grad-text">Modular AI Foundation.</span>
+            Four Platforms.<br />
+            <span className="grad-text">One Secure Foundation.</span>
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
-            Four battle-tested platform layers that give your enterprise the AI building blocks needed to move fast — without compromising security, compliance, or scale.
+            Enterprise AI demands more than models — it demands trust. Four battle-tested layers — agents, cognition, context, and data — built for speed without sacrificing governance, so you pay for outcomes, not experiments.
           </p>
         </motion.div>
 
