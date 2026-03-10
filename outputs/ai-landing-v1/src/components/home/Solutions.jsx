@@ -166,17 +166,37 @@ function FloatingScreenshot({ solution, isHovered }) {
         }}
         transition={{ type: 'spring', stiffness: 150, damping: 20 }}
       >
-        {/* ── Real screenshot ── */}
+        {/* ── Real screenshot with light/dark mode toggle ── */}
         {hasRealScreenshot && (
           <>
+            {/* Light mode (default) */}
             <img
               src={solution.screenshot}
               alt={solution.title}
-              className="absolute inset-0 w-full h-full object-cover object-top"
+              className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out"
+              style={{ opacity: isHovered ? 0 : 1 }}
             />
-            {/* Subtle color tint overlay */}
-            <div className="absolute inset-0 pointer-events-none mix-blend-soft-light opacity-10"
-              style={{ background: solution.accent }} />
+            {/* Dark mode (on hover) — CSS filter simulated */}
+            <img
+              src={solution.screenshot}
+              alt={`${solution.title} dark mode`}
+              className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out"
+              style={{
+                opacity: isHovered ? 1 : 0,
+                filter: 'invert(0.88) hue-rotate(180deg) contrast(1.05) brightness(0.95)',
+              }}
+            />
+            {/* Accent tint overlay for dark mode */}
+            <div
+              className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+              style={{
+                background: `linear-gradient(135deg, ${solution.accent}12 0%, transparent 60%)`,
+                opacity: isHovered ? 1 : 0,
+              }}
+            />
+            {/* Light mode subtle tint */}
+            <div className="absolute inset-0 pointer-events-none mix-blend-soft-light transition-opacity duration-700"
+              style={{ background: solution.accent, opacity: isHovered ? 0 : 0.1 }} />
           </>
         )}
 
