@@ -83,27 +83,37 @@ export default function Hero() {
                 <a href="#contact" className="btn-ghost text-sm">Book a Strategy Call</a>
               </motion.div>
 
-              {/* Conversational input */}
+              {/* Conversational input — prominent */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
-                className="max-w-xl mx-auto"
+                className="max-w-2xl mx-auto"
               >
                 <div
                   onClick={() => navigate('/chat')}
-                  className="flex items-center gap-3 rounded-2xl px-5 py-4 cursor-pointer transition-all duration-300 hover:border-[rgba(145,196,107,0.3)] hover:shadow-[0_0_0_4px_rgba(145,196,107,0.06)] group"
+                  className="flex items-center gap-4 rounded-2xl px-7 py-5 cursor-pointer transition-all duration-300 hover:border-[rgba(145,196,107,0.35)] hover:shadow-[0_0_0_6px_rgba(145,196,107,0.08),0_20px_60px_rgba(0,0,0,0.3)] group relative overflow-hidden"
                   style={{
-                    background: 'rgba(255,255,255,0.04)',
-                    border: '1px solid rgba(255,255,255,0.08)',
-                    backdropFilter: 'blur(12px)',
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1.5px solid rgba(255,255,255,0.12)',
+                    backdropFilter: 'blur(16px)',
+                    boxShadow: '0 8px 32px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.04)',
                   }}
                 >
-                  <Sparkles size={16} className="text-brand-green/60 group-hover:text-brand-green transition-colors flex-shrink-0" />
-                  <span className="text-white/30 text-sm font-body flex-1 text-left group-hover:text-white/45 transition-colors">
+                  {/* Subtle inner glow */}
+                  <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(145,196,107,0.06) 0%, transparent 60%)' }} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:scale-110"
+                    style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.2)' }}>
+                    <Sparkles size={18} className="text-brand-green" />
+                  </div>
+                  <span className="text-white/35 text-base font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
                     Ask anything about Radiant Digital...
                   </span>
-                  <Search size={15} className="text-white/20 group-hover:text-white/40 transition-colors flex-shrink-0" />
+                  <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:bg-brand-green/15"
+                    style={{ background: 'rgba(255,255,255,0.05)' }}>
+                    <Search size={16} className="text-white/25 group-hover:text-brand-green/70 transition-colors" />
+                  </div>
                 </div>
               </motion.div>
 
