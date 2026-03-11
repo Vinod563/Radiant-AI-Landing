@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Sparkles, Search } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 
 const heroMetrics = [
   { val: '30–40%', label: 'Productivity Gains', color: 'text-brand-green' },
@@ -11,6 +12,8 @@ const heroMetrics = [
 
 
 export default function Hero() {
+  const navigate = useNavigate()
+
   return (
     <section className="relative min-h-screen flex flex-col overflow-hidden">
       {/* Video background */}
@@ -78,6 +81,30 @@ export default function Hero() {
                   </span>
                 </a>
                 <a href="#contact" className="btn-ghost text-sm">Book a Strategy Call</a>
+              </motion.div>
+
+              {/* Conversational input */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="max-w-xl mx-auto"
+              >
+                <div
+                  onClick={() => navigate('/chat')}
+                  className="flex items-center gap-3 rounded-2xl px-5 py-4 cursor-pointer transition-all duration-300 hover:border-[rgba(145,196,107,0.3)] hover:shadow-[0_0_0_4px_rgba(145,196,107,0.06)] group"
+                  style={{
+                    background: 'rgba(255,255,255,0.04)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                    backdropFilter: 'blur(12px)',
+                  }}
+                >
+                  <Sparkles size={16} className="text-brand-green/60 group-hover:text-brand-green transition-colors flex-shrink-0" />
+                  <span className="text-white/30 text-sm font-body flex-1 text-left group-hover:text-white/45 transition-colors">
+                    Ask anything about Radiant Digital...
+                  </span>
+                  <Search size={15} className="text-white/20 group-hover:text-white/40 transition-colors flex-shrink-0" />
+                </div>
               </motion.div>
 
             </div>
