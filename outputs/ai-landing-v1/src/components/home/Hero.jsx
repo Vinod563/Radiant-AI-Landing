@@ -2,11 +2,11 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
 const heroMetrics = [
-  { val: '40%', label: 'Avg Cost Reduction', color: 'text-brand-green' },
-  { val: '6 wks', label: 'Time to Deploy', color: 'text-brand-orange' },
-  { val: '75%', label: 'Enterprises Want This', color: 'text-brand-green' },
-  { val: '50+', label: 'Enterprise Clients', color: 'text-brand-orange' },
-  { val: '99.9%', label: 'Platform Uptime SLA', color: 'text-brand-purple' },
+  { val: '30–40%', label: 'Productivity Gains', color: 'text-brand-green' },
+  { val: '6 wks', label: 'From Pilot to Production', color: 'text-brand-orange' },
+  { val: '8', label: 'Industries Served', color: 'text-brand-green' },
+  { val: '50+', label: 'Federal & Enterprise Clients', color: 'text-brand-orange' },
+  { val: '99.9%', label: 'Uptime Guarantee', color: 'text-brand-purple' },
 ]
 
 
@@ -43,8 +43,8 @@ export default function Hero() {
                 className="font-display font-black leading-[1.1] mb-7 tracking-tight"
                 style={{ fontSize: 'clamp(3.4rem, 6.75vw, 6.3rem)' }}
               >
-                Cut Costs 40%.<br />
-                Deploy in{' '}
+                Deploy AI<br />
+                in{' '}
                 <span className="whitespace-nowrap" style={{
                   background: 'linear-gradient(135deg, #91C46B 0%, #F0974E 35%, #596AE0 70%, #a855f7 100%)',
                   WebkitBackgroundClip: 'text',
@@ -63,7 +63,7 @@ export default function Hero() {
                 transition={{ duration: 0.6, delay: 0.25 }}
                 className="text-text-secondary text-lg leading-relaxed mx-auto mb-9"
               >
-                75% of enterprises want outcome-linked AI. 60% see no Total Cost of Ownership improvement. We close that gap — with agentic AI that delivers measurable ROI from week one.
+                Radiant delivers enterprise-grade AI solutions built for scalability, compliance, and measurable impact — from day one.
               </motion.p>
 
               <motion.div
@@ -74,7 +74,7 @@ export default function Hero() {
               >
                 <a href="#solutions" className="btn-primary text-sm relative overflow-hidden group">
                   <span className="relative z-10 flex items-center gap-2">
-                    See Proven Results <ArrowRight size={15} />
+                    Explore Solutions <ArrowRight size={15} />
                   </span>
                 </a>
                 <a href="#contact" className="btn-ghost text-sm">Book a Strategy Call</a>
