@@ -9,6 +9,7 @@ import Enablers from '../components/home/Enablers.jsx'
 import CaseStudy from '../components/home/CaseStudy.jsx'
 import SocialProof from '../components/home/SocialProof.jsx'
 import MarketCarousel from '../components/home/MarketCarousel.jsx'
+import WhyRadiant from '../components/home/WhyRadiant.jsx'
 import CTA from '../components/home/CTA.jsx'
 
 const Divider = () => <div className="divider" />
@@ -34,6 +35,8 @@ export default function Index() {
       <CaseStudy />
       <Divider />
       <SocialProof />
+      <Divider />
+      <WhyRadiant />
       <Divider />
       <CTA />
       <Footer variant="home" />
