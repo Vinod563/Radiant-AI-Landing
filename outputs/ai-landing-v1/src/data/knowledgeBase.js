@@ -82,7 +82,7 @@ const knowledgeBase = [
             label: 'Billing Intelligence',
             accent: '#596AE0',
             gradient: 'linear-gradient(135deg, #050818 0%, #0c1040 50%, #1a2270 100%)',
-            screenshot: '/screenshots/ai-fabric.png',
+            screenshot: '/screenshots/anomaly-detection.png',
             desc: 'AI-powered platform that detects billing anomalies, groups them into patterns, and guides teams to resolve issues before they impact customers.',
             tags: ['Billing', 'Anomaly Detection', 'Resolution'],
             details: [
@@ -98,7 +98,7 @@ const knowledgeBase = [
             label: 'Launch Intelligence',
             accent: '#F05030',
             gradient: 'linear-gradient(135deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)',
-            screenshot: '/screenshots/anomaly-detection.png',
+            screenshot: '/screenshots/magic-globe.png',
             desc: 'AI-powered platform that integrates sales, returns, quality, and customer data to predict device launch risk and provide go/no-go recommendations.',
             tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
             details: [
@@ -114,6 +114,7 @@ const knowledgeBase = [
             label: 'Analytics Platform',
             accent: '#00c87d',
             gradient: 'linear-gradient(135deg, #001208 0%, #003020 50%, #005838 100%)',
+            screenshot: '/screenshots/ai-fabric.png',
             desc: 'Centralized analytics and reporting solution that connects data sources into a governed environment — enabling faster, data-driven decision-making across the enterprise.',
             tags: ['Analytics', 'BI', 'Data Governance'],
             details: [
@@ -129,6 +130,7 @@ const knowledgeBase = [
             label: 'Document Intelligence',
             accent: '#a855f7',
             gradient: 'linear-gradient(135deg, #080014 0%, #160038 50%, #2a0068 100%)',
+            screenshot: '/screenshots/automarc.png',
             desc: 'AI-powered document workflow automation that extracts, classifies, and processes content to reduce manual effort — purpose-built for technical writing at scale.',
             tags: ['Documents', 'Automation', 'Technical Writing'],
             details: [
