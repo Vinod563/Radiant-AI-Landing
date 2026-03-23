@@ -261,7 +261,7 @@ export default function Chat() {
                   className="font-display font-black text-white mb-4 tracking-tight relative z-10"
                   style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.5rem)' }}
                 >
-                  How can I help?
+                  What problem are you trying to solve?
                 </motion.h1>
                 <motion.p
                   initial={{ opacity: 0, y: 12 }}
@@ -269,7 +269,7 @@ export default function Chat() {
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className="text-text-secondary text-lg max-w-md mx-auto mb-10 leading-relaxed relative z-10"
                 >
-                  Explore Radiant Digital — our AI solutions, industries, case studies, and more.
+                  Tell us what you're working on. We'll tell you what we've already built for it.
                 </motion.p>
 
                 {/* Suggestion cards with icons & richer styling */}
@@ -444,7 +444,7 @@ export default function Chat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="Ask anything about Radiant Digital..."
+              placeholder="What problem are you trying to solve?"
               className="flex-1 bg-transparent text-white text-[15px] placeholder:text-white/25 outline-none font-body"
             />
             <button

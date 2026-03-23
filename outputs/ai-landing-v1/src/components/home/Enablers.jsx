@@ -1,67 +1,47 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Compass, BarChart3, Cloud, Blocks, RefreshCw, Users, ArrowUpRight } from 'lucide-react'
+import { Compass, BarChart3, Cloud, Blocks, RefreshCw, ArrowUpRight } from 'lucide-react'
 
-const enablers = [
+const practices = [
   {
     icon: Compass,
     num: '01',
-    title: 'Digital Strategy & Experience',
-    desc: 'Discover improved customer experience, productivity, and ROI through research-driven design and enterprise UX.',
-    capabilities: ['Enterprise UX', 'CX/UX Research', 'Service Design', 'Digital Strategy'],
-    metric: '50%',
-    metricLabel: 'engagement lift',
+    title: 'Digital Strategy and Experience',
+    desc: 'Design and optimize experiences faster with AI-driven insight and automation.',
     accent: '#91C46B',
+    gradient: 'linear-gradient(135deg, #010F1E 0%, #0a2810 60%, #144d1e 100%)',
   },
   {
-    icon: BarChart3,
+    icon: Blocks,
     num: '02',
-    title: 'Analytics, Data Science & AI',
-    desc: 'A steady stream of insights through transparent, accessible data and intelligent ML pipelines.',
-    capabilities: ['Data Engineering', 'Business Intelligence', 'AI Adoption', 'ML Pipelines'],
-    metric: '70%',
-    metricLabel: 'efficiency gain',
+    title: 'Product Development and Integration',
+    desc: 'Accelerate delivery and reduce cost through AI-enabled development.',
     accent: '#F0974E',
+    gradient: 'linear-gradient(135deg, #010F1E 0%, #1a1008 60%, #3d2200 100%)',
   },
   {
     icon: Cloud,
     num: '03',
     title: 'Cloud Transformation',
-    desc: 'Scalable, secure, and agile cloud infrastructure built for enterprise-grade performance.',
-    capabilities: ['Cloud Migration', 'Hybrid Cloud', 'Infra Automation', 'Cloud Computing'],
-    metric: '99.9%',
-    metricLabel: 'uptime SLA',
+    desc: 'Enhance scalability and performance with AI-optimized infrastructure.',
     accent: '#596AE0',
+    gradient: 'linear-gradient(135deg, #010F1E 0%, #0a0d2e 60%, #151a50 100%)',
   },
   {
-    icon: Blocks,
+    icon: BarChart3,
     num: '04',
-    title: 'Product Development & Integration',
-    desc: 'Deliver products at the speed of change with modern architecture and rapid deployment.',
-    capabilities: ['System Modernization', 'Dev & Integration', 'RPA', 'Platform Dev'],
-    metric: '40%',
-    metricLabel: 'faster deploys',
+    title: 'Analytics, Data Science and AI',
+    desc: 'Turn data into real-time intelligence for faster decisions.',
     accent: '#2DD4BF',
+    gradient: 'linear-gradient(135deg, #010F1E 0%, #041a18 60%, #0a3530 100%)',
   },
   {
     icon: RefreshCw,
     num: '05',
     title: 'Organizational Transformation',
-    desc: 'Upskill, motivate, and align your workforce for lasting operational change.',
-    capabilities: ['Change Management', 'Workforce Upskilling', 'Process Optimization', 'Culture Alignment'],
-    metric: '3x',
-    metricLabel: 'adoption rate',
-    accent: '#E06492',
-  },
-  {
-    icon: Users,
-    num: '06',
-    title: 'Skilled Workforce Solutions',
-    desc: 'A skilled, scalable workforce with global delivery centers for present and future growth.',
-    capabilities: ['Onshore/Offshore', 'Full-Stack Engineers', 'Cloud Architects', 'AI/ML Specialists'],
-    metric: '5+',
-    metricLabel: 'delivery centers',
-    accent: '#D4A72D',
+    desc: 'Empower people and processes with AI enablement.',
+    accent: '#a855f7',
+    gradient: 'linear-gradient(135deg, #010F1E 0%, #0e0820 60%, #1a1040 100%)',
   },
 ]
 
@@ -70,109 +50,137 @@ export default function Enablers() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="enablers" className="py-32 lg:py-40 relative overflow-hidden"
+    <section id="ai-fabric" className="py-32 lg:py-40 relative overflow-hidden"
       style={{ background: 'linear-gradient(180deg, #0A1628 0%, #051A30 50%, #0A1628 100%)' }}>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
-        {/* Header — split layout */}
+        {/* Header */}
         <motion.div ref={ref}
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-20"
+          className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10"
         >
           <div className="max-w-2xl">
-            <span className="kicker">What We Do</span>
+            <span className="kicker">AI Fabric</span>
             <h2 className="font-display font-black leading-[0.95] tracking-tight"
               style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}>
-              Six Pillars That{' '}
-              <span className="grad-text">Power Every Initiative.</span>
+              AI infused into{' '}
+              <span className="grad-text">everything we do.</span>
             </h2>
           </div>
           <p className="text-text-secondary text-base lg:text-lg max-w-md leading-relaxed lg:text-right">
-            From digital strategy to skilled workforce delivery — the foundation behind every AI transformation.
+            AI Fabric is not a product. It is the way Radiant operates.
+            Every practice runs with AI embedded: not bolted on.
           </p>
         </motion.div>
 
-        {/* Card grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-px rounded-2xl overflow-hidden"
-          style={{ background: 'rgba(255,255,255,0.06)' }}>
-          {enablers.map((e, i) => {
-            const Icon = e.icon
-            return (
-              <motion.div key={e.title}
-                initial={{ opacity: 0, y: 24 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
-                className="group relative cursor-default"
-                style={{ background: '#0A1628' }}
-              >
-                {/* Card inner */}
-                <div className="relative h-full p-7 lg:p-8 transition-colors duration-500 group-hover:bg-white/[0.02]">
+        {/* Supporting line */}
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-text-muted text-base max-w-2xl leading-relaxed mb-16"
+        >
+          That is what makes Radiant's enterprise transformation
+          fundamentally faster than conventional delivery.
+        </motion.p>
 
-                  {/* Number + Icon row */}
-                  <div className="flex items-start justify-between mb-8">
-                    <span className="font-display font-black text-[2.5rem] leading-none tracking-tight transition-colors duration-500"
-                      style={{ color: 'rgba(255,255,255,0.04)' }}>
-                      <span className="group-hover:opacity-0 transition-opacity duration-500">{e.num}</span>
-                      <span className="absolute top-7 lg:top-8 left-7 lg:left-8 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{ color: `${e.accent}30` }}>{e.num}</span>
-                    </span>
-                    <div className="w-11 h-11 rounded-lg flex items-center justify-center transition-all duration-500 border border-transparent group-hover:border-current/10"
-                      style={{
-                        background: `${e.accent}08`,
-                        borderColor: `${e.accent}12`,
-                      }}>
-                      <Icon size={20} style={{ color: e.accent }} className="transition-transform duration-500 group-hover:scale-110" />
-                    </div>
-                  </div>
+        {/* Top row: 3 cards */}
+        <div className="grid md:grid-cols-3 gap-6 mb-6">
+          {practices.slice(0, 3).map((e, i) => (
+            <PracticeCard key={e.title} e={e} i={i} inView={inView} />
+          ))}
+        </div>
 
-                  {/* Title */}
-                  <h3 className="font-display font-bold text-lg text-white/90 mb-3 leading-snug group-hover:text-white transition-colors duration-300">
-                    {e.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-text-muted text-sm leading-relaxed mb-6">
-                    {e.desc}
-                  </p>
-
-                  {/* Capabilities */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {e.capabilities.map(c => (
-                      <span key={c}
-                        className="text-[0.68rem] font-medium px-2.5 py-1 rounded-md transition-all duration-300"
-                        style={{
-                          color: 'rgba(255,255,255,0.45)',
-                          background: 'rgba(255,255,255,0.03)',
-                          border: '1px solid rgba(255,255,255,0.06)',
-                        }}>
-                        {c}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Bottom: metric + arrow */}
-                  <div className="flex items-end justify-between pt-5 mt-auto"
-                    style={{ borderTop: '1px solid rgba(255,255,255,0.05)' }}>
-                    <div>
-                      <span className="font-display font-black text-2xl leading-none transition-colors duration-500 group-hover:opacity-100"
-                        style={{ color: e.accent, opacity: 0.7 }}>
-                        {e.metric}
-                      </span>
-                      <span className="text-text-muted text-[0.65rem] ml-2">{e.metricLabel}</span>
-                    </div>
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0"
-                      style={{ background: `${e.accent}15`, border: `1px solid ${e.accent}25` }}>
-                      <ArrowUpRight size={14} style={{ color: e.accent }} />
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )
-          })}
+        {/* Bottom row: 2 cards centered */}
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="md:col-start-1">
+            <PracticeCard e={practices[3]} i={3} inView={inView} />
+          </div>
+          <div className="md:col-start-2">
+            <PracticeCard e={practices[4]} i={4} inView={inView} />
+          </div>
         </div>
       </div>
     </section>
+  )
+}
+
+function PracticeCard({ e, i, inView }) {
+  const Icon = e.icon
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 28 }}
+      animate={inView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.55, delay: i * 0.08 }}
+      className="group relative rounded-2xl overflow-hidden cursor-default"
+      style={{
+        background: e.gradient,
+        border: `1px solid ${e.accent}15`,
+        boxShadow: '0 12px 40px rgba(0,0,0,0.35)',
+      }}
+      whileHover={{
+        y: -6,
+        boxShadow: `0 24px 60px rgba(0,0,0,0.45), 0 0 40px ${e.accent}08`,
+      }}
+    >
+      {/* Top accent line */}
+      <div className="h-px w-full"
+        style={{ background: `linear-gradient(90deg, transparent, ${e.accent}35, transparent)` }} />
+
+      <div className="relative p-7 lg:p-8">
+        {/* Decorative background number */}
+        <div className="absolute top-4 right-5 font-display font-black text-[5rem] leading-none select-none pointer-events-none"
+          style={{ color: `${e.accent}06` }}>
+          {e.num}
+        </div>
+
+        {/* Accent glow on hover */}
+        <div className="absolute -top-20 -right-20 w-48 h-48 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+          style={{ background: `radial-gradient(circle, ${e.accent}10, transparent 70%)` }} />
+
+        {/* Icon */}
+        <motion.div
+          className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 relative z-10"
+          style={{
+            background: `${e.accent}12`,
+            border: `1.5px solid ${e.accent}28`,
+          }}
+          whileHover={{ scale: 1.1, rotate: 4 }}
+          transition={{ type: 'spring', stiffness: 300 }}
+        >
+          <Icon size={22} style={{ color: e.accent }} />
+        </motion.div>
+
+        {/* Title */}
+        <h3 className="font-display font-bold text-lg text-white/90 mb-3 leading-snug group-hover:text-white transition-colors duration-300 relative z-10">
+          {e.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-text-muted text-sm leading-relaxed mb-6 relative z-10">
+          {e.desc}
+        </p>
+
+        {/* Bottom row: divider + arrow */}
+        <div className="flex items-center justify-between pt-4 relative z-10"
+          style={{ borderTop: `1px solid ${e.accent}12` }}>
+          <span className="text-[0.6rem] font-display font-semibold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+            style={{ color: `${e.accent}80` }}>
+            Learn more
+          </span>
+          <div className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0"
+            style={{ background: `${e.accent}15`, border: `1px solid ${e.accent}25` }}>
+            <ArrowUpRight size={14} style={{ color: e.accent }} />
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom accent glow on hover */}
+      <div className="h-0.5 w-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{ background: `linear-gradient(90deg, transparent 10%, ${e.accent}40 50%, transparent 90%)` }} />
+    </motion.div>
   )
 }

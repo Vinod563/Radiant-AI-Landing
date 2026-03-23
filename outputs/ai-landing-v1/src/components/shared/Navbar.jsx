@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ArrowRight } from 'lucide-react'
 import RadiantLogo from './RadiantLogo'
 
 export default function Navbar() {
@@ -17,10 +17,10 @@ export default function Navbar() {
 
   const homeLinks = [
     { label: 'Solutions', href: '#solutions' },
+    { label: 'Industries', href: '#industries' },
+    { label: 'Proof', href: '#proof' },
     { label: 'Platform', href: '#platform' },
-    { label: 'AI Labs', href: '#ai-labs' },
-    { label: 'About', href: '#' },
-    { label: 'Blog', href: '#' },
+    { label: 'Contact', href: '#contact' },
   ]
   const icxLinks = [
     { label: 'Solutions', href: '/#solutions' },
@@ -56,7 +56,7 @@ export default function Navbar() {
                 <a href="#contact" className="btn-primary !py-2.5 !px-5 !text-[0.78rem]">Book a Demo</a>
               </>
             ) : (
-              <a href="#contact" className="btn-primary !py-2.5 !px-5 !text-[0.78rem]">Let's Talk</a>
+              <a href="#contact" className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">Start the Conversation <ArrowRight size={13} /></a>
             )}
           </div>
 
@@ -74,7 +74,7 @@ export default function Navbar() {
               </a>
             ))}
             <a href="#contact" onClick={() => setOpen(false)} className="btn-primary w-fit mt-2 !py-3 !px-6">
-              {isICX ? 'Book a Demo' : "Let's Talk"}
+              {isICX ? 'Book a Demo' : 'Start the Conversation'}
             </a>
           </div>
         )}

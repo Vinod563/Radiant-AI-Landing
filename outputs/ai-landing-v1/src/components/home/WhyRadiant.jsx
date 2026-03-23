@@ -1,32 +1,10 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Cpu, Users, TrendingUp, Globe } from 'lucide-react'
 
-const pillars = [
-  {
-    icon: Cpu,
-    title: 'Expertise & Specialization',
-    desc: 'We\u2019ve developed 100 agents across 3 domains allowing enterprises to automate development, streamline data operations, and optimize intelligent system management at scale.',
-    accent: '#596AE0',
-  },
-  {
-    icon: Users,
-    title: 'Our People',
-    desc: 'Our team of engineers, architects, and AI specialists brings deep expertise across leading technology ecosystems.',
-    accent: '#a855f7',
-  },
-  {
-    icon: TrendingUp,
-    title: 'Enterprise Impact at Scale',
-    desc: 'AI-driven automation delivering up to 40% productivity improvement across IT operations, enterprise applications, and data workflows.',
-    accent: '#91C46B',
-  },
-  {
-    icon: Globe,
-    title: 'Longstanding History',
-    desc: '500+ employees, 50+ customers, and 7 global offices supporting enterprise digital transformation initiatives worldwide.',
-    accent: '#F0974E',
-  },
+const proofPoints = [
+  { val: '40%', label: 'Average cost reduction across enterprise deployments', accent: '#91C46B' },
+  { val: '6 Weeks', label: 'From kickoff to production: not proof-of-concept', accent: '#F0974E' },
+  { val: '29', label: 'Telecom AI use cases mapped across a single carrier\'s full operating model', accent: '#596AE0' },
 ]
 
 export default function WhyRadiant() {
@@ -50,71 +28,84 @@ export default function WhyRadiant() {
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="text-center mb-20"
+          className="max-w-3xl mb-12"
         >
           <p className="text-brand-green font-body text-sm font-semibold tracking-widest uppercase mb-5">
             Why Radiant Digital
           </p>
-          <h2 className="font-display font-bold text-display-xl text-text-primary mb-5">
-            Built to Deliver{' '}
-            <span className="text-brand-green">Outcomes</span>
+          <h2 className="font-display font-black leading-[0.95] tracking-tight mb-6"
+            style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}>
+            Radiant deploys AI.<br />
+            We do not build models.<br />
+            <span className="grad-text">We build the context that makes models perform.</span>
           </h2>
-          <p className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed">
-            We don't just build AI — we engineer measurable business impact backed by deep domain expertise and a proven track record.
-          </p>
         </motion.div>
 
-        {/* Pillars grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {pillars.map((pillar, i) => {
-            const Icon = pillar.icon
-            return (
-              <motion.div
-                key={pillar.title}
-                initial={{ opacity: 0, y: 32 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.6, delay: 0.15 + i * 0.1 }}
-                className="group relative rounded-2xl p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1"
+        {/* Body copy */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="grid md:grid-cols-2 gap-12 mb-20"
+        >
+          <div>
+            <p className="text-text-secondary text-lg leading-relaxed">
+              Most firms arrive at your door with the same tools.
+              The difference is what happens before deployment.
+            </p>
+          </div>
+          <div>
+            <p className="text-text-secondary text-base leading-relaxed mb-4">
+              Radiant constructs a precision context environment:
+              built from your systems, your domain, your constraints:
+              so that AI produces accurate, auditable, client-specific outputs
+              on the first pass. Not after months of calibration.
+            </p>
+            <p className="text-white/80 text-base font-semibold leading-relaxed">
+              That is the Precision Context Engine.
+              And it is why the organizations that have deployed with Radiant
+              do not run pilots. They run production.
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Three proof stat cards */}
+        <div className="grid md:grid-cols-3 gap-6">
+          {proofPoints.map((p, i) => (
+            <motion.div
+              key={p.val}
+              initial={{ opacity: 0, y: 32 }}
+              animate={inView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }}
+              className="group relative rounded-2xl p-8 lg:p-10 transition-all duration-300 hover:-translate-y-1"
+              style={{
+                background: 'rgba(255,255,255,0.02)',
+                border: '1px solid rgba(255,255,255,0.06)',
+              }}
+            >
+              {/* Hover glow */}
+              <div
+                className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{
-                  background: 'rgba(255,255,255,0.02)',
-                  border: '1px solid rgba(255,255,255,0.06)',
+                  background: `radial-gradient(ellipse at 50% 0%, ${p.accent}10 0%, transparent 70%)`,
                 }}
-              >
-                {/* Hover glow */}
-                <div
-                  className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                  style={{
-                    background: `radial-gradient(ellipse at 50% 0%, ${pillar.accent}10 0%, transparent 70%)`,
-                  }}
-                />
+              />
 
-                {/* Icon */}
-                <div
-                  className="w-14 h-14 rounded-xl flex items-center justify-center mb-6 relative z-10"
-                  style={{
-                    background: `${pillar.accent}15`,
-                    border: `1.5px solid ${pillar.accent}30`,
-                  }}
-                >
-                  <Icon size={26} style={{ color: pillar.accent }} />
-                </div>
+              <div className="font-display font-black leading-none mb-4 relative z-10"
+                style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', color: p.accent }}>
+                {p.val}
+              </div>
+              <p className="text-text-secondary text-sm leading-relaxed relative z-10">
+                {p.label}
+              </p>
 
-                {/* Content */}
-                <h3 className="font-display font-bold text-white text-lg leading-snug mb-3 relative z-10">
-                  {pillar.title}
-                </h3>
-                <p className="text-text-secondary text-sm leading-relaxed relative z-10">
-                  {pillar.desc}
-                </p>
-
-                {/* Bottom accent line */}
-                <div
-                  className="absolute bottom-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                  style={{ background: `linear-gradient(90deg, transparent, ${pillar.accent}40, transparent)` }}
-                />
-              </motion.div>
-            )
-          })}
+              {/* Bottom accent line */}
+              <div
+                className="absolute bottom-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: `linear-gradient(90deg, transparent, ${p.accent}40, transparent)` }}
+              />
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

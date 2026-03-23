@@ -3,10 +3,10 @@ import { motion, useInView } from 'framer-motion'
 import { Play, Quote } from 'lucide-react'
 
 const metrics = [
-  { val: '10K+', label: 'Hours Automated Annually',   color: 'grad-text' },
-  { val: '43%',  label: 'Operational Efficiency Gain', color: 'text-brand-green' },
-  { val: '$2.1M',label: 'Annual Cost Savings',         color: 'grad-text' },
-  { val: '6 wks',label: 'From Kickoff to Production',  color: 'text-brand-orange' },
+  { val: '3-7%',  label: 'Revenue Leakage Recovered',   color: 'grad-text' },
+  { val: '98%',   label: 'Billing Accuracy Achieved',    color: 'text-brand-green' },
+  { val: '40-70%',label: 'LLM Cost Reduction via AI FinOps', color: 'grad-text' },
+  { val: '6 wks', label: 'From Kickoff to Production',   color: 'text-brand-orange' },
 ]
 
 export default function CaseStudy() {
@@ -14,7 +14,7 @@ export default function CaseStudy() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="case-study" className="py-32 bg-brand-dark relative overflow-hidden">
+    <section id="proof" className="py-32 bg-brand-dark relative overflow-hidden">
       {/* Editorial bg number */}
       <div className="editorial-bg-num absolute -left-4 top-0 opacity-[0.02]">T</div>
 
@@ -29,9 +29,8 @@ export default function CaseStudy() {
           <span className="kicker">Proof, Not Promises</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight max-w-3xl"
             style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5rem)' }}>
-            $2.1M Saved.<br />
-            43% More Efficient.<br />
-            <span className="grad-text">In 6 Weeks.</span>
+            Not a pilot.<br />
+            <span className="grad-text">A different operating model.</span>
           </h2>
         </motion.div>
 
@@ -47,8 +46,8 @@ export default function CaseStudy() {
             <div className="flex items-center gap-5 p-6 mag-card border border-white/[0.08] mb-8">
               <div className="w-14 h-14 rounded-2xl bg-brand-green flex items-center justify-center font-display font-black text-2xl text-brand-dark flex-shrink-0">T</div>
               <div>
-                <div className="font-display font-bold text-text-primary">Leading Telecom Enterprise</div>
-                <div className="text-text-muted text-sm">Fortune 500 · Telecommunications</div>
+                <div className="font-display font-bold text-text-primary">Leading Fortune 15 Telecom Enterprise</div>
+                <div className="text-text-muted text-sm">Fortune 15 · Telecommunications</div>
               </div>
               <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-green/10 border border-brand-green/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
@@ -56,17 +55,32 @@ export default function CaseStudy() {
               </div>
             </div>
 
-            <p className="text-text-secondary text-lg leading-relaxed mb-8">
-              Leading Telecom Enterprise needed AI that delivered measurable ROI, not another pilot. Radiant deployed agentic workflows that automated 10,000+ manual hours — a 43% efficiency gain and $2.1M in annual savings, live in production within 6 weeks.
-            </p>
+            <div className="mb-6">
+              <h4 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">Challenge</h4>
+              <p className="text-text-secondary text-base leading-relaxed">
+                A tier-1 telecom carrier needed AI that produced measurable operational
+                results: not a proof-of-concept that stalled after 90 days.
+              </p>
+            </div>
+
+            <div className="mb-8">
+              <h4 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">What Radiant Did</h4>
+              <p className="text-text-secondary text-base leading-relaxed">
+                Radiant built a precision context environment grounded in the carrier's
+                billing systems, operational data, and domain vocabulary. Then deployed
+                AI workflows across revenue assurance, billing intelligence, and
+                customer operations: live in six weeks.
+              </p>
+            </div>
 
             {/* Pull quote */}
             <div className="relative pl-6 border-l-2 border-brand-green/40">
               <Quote size={20} className="absolute -top-1 -left-2.5 text-brand-green" />
               <p className="text-text-primary text-base italic font-light leading-relaxed">
-                "We expected efficiency gains. What we got was a fundamental shift — our operations team now focuses on strategy, not firefighting."
+                "We expected efficiency gains. What we got was a fundamental shift:
+                our operations team now focuses on strategy, not firefighting."
               </p>
-              <span className="text-text-muted text-xs mt-2 block">— Operations Director, Fortune 500 Telecom</span>
+              <span className="text-text-muted text-xs mt-2 block">: Operations Director, Fortune 15 Telecom</span>
             </div>
           </motion.div>
 
@@ -149,7 +163,7 @@ export default function CaseStudy() {
             style={{ background: 'linear-gradient(90deg, transparent 5%, #a855f7 20%, #596AE0 40%, #F0974E 60%, #91C46B 80%, transparent 95%)', opacity: 0.25 }} />
         </div>
 
-        {/* Video — full width edge-to-edge, no container */}
+        {/* Video — full width edge-to-edge */}
         <div className="relative w-full flex items-center justify-center overflow-hidden" style={{ aspectRatio: '16/7.2' }}>
           {/* Thumbnail image */}
           <img
@@ -182,7 +196,7 @@ export default function CaseStudy() {
               <span className="w-2 h-2 rounded-full bg-brand-green animate-pulse" />
               <span className="text-brand-green text-xs font-semibold tracking-widest uppercase">Watch Case Study</span>
             </div>
-            <p className="text-white text-lg lg:text-xl font-display font-bold">How a Leading Telecom Enterprise Achieved 43% Efficiency Gain in 6 Weeks</p>
+            <p className="text-white text-lg lg:text-xl font-display font-bold">How a Fortune 15 Telecom Achieved 98% Billing Accuracy in 6 Weeks</p>
           </div>
         </div>
       </motion.div>

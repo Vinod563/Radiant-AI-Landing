@@ -16,29 +16,29 @@ import {
 
 const markets = [
   {
-    title: 'Telecom, Media & Technology',
+    title: 'Technology, Media and Telecom',
     icon: Radio,
     accent: '#596AE0',
     gradientFrom: '#1e2a6e',
     gradientTo: '#596AE0',
     image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&h=900&fit=crop&q=80',
-    clients: 'Verizon, Major TMT Enterprises',
-    desc: 'Scale network capacity without proportional cost increases through AI-powered intelligent automation.',
+    clients: 'Major tier-1 carriers',
+    desc: 'Radiant has mapped 29 AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
     metrics: [
-      { value: '5X', label: 'Capacity Scaling' },
+      { value: '29', label: 'AI Use Cases' },
       { value: '40%', label: 'Faster Deployment' },
       { value: '99.9%', label: 'Uptime SLA' },
     ],
   },
   {
-    title: 'Healthcare & Life Science',
+    title: 'Healthcare and Life Sciences',
     icon: HeartPulse,
     accent: '#e05990',
     gradientFrom: '#7a2050',
     gradientTo: '#e05990',
     image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=900&fit=crop&q=80',
     clients: 'NIH, MD Anderson, CHOP',
-    desc: 'Privacy-first AI that scales clinical workflows — from diagnostics to patient experience — with HIPAA governance built in.',
+    desc: 'Privacy-first AI that scales clinical workflows and research operations: with HIPAA governance built in, not bolted on.',
     metrics: [
       { value: '35%', label: 'Cost Reduction' },
       { value: '70%', label: 'Less Manual Work' },
@@ -46,14 +46,14 @@ const markets = [
     ],
   },
   {
-    title: 'Financial Services & Insurance',
+    title: 'Financial Services',
     icon: Banknote,
     accent: '#F0974E',
     gradientFrom: '#7a4a10',
     gradientTo: '#F0974E',
     image: 'https://images.unsplash.com/photo-1560472355-536de3962603?w=600&h=900&fit=crop&q=80',
-    clients: 'Navy Federal Credit Union',
-    desc: 'Outcome-linked AI for fraud detection, compliance automation, and customer journey transformation — with audit trails from day one.',
+    clients: 'Navy Federal Credit Union, major BFSI enterprises',
+    desc: 'AI for fraud detection, compliance automation, and customer journey transformation: with audit trails from day one.',
     metrics: [
       { value: '40%', label: 'Conversion Lift' },
       { value: '25%', label: 'CSAT Improvement' },
@@ -67,8 +67,8 @@ const markets = [
     gradientFrom: '#1a2060',
     gradientTo: '#596AE0',
     image: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=900&fit=crop&q=80',
-    clients: 'DoD, HHS, DHS, Treasury',
-    desc: 'Beyond pilots — scaling agentic AI for mission-critical operations with FedRAMP compliance and human-in-the-loop governance.',
+    clients: 'DoD, HHS, DHS, Treasury, Commerce, Interior',
+    desc: 'Mission-critical enterprise transformation with program-grade delivery, human-in-the-loop governance, and federal compliance alignment.',
     metrics: [
       { value: '45%', label: 'Infra Cost Reduction' },
       { value: '40%', label: 'Faster Delivery' },
@@ -76,14 +76,14 @@ const markets = [
     ],
   },
   {
-    title: 'State & Local Government',
+    title: 'State and Local Government',
     icon: Building2,
     accent: '#91C46B',
     gradientFrom: '#2a5018',
     gradientTo: '#91C46B',
     image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=900&fit=crop&q=80',
     clients: 'FL DCF, FL DEO, FL DOT',
-    desc: 'Citizen-centric digital transformation that delivers better outcomes on smaller budgets — agentic AI for permits, benefits, and case processing.',
+    desc: 'Citizen-centric transformation that delivers better outcomes on constrained budgets. Faster permitting, benefits processing, and case management: at scale.',
     metrics: [
       { value: '30%', label: 'Cost Savings' },
       { value: '70%', label: 'Faster Processing' },
@@ -97,8 +97,8 @@ const markets = [
     gradientFrom: '#4a1880',
     gradientTo: '#a855f7',
     image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=900&fit=crop&q=80',
-    clients: 'UT Austin, Baylor University',
-    desc: 'AI-first campus transformation — student success prediction, research analytics, and FERPA-compliant data governance at scale.',
+    clients: 'UT Austin, Baylor University, research institutions',
+    desc: 'AI-first campus transformation: research analytics, student outcomes, and FERPA-compliant data governance at scale.',
     metrics: [
       { value: '35%', label: 'Cost Reduction' },
       { value: '50%', label: 'Faster Data Access' },
@@ -106,14 +106,14 @@ const markets = [
     ],
   },
   {
-    title: 'Oil & Gas',
+    title: 'Oil and Gas',
     icon: Fuel,
     accent: '#F0974E',
     gradientFrom: '#5a3000',
     gradientTo: '#F0974E',
     image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=600&h=900&fit=crop&q=80',
-    clients: 'Halliburton',
-    desc: 'Connected worker safety meets predictive maintenance — Tracklynk IoT plus AI-driven asset intelligence across remote operations.',
+    clients: 'Halliburton, Noble Corporation, offshore operators',
+    desc: 'Connected worker safety, predictive maintenance, and digital asset intelligence across remote and field operations.',
     metrics: [
       { value: '60%', label: 'Maintenance Uplift' },
       { value: '70%', label: 'Downtime Reduced' },
@@ -121,14 +121,14 @@ const markets = [
     ],
   },
   {
-    title: 'Defense & Intelligence',
+    title: 'Defense and Intelligence',
     icon: Shield,
     accent: '#2DD4BF',
     gradientFrom: '#0a3028',
     gradientTo: '#2DD4BF',
     image: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=600&h=900&fit=crop&q=80',
     clients: 'Department of Defense',
-    desc: 'Mission-critical AI with zero-trust governance — humans orchestrate agents, never autonomous decisions in classified environments.',
+    desc: 'Mission-critical AI with zero-trust governance: humans orchestrate, never autonomous decisions in classified environments.',
     metrics: [
       { value: '40%', label: 'Faster Deployment' },
       { value: '99.9%', label: 'System Uptime' },
@@ -177,14 +177,16 @@ export default function MarketCarousel() {
           className="text-center mb-16"
         >
           <p className="text-brand-green font-body text-sm font-semibold tracking-widest uppercase mb-5">
-            Industries We Serve
+            Industries
           </p>
           <h2 className="font-display font-bold text-display-xl text-text-primary mb-5">
             Built for Your{' '}
             <span className="text-brand-green">Domain</span>
           </h2>
           <p className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed">
-            Every industry has its own rules, risks, and opportunities. We bring AI solutions shaped by deep sector expertise — so you scale faster with governance built in.
+            Every industry has its own rules, risks, and opportunities.
+            We bring enterprise transformation shaped by deep sector expertise:
+            so you scale faster, with governance built in from the start.
           </p>
         </motion.div>
 

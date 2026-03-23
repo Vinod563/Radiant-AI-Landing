@@ -35,14 +35,16 @@ export default function CTA() {
           transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="text-center max-w-3xl mx-auto"
         >
-          <span className="kicker justify-center" style={{ justifyContent: 'center' }}>CX Maturity Assessment</span>
+          <span className="kicker justify-center" style={{ justifyContent: 'center' }}>Start Here</span>
           <h2 className="font-display font-black leading-[0.92] tracking-tight mb-6"
             style={{ fontSize: 'clamp(3rem, 6.5vw, 5.5rem)' }}>
-            Where Does Your<br />
-            <span className="grad-text">CX Maturity Stand?</span>
+            Where does your enterprise<br />
+            <span className="grad-text">stand on AI readiness?</span>
           </h2>
           <p className="text-text-secondary text-xl leading-relaxed mb-12 max-w-lg mx-auto">
-            Take our 5-minute assessment to uncover where you are on the CX maturity curve — and get a custom roadmap to close the gap.
+            Five minutes. No signup. A prioritized roadmap
+            that tells you where you are, where the gaps are,
+            and which AI deployments would produce the fastest results.
           </p>
 
           {/* Maturity scale visualization */}

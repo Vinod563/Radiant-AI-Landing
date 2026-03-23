@@ -3,11 +3,10 @@ import { ArrowRight, Sparkles, Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 const heroMetrics = [
-  { val: '30–40%', label: 'Productivity Gains', color: 'text-brand-green' },
-  { val: '6 wks', label: 'From Pilot to Production', color: 'text-brand-orange' },
-  { val: '8', label: 'Industries Served', color: 'text-brand-green' },
-  { val: '50+', label: 'Federal & Enterprise Clients', color: 'text-brand-orange' },
-  { val: '99.9%', label: 'Uptime Guarantee', color: 'text-brand-purple' },
+  { val: '40%', label: 'Avg Cost Reduction', color: 'text-brand-green' },
+  { val: '6 Weeks', label: 'Pilot to Production', color: 'text-brand-orange' },
+  { val: '14+', label: 'Industries Served', color: 'text-brand-green' },
+  { val: '29', label: 'Telecom AI Use Cases Mapped', color: 'text-brand-orange' },
 ]
 
 
@@ -44,29 +43,37 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className="font-display font-black leading-[1.1] mb-7 tracking-tight"
-                style={{ fontSize: 'clamp(3.4rem, 6.75vw, 6.3rem)' }}
+                style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5.2rem)' }}
               >
-                Deploy AI<br />
-                in{' '}
+                Radiant has evolved<br />
+                into the{' '}
                 <span className="whitespace-nowrap" style={{
                   background: 'linear-gradient(135deg, #91C46B 0%, #F0974E 35%, #596AE0 70%, #a855f7 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                }}>6 Weeks.</span>
-                <br />
-                <span className="text-white/70" style={{ fontSize: '55%', fontWeight: 300, fontStyle: 'italic', letterSpacing: '-0.01em' }}>
-                  Not 6 months.
-                </span>
+                }}>age of AI.</span>
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.25 }}
-                className="text-text-secondary text-lg leading-relaxed mx-auto mb-9"
+                className="text-text-secondary text-lg leading-relaxed mx-auto mb-4 max-w-2xl"
               >
-                Radiant delivers enterprise-grade AI solutions built for scalability, compliance, and measurable impact — from day one.
+                We have figured out a way to infuse AI into everything we do.
+                That means we can now help enterprises deploy AI into their operations:
+                grounded in the right context, producing measurable results,
+                faster than any other approach.
+              </motion.p>
+
+              <motion.p
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.32 }}
+                className="text-white/50 text-sm font-display font-semibold tracking-widest uppercase mb-9"
+              >
+                Enterprise transformation. Supercharged with AI.
               </motion.p>
 
               <motion.div
@@ -75,15 +82,15 @@ export default function Hero() {
                 transition={{ duration: 0.5, delay: 0.38 }}
                 className="flex flex-wrap justify-center gap-4 mb-10"
               >
-                <a href="#solutions" className="btn-primary text-sm relative overflow-hidden group">
+                <a href="#contact" className="btn-primary text-sm relative overflow-hidden group">
                   <span className="relative z-10 flex items-center gap-2">
-                    Explore Solutions <ArrowRight size={15} />
+                    Start the Conversation <ArrowRight size={15} />
                   </span>
                 </a>
-                <a href="#contact" className="btn-ghost text-sm">Book a Strategy Call</a>
+                <a href="#proof" className="btn-ghost text-sm">See Our Work</a>
               </motion.div>
 
-              {/* Conversational input — prominent */}
+              {/* Conversational input */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -108,7 +115,7 @@ export default function Hero() {
                     <Sparkles size={18} className="text-brand-green" />
                   </div>
                   <span className="text-white/35 text-base font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
-                    Ask anything about Radiant Digital...
+                    What problem are you trying to solve?
                   </span>
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:bg-brand-green/15"
                     style={{ background: 'rgba(255,255,255,0.05)' }}>
@@ -122,14 +129,14 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom metric strip with colorful accents */}
+      {/* Bottom metric strip */}
       <div className="relative border-t border-white/[0.07] backdrop-blur-sm"
         style={{ background: 'rgba(5,10,25,0.5)' }}>
         {/* Subtle rainbow line on top of strip */}
         <div className="absolute top-0 left-0 right-0 h-px"
           style={{ background: 'linear-gradient(90deg, transparent 5%, #91C46B 20%, #F0974E 40%, #596AE0 60%, #a855f7 80%, transparent 95%)', opacity: 0.25 }} />
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-3 md:grid-cols-5">
+          <div className="grid grid-cols-2 md:grid-cols-4">
             {heroMetrics.map((m, i) => (
               <motion.div key={m.label}
                 initial={{ opacity: 0, y: 12 }}

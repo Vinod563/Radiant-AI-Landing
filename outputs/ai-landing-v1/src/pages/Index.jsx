@@ -24,19 +24,19 @@ export default function Index() {
       <Divider />
       <Solutions />
       <Divider />
-      <Platform />
-      <Divider />
-      <Infrastructure />
-      <Divider />
       <Enablers />
-      <Divider />
-      <MarketCarousel />
       <Divider />
       <CaseStudy />
       <Divider />
       <SocialProof />
       <Divider />
+      <MarketCarousel />
+      <Divider />
       <WhyRadiant />
+      <Divider />
+      <Platform />
+      <Divider />
+      <Infrastructure />
       <Divider />
       <CTA />
       <Footer variant="home" />

@@ -1,49 +1,33 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { ArrowRight } from 'lucide-react'
 
-const platforms = [
+const categories = [
   {
+    label: 'Context and Knowledge',
     num: '01',
-    gradient: 'linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 20%, #0a4a6e 40%, #00bcd4 60%, #e040fb 80%, #ff1493 100%)',
-    title: 'Persona-Based Microagent Framework',
-    desc: 'Deploy task-specific agents in days, not months. Minimal training data, low maintenance, and seamless orchestration through AgentOps — unlocking the autonomous Build-Deploy-Run value pool that defines the next wave of enterprise AI.',
-    features: ['Deploy in Days', 'Minimal Training Data', 'AgentOps Orchestration', '70% Less Maintenance'],
+    accent: '#596AE0',
+    gradient: 'linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 40%, #1a3a7e 100%)',
+    capabilities: ['Radiant Knowledge Hub', 'Semantic Data Graph', 'KAG', 'Context-Aware AI'],
+    desc: 'The foundation layer that ensures every deployment knows your environment before it starts.',
   },
   {
+    label: 'Intelligence and Automation',
     num: '02',
-    gradient: 'linear-gradient(135deg, #1a0800 0%, #3d1500 20%, #8b3000 40%, #e65c00 60%, #f9a825 80%, #ff7043 100%)',
-    title: 'Cognitive Experience',
-    desc: 'Your users expect consumer-grade AI interactions with enterprise-grade security. Role-aware, conversational, multi-modal — with governance and compliance built in, not bolted on.',
-    features: ['Role-Aware UX', 'Conversational AI', 'Multi-Modal', 'Zero-Trust Governance'],
+    accent: '#F0974E',
+    gradient: 'linear-gradient(135deg, #1a0800 0%, #3d1500 40%, #8b4000 100%)',
+    capabilities: ['Talk to Data', 'Agentic Orchestration', 'Predictive Analytics'],
+    desc: 'Natural language data access and orchestrated agents that turn context into action.',
   },
   {
+    label: 'Operations and Governance',
     num: '03',
-    gradient: 'linear-gradient(135deg, #000d1a 0%, #001a4d 25%, #003380 50%, #0066cc 70%, #00bfff 90%, #7df9ff 100%)',
-    title: 'Semantic Context Engine',
-    desc: 'Data without context is noise. Our semantic layer connects operational data to business outcomes through knowledge graphs — turning natural language queries into actionable, revenue-driving insights.',
-    features: ['Knowledge Graphs', 'Context-Aware AI', 'Natural Language Queries', 'Revenue-Aligned Insights'],
-  },
-  {
-    num: '04',
-    gradient: 'linear-gradient(135deg, #001a00 0%, #003300 20%, #006600 40%, #009900 60%, #39d353 80%, #b8ffb8 100%)',
-    title: 'Agentic Data Framework',
-    desc: 'Fragmented data is the #1 blocker for enterprise AI. Our AI Fabric unifies it — ontology mapping, automated cleansing, and governed migration that turns data chaos into AI-ready assets.',
-    features: ['Ontology Mapping', 'Auto Data Cleansing', 'Unified Data Layer', 'Governed Migration'],
+    accent: '#91C46B',
+    gradient: 'linear-gradient(135deg, #001a00 0%, #003300 40%, #1a6620 100%)',
+    capabilities: ['Radiant AIOps', 'Autonomous Stack', 'Radiant Data Fabric', 'AI-RAD', 'AI FinOps'],
+    desc: 'The operational layer ensuring every deployment is governed, observable, and cost-efficient.',
   },
 ]
-
-function HexBadge({ num }) {
-  return (
-    <div className="relative inline-flex items-center justify-center w-12 h-12 flex-shrink-0"
-      style={{ filter: 'drop-shadow(0 4px 12px rgba(145,196,107,0.35))' }}>
-      <svg viewBox="0 0 52 60" className="absolute inset-0 w-full h-full" fill="none">
-        <path d="M26 2L50 16V44L26 58L2 44V16L26 2Z"
-          fill="#0d2a17" stroke="rgba(145,196,107,0.5)" strokeWidth="1.5" />
-      </svg>
-      <span className="relative font-display font-black text-sm text-brand-green z-10 leading-none">{num}</span>
-    </div>
-  )
-}
 
 export default function Platform() {
   const ref = useRef(null)
@@ -58,72 +42,148 @@ export default function Platform() {
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="max-w-2xl mb-16"
+          className="max-w-3xl mb-8"
         >
-          <span className="kicker">Platforms</span>
+          <span className="kicker">The Radiant AI Platform</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-5"
             style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)' }}>
-            Four Platforms.<br />
-            <span className="grad-text">One Secure Foundation.</span>
+            12 foundational capabilities.<br />
+            <span className="grad-text">The infrastructure beneath every solution.</span>
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
-            Enterprise AI demands more than models — it demands trust. Four battle-tested layers — agents, cognition, context, and data — built for speed without sacrificing governance, so you pay for outcomes, not experiments.
+            Radiant does not deploy generic AI.
+            Every solution is assembled from purpose-built platform capabilities:
+            12 components that cover context acquisition, synthesis, grounding,
+            reasoning, orchestration, observability, and governance.
           </p>
         </motion.div>
 
-        {/* 2-column card grid */}
-        <div className="grid md:grid-cols-2 gap-7">
-          {platforms.map((p, i) => (
-            <motion.div key={p.num}
-              initial={{ opacity: 0, y: 36 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.65, delay: i * 0.12 }}
-              className="rounded-3xl overflow-hidden flex flex-col"
-              style={{
-                background: 'rgba(1, 15, 30, 0.75)',
-                border: '1px solid rgba(255,255,255,0.07)',
-                boxShadow: '0 16px 48px rgba(0,0,0,0.4)',
-              }}
-            >
-              {/* Abstract banner image */}
-              <div className="relative h-52 flex-shrink-0 overflow-hidden">
-                <div className="absolute inset-0" style={{ background: p.gradient }} />
-                {/* Wave overlay for depth */}
-                <svg className="absolute inset-0 w-full h-full" viewBox="0 0 700 208" preserveAspectRatio="xMidYMid slice" fill="none" opacity="0.35">
-                  <path d="M-50 140 Q175 60 350 130 Q525 200 750 80" stroke="rgba(255,255,255,0.4)" strokeWidth="2" fill="none" />
-                  <path d="M-50 170 Q200 90 380 155 Q560 220 750 110" stroke="rgba(255,255,255,0.25)" strokeWidth="1.5" fill="none" />
-                  <path d="M-50 100 Q150 30 330 105 Q510 180 750 50" stroke="rgba(255,255,255,0.2)" strokeWidth="1" fill="none" />
-                </svg>
-              </div>
+        <motion.p
+          initial={{ opacity: 0, y: 16 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.1 }}
+          className="text-white/60 text-sm font-display font-medium mb-16 max-w-2xl"
+        >
+          This is the technical foundation of the Precision Context Engine.
+        </motion.p>
 
-              {/* Card body */}
-              <div className="p-8 flex flex-col flex-1">
-                {/* Hex badge — pulled up to overlap the image */}
-                <div className="-mt-16 mb-5">
-                  <HexBadge num={p.num} />
+        {/* Three category cards */}
+        <div className="grid md:grid-cols-3 gap-7">
+          {categories.map((cat, i) => {
+            return (
+              <motion.div key={cat.label}
+                initial={{ opacity: 0, y: 36 }}
+                animate={inView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.65, delay: i * 0.12 }}
+                className="rounded-3xl overflow-hidden flex flex-col group cursor-default relative"
+                style={{
+                  background: 'rgba(1, 15, 30, 0.75)',
+                  border: `1px solid ${cat.accent}18`,
+                  boxShadow: '0 16px 48px rgba(0,0,0,0.4)',
+                }}
+                whileHover={{
+                  y: -8,
+                  boxShadow: `0 32px 80px rgba(0,0,0,0.5), 0 0 60px ${cat.accent}08`,
+                }}
+              >
+                {/* Gradient banner */}
+                <div className="relative h-32 flex-shrink-0 overflow-hidden">
+                  <div className="absolute inset-0" style={{ background: cat.gradient }} />
+
+                  {/* Animated wave paths */}
+                  <svg className="absolute inset-0 w-full h-full" viewBox="0 0 700 128" preserveAspectRatio="xMidYMid slice" fill="none">
+                    <motion.path
+                      d="M-50 90 Q175 30 350 80 Q525 130 750 50"
+                      stroke={`${cat.accent}55`} strokeWidth="2" fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={inView ? { pathLength: 1 } : {}}
+                      transition={{ duration: 2, delay: 0.3 + i * 0.2 }}
+                    />
+                    <motion.path
+                      d="M-50 110 Q200 50 380 95 Q560 140 750 70"
+                      stroke="rgba(255,255,255,0.12)" strokeWidth="1.5" fill="none"
+                      initial={{ pathLength: 0 }}
+                      animate={inView ? { pathLength: 1 } : {}}
+                      transition={{ duration: 2.5, delay: 0.5 + i * 0.2 }}
+                    />
+                    <circle cx="580" cy="40" r="60" fill={`${cat.accent}08`} />
+                  </svg>
+
+                  {/* Large number watermark */}
+                  <div className="absolute top-3 right-5 font-display font-black text-[4.5rem] leading-none select-none pointer-events-none"
+                    style={{ color: `${cat.accent}12` }}>
+                    {cat.num}
+                  </div>
                 </div>
 
-                <h3 className="font-display font-black text-3xl text-white mb-4 leading-tight">
-                  {p.title}
-                </h3>
-                <p className="text-text-secondary text-sm leading-relaxed mb-8">
-                  {p.desc}
-                </p>
+                {/* Card body */}
+                <div className="p-7 lg:p-8 flex flex-col flex-1">
+                  {/* Category label */}
+                  <h3 className="font-display font-black text-xl mb-2 leading-tight transition-colors duration-300"
+                    style={{ color: cat.accent }}>
+                    {cat.label}
+                  </h3>
 
-                {/* 2×2 feature grid */}
-                <div className="grid grid-cols-2 gap-x-8 mt-auto">
-                  {p.features.map(f => (
-                    <div key={f} className="py-3 border-b border-white/[0.08]">
-                      <span className="text-sm font-medium text-text-secondary">
-                        {f}
-                      </span>
-                    </div>
-                  ))}
+                  {/* Description */}
+                  <p className="text-text-muted text-sm leading-relaxed mb-6">
+                    {cat.desc}
+                  </p>
+
+                  {/* Capability count badge */}
+                  <div className="flex items-center gap-2 mb-4">
+                    <span className="text-[0.6rem] font-display font-bold uppercase tracking-widest px-2.5 py-1 rounded-full"
+                      style={{ background: `${cat.accent}12`, color: `${cat.accent}cc`, border: `1px solid ${cat.accent}20` }}>
+                      {cat.capabilities.length} capabilities
+                    </span>
+                  </div>
+
+                  {/* Capability list */}
+                  <div className="flex flex-col gap-0">
+                    {cat.capabilities.map((c, ci) => (
+                      <motion.div key={c}
+                        className="py-3 border-b border-white/[0.05] last:border-b-0 flex items-center gap-3 group/item"
+                        initial={{ opacity: 0, x: -12 }}
+                        animate={inView ? { opacity: 1, x: 0 } : {}}
+                        transition={{ duration: 0.4, delay: 0.4 + i * 0.12 + ci * 0.06 }}
+                      >
+                        <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-300 group-hover/item:scale-150"
+                          style={{ background: `${cat.accent}60` }} />
+                        <span className="text-sm font-medium text-text-secondary transition-colors duration-300 group-hover/item:text-white/80">
+                          {c}
+                        </span>
+                      </motion.div>
+                    ))}
+                  </div>
+
+                  {/* Bottom spacer */}
+                  <div className="pt-4" />
                 </div>
-              </div>
-            </motion.div>
-          ))}
+
+                {/* Bottom accent line on hover */}
+                <div className="h-1 rounded-b-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  style={{ background: `linear-gradient(90deg, transparent 10%, ${cat.accent}30 50%, transparent 90%)` }} />
+              </motion.div>
+            )
+          })}
         </div>
+
+        {/* Supporting copy + CTA */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="mt-16 flex flex-col md:flex-row md:items-center md:justify-between gap-6"
+        >
+          <p className="text-text-muted text-base max-w-xl leading-relaxed">
+            These are not features. They are the building blocks from which
+            Radiant assembles solutions that know your environment
+            before they run a single process.
+          </p>
+          <a href="#contact" className="btn-primary group/link whitespace-nowrap">
+            <span>Explore the Platform</span>
+            <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
+          </a>
+        </motion.div>
       </div>
     </section>
   )
