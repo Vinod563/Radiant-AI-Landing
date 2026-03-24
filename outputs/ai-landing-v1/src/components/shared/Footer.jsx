@@ -27,8 +27,8 @@ export default function Footer({ variant = 'home' }) {
               Enterprise transformation. Supercharged with AI.
             </p>
             <p className="text-text-muted text-sm leading-relaxed max-w-xs mb-6">
-              Radiant has figured out how to infuse AI into everything we do.
-              Now we help enterprises do the same.
+              Radiant Digital built its operating model on AI.
+              Now it brings that same transformation to your enterprise.
             </p>
             <div className="flex gap-3">
               {[

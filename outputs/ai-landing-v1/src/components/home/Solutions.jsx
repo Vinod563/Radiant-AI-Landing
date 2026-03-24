@@ -56,7 +56,7 @@ const solutions = [
     bg: '#00261a',
     gradient: 'linear-gradient(180deg, #010F1E 0%, #000f0a 15%, #00261a 35%, #004d2e 55%, #00c87d 75%, #004d2e 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #001208 0%, #003020 50%, #005838 100%)',
-    screenshot: '/screenshots/ai-fabric.png',
+    screenshot: '/screenshots/design-to-code.png',
     tagline: 'AI-first legacy modernization.',
     desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Not wireframes in six months. Working, auditable output in hours per module.',
     proofStat: 'Hours per module vs. six months manual',
@@ -382,6 +382,7 @@ function SolutionBlock({ s }) {
 
   return (
     <motion.div
+      id={`solution-${s.num}`}
       ref={blockRef}
       className="relative w-full"
       style={{ minHeight: '100vh' }}
@@ -504,7 +505,7 @@ function SolutionBlock({ s }) {
               </span>
             )}
             <div className="flex-1" />
-            <Link to={s.href !== '#' ? s.href : '#'} className="btn-primary group/link">
+            <Link to={`/chat?q=${encodeURIComponent('Tell me about ' + s.title)}`} className="btn-primary group/link">
               <span>{s.cta || 'View Solution'}</span>
               <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
             </Link>
@@ -578,12 +579,28 @@ export default function Solutions() {
               Purpose-built for your problem.<br />
               <span className="grad-text">Grounded in your context.</span>
             </h2>
-            <p className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed">
+            <p className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed mb-10">
               Each solution targets a specific enterprise challenge.
               Every one is powered by the Radiant AI Platform:
               12 foundational capabilities that ensure your AI
               knows your environment before it starts.
             </p>
+
+            {/* Solution pill navigation */}
+            <div className="flex flex-wrap justify-center gap-3">
+              {solutions.map(s => (
+                <a key={s.num} href={`#solution-${s.num}`}
+                  className="text-[0.72rem] font-display font-semibold px-4 py-2 rounded-full transition-all duration-300 hover:scale-105 no-underline"
+                  style={{
+                    background: `${s.accent}10`,
+                    color: `${s.accent}cc`,
+                    border: `1px solid ${s.accent}25`,
+                  }}
+                >
+                  {s.num} {s.title}
+                </a>
+              ))}
+            </div>
           </motion.div>
         </div>
       </div>

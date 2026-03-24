@@ -51,7 +51,7 @@ export default function Platform() {
             <span className="grad-text">The infrastructure beneath every solution.</span>
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
-            Radiant does not deploy generic AI.
+            Radiant Digital does not deploy generic AI.
             Every solution is assembled from purpose-built platform capabilities:
             12 components that cover context acquisition, synthesis, grounding,
             reasoning, orchestration, observability, and governance.
@@ -70,6 +70,7 @@ export default function Platform() {
         {/* Three category cards */}
         <div className="grid md:grid-cols-3 gap-7">
           {categories.map((cat, i) => {
+            const numOffset = categories.slice(0, i).reduce((sum, c) => sum + c.capabilities.length, 0)
             return (
               <motion.div key={cat.label}
                 initial={{ opacity: 0, y: 36 }}
@@ -146,8 +147,12 @@ export default function Platform() {
                         animate={inView ? { opacity: 1, x: 0 } : {}}
                         transition={{ duration: 0.4, delay: 0.4 + i * 0.12 + ci * 0.06 }}
                       >
-                        <div className="w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-300 group-hover/item:scale-150"
-                          style={{ background: `${cat.accent}60` }} />
+                        <span className="text-[0.6rem] font-display font-bold w-5 text-right flex-shrink-0"
+                          style={{ color: `${cat.accent}50` }}>
+                          {String(numOffset + ci + 1).padStart(2, '0')}
+                        </span>
+                        <div className="w-1 h-1 rounded-full flex-shrink-0"
+                          style={{ background: `${cat.accent}40` }} />
                         <span className="text-sm font-medium text-text-secondary transition-colors duration-300 group-hover/item:text-white/80">
                           {c}
                         </span>
@@ -176,10 +181,10 @@ export default function Platform() {
         >
           <p className="text-text-muted text-base max-w-xl leading-relaxed">
             These are not features. They are the building blocks from which
-            Radiant assembles solutions that know your environment
+            Radiant Digital assembles solutions that know your environment
             before they run a single process.
           </p>
-          <a href="#contact" className="btn-primary group/link whitespace-nowrap">
+          <a href="/chat?q=How+does+the+Radiant+AI+Platform+work" className="btn-primary group/link whitespace-nowrap">
             <span>Explore the Platform</span>
             <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
           </a>

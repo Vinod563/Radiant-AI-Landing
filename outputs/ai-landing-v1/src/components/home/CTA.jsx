@@ -107,7 +107,7 @@ export default function CTA() {
             ))}
           </motion.div>
 
-          <a href="#assessment" className="btn-primary text-base !px-10 !py-5 shadow-[0_0_60px_rgba(145,196,107,0.25)]">
+          <a href="/chat" className="btn-primary text-base !px-10 !py-5 shadow-[0_0_60px_rgba(145,196,107,0.25)]">
             Take the Assessment <ArrowRight size={17} />
           </a>
 

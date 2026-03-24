@@ -12,30 +12,25 @@ export default function WhyRadiant() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="py-32 lg:py-40 bg-brand-dark relative overflow-hidden">
+    <section className="py-32 lg:py-40 bg-brand-dark relative overflow-hidden">
       {/* Subtle background glow */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(ellipse at 30% 50%, rgba(89,106,224,0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 50%, rgba(145,196,107,0.05) 0%, transparent 50%)',
-        }}
-      />
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(89,106,224,0.06) 0%, transparent 50%), radial-gradient(ellipse at 70% 50%, rgba(145,196,107,0.05) 0%, transparent 50%)' }} />
 
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         {/* Header */}
-        <motion.div
+        <motion.div ref={ref}
           initial={{ opacity: 0, y: 28 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.7 }}
-          className="max-w-3xl mb-12"
+          className="mb-12"
         >
           <p className="text-brand-green font-body text-sm font-semibold tracking-widest uppercase mb-5">
-            Why Radiant Digital
+            What Makes Radiant Digital Different
           </p>
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-6"
             style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}>
-            Radiant deploys AI.<br />
+            Radiant Digital deploys AI.<br />
             We do not build models.<br />
             <span className="grad-text">We build the context that makes models perform.</span>
           </h2>
@@ -56,14 +51,14 @@ export default function WhyRadiant() {
           </div>
           <div>
             <p className="text-text-secondary text-base leading-relaxed mb-4">
-              Radiant constructs a precision context environment:
+              Radiant Digital constructs a precision context environment:
               built from your systems, your domain, your constraints:
               so that AI produces accurate, auditable, client-specific outputs
               on the first pass. Not after months of calibration.
             </p>
             <p className="text-white/80 text-base font-semibold leading-relaxed">
               That is the Precision Context Engine.
-              And it is why the organizations that have deployed with Radiant
+              And it is why the organizations that have deployed with Radiant Digital
               do not run pilots. They run production.
             </p>
           </div>

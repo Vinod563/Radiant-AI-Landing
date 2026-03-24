@@ -28,7 +28,7 @@ const clientLogos = [
 ]
 
 const stats = [
-  { value: '18+', label: 'Years Delivering AI', icon: Award },
+  { value: '20+', label: 'Years in Business', icon: Award },
   { value: '50+', label: 'Enterprise Clients', icon: Briefcase },
   { value: '$2B+', label: 'Programs Powered', icon: TrendingUp },
   { value: '40%', label: 'Avg Cost Reduction', icon: Cpu },
@@ -72,7 +72,7 @@ export default function SocialProof() {
             <span className="grad-text">Real Results.</span>
           </h2>
           <p className="text-text-secondary text-base max-w-2xl mx-auto mt-4 leading-relaxed">
-            The proof is in who keeps coming back. Fortune 500s and federal agencies choose Radiant because we tie every engagement to measurable business impact — not billable hours.
+            The proof is in who keeps coming back. Fortune 500s and federal agencies choose Radiant Digital because we tie every engagement to measurable business impact, not billable hours.
           </p>
         </motion.div>
 
@@ -141,7 +141,7 @@ export default function SocialProof() {
         >
           <div className="divider mb-10" />
           <p className="text-center text-text-muted text-sm leading-relaxed max-w-xl mx-auto">
-            Clearance-ready teams &bull; FedRAMP aligned &bull; CMMC compliant &bull; SOC 2 certified
+            CMMC compliant
           </p>
         </motion.div>
       </div>

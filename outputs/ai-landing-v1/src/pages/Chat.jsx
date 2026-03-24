@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
   Send,
   ArrowLeft,
@@ -46,11 +46,13 @@ const iconMap = {
 
 export default function Chat() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
   const [messages, setMessages] = useState([])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef(null)
   const inputRef = useRef(null)
+  const autoSubmitted = useRef(false)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -64,6 +66,15 @@ export default function Chat() {
     inputRef.current?.focus()
   }, [])
 
+  // Auto-submit query from URL param (e.g., /chat?q=Show+me+case+studies)
+  useEffect(() => {
+    const q = searchParams.get('q')
+    if (q && !autoSubmitted.current) {
+      autoSubmitted.current = true
+      setTimeout(() => handleSubmit(q), 400)
+    }
+  }, [searchParams])
+
   const handleSubmit = (query) => {
     const q = typeof query === 'string' ? query : input
     if (!q.trim()) return
@@ -75,7 +86,7 @@ export default function Chat() {
 
     setTimeout(() => {
       const answer = findAnswer(q)
-      const botMsg = { role: 'assistant', cards: answer.cards, id: answer.id }
+      const botMsg = { role: 'assistant', cards: answer.cards, id: answer.id, followUp: answer.followUp }
       setMessages((prev) => [...prev, botMsg])
       setIsTyping(false)
     }, 600 + Math.random() * 400)
@@ -117,8 +128,24 @@ export default function Chat() {
             <ArrowLeft size={16} />
             <span className="font-display font-semibold">Back</span>
           </button>
-          <RadiantLogo height={20} />
-          <div className="w-20" />
+          <div className="flex items-center gap-2">
+            <RadiantLogo height={20} />
+            <span className="text-[0.55rem] font-display font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
+              style={{ background: 'rgba(145,196,107,0.15)', color: '#91C46B', border: '1px solid rgba(145,196,107,0.3)' }}>
+              Beta
+            </span>
+          </div>
+          <div className="w-20 flex justify-end">
+            {messages.length > 0 && (
+              <button
+                onClick={() => { setMessages([]); autoSubmitted.current = false }}
+                className="flex items-center gap-1.5 text-text-muted hover:text-white transition-colors text-xs font-display font-semibold px-3 py-1.5 rounded-lg hover:bg-white/[0.05]"
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
+                Reset
+              </button>
+            )}
+          </div>
         </div>
       </header>
 
@@ -342,7 +369,7 @@ export default function Chat() {
                 {msg.role === 'user' ? (
                   <UserBubble content={msg.content} />
                 ) : (
-                  <AssistantCards cards={msg.cards} />
+                  <AssistantCards cards={msg.cards} onSubmit={handleSubmit} />
                 )}
               </motion.div>
             ))}
@@ -387,7 +414,7 @@ export default function Chat() {
               >
                 <p className="text-text-muted text-xs font-semibold uppercase tracking-wider mb-4">Continue exploring</p>
                 <div className="flex flex-wrap gap-2.5">
-                  {suggestions
+                  {(messages.filter(m => m.role === 'assistant').slice(-1)[0]?.followUp || suggestions.slice(0, 4))
                     .filter((s) => !messages.some((m) => m.role === 'user' && m.content === s))
                     .slice(0, 4)
                     .map((s, i) => (
@@ -482,7 +509,7 @@ function UserBubble({ content }) {
 }
 
 /* ── Assistant Card Renderer ── */
-function AssistantCards({ cards }) {
+function AssistantCards({ cards, onSubmit }) {
   return (
     <div className="flex gap-4 items-start">
       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1"
@@ -491,7 +518,7 @@ function AssistantCards({ cards }) {
       </div>
       <div className="flex-1 space-y-6 min-w-0">
         {cards.map((card, i) => (
-          <CardRenderer key={i} card={card} index={i} />
+          <CardRenderer key={i} card={card} index={i} onSubmit={onSubmit} />
         ))}
       </div>
     </div>
@@ -499,7 +526,7 @@ function AssistantCards({ cards }) {
 }
 
 /* ── Card Router ── */
-function CardRenderer({ card, index }) {
+function CardRenderer({ card, index, onSubmit }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -510,13 +537,15 @@ function CardRenderer({ card, index }) {
       {card.type === 'metrics' && <MetricsCard card={card} />}
       {card.type === 'text' && <TextCard card={card} />}
       {card.type === 'grid' && <GridCard card={card} />}
-      {card.type === 'list' && <ListCard card={card} />}
+      {card.type === 'list' && <ListCard card={card} onItemClick={onSubmit} />}
       {card.type === 'case-study' && <CaseStudyCard card={card} />}
       {card.type === 'partners' && <PartnersCard card={card} />}
       {card.type === 'cta' && <CTACard card={card} />}
       {card.type === 'solutions' && <SolutionsCard card={card} />}
       {card.type === 'platforms' && <PlatformsCard card={card} />}
       {card.type === 'industries' && <IndustriesCard card={card} />}
+      {card.type === 'pce-diagram' && <PCEDiagramCard />}
+      {card.type === 'screenshot' && <ScreenshotCard card={card} />}
     </motion.div>
   )
 }
@@ -607,8 +636,173 @@ function MetricsCard({ card }) {
         {/* Trust line like SocialProof */}
         <div className="divider mt-8 mb-4" />
         <p className="text-center text-text-muted text-xs">
-          Clearance-ready teams · FedRAMP aligned · CMMC compliant · SOC 2 certified
+          CMMC compliant · 20+ Years in Business · 50+ Enterprise Clients
         </p>
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   PCE DIAGRAM CARD — Inline SVG of the Precision
+   Context Engine pipeline for chat responses
+   ═══════════════════════════════════════════════ */
+function PCEDiagramCard() {
+  return (
+    <div className="rounded-[20px] overflow-hidden p-6 lg:p-8"
+      style={{ background: 'rgba(1,15,30,0.8)', border: '1px solid rgba(255,255,255,0.06)' }}>
+      <svg width="100%" viewBox="0 0 680 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Section 1: Context Engineering */}
+        <rect x="28" y="26" width="624" height="162" rx="10"
+          stroke="rgba(145,196,107,0.3)" strokeWidth="1.5" strokeDasharray="6 4" fill="none" />
+        <rect x="250" y="15" width="180" height="24" rx="12"
+          stroke="rgba(145,196,107,0.5)" strokeWidth="1" fill="#0a1628" />
+        <text x="340" y="31" textAnchor="middle"
+          fill="#91C46B" fontSize="10" fontWeight="700" letterSpacing="1.5"
+          fontFamily="-apple-system, sans-serif">CONTEXT ENGINEERING</text>
+
+        {/* Stage cards */}
+        <rect x="40" y="44" width="140" height="132" rx="8" fill="rgba(145,196,107,0.06)" stroke="rgba(145,196,107,0.15)" strokeWidth="1" />
+        <text x="52" y="66" fill="rgba(145,196,107,0.35)" fontSize="10" fontWeight="800" fontFamily="-apple-system, sans-serif">01</text>
+        <text x="52" y="86" fill="#91C46B" fontSize="14" fontWeight="800" fontFamily="-apple-system, sans-serif">Extract</text>
+        <text x="52" y="106" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Situation</text>
+        <text x="52" y="120" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Complication</text>
+        <text x="52" y="134" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Question</text>
+        <text x="52" y="148" fill="rgba(255,255,255,0.4)" fontSize="10" fontFamily="-apple-system, sans-serif" fontStyle="italic">SCQ framing</text>
+
+        <line x1="180" y1="108" x2="198" y2="108" stroke="rgba(145,196,107,0.4)" strokeWidth="1.5" />
+        <polygon points="196,104 204,108 196,112" fill="rgba(145,196,107,0.4)" />
+
+        <rect x="200" y="44" width="140" height="132" rx="8" fill="rgba(240,151,78,0.06)" stroke="rgba(240,151,78,0.15)" strokeWidth="1" />
+        <text x="212" y="66" fill="rgba(240,151,78,0.35)" fontSize="10" fontWeight="800" fontFamily="-apple-system, sans-serif">02</text>
+        <text x="212" y="86" fill="#F0974E" fontSize="14" fontWeight="800" fontFamily="-apple-system, sans-serif">Structure</text>
+        <text x="212" y="106" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Domain</text>
+        <text x="212" y="120" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">knowledge base</text>
+        <text x="212" y="134" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Scope</text>
+        <text x="212" y="148" fill="rgba(255,255,255,0.4)" fontSize="10" fontFamily="-apple-system, sans-serif" fontStyle="italic">boundaries set</text>
+
+        <line x1="340" y1="108" x2="358" y2="108" stroke="rgba(240,151,78,0.4)" strokeWidth="1.5" />
+        <polygon points="356,104 364,108 356,112" fill="rgba(240,151,78,0.4)" />
+
+        <rect x="360" y="44" width="140" height="132" rx="8" fill="rgba(89,106,224,0.06)" stroke="rgba(89,106,224,0.15)" strokeWidth="1" />
+        <text x="372" y="66" fill="rgba(89,106,224,0.35)" fontSize="10" fontWeight="800" fontFamily="-apple-system, sans-serif">03</text>
+        <text x="372" y="86" fill="#596AE0" fontSize="14" fontWeight="800" fontFamily="-apple-system, sans-serif">Validate</text>
+        <text x="372" y="106" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Pilot module</text>
+        <text x="372" y="120" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">stress-tests</text>
+        <text x="372" y="134" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">the environment</text>
+        <text x="372" y="148" fill="rgba(255,255,255,0.4)" fontSize="10" fontFamily="-apple-system, sans-serif" fontStyle="italic">Accuracy compounds</text>
+
+        <line x1="500" y1="108" x2="518" y2="108" stroke="rgba(89,106,224,0.4)" strokeWidth="1.5" />
+        <polygon points="516,104 524,108 516,112" fill="rgba(89,106,224,0.4)" />
+
+        <rect x="520" y="44" width="120" height="132" rx="8" fill="rgba(168,85,247,0.06)" stroke="rgba(168,85,247,0.15)" strokeWidth="1" />
+        <text x="532" y="66" fill="rgba(168,85,247,0.35)" fontSize="10" fontWeight="800" fontFamily="-apple-system, sans-serif">04</text>
+        <text x="532" y="86" fill="#a855f7" fontSize="14" fontWeight="800" fontFamily="-apple-system, sans-serif">Deploy</text>
+        <text x="532" y="106" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Knowledge Hub</text>
+        <text x="532" y="120" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Semantic Graph</text>
+        <text x="532" y="134" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">KAG</text>
+        <text x="532" y="148" fill="rgba(255,255,255,0.4)" fontSize="10" fontFamily="-apple-system, sans-serif" fontStyle="italic">Context-Aware AI</text>
+
+        {/* Fork lines */}
+        <line x1="340" y1="188" x2="340" y2="218" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+        <line x1="166" y1="218" x2="514" y2="218" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+        <line x1="166" y1="218" x2="166" y2="234" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+        <line x1="514" y1="218" x2="514" y2="234" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+        <circle cx="340" cy="188" r="3" fill="rgba(255,255,255,0.2)" />
+
+        {/* Section 2: Forward Deployment */}
+        <rect x="28" y="234" width="624" height="228" rx="10"
+          stroke="rgba(240,151,78,0.3)" strokeWidth="1.5" strokeDasharray="6 4" fill="none" />
+        <rect x="248" y="223" width="184" height="24" rx="12"
+          stroke="rgba(240,151,78,0.5)" strokeWidth="1" fill="#0a1628" />
+        <text x="340" y="239" textAnchor="middle"
+          fill="#F0974E" fontSize="10" fontWeight="700" letterSpacing="1.5"
+          fontFamily="-apple-system, sans-serif">FORWARD DEPLOYMENT</text>
+
+        {/* Left: AI agents */}
+        <rect x="44" y="252" width="270" height="30" rx="6" fill="rgba(89,106,224,0.1)" stroke="rgba(89,106,224,0.2)" strokeWidth="1" />
+        <text x="179" y="272" textAnchor="middle" fill="#596AE0" fontSize="12" fontWeight="700" fontFamily="-apple-system, sans-serif">Your AI agents</text>
+
+        <rect x="44" y="292" width="270" height="46" rx="6" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <text x="56" y="311" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Scoped vocabulary and domain rules so</text>
+        <text x="56" y="325" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">outputs are accurate from run one</text>
+
+        <rect x="44" y="346" width="270" height="46" rx="6" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <text x="56" y="365" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Scope boundaries that prevent</text>
+        <text x="56" y="379" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">well-intentioned errors downstream</text>
+
+        <rect x="44" y="400" width="270" height="46" rx="6" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <text x="56" y="419" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Validated context that compounds</text>
+        <text x="56" y="433" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">accuracy at scale</text>
+
+        {/* Right: Delivery team */}
+        <rect x="366" y="252" width="270" height="30" rx="6" fill="rgba(145,196,107,0.1)" stroke="rgba(145,196,107,0.2)" strokeWidth="1" />
+        <text x="501" y="272" textAnchor="middle" fill="#91C46B" fontSize="12" fontWeight="700" fontFamily="-apple-system, sans-serif">Your delivery team</text>
+
+        <rect x="366" y="292" width="270" height="46" rx="6" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <text x="378" y="311" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Structured problem framing before</text>
+        <text x="378" y="325" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">any solution design begins</text>
+
+        <rect x="366" y="346" width="270" height="46" rx="6" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <text x="378" y="365" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Shared knowledge base aligned to</text>
+        <text x="378" y="379" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">your actual environment</text>
+
+        <rect x="366" y="400" width="270" height="46" rx="6" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.06)" strokeWidth="1" />
+        <text x="378" y="419" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Pilot-validated map so every module</text>
+        <text x="378" y="433" fill="rgba(255,255,255,0.6)" fontSize="10.5" fontFamily="-apple-system, sans-serif">after runs faster</text>
+
+        {/* Converge lines */}
+        <line x1="179" y1="462" x2="179" y2="490" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+        <line x1="501" y1="462" x2="501" y2="490" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+        <line x1="179" y1="490" x2="501" y2="490" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+        <line x1="340" y1="490" x2="340" y2="506" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+        <circle cx="340" cy="506" r="3" fill="rgba(255,255,255,0.2)" />
+
+        {/* Section 3: Outcome bar */}
+        <rect x="60" y="508" width="560" height="76" rx="10"
+          fill="rgba(145,196,107,0.08)" stroke="rgba(145,196,107,0.25)" strokeWidth="1.5" />
+        <text x="340" y="536" textAnchor="middle" fill="#91C46B" fontSize="15" fontWeight="800" fontFamily="-apple-system, sans-serif">Supercharged Enterprise Transformation</text>
+        <text x="340" y="556" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="11" fontFamily="-apple-system, sans-serif">AI agents and delivery teams aligned from day one.</text>
+        <text x="340" y="572" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Fastest path from context to production. Every time.</text>
+      </svg>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   SCREENSHOT CARD — Solution screenshot with
+   light/dark mode hover effect
+   ═══════════════════════════════════════════════ */
+function ScreenshotCard({ card }) {
+  return (
+    <div className="rounded-[20px] overflow-hidden relative"
+      style={{ border: '1px solid rgba(255,255,255,0.06)' }}>
+      {card.label && (
+        <div className="px-6 pt-5 pb-3" style={{ background: 'rgba(1,15,30,0.6)' }}>
+          <span className="text-[0.6rem] font-display font-bold uppercase tracking-widest"
+            style={{ color: card.accent || '#91C46B' }}>
+            {card.label}
+          </span>
+        </div>
+      )}
+      <div className="relative group cursor-pointer">
+        <img
+          src={card.src}
+          alt={card.alt || 'Solution screenshot'}
+          className="w-full h-auto object-cover transition-all duration-700"
+        />
+        {/* Dark mode overlay on hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none">
+          <img
+            src={card.src}
+            alt=""
+            className="w-full h-full object-cover"
+            style={{ filter: 'invert(0.88) hue-rotate(180deg) contrast(1.05) brightness(0.95)' }}
+          />
+        </div>
+        {/* Accent tint on hover */}
+        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
+          style={{ background: `linear-gradient(135deg, ${card.accent || '#91C46B'}12 0%, transparent 60%)` }} />
       </div>
     </div>
   )
@@ -697,7 +891,7 @@ function GridCard({ card }) {
    LIST CARD — Matches Services section with
    accent dots, metric badges, hover lift
    ═══════════════════════════════════════════════ */
-function ListCard({ card }) {
+function ListCard({ card, onItemClick }) {
   return (
     <div className="space-y-5">
       {/* Section header */}
@@ -711,7 +905,7 @@ function ListCard({ card }) {
         </div>
       </div>
 
-      {/* Items as individual cards */}
+      {/* Items as individual clickable cards */}
       <div className="grid sm:grid-cols-2 gap-4">
         {card.items.map((item, i) => (
           <motion.div
@@ -719,8 +913,9 @@ function ListCard({ card }) {
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, delay: i * 0.06 }}
-            className="group relative rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1"
+            className={`group relative rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 ${onItemClick ? 'cursor-pointer' : ''}`}
             style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${item.accent}15` }}
+            onClick={() => onItemClick && onItemClick(`Tell me about the ${item.name} case study`)}
           >
             {/* Hover glow */}
             <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
@@ -736,6 +931,13 @@ function ListCard({ card }) {
                 {item.metric}
               </span>
             </div>
+
+            {/* Click hint on hover */}
+            {onItemClick && (
+              <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <ChevronRight size={14} className="text-white/30" />
+              </div>
+            )}
 
             {/* Bottom accent line */}
             <div className="absolute bottom-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"

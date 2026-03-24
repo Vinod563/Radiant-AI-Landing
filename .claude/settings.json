@@ -14,12 +14,20 @@
       "WebFetch(domain:www.onixnet.com)",
       "Bash(mv content/reference-websites/onixnet-*.md content/reference-websites/onixnet/)",
       "Bash(mv content/reference-websites/minto-framework-guide.md content/reference-websites/onixnet/)",
-      "Bash(mv content/reference-websites/bcg-agentic-ai-insights.md content/reference-websites/onixnet/)"
+      "Bash(mv content/reference-websites/bcg-agentic-ai-insights.md content/reference-websites/onixnet/)",
+      "Bash(file \"/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/public/screenshots/\"*.png)",
+      "Bash(find '/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/src/components/home' -type f -name *.jsx)",
+      "Bash(node -e \":*)",
+      "Bash(npm search:*)",
+      "Bash(npm view:*)",
+      "WebSearch"
     ],
     "additionalDirectories": [
       "/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/src/components/icx",
       "/Users/vinodkumarmourya/Desktop",
-      "/Users/vinodkumarmourya/Documents/GitHub/files webflow/content/reference-websites"
+      "/Users/vinodkumarmourya/Documents/GitHub/files webflow/content/reference-websites",
+      "/tmp",
+      "/private/tmp"
     ]
   }
 }

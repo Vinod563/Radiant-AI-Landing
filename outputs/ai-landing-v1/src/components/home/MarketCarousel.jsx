@@ -23,7 +23,7 @@ const markets = [
     gradientTo: '#596AE0',
     image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&h=900&fit=crop&q=80',
     clients: 'Major tier-1 carriers',
-    desc: 'Radiant has mapped 29 AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
+    desc: 'Radiant Digital has mapped 29 AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
     metrics: [
       { value: '29', label: 'AI Use Cases' },
       { value: '40%', label: 'Faster Deployment' },
@@ -190,38 +190,6 @@ export default function MarketCarousel() {
           </p>
         </motion.div>
 
-        {/* Navigation arrows */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={inView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.5, delay: 0.3 }}
-          className="flex items-center justify-center gap-4 mb-12"
-        >
-          <button
-            onClick={() => scroll(-1)}
-            disabled={scrollPos <= 5}
-            className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300
-              disabled:opacity-20 disabled:cursor-not-allowed"
-            style={{
-              background: scrollPos <= 5 ? 'rgba(255,255,255,0.05)' : 'rgba(145,196,107,0.15)',
-              border: `1px solid ${scrollPos <= 5 ? 'rgba(255,255,255,0.08)' : 'rgba(145,196,107,0.3)'}`,
-            }}
-          >
-            <ChevronLeft size={22} className={scrollPos <= 5 ? 'text-white/30' : 'text-brand-green'} />
-          </button>
-          <button
-            onClick={() => scroll(1)}
-            disabled={scrollPos >= maxScroll - 5}
-            className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300
-              disabled:opacity-20 disabled:cursor-not-allowed"
-            style={{
-              background: scrollPos >= maxScroll - 5 ? 'rgba(255,255,255,0.05)' : 'rgba(145,196,107,0.15)',
-              border: `1px solid ${scrollPos >= maxScroll - 5 ? 'rgba(255,255,255,0.08)' : 'rgba(145,196,107,0.3)'}`,
-            }}
-          >
-            <ChevronRight size={22} className={scrollPos >= maxScroll - 5 ? 'text-white/30' : 'text-brand-green'} />
-          </button>
-        </motion.div>
       </div>
 
       {/* Carousel track */}
@@ -278,6 +246,39 @@ export default function MarketCarousel() {
           transform: rotateY(180deg);
         }
       `}</style>
+
+      {/* Navigation arrows — bottom */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.5, delay: 0.4 }}
+        className="flex items-center justify-center gap-4 mt-10"
+      >
+        <button
+          onClick={() => scroll(-1)}
+          disabled={scrollPos <= 5}
+          className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300
+            disabled:opacity-20 disabled:cursor-not-allowed"
+          style={{
+            background: scrollPos <= 5 ? 'rgba(255,255,255,0.05)' : 'rgba(145,196,107,0.15)',
+            border: `1px solid ${scrollPos <= 5 ? 'rgba(255,255,255,0.08)' : 'rgba(145,196,107,0.3)'}`,
+          }}
+        >
+          <ChevronLeft size={22} className={scrollPos <= 5 ? 'text-white/30' : 'text-brand-green'} />
+        </button>
+        <button
+          onClick={() => scroll(1)}
+          disabled={scrollPos >= maxScroll - 5}
+          className="w-14 h-14 rounded-full flex items-center justify-center transition-all duration-300
+            disabled:opacity-20 disabled:cursor-not-allowed"
+          style={{
+            background: scrollPos >= maxScroll - 5 ? 'rgba(255,255,255,0.05)' : 'rgba(145,196,107,0.15)',
+            border: `1px solid ${scrollPos >= maxScroll - 5 ? 'rgba(255,255,255,0.08)' : 'rgba(145,196,107,0.3)'}`,
+          }}
+        >
+          <ChevronRight size={22} className={scrollPos >= maxScroll - 5 ? 'text-white/30' : 'text-brand-green'} />
+        </button>
+      </motion.div>
     </section>
   )
 }

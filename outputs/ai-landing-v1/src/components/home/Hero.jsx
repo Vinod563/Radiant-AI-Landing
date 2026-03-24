@@ -42,47 +42,34 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-                className="font-display font-black leading-[1.1] mb-7 tracking-tight"
-                style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5.2rem)' }}
+                className="font-display font-black leading-[1.1] mb-9 tracking-tight"
+                style={{ fontSize: 'clamp(3rem, 6vw, 5.8rem)' }}
               >
-                Radiant has evolved<br />
-                into the{' '}
-                <span className="whitespace-nowrap" style={{
+                Enterprise Transformation.<br />
+                <span style={{
                   background: 'linear-gradient(135deg, #91C46B 0%, #F0974E 35%, #596AE0 70%, #a855f7 100%)',
                   WebkitBackgroundClip: 'text',
                   WebkitTextFillColor: 'transparent',
                   backgroundClip: 'text',
-                }}>age of AI.</span>
+                }}>Supercharged with AI.</span>
               </motion.h1>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.25 }}
-                className="text-text-secondary text-lg leading-relaxed mx-auto mb-4 max-w-2xl"
-              >
-                We have figured out a way to infuse AI into everything we do.
-                That means we can now help enterprises deploy AI into their operations:
-                grounded in the right context, producing measurable results,
-                faster than any other approach.
-              </motion.p>
 
               <motion.p
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.32 }}
-                className="text-white/50 text-sm font-display font-semibold tracking-widest uppercase mb-9"
+                transition={{ duration: 0.5, delay: 0.3 }}
+                className="text-white/60 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto mb-10"
               >
-                Enterprise transformation. Supercharged with AI.
+                We have figured out a way to infuse AI into everything we do. That means we can now help enterprises deploy AI into their operations: grounded in the right context, producing measurable results, faster than any other approach.
               </motion.p>
 
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.38 }}
+                transition={{ duration: 0.5, delay: 0.42 }}
                 className="flex flex-wrap justify-center gap-4 mb-10"
               >
-                <a href="#contact" className="btn-primary text-sm relative overflow-hidden group">
+                <a href="/chat" className="btn-primary text-sm relative overflow-hidden group">
                   <span className="relative z-10 flex items-center gap-2">
                     Start the Conversation <ArrowRight size={15} />
                   </span>
