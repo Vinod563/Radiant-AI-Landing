@@ -581,7 +581,7 @@ export default function Solutions() {
             </h2>
             <p className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed mb-10">
               Each solution targets a specific enterprise challenge.
-              Every one is powered by the Radiant AI Platform:
+              Every one is powered by the Radiant Digital AI Platform:
               12 foundational capabilities that ensure your AI
               knows your environment before it starts.
             </p>

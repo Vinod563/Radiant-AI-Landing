@@ -96,7 +96,7 @@ export default function Enablers() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-text-muted text-base max-w-2xl leading-relaxed mb-16"
         >
-          That is what makes Radiant's enterprise transformation
+          That is what makes Radiant Digital's enterprise transformation
           fundamentally faster than conventional delivery.
         </motion.p>
 

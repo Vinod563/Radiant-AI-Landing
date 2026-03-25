@@ -44,7 +44,7 @@ export default function Platform() {
           transition={{ duration: 0.7 }}
           className="max-w-3xl mb-8"
         >
-          <span className="kicker">The Radiant AI Platform</span>
+          <span className="kicker">The Radiant Digital AI Platform</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-5"
             style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)' }}>
             12 foundational capabilities.<br />

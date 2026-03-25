@@ -33,8 +33,16 @@ import {
   Award,
   Briefcase,
   Target,
+  Phone,
+  ClipboardCheck,
+  UserSearch,
+  Mail,
+  MapPin,
+  ExternalLink,
+  Linkedin,
+  Youtube,
 } from 'lucide-react'
-import { findAnswer, suggestions } from '../data/knowledgeBase.js'
+import { findAnswer, suggestions, mainMenuItems } from '../data/knowledgeBase.js'
 import RadiantLogo from '../components/shared/RadiantLogo'
 
 const iconMap = {
@@ -51,6 +59,7 @@ export default function Chat() {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef(null)
+  const mainRef = useRef(null)
   const inputRef = useRef(null)
   const autoSubmitted = useRef(false)
 
@@ -59,7 +68,11 @@ export default function Chat() {
   }
 
   useEffect(() => {
-    scrollToBottom()
+    if (messages.length > 0) {
+      scrollToBottom()
+    } else {
+      mainRef.current?.scrollTo({ top: 0 })
+    }
   }, [messages, isTyping])
 
   useEffect(() => {
@@ -150,7 +163,7 @@ export default function Chat() {
       </header>
 
       {/* Messages area */}
-      <main className="flex-1 overflow-y-auto flex flex-col">
+      <main ref={mainRef} className="flex-1 overflow-y-auto flex flex-col">
         <div className="max-w-6xl mx-auto px-6 w-full flex-1 flex flex-col">
           <AnimatePresence mode="popLayout">
             {!hasMessages && (
@@ -288,7 +301,7 @@ export default function Chat() {
                   className="font-display font-black text-white mb-4 tracking-tight relative z-10"
                   style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.5rem)' }}
                 >
-                  What problem are you trying to solve?
+                  <span className="grad-text">Every AI firm</span> promises transformation. We can show you ours.
                 </motion.h1>
                 <motion.p
                   initial={{ opacity: 0, y: 12 }}
@@ -299,61 +312,106 @@ export default function Chat() {
                   Tell us what you're working on. We'll tell you what we've already built for it.
                 </motion.p>
 
-                {/* Suggestion cards with icons & richer styling */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto relative z-10">
-                  {suggestions.map((s, i) => {
-                    const colors = ['#91C46B', '#596AE0', '#F0974E', '#a855f7', '#2DD4BF', '#e05990', '#596AE0', '#91C46B']
-                    const icons = [Sparkles, Layers, BarChart3, Globe, Cpu, TrendingUp, Shield, ArrowRight]
-                    const c = colors[i % colors.length]
-                    const SugIcon = icons[i % icons.length]
-                    return (
-                      <motion.button
-                        key={s}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.5, delay: 0.25 + i * 0.07 }}
-                        whileHover={{ y: -6, scale: 1.03 }}
-                        whileTap={{ scale: 0.97 }}
-                        onClick={() => handleSubmit(s)}
-                        className="text-left p-5 rounded-2xl transition-all duration-300 group relative overflow-hidden"
-                        style={{
-                          background: 'rgba(255,255,255,0.02)',
-                          border: '1px solid rgba(255,255,255,0.06)',
-                          boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
-                        }}
-                      >
-                        {/* Hover glow */}
-                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-                          style={{ background: `radial-gradient(ellipse at 50% 0%, ${c}14 0%, transparent 70%)` }} />
-                        {/* Hover border color */}
-                        <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                          style={{ border: `1px solid ${c}30` }} />
+                {/* Suggestion cards — 9 cards: 4+4+1 layout */}
+                <div className="max-w-4xl mx-auto relative z-10">
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    {suggestions.slice(0, 8).map((s, i) => {
+                      const colors = ['#91C46B', '#596AE0', '#F0974E', '#a855f7', '#2DD4BF', '#818cf8', '#e05990', '#91C46B']
+                      const icons = [Sparkles, Layers, BarChart3, Award, Globe, Cpu, ClipboardCheck, UserSearch]
+                      const c = colors[i]
+                      const SugIcon = icons[i]
+                      return (
+                        <motion.button
+                          key={s}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 0.25 + i * 0.07 }}
+                          whileHover={{ y: -6, scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={() => handleSubmit(s)}
+                          className="text-left p-5 rounded-2xl transition-all duration-300 group relative overflow-hidden"
+                          style={{
+                            background: 'rgba(255,255,255,0.02)',
+                            border: '1px solid rgba(255,255,255,0.06)',
+                            boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+                          }}
+                        >
+                          {/* Hover glow */}
+                          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                            style={{ background: `radial-gradient(ellipse at 50% 0%, ${c}14 0%, transparent 70%)` }} />
+                          <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                            style={{ border: `1px solid ${c}30` }} />
 
-                        {/* Icon */}
-                        <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 relative z-10 transition-all duration-300 group-hover:scale-110"
-                          style={{ background: `${c}10`, border: `1px solid ${c}20` }}>
-                          <SugIcon size={18} style={{ color: c }} />
-                        </div>
+                          <div className="w-10 h-10 rounded-xl flex items-center justify-center mb-4 relative z-10 transition-all duration-300 group-hover:scale-110"
+                            style={{ background: `${c}10`, border: `1px solid ${c}20` }}>
+                            <SugIcon size={18} style={{ color: c }} />
+                          </div>
 
-                        <span className="text-white/75 text-sm font-semibold leading-snug relative z-10 group-hover:text-white transition-colors block mb-2">
-                          {s}
-                        </span>
-
-                        <div className="flex items-center gap-1.5 relative z-10">
-                          <span className="text-[11px] font-medium transition-colors duration-300 group-hover:translate-x-0.5"
-                            style={{ color: `${c}80` }}>
-                            Explore
+                          <span className="text-white/75 text-sm font-semibold leading-snug relative z-10 group-hover:text-white transition-colors block mb-2">
+                            {s}
                           </span>
-                          <ChevronRight size={12} className="transition-all duration-300 group-hover:translate-x-1"
-                            style={{ color: `${c}60` }} />
-                        </div>
 
-                        {/* Bottom accent line on hover */}
-                        <div className="absolute bottom-0 left-4 right-4 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                          style={{ background: `linear-gradient(90deg, transparent, ${c}35, transparent)` }} />
-                      </motion.button>
-                    )
-                  })}
+                          <div className="flex items-center gap-1.5 relative z-10">
+                            <span className="text-[11px] font-medium transition-colors duration-300 group-hover:translate-x-0.5"
+                              style={{ color: `${c}80` }}>
+                              Explore
+                            </span>
+                            <ChevronRight size={12} className="transition-all duration-300 group-hover:translate-x-1"
+                              style={{ color: `${c}60` }} />
+                          </div>
+
+                          <div className="absolute bottom-0 left-4 right-4 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                            style={{ background: `linear-gradient(90deg, transparent, ${c}35, transparent)` }} />
+                        </motion.button>
+                      )
+                    })}
+                  </div>
+
+                  {/* Card 9 — "Talk to a real person" — visually distinct, centered */}
+                  <div className="flex justify-center mt-4">
+                    <motion.button
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: 0.25 + 8 * 0.07 }}
+                      whileHover={{ y: -6, scale: 1.03 }}
+                      whileTap={{ scale: 0.97 }}
+                      onClick={() => handleSubmit(suggestions[8])}
+                      className="text-left p-5 rounded-2xl transition-all duration-300 group relative overflow-hidden w-full md:w-[calc(50%-8px)]"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(240,151,78,0.06), rgba(145,196,107,0.04))',
+                        border: '1px solid rgba(240,151,78,0.2)',
+                        boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
+                      }}
+                    >
+                      {/* Hover glow */}
+                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(240,151,78,0.1) 0%, transparent 70%)' }} />
+                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
+                        style={{ border: '1px solid rgba(240,151,78,0.35)' }} />
+
+                      <div className="flex items-center gap-4 relative z-10">
+                        <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110"
+                          style={{ background: 'rgba(240,151,78,0.12)', border: '1px solid rgba(240,151,78,0.25)' }}>
+                          <Phone size={18} style={{ color: '#F0974E' }} />
+                        </div>
+                        <div>
+                          <span className="text-white/80 text-sm font-semibold leading-snug group-hover:text-white transition-colors block mb-1">
+                            {suggestions[8]}
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[11px] font-medium" style={{ color: 'rgba(240,151,78,0.6)' }}>
+                              Connect with our team
+                            </span>
+                            <ChevronRight size={12} className="transition-all duration-300 group-hover:translate-x-1"
+                              style={{ color: 'rgba(240,151,78,0.5)' }} />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="absolute bottom-0 left-4 right-4 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        style={{ background: 'linear-gradient(90deg, transparent, rgba(240,151,78,0.3), transparent)' }} />
+                    </motion.button>
+                  </div>
                 </div>
               </motion.div>
             )}
@@ -405,7 +463,11 @@ export default function Chat() {
           </AnimatePresence>
 
           <AnimatePresence>
-            {hasMessages && !isTyping && (
+            {hasMessages && !isTyping && (() => {
+              const lastAssistant = messages.filter(m => m.role === 'assistant').slice(-1)[0]
+              if (lastAssistant?.id === 'main-menu') return null
+              return true
+            })() && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -414,7 +476,7 @@ export default function Chat() {
               >
                 <p className="text-text-muted text-xs font-semibold uppercase tracking-wider mb-4">Continue exploring</p>
                 <div className="flex flex-wrap gap-2.5">
-                  {(messages.filter(m => m.role === 'assistant').slice(-1)[0]?.followUp || suggestions.slice(0, 4))
+                  {(messages.filter(m => m.role === 'assistant').slice(-1)[0]?.followUp?.length ? messages.filter(m => m.role === 'assistant').slice(-1)[0].followUp : suggestions.slice(0, 4))
                     .filter((s) => !messages.some((m) => m.role === 'user' && m.content === s))
                     .slice(0, 4)
                     .map((s, i) => (
@@ -444,12 +506,38 @@ export default function Chat() {
                         {s}
                       </motion.button>
                     ))}
+                  {/* Main menu button */}
+                  <motion.button
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3, delay: 0.25 }}
+                    onClick={() => handleSubmit('Show me the main menu')}
+                    className="px-4 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 flex items-center gap-1.5"
+                    style={{
+                      background: 'rgba(255,255,255,0.03)',
+                      border: '1px solid rgba(255,255,255,0.07)',
+                      color: 'rgba(240,244,248,0.6)',
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(240,151,78,0.3)'
+                      e.currentTarget.style.background = 'rgba(240,151,78,0.05)'
+                      e.currentTarget.style.color = '#F0974E'
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.07)'
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.03)'
+                      e.currentTarget.style.color = 'rgba(240,244,248,0.6)'
+                    }}
+                  >
+                    <Layers size={13} />
+                    Main menu
+                  </motion.button>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
-          <div ref={messagesEndRef} className="h-44" />
+          <div ref={messagesEndRef} className={hasMessages ? 'h-44' : 'h-4'} />
         </div>
       </main>
 
@@ -471,7 +559,7 @@ export default function Chat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="What problem are you trying to solve?"
+              placeholder="What enterprise transformation are you trying to supercharge?"
               className="flex-1 bg-transparent text-white text-[15px] placeholder:text-white/25 outline-none font-body"
             />
             <button
@@ -536,10 +624,13 @@ function CardRenderer({ card, index, onSubmit }) {
       {card.type === 'hero' && <HeroCard card={card} />}
       {card.type === 'metrics' && <MetricsCard card={card} />}
       {card.type === 'text' && <TextCard card={card} />}
-      {card.type === 'grid' && <GridCard card={card} />}
+      {card.type === 'grid' && <GridCard card={card} onSubmit={onSubmit} />}
       {card.type === 'list' && <ListCard card={card} onItemClick={onSubmit} />}
+      {card.type === 'case-study-grid' && <CaseStudyGridCard card={card} onItemClick={onSubmit} />}
       {card.type === 'case-study' && <CaseStudyCard card={card} />}
       {card.type === 'partners' && <PartnersCard card={card} />}
+      {card.type === 'main-menu' && <MainMenuCard card={card} onSubmit={onSubmit} />}
+      {card.type === 'contact-details' && <ContactDetailsCard card={card} />}
       {card.type === 'cta' && <CTACard card={card} />}
       {card.type === 'solutions' && <SolutionsCard card={card} />}
       {card.type === 'platforms' && <PlatformsCard card={card} />}
@@ -837,10 +928,10 @@ function TextCard({ card }) {
    GRID CARD — Matches WhyRadiant.jsx with icon boxes,
    hover glow, bottom accent line
    ═══════════════════════════════════════════════ */
-function GridCard({ card }) {
+function GridCard({ card, onSubmit }) {
   return (
     <div className="space-y-5">
-      {/* Header like WhyRadiant */}
+      {/* Header */}
       <div className="text-center py-6">
         <p className="text-brand-green font-body text-xs font-semibold tracking-widest uppercase mb-4">
           Why Radiant Digital
@@ -853,14 +944,17 @@ function GridCard({ card }) {
         )}
       </div>
 
-      {/* Pillar cards — matching WhyRadiant grid */}
+      {/* Grid items */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {card.items.map((item) => {
           const Icon = iconMap[item.icon] || Layers
+          const isClickable = card.clickable && item.query
+          const Tag = isClickable ? 'button' : 'div'
           return (
-            <div
-              key={item.name}
-              className="group relative rounded-2xl p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1"
+            <Tag
+              key={item.name || item.title}
+              {...(isClickable ? { onClick: () => onSubmit(item.query) } : {})}
+              className={`group relative rounded-2xl p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1 text-left ${isClickable ? 'cursor-pointer' : ''}`}
               style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
             >
               {/* Hover glow */}
@@ -872,14 +966,30 @@ function GridCard({ card }) {
                   style={{ background: `${item.accent}15`, border: `1.5px solid ${item.accent}30` }}>
                   <Icon size={26} style={{ color: item.accent }} />
                 </div>
-                <h4 className="font-display font-bold text-white text-lg leading-snug mb-3">{item.name}</h4>
+                <h4 className="font-display font-bold text-white text-lg leading-snug mb-3">{item.name || item.title}</h4>
                 <p className="text-text-secondary text-sm leading-relaxed">{item.desc}</p>
+                {item.tags && (
+                  <div className="flex flex-wrap gap-2 mt-4">
+                    {item.tags.map(tag => (
+                      <span key={tag} className="text-[10px] font-semibold px-2.5 py-1 rounded-full"
+                        style={{ background: `${item.accent}12`, color: `${item.accent}`, border: `1px solid ${item.accent}25` }}>
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+                {isClickable && (
+                  <div className="flex items-center gap-1.5 mt-4">
+                    <span className="text-xs font-medium" style={{ color: `${item.accent}` }}>Show me solutions</span>
+                    <ChevronRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" style={{ color: item.accent }} />
+                  </div>
+                )}
               </div>
 
               {/* Bottom accent line */}
               <div className="absolute bottom-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                 style={{ background: `linear-gradient(90deg, transparent, ${item.accent}40, transparent)` }} />
-            </div>
+            </Tag>
           )
         })}
       </div>
@@ -891,6 +1001,85 @@ function GridCard({ card }) {
    LIST CARD — Matches Services section with
    accent dots, metric badges, hover lift
    ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   CASE STUDY GRID — Magazine-style vertical cards
+   with thumbnails for AI case studies
+   ═══════════════════════════════════════════════ */
+function CaseStudyGridCard({ card, onItemClick }) {
+  return (
+    <div className="space-y-5">
+      {/* Section header */}
+      <div className="mag-card p-8 lg:p-10 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: `radial-gradient(ellipse at 0% 0%, ${card.accent}06 0%, transparent 50%)` }} />
+        <div className="relative z-10">
+          <span className="kicker mb-4">AI Case Studies</span>
+          <h3 className="font-display font-black text-2xl lg:text-3xl text-white mb-2 tracking-tight">{card.title}</h3>
+          {card.subtitle && <p className="text-text-secondary text-base leading-relaxed">{card.subtitle}</p>}
+        </div>
+      </div>
+
+      {/* Magazine-style vertical cards grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {card.items.map((item, i) => (
+          <motion.div
+            key={item.name}
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45, delay: i * 0.07 }}
+            className="group relative rounded-2xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1"
+            style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${item.accent}15` }}
+            onClick={() => onItemClick && onItemClick(`Tell me about the ${item.name} case study`)}
+          >
+            {/* Thumbnail image */}
+            <div className="relative h-36 overflow-hidden">
+              <img
+                src={item.image}
+                alt={item.name}
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+              {/* Gradient overlay */}
+              <div className="absolute inset-0"
+                style={{ background: `linear-gradient(to top, rgba(1,15,30,0.95) 0%, ${item.accent}15 50%, rgba(1,15,30,0.3) 100%)` }} />
+              {/* Industry badge */}
+              <div className="absolute top-3 left-3">
+                <span className="text-[0.58rem] font-display font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
+                  style={{ background: `${item.accent}25`, color: item.accent, border: `1px solid ${item.accent}30`, backdropFilter: 'blur(8px)' }}>
+                  {item.industry}
+                </span>
+              </div>
+              {/* Metric badge */}
+              <div className="absolute bottom-3 right-3">
+                <span className="font-display font-black text-lg" style={{ color: item.accent, textShadow: `0 0 20px ${item.accent}40` }}>
+                  {item.metric}
+                </span>
+              </div>
+            </div>
+
+            {/* Card body */}
+            <div className="p-5">
+              <h4 className="font-display font-bold text-white text-sm leading-snug mb-2 group-hover:text-brand-green transition-colors duration-300">
+                {item.name}
+              </h4>
+              <p className="text-text-muted text-xs leading-relaxed line-clamp-2">
+                {item.detail}
+              </p>
+            </div>
+
+            {/* Hover glow */}
+            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+              style={{ background: `radial-gradient(ellipse at 50% 0%, ${item.accent}0c 0%, transparent 70%)` }} />
+
+            {/* Bottom accent line */}
+            <div className="absolute bottom-0 left-4 right-4 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ background: `linear-gradient(90deg, transparent, ${item.accent}35, transparent)` }} />
+          </motion.div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 function ListCard({ card, onItemClick }) {
   return (
     <div className="space-y-5">
@@ -1072,6 +1261,288 @@ function PartnersCard({ card }) {
    CTA CARD — Matches CTA.jsx with maturity scale
    bars, benefits grid, primary action button
    ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   MAIN MENU CARD — Shows all topic cards inline
+   in the chat, matching the welcome screen style
+   ═══════════════════════════════════════════════ */
+function MainMenuCard({ card, onSubmit }) {
+  const menuIconMap = {
+    Sparkles, Layers, BarChart3, Award, Globe, Cpu, Target, Users, Phone,
+  }
+
+  return (
+    <div className="space-y-5">
+      <div className="mag-card p-8 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 0% 0%, rgba(145,196,107,0.05) 0%, transparent 50%)' }} />
+        <div className="relative z-10">
+          <span className="kicker mb-3">Main Menu</span>
+          <h3 className="font-display font-black text-xl lg:text-2xl text-white mb-1 tracking-tight">{card.title}</h3>
+          {card.subtitle && <p className="text-text-secondary text-sm leading-relaxed">{card.subtitle}</p>}
+        </div>
+      </div>
+
+      <div className="grid sm:grid-cols-2 gap-3">
+        {mainMenuItems.map((item, i) => {
+          const Icon = menuIconMap[item.icon] || Sparkles
+          const isContact = item.query.includes('real person')
+          return (
+            <motion.button
+              key={item.title}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.35, delay: i * 0.05 }}
+              onClick={() => onSubmit(item.query)}
+              className={`group relative rounded-2xl p-5 text-left transition-all duration-300 hover:-translate-y-0.5 ${isContact ? 'sm:col-span-2' : ''}`}
+              style={{
+                background: isContact ? 'rgba(145,196,107,0.04)' : 'rgba(255,255,255,0.02)',
+                border: isContact ? '1px solid rgba(145,196,107,0.15)' : '1px solid rgba(255,255,255,0.06)',
+              }}
+            >
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(145,196,107,0.06) 0%, transparent 70%)' }} />
+              <div className="relative z-10">
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center mb-3"
+                  style={{
+                    background: isContact ? 'rgba(145,196,107,0.12)' : 'rgba(89,106,224,0.08)',
+                    border: isContact ? '1px solid rgba(145,196,107,0.2)' : '1px solid rgba(89,106,224,0.12)',
+                  }}>
+                  <Icon size={16} style={{ color: isContact ? '#91C46B' : '#596AE0' }} />
+                </div>
+                <div className="font-display font-bold text-white text-sm leading-snug mb-1">{item.title}</div>
+                <div className="text-text-muted text-xs flex items-center gap-1 group-hover:text-brand-green transition-colors">
+                  {isContact ? 'Connect with our team' : 'Explore'} <ChevronRight size={12} />
+                </div>
+              </div>
+            </motion.button>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+function ContactDetailsCard({ card }) {
+  const contactItems = [
+    { icon: Mail, label: 'Email', value: card.email, href: `mailto:${card.email}` },
+    { icon: Phone, label: 'Phone', value: card.phone, href: `tel:${card.phone?.replace(/\./g, '')}` },
+    { icon: MapPin, label: 'Office', value: card.address },
+  ]
+
+  // Simple math captcha
+  const [captchaA] = useState(() => Math.floor(Math.random() * 9) + 1)
+  const [captchaB] = useState(() => Math.floor(Math.random() * 9) + 1)
+  const [form, setForm] = useState({ name: '', email: '', company: '', message: '', captcha: '' })
+  const [submitted, setSubmitted] = useState(false)
+  const [submitting, setSubmitting] = useState(false)
+  const [error, setError] = useState('')
+
+  // Get your free access key at https://web3forms.com (enter vinod.mourya@radiant.digital)
+  const WEB3FORMS_KEY = '3a375f4a-b42f-45e0-a66f-0d787bf9e535'
+
+  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('')
+    if (!form.name || !form.email || !form.message) {
+      setError('Please fill in all required fields.')
+      return
+    }
+    if (parseInt(form.captcha, 10) !== captchaA + captchaB) {
+      setError('Incorrect answer. Please try again.')
+      return
+    }
+
+    setSubmitting(true)
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_KEY,
+          subject: `New inquiry from ${form.name} — Radiant Digital AI`,
+          from_name: form.name,
+          name: form.name,
+          email: form.email,
+          company: form.company || 'Not provided',
+          message: form.message,
+        }),
+      })
+      const data = await res.json()
+      if (data.success) {
+        setSubmitted(true)
+      } else {
+        setError('Something went wrong. Please try again or email us directly.')
+      }
+    } catch {
+      setError('Network error. Please try again or email us directly.')
+    } finally {
+      setSubmitting(false)
+    }
+  }
+
+  return (
+    <div className="rounded-[20px] overflow-hidden relative"
+      style={{ background: 'rgba(1,15,30,0.9)', border: '1px solid rgba(145,196,107,0.12)' }}>
+      <div className="absolute left-0 right-0 top-0 h-px"
+        style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(145,196,107,0.3) 50%, transparent 90%)' }} />
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full"
+          style={{ background: 'radial-gradient(ellipse, rgba(145,196,107,0.06) 0%, transparent 60%)' }} />
+      </div>
+
+      <div className="relative z-10 p-8 lg:p-10">
+        <span className="kicker mb-4">Contact Us</span>
+        <h3 className="font-display font-black text-white tracking-tight mb-2 leading-[0.95]"
+          style={{ fontSize: 'clamp(1.6rem, 3vw, 2.4rem)' }}>
+          {card.title}
+        </h3>
+        <p className="text-text-secondary text-sm mb-8 max-w-lg leading-relaxed">{card.body}</p>
+
+        <div className="grid md:grid-cols-2 gap-10">
+          {/* Left — Contact details */}
+          <div>
+            {/* Contact items */}
+            <div className="space-y-4 mb-8">
+              {contactItems.map((item) => (
+                <div key={item.label} className="flex items-start gap-4">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                    style={{ background: 'rgba(145,196,107,0.08)', border: '1px solid rgba(145,196,107,0.15)' }}>
+                    <item.icon size={16} className="text-brand-green" />
+                  </div>
+                  <div>
+                    <div className="text-text-muted text-[10px] font-display font-semibold uppercase tracking-widest mb-0.5">{item.label}</div>
+                    {item.href ? (
+                      <a href={item.href} className="text-white text-sm font-semibold hover:text-brand-green transition-colors">
+                        {item.value}
+                      </a>
+                    ) : (
+                      <span className="text-white text-sm font-semibold">{item.value}</span>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Global offices */}
+            {card.offices && (
+              <div className="mb-8">
+                <div className="text-text-muted text-[10px] font-display font-semibold uppercase tracking-widest mb-3">Global Offices</div>
+                <div className="flex flex-wrap gap-2">
+                  {card.offices.map((office) => (
+                    <span key={office} className="px-3 py-1.5 rounded-full text-xs font-display font-semibold text-white"
+                      style={{ background: 'rgba(89,106,224,0.12)', border: '1px solid rgba(89,106,224,0.2)' }}>
+                      {office}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Social links */}
+            {card.social && (
+              <div className="flex items-center gap-3">
+                {card.social.linkedin && (
+                  <a href={card.social.linkedin} target="_blank" rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center text-text-secondary hover:text-brand-green transition-colors"
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                    <Linkedin size={16} />
+                  </a>
+                )}
+                {card.social.youtube && (
+                  <a href={card.social.youtube} target="_blank" rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center text-text-secondary hover:text-brand-green transition-colors"
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
+                    <Youtube size={16} />
+                  </a>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* Right — Contact form */}
+          <div>
+            {submitted ? (
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="rounded-2xl p-8 text-center h-full flex flex-col items-center justify-center"
+                style={{ background: 'rgba(145,196,107,0.06)', border: '1px solid rgba(145,196,107,0.15)' }}
+              >
+                <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4"
+                  style={{ background: 'rgba(145,196,107,0.15)' }}>
+                  <CheckCircle2 size={28} className="text-brand-green" />
+                </div>
+                <h4 className="font-display font-bold text-white text-lg mb-2">Message Sent</h4>
+                <p className="text-text-secondary text-sm leading-relaxed">
+                  Thank you, {form.name}. Our team will get back to you shortly.
+                </p>
+              </motion.div>
+            ) : (
+              <form onSubmit={handleSubmit} className="space-y-4">
+                <div className="text-text-muted text-[10px] font-display font-semibold uppercase tracking-widest mb-1">Send us a message</div>
+
+                <input
+                  type="text" name="name" placeholder="Full Name *" value={form.name} onChange={handleChange}
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                />
+                <input
+                  type="email" name="email" placeholder="Work Email *" value={form.email} onChange={handleChange}
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                />
+                <input
+                  type="text" name="company" placeholder="Company" value={form.company} onChange={handleChange}
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                />
+                <textarea
+                  name="message" placeholder="How can we help? *" rows={3} value={form.message} onChange={handleChange}
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none resize-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                />
+
+                {/* Math captcha */}
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-2 px-4 py-3 rounded-xl flex-shrink-0"
+                    style={{ background: 'rgba(89,106,224,0.08)', border: '1px solid rgba(89,106,224,0.15)' }}>
+                    <Shield size={14} className="text-[#596AE0]" />
+                    <span className="text-white text-sm font-display font-semibold">{captchaA} + {captchaB} = ?</span>
+                  </div>
+                  <input
+                    type="text" name="captcha" placeholder="Answer" value={form.captcha} onChange={handleChange}
+                    className="w-24 rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none text-center transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
+                  />
+                </div>
+
+                {error && (
+                  <p className="text-red-400 text-xs font-medium">{error}</p>
+                )}
+
+                <button
+                  type="submit"
+                  disabled={submitting}
+                  className="btn-primary w-full justify-center !py-3.5 group/btn disabled:opacity-60 disabled:cursor-not-allowed"
+                >
+                  <span>{submitting ? 'Sending...' : 'Send Message'}</span>
+                  {!submitting && <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />}
+                </button>
+
+                <p className="text-text-muted text-[10px] text-center leading-relaxed">
+                  By submitting, you agree to be contacted by Radiant Digital.
+                </p>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function CTACard({ card }) {
   const levels = [
     { label: 'Reactive', color: '#F05030' },

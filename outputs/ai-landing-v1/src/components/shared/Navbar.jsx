@@ -52,11 +52,11 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             {isICX ? (
               <>
-                <a href="/#contact" className="btn-ghost !py-2.5 !px-5 !text-[0.78rem]">Learn More</a>
-                <a href="#contact" className="btn-primary !py-2.5 !px-5 !text-[0.78rem]">Book a Demo</a>
+                <Link to="/chat" className="btn-ghost !py-2.5 !px-5 !text-[0.78rem]">Learn More</Link>
+                <Link to="/chat" className="btn-primary !py-2.5 !px-5 !text-[0.78rem]">Book a Demo</Link>
               </>
             ) : (
-              <a href="#contact" className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">Start the Conversation <ArrowRight size={13} /></a>
+              <Link to="/chat" className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">Start the Conversation <ArrowRight size={13} /></Link>
             )}
           </div>
 
@@ -73,9 +73,9 @@ export default function Navbar() {
                 {l.label}
               </a>
             ))}
-            <a href="#contact" onClick={() => setOpen(false)} className="btn-primary w-fit mt-2 !py-3 !px-6">
+            <Link to="/chat" onClick={() => setOpen(false)} className="btn-primary w-fit mt-2 !py-3 !px-6">
               {isICX ? 'Book a Demo' : 'Start the Conversation'}
-            </a>
+            </Link>
           </div>
         )}
       </div>

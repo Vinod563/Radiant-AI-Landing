@@ -102,7 +102,7 @@ export default function Hero() {
                     <Sparkles size={18} className="text-brand-green" />
                   </div>
                   <span className="text-white/35 text-base font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
-                    What problem are you trying to solve?
+                    What enterprise transformation are you trying to supercharge?
                   </span>
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:bg-brand-green/15"
                     style={{ background: 'rgba(255,255,255,0.05)' }}>

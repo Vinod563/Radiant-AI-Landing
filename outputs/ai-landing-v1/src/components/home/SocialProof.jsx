@@ -28,7 +28,7 @@ const clientLogos = [
 ]
 
 const stats = [
-  { value: '20+', label: 'Years in Business', icon: Award },
+  { value: '20+', label: 'Years of Transformation', icon: Award },
   { value: '50+', label: 'Enterprise Clients', icon: Briefcase },
   { value: '$2B+', label: 'Programs Powered', icon: TrendingUp },
   { value: '40%', label: 'Avg Cost Reduction', icon: Cpu },
@@ -64,7 +64,7 @@ export default function SocialProof() {
           transition={{ duration: 0.65 }}
           className="text-center mb-20"
         >
-          <div className="kicker justify-center">Proven Trust</div>
+          <div className="kicker justify-center">Customers</div>
           <h2 className="font-display font-black leading-[0.92] tracking-tight mb-4"
             style={{ fontSize: 'clamp(2rem, 4.5vw, 3.6rem)' }}>
             50+ Enterprises.<br />

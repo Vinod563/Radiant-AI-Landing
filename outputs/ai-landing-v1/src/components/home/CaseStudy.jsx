@@ -57,8 +57,8 @@ export default function CaseStudy() {
             <div className="flex items-center gap-5 p-6 mag-card border border-white/[0.08] mb-8">
               <div className="w-14 h-14 rounded-2xl bg-brand-green flex items-center justify-center font-display font-black text-2xl text-brand-dark flex-shrink-0">T</div>
               <div>
-                <div className="font-display font-bold text-text-primary">Leading Fortune 15 Telecom Enterprise</div>
-                <div className="text-text-muted text-sm">Fortune 15 · Telecommunications</div>
+                <div className="font-display font-bold text-text-primary">Leading Telecom Company</div>
+                <div className="text-text-muted text-sm">Telecommunications</div>
               </div>
               <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-green/10 border border-brand-green/20">
                 <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
@@ -75,9 +75,9 @@ export default function CaseStudy() {
             </div>
 
             <div className="mb-8">
-              <h4 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">What Radiant Did</h4>
+              <h4 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">What Radiant Digital Did</h4>
               <p className="text-text-secondary text-base leading-relaxed">
-                Radiant built a precision context environment grounded in the carrier's
+                Radiant Digital built a precision context environment grounded in the carrier's
                 billing systems, operational data, and domain vocabulary. Then deployed
                 AI workflows across revenue assurance, billing intelligence, and
                 customer operations: live in six weeks.
@@ -91,7 +91,7 @@ export default function CaseStudy() {
                 "We expected efficiency gains. What we got was a fundamental shift:
                 our operations team now focuses on strategy, not firefighting."
               </p>
-              <span className="text-text-muted text-xs mt-2 block">: Operations Director, Fortune 15 Telecom</span>
+              <span className="text-text-muted text-xs mt-2 block">: Operations Director, Leading Telecom Company</span>
             </div>
           </motion.div>
 

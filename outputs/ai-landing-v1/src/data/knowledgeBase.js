@@ -1,35 +1,46 @@
 /**
  * Knowledge base powering the conversational AI experience.
- * Real content pulled from landing page components.
+ *
+ * SYNC MECHANISM: Content is imported from siteContent.js — the single source
+ * of truth shared with homepage components. Update siteContent.js and both
+ * the homepage AND chat will reflect the change automatically.
  */
+import {
+  brand,
+  heroMetrics,
+  proofPoints,
+  trustStats,
+  precisionContextEngine,
+  telecomCaseStudy,
+  socialProof,
+  aiFabric,
+  solutions as solutionsData,
+  markets,
+  contact as contactData,
+} from './siteContent.js'
 
 const knowledgeBase = [
   {
     id: 'what-is-radiant',
     keywords: ['what is radiant', 'about radiant', 'who is radiant', 'radiant ai', 'what do you do', 'company', 'precision context engine', 'pce', 'context engine', 'how does radiant work'],
-    question: 'What is Radiant Digital?',
+    question: `What is ${brand.name}?`,
     cards: [
       {
         type: 'hero',
-        title: 'Enterprise Transformation. Supercharged with AI.',
-        subtitle: 'Before deployment begins, Radiant Digital structures everything your AI agents and your teams need to move fast and get it right. Every AI firm brings models. Only Radiant Digital brings the Precision Context Engine.',
+        title: brand.tagline,
+        subtitle: `${brand.differentiatorBody} ${brand.differentiator}`,
         accent: '#91C46B',
       },
       {
         type: 'metrics',
         title: 'By the Numbers',
-        items: [
-          { value: '40%', label: 'Avg Cost Reduction' },
-          { value: '6 Weeks', label: 'Pilot to Production' },
-          { value: '14+', label: 'Industries Served' },
-          { value: '29', label: 'Telecom AI Use Cases Mapped' },
-        ],
+        items: heroMetrics,
         accent: '#596AE0',
       },
       {
         type: 'text',
         title: 'The Precision Context Engine',
-        body: 'Before any solution is deployed, Radiant Digital constructs a precision context environment built from your systems, your domain vocabulary, your operational constraints, and your target outcomes. The result: AI that already knows your business before it runs a single process.',
+        body: `${precisionContextEngine.bodyRight} ${precisionContextEngine.conclusion}`,
         accent: '#F0974E',
       },
       {
@@ -45,111 +56,22 @@ const knowledgeBase = [
   },
   {
     id: 'solutions',
-    keywords: ['solutions', 'products', 'what do you offer', 'what solutions', 'offerings', 'tools', 'six solutions', 'solutions does radiant', 'all solutions'],
-    question: 'What solutions does Radiant Digital offer?',
+    keywords: ['solutions', 'products', 'what do you offer', 'what solutions', 'offerings', 'tools', 'six solutions', 'solutions does radiant', 'all solutions', 'already built', 'what have you built', 'have you already built'],
+    question: `What solutions does ${brand.name} offer?`,
     cards: [
       {
         type: 'solutions',
         title: 'Purpose-built for your problem. Grounded in your context.',
-        subtitle: 'Each solution targets a specific enterprise challenge. Every one is powered by the Radiant AI Platform: 12 foundational capabilities that ensure your AI knows your environment before it starts.',
-        items: [
-          {
-            num: '01',
-            title: 'Enterprise ICX',
-            label: 'Digital Strategy and Experience',
-            accent: '#91C46B',
-            gradient: 'linear-gradient(135deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)',
-            screenshot: '/screenshots/enterprise-icx.png',
-            desc: 'Unifies every customer signal into a single intelligence layer, giving your teams the predictive power to eliminate friction before it becomes churn.',
-            tags: ['Enterprise', 'CX', 'Insight-to-ROI'],
-            details: [
-              'Unified data platform across all CX touchpoints',
-              'Proactive friction detection & elimination',
-              'Insight-to-ROI pipeline with measurable outcomes',
-              'Real-time experience monitoring & alerting',
-            ],
-          },
-          {
-            num: '02',
-            title: 'Customer Journey Intelligence',
-            label: 'Digital Strategy and Experience',
-            accent: '#F0974E',
-            gradient: 'linear-gradient(135deg, #1a0a00 0%, #3d1e00 50%, #7a3800 100%)',
-            screenshot: '/screenshots/cx-workbench.png',
-            desc: 'Accelerates the analysis of customer interactions across digital channels, enabling teams to visualize journeys and act on experience insights in hours, not weeks.',
-            tags: ['Workflow', 'Figma Analysis', 'Journey Mapping'],
-            details: [
-              'AI-accelerated interaction tagging on digital channels',
-              'Figma screen analysis with business rule engine',
-              'Customer journey visualization & mapping',
-              'Experience detail extraction & pattern recognition',
-            ],
-          },
-          {
-            num: '03',
-            title: 'Design-to-Code Modernization',
-            label: 'Product Development and Integration',
-            accent: '#00c87d',
-            gradient: 'linear-gradient(135deg, #001208 0%, #003020 50%, #005838 100%)',
-            screenshot: '/screenshots/design-to-code.png',
-            desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Working, auditable output in hours per module.',
-            tags: ['Legacy Modernization', 'Design Systems', 'AI-RAD'],
-            details: [
-              'Legacy application analysis & decomposition',
-              'Design-system-compliant code generation',
-              'Working output in hours per module',
-              'Auditable modernization pipeline',
-            ],
-          },
-          {
-            num: '04',
-            title: 'Billing Anomaly Detection',
-            label: 'Analytics, Data Science and AI',
-            accent: '#596AE0',
-            gradient: 'linear-gradient(135deg, #050818 0%, #0c1040 50%, #1a2270 100%)',
-            screenshot: '/screenshots/anomaly-detection.png',
-            desc: 'Detects billing anomalies, groups them into patterns, and guides teams to resolve issues before they reach customers, protecting revenue and trust at scale.',
-            tags: ['Billing', 'Anomaly Detection', 'Revenue Protection'],
-            details: [
-              'Real-time billing anomaly detection engine',
-              'Intelligent pattern grouping & classification',
-              'Guided resolution workflows for support teams',
-              'Proactive issue resolution before customer impact',
-            ],
-          },
-          {
-            num: '05',
-            title: 'Product Launch Risk Intelligence',
-            label: 'Analytics, Data Science and AI',
-            accent: '#F05030',
-            gradient: 'linear-gradient(135deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)',
-            screenshot: '/screenshots/magic-globe.png',
-            desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations before and after launch.',
-            tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
-            details: [
-              'Integrated sales, returns, quality & customer data',
-              'Device launch risk prediction & scoring',
-              'AI-driven root cause identification',
-              'Go/no-go recommendations pre & post launch',
-            ],
-          },
-          {
-            num: '06',
-            title: 'Automarc AI',
-            label: 'Organizational Transformation',
-            accent: '#a855f7',
-            gradient: 'linear-gradient(135deg, #080014 0%, #160038 50%, #2a0068 100%)',
-            screenshot: '/screenshots/automarc.png',
-            desc: 'Extracts, classifies, and processes content to reduce manual effort and improve accuracy, turning document-heavy operations into automated, governed workflows.',
-            tags: ['Documents', 'Automation', 'Technical Writing'],
-            details: [
-              'AI-powered content extraction & classification',
-              'Automated document processing workflows',
-              'Technical writing acceleration & consistency',
-              'Reduced manual effort with improved accuracy',
-            ],
-          },
-        ],
+        subtitle: `Each solution targets a specific enterprise challenge. Every one is powered by the ${brand.platformName}: 12 foundational capabilities that ensure your AI knows your environment before it starts.`,
+        items: solutionsData.map(s => ({
+          num: s.num,
+          title: s.title,
+          label: s.label,
+          accent: s.accent,
+          desc: s.desc,
+          tags: s.tags,
+          details: s.details,
+        })),
       },
     ],
     followUp: [
@@ -385,164 +307,62 @@ const knowledgeBase = [
   },
   {
     id: 'case-studies',
-    keywords: ['case study', 'show me proof', 'proof not promises', 'results', 'roi', 'success', 'fortune 15', 'savings'],
-    question: 'Show me proof — any case studies?',
+    keywords: ['case study', 'show me proof', 'proof not promises', 'results', 'roi', 'success', 'leading telecom', 'savings'],
+    question: 'Show me proof — not promises.',
     cards: [
       {
         type: 'case-study',
-        title: 'Fortune 15 Telecom Transformation',
-        subtitle: 'A tier-1 telecom carrier needed AI that produced measurable operational results: not a proof-of-concept that stalled after 90 days. Radiant Digital built a precision context environment grounded in the carrier\'s billing systems, operational data, and domain vocabulary. Then deployed AI workflows across revenue assurance, billing intelligence, and customer operations: live in six weeks.',
-        client: 'Leading Fortune 15 Telecom Enterprise',
-        clientDetail: 'Fortune 15 · Telecommunications',
-        metrics: [
-          { value: '3-7%', label: 'Revenue Leakage Recovered' },
-          { value: '98%', label: 'Billing Accuracy' },
-          { value: '40-70%', label: 'LLM Cost Reduction' },
-          { value: '6 wks', label: 'To Production' },
-        ],
-        quote: 'We expected efficiency gains. What we got was a fundamental shift: our operations team now focuses on strategy, not firefighting.',
-        quoteAuthor: 'Operations Director, Fortune 15 Telecom',
+        title: `${telecomCaseStudy.client} Transformation`,
+        subtitle: `${telecomCaseStudy.challenge} ${telecomCaseStudy.whatWeDid}`,
+        client: telecomCaseStudy.client,
+        clientDetail: telecomCaseStudy.clientDetail,
+        metrics: telecomCaseStudy.metrics,
+        quote: telecomCaseStudy.quote,
+        quoteAuthor: telecomCaseStudy.quoteAuthor,
         accent: '#91C46B',
+      },
+      {
+        type: 'case-study-grid',
+        title: 'More AI Case Studies with Proof',
+        subtitle: 'Every engagement below is AI-powered with measurable outcomes.',
+        items: [
+          { name: 'Scaling Telecom Service Capacity 5x', metric: '5x Capacity', detail: '70% less manual work through intelligent automation across network operations.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&q=80' },
+          { name: 'AI-Powered Virtual Assistant for Guest Support', metric: '65% Auto-Resolution', detail: 'Resolved guest inquiries, booking modifications, and service requests with +22 NPS improvement.', industry: 'Hospitality', accent: '#F0974E', image: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=400&h=300&fit=crop&q=80' },
+          { name: 'AI-Accelerated Digital Platform Modernization', metric: '60% Faster', detail: 'Legacy platform modernized with 99.9% uptime and 45% cost reduction.', industry: 'Web Services', accent: '#91C46B', image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop&q=80' },
+          { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '70% Less Downtime', detail: 'Connected worker safety and predictive maintenance across remote operations.', industry: 'IoT', accent: '#2DD4BF', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop&q=80' },
+          { name: 'AI-Driven Outage Response & Integration', metric: '55% Faster Resolution', detail: '80% auto-detection across monitoring platforms for faster incident response.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&h=300&fit=crop&q=80' },
+          { name: 'AI-Powered Network Intelligence', metric: '5x Visibility', detail: 'AI-powered development enabling unprecedented network operations insight.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop&q=80' },
+        ],
+        accent: '#596AE0',
       },
     ],
     followUp: [
-      'What have you done for telecom enterprises?',
-      'What have you done for healthcare?',
-      'Show me all case studies',
+      'Tell me about the Scaling Telecom case study',
+      'Tell me about the Improving Guest Support case study',
       'What solutions does Radiant Digital offer?',
+      'How can I get started?',
     ],
   },
   {
     id: 'industries',
-    keywords: ['industries', 'markets', 'sectors', 'government', 'healthcare', 'telecom', 'defense', 'education', 'financial', 'oil', 'gas', 'who do you serve', 'domain'],
+    keywords: ['industries', 'markets', 'sectors', 'government', 'healthcare', 'telecom', 'defense', 'education', 'financial', 'oil', 'gas', 'who do you serve', 'domain', 'my industry', 'work in my industry', 'do you work in'],
     question: 'Which industries do you serve?',
     cards: [
       {
         type: 'industries',
         title: 'Built for Your Domain',
         subtitle: 'Every industry has its own rules, risks, and opportunities. We bring enterprise transformation shaped by deep sector expertise: so you scale faster, with governance built in from the start.',
-        items: [
-          {
-            title: 'Technology, Media and Telecom',
-            icon: 'Radio',
-            accent: '#596AE0',
-            gradientFrom: '#1e2a6e',
-            gradientTo: '#596AE0',
-            image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&h=900&fit=crop&q=80',
-            clients: 'Major tier-1 carriers',
-            desc: 'Radiant Digital has mapped 29 AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity.',
-            metrics: [
-              { value: '29', label: 'AI Use Cases' },
-              { value: '40%', label: 'Faster Deployment' },
-              { value: '99.9%', label: 'Uptime SLA' },
-            ],
-          },
-          {
-            title: 'Healthcare and Life Sciences',
-            icon: 'HeartPulse',
-            accent: '#e05990',
-            gradientFrom: '#7a2050',
-            gradientTo: '#e05990',
-            image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=900&fit=crop&q=80',
-            clients: 'NIH, MD Anderson, CHOP',
-            desc: 'Privacy-first AI that scales clinical workflows and research operations: with HIPAA governance built in, not bolted on.',
-            metrics: [
-              { value: '35%', label: 'Cost Reduction' },
-              { value: '70%', label: 'Less Manual Work' },
-              { value: '30%', label: 'Ops Efficiency Gain' },
-            ],
-          },
-          {
-            title: 'Financial Services',
-            icon: 'Banknote',
-            accent: '#F0974E',
-            gradientFrom: '#7a4a10',
-            gradientTo: '#F0974E',
-            image: 'https://images.unsplash.com/photo-1560472355-536de3962603?w=600&h=900&fit=crop&q=80',
-            clients: 'Navy Federal Credit Union, major BFSI enterprises',
-            desc: 'AI for fraud detection, compliance automation, and customer journey transformation: with audit trails from day one.',
-            metrics: [
-              { value: '40%', label: 'Conversion Lift' },
-              { value: '25%', label: 'CSAT Improvement' },
-              { value: '70%', label: 'Sync Time Reduced' },
-            ],
-          },
-          {
-            title: 'Federal Government',
-            icon: 'Landmark',
-            accent: '#596AE0',
-            gradientFrom: '#1a2060',
-            gradientTo: '#596AE0',
-            image: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=900&fit=crop&q=80',
-            clients: 'DoD, HHS, DHS, Treasury, Commerce, Interior',
-            desc: 'Mission-critical enterprise transformation with program-grade delivery, human-in-the-loop governance, and federal compliance alignment.',
-            metrics: [
-              { value: '45%', label: 'Infra Cost Reduction' },
-              { value: '40%', label: 'Faster Delivery' },
-              { value: '70%', label: 'Ops Efficiency Gain' },
-            ],
-          },
-          {
-            title: 'State and Local Government',
-            icon: 'Building2',
-            accent: '#91C46B',
-            gradientFrom: '#2a5018',
-            gradientTo: '#91C46B',
-            image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=900&fit=crop&q=80',
-            clients: 'FL DCF, FL DEO, FL DOT',
-            desc: 'Citizen-centric transformation that delivers better outcomes on constrained budgets. Faster permitting, benefits processing, and case management: at scale.',
-            metrics: [
-              { value: '30%', label: 'Cost Savings' },
-              { value: '70%', label: 'Faster Processing' },
-              { value: '25%', label: 'Citizen CSAT Lift' },
-            ],
-          },
-          {
-            title: 'Education',
-            icon: 'GraduationCap',
-            accent: '#a855f7',
-            gradientFrom: '#4a1880',
-            gradientTo: '#a855f7',
-            image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=900&fit=crop&q=80',
-            clients: 'UT Austin, Baylor University, research institutions',
-            desc: 'AI-first campus transformation: research analytics, student outcomes, and FERPA-compliant data governance at scale.',
-            metrics: [
-              { value: '35%', label: 'Cost Reduction' },
-              { value: '50%', label: 'Faster Data Access' },
-              { value: '70%', label: 'Engagement Lift' },
-            ],
-          },
-          {
-            title: 'Oil and Gas',
-            icon: 'Fuel',
-            accent: '#F0974E',
-            gradientFrom: '#5a3000',
-            gradientTo: '#F0974E',
-            image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=600&h=900&fit=crop&q=80',
-            clients: 'Halliburton, Noble Corporation, offshore operators',
-            desc: 'Connected worker safety, predictive maintenance, and digital asset intelligence across remote and field operations.',
-            metrics: [
-              { value: '60%', label: 'Maintenance Uplift' },
-              { value: '70%', label: 'Downtime Reduced' },
-              { value: '99.9%', label: 'Safety Uptime' },
-            ],
-          },
-          {
-            title: 'Defense and Intelligence',
-            icon: 'Shield',
-            accent: '#2DD4BF',
-            gradientFrom: '#0a3028',
-            gradientTo: '#2DD4BF',
-            image: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=600&h=900&fit=crop&q=80',
-            clients: 'Department of Defense',
-            desc: 'Mission-critical AI with zero-trust governance: humans orchestrate, never autonomous decisions in classified environments.',
-            metrics: [
-              { value: '40%', label: 'Faster Deployment' },
-              { value: '99.9%', label: 'System Uptime' },
-              { value: '35%', label: 'Infra Cost Savings' },
-            ],
-          },
-        ],
+        items: markets.map(m => ({
+          title: m.title,
+          icon: m.icon,
+          accent: m.accent,
+          gradientFrom: m.accent.replace(/^#/, '#') + '20',
+          gradientTo: m.accent,
+          image: m.image,
+          clients: m.clients,
+          desc: m.desc,
+          metrics: m.metrics,
+        })),
       },
     ],
     followUp: [
@@ -554,7 +374,7 @@ const knowledgeBase = [
   },
   {
     id: 'platform',
-    keywords: ['platform', 'technology', 'architecture', 'how does it work', 'under the hood', 'framework', 'agent', 'microagent', 'agentic', 'four platforms'],
+    keywords: ['platform', 'technology', 'architecture', 'how does it work', 'under the hood', 'framework', 'agent', 'microagent', 'agentic', 'four platforms', 'radiant ai platform', 'what is the radiant ai platform', 'what is the platform'],
     question: 'How does the platform work?',
     cards: [
       {
@@ -613,7 +433,7 @@ const knowledgeBase = [
       },
     ],
     followUp: [
-      'How does the Radiant AI Platform work?',
+      'How does the Radiant Digital AI Platform work?',
       'What solutions does Radiant Digital offer?',
       'How secure is Radiant Digital?',
       'How can I get started?',
@@ -622,24 +442,22 @@ const knowledgeBase = [
   {
     id: 'services',
     keywords: ['services', 'enablers', 'pillars', 'transformation', 'strategy', 'analytics', 'cloud', 'workforce', 'consulting', 'what services'],
-    question: 'What services does Radiant Digital provide?',
+    question: `What services does ${brand.name} provide?`,
     cards: [
       {
         type: 'list',
-        title: 'AI Fabric: AI infused into everything we do.',
-        subtitle: 'AI Fabric is not a product. It is the way Radiant Digital operates. Every practice runs with AI embedded: not bolted on.',
-        items: [
-          { name: 'Digital Strategy and Experience', metric: 'Design and optimize experiences faster', accent: '#91C46B' },
-          { name: 'Product Development and Integration', metric: 'Accelerate delivery, reduce cost', accent: '#F0974E' },
-          { name: 'Cloud Transformation', metric: 'AI-optimized infrastructure', accent: '#596AE0' },
-          { name: 'Analytics, Data Science and AI', metric: 'Data to real-time intelligence', accent: '#2DD4BF' },
-          { name: 'Organizational Transformation', metric: 'Empower people and processes', accent: '#a855f7' },
-        ],
+        title: `${aiFabric.kicker}: ${aiFabric.headline.replace(/\n/g, ' ')}`,
+        subtitle: aiFabric.body,
+        items: aiFabric.practices.map((p, i) => ({
+          name: p.title,
+          metric: p.desc,
+          accent: ['#91C46B', '#F0974E', '#596AE0', '#2DD4BF', '#a855f7'][i],
+        })),
         accent: '#596AE0',
       },
     ],
     followUp: [
-      'How does the Radiant AI Platform work?',
+      'How does the Radiant Digital AI Platform work?',
       'Which industries do you serve?',
       'Show me case studies',
       'How can I get started?',
@@ -648,29 +466,35 @@ const knowledgeBase = [
   {
     id: 'security',
     keywords: ['security', 'compliance', 'cmmc', 'governance', 'audit', 'secure', 'trust', 'certifications', 'how secure', 'secure is radiant'],
-    question: 'How secure is Radiant Digital?',
+    question: `How secure is ${brand.name}?`,
     cards: [
       {
         type: 'text',
         title: 'Governance Built In, Not Bolted On',
-        body: 'Enterprise-grade security with CMMC compliance. Every deployment includes full audit trails, human-in-the-loop oversight, and zero-trust architecture by default.',
+        body: `Enterprise-grade security with ${socialProof.compliance}. Every deployment includes full audit trails, human-in-the-loop oversight, and zero-trust architecture by default.`,
         accent: '#2DD4BF',
       },
       {
         type: 'metrics',
         title: 'Security and Trust',
         items: [
-          { value: 'CMMC', label: 'Defense Ready' },
+          { value: socialProof.compliance.replace(' compliant', '').toUpperCase(), label: 'Defense Ready' },
           { value: '99.9%', label: 'Uptime SLA' },
           { value: 'Zero-Trust', label: 'Architecture' },
           { value: 'Human-in-Loop', label: 'Governance' },
         ],
         accent: '#2DD4BF',
       },
+      {
+        type: 'metrics',
+        title: 'By the Numbers',
+        items: trustStats.map(s => ({ value: s.value, label: s.label })),
+        accent: '#91C46B',
+      },
     ],
     followUp: [
       'What solutions does Radiant Digital offer?',
-      'How does the Radiant AI Platform work?',
+      'How does the Radiant Digital AI Platform work?',
       'Show me case studies',
       'How can I get started?',
     ],
@@ -678,12 +502,12 @@ const knowledgeBase = [
   {
     id: 'why-radiant',
     keywords: ['why radiant', 'differentiator', 'competitive', 'advantage', 'why choose', 'why choose radiant', 'what makes you different', 'what makes radiant different', 'better'],
-    question: 'Why choose Radiant Digital?',
+    question: `Why choose ${brand.name}?`,
     cards: [
       {
         type: 'hero',
-        title: 'Every AI firm brings models. Only Radiant Digital brings the Precision Context Engine.',
-        subtitle: 'Before deployment begins, Radiant Digital structures everything your AI agents and your teams need to move fast and get it right.',
+        title: brand.differentiator,
+        subtitle: brand.differentiatorBody,
         accent: '#91C46B',
       },
       {
@@ -692,11 +516,7 @@ const knowledgeBase = [
       {
         type: 'metrics',
         title: 'The Proof',
-        items: [
-          { value: '40%', label: 'Avg Cost Reduction' },
-          { value: '6 Weeks', label: 'Kickoff to Production' },
-          { value: '29', label: 'Telecom AI Use Cases Mapped' },
-        ],
+        items: proofPoints.map(p => ({ value: p.value, label: p.label })),
         accent: '#596AE0',
       },
     ],
@@ -709,17 +529,18 @@ const knowledgeBase = [
   },
   {
     id: 'contact',
-    keywords: ['contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'assessment'],
+    keywords: ['contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'assessment', 'real person', 'talk to a real person', 'rather talk', 'ai-ready', 'ai ready', 'how ai-ready', 'my organization'],
     question: 'How can I get started?',
     cards: [
       {
-        type: 'cta',
-        title: 'Where does your enterprise stand on AI readiness?',
-        body: 'Five minutes. No signup. A prioritized roadmap that tells you where you are, where the gaps are, and which AI deployments would produce the fastest results.',
-        actions: [
-          { label: 'Take the Assessment', href: '/chat' },
-          { label: 'Start the Conversation', href: '/chat' },
-        ],
+        type: 'contact-details',
+        title: 'Let\'s Start a Conversation',
+        body: 'Reach out directly — our team is ready to discuss how AI can transform your enterprise operations.',
+        email: contactData.email,
+        phone: contactData.phone,
+        address: contactData.address,
+        offices: contactData.offices,
+        social: contactData.social,
         accent: '#91C46B',
       },
     ],
@@ -732,56 +553,36 @@ const knowledgeBase = [
   },
   {
     id: 'all-case-studies',
-    keywords: ['case studies', 'all case studies', 'portfolio', 'all projects', 'show me all', 'full portfolio', 'all engagements', 'complete list'],
+    keywords: ['case studies', 'all case studies', 'portfolio', 'all projects', 'show me all', 'full portfolio', 'all engagements', 'complete list', 'who has worked with you', 'what did they achieve', 'worked with you', 'clients', 'references'],
     question: 'Show me your case studies and proof.',
     cards: [
       {
         type: 'text',
-        title: 'Proof Across Industries',
-        body: 'Radiant Digital has delivered transformation engagements across telecom, federal, state government, healthcare, financial services, oil and gas, and more. Here is a selection of published case studies from our portfolio.',
+        title: 'AI-Powered Transformation — Proof Across Industries',
+        body: 'Radiant Digital has delivered AI-driven transformation engagements across telecom, hospitality, web services, IoT, and enterprise operations. Here are our AI case studies with measurable outcomes.',
         accent: '#91C46B',
       },
       {
-        type: 'list',
-        title: '30+ Published Case Studies',
-        subtitle: 'A selection from our portfolio of enterprise engagements.',
+        type: 'case-study-grid',
+        title: 'AI Case Studies',
+        subtitle: 'Every engagement powered by AI, automation, or intelligent systems.',
         items: [
-          { name: 'Scaling Telecom Service Capacity 5x with Intelligent Automation', metric: 'Telecom', accent: '#596AE0' },
-          { name: 'Improving Guest Support with an AI-Powered Virtual Assistant', metric: 'Hospitality', accent: '#F0974E' },
-          { name: 'Modernizing Digital Platforms with AI-Accelerated Delivery', metric: 'Web Services', accent: '#91C46B' },
-          { name: 'Advancing Industrial IoT with AI-Accelerated Product Delivery', metric: 'IoT / Tracklynk', accent: '#2DD4BF' },
-          { name: 'Improving Outage Response with AI and System Integration', metric: 'Telecom', accent: '#596AE0' },
-          { name: 'Enabling Network Intelligence through AI-Powered Development', metric: 'Telecom', accent: '#596AE0' },
-          { name: 'Accountability System Audit for Florida DCF', metric: 'State Gov', accent: '#91C46B' },
-          { name: 'Florida DEO Reemployment Assistance Modernization', metric: 'State Gov', accent: '#91C46B' },
-          { name: 'Enhancing Test Data Management at FLHSMV', metric: 'State Gov', accent: '#91C46B' },
-          { name: 'Florida DOT Disaster Recovery Plan for HCI Servers', metric: 'State Gov', accent: '#91C46B' },
-          { name: 'Application Modernization for Navy Federal Credit Union', metric: 'Financial', accent: '#F0974E' },
-          { name: 'Systems Assurance and Technical Services for USCIS', metric: 'Federal', accent: '#596AE0' },
-          { name: 'Modernizing Infrastructure for Scalable Analytics', metric: 'Commercial', accent: '#2DD4BF' },
-          { name: 'World Table Tennis: Elevating the Sport', metric: 'Entertainment', accent: '#a855f7' },
-          { name: 'Transforming Digital Excellence: Scalable Design System', metric: 'Federal/HHS', accent: '#596AE0' },
-          { name: 'Transforming Oil Field Solutions with Halliburton', metric: 'Oil & Gas', accent: '#F0974E' },
-          { name: 'Enhancing Head Start Reporting Systems for OHS', metric: 'Federal/HHS', accent: '#596AE0' },
-          { name: 'Augmented Reality App for Halliburton Oil Field Tool', metric: 'Oil & Gas', accent: '#F0974E' },
-          { name: 'Transforming Federal Operations with Digital Innovation', metric: 'Federal/DHS', accent: '#596AE0' },
-          { name: 'Optimizing Application Development for Telecom Provider', metric: 'Telecom', accent: '#596AE0' },
-          { name: 'STARTing Strong: HIV Treatment Adherence Platform', metric: 'Healthcare', accent: '#e05990' },
-          { name: 'Brighter Bites: Healthy Food Access Platform', metric: 'Healthcare', accent: '#e05990' },
-          { name: 'Quit4Health: Smarter Way to Quit Smoking', metric: 'Healthcare', accent: '#e05990' },
-          { name: 'QuitBuddy: Social Support for Quitting', metric: 'Healthcare', accent: '#e05990' },
-          { name: 'mySmartSkin: Skin Cancer Survivor Monitoring', metric: 'Healthcare', accent: '#e05990' },
-          { name: 'MY Health: Young Adult Health Management', metric: 'Healthcare', accent: '#e05990' },
-          { name: 'Pocket Ark: PPE Training Platform', metric: 'Healthcare', accent: '#e05990' },
+          { name: 'Scaling Telecom Service Capacity 5x', metric: '5x Capacity', detail: 'Intelligent automation across network operations with 70% less manual work.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&q=80' },
+          { name: 'AI-Powered Virtual Assistant', metric: '65% Auto-Resolution', detail: 'Guest support automation with +22 NPS improvement in hospitality.', industry: 'Hospitality', accent: '#F0974E', image: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=400&h=300&fit=crop&q=80' },
+          { name: 'AI-Accelerated Platform Modernization', metric: '60% Faster Delivery', detail: 'Legacy digital platform modernized with 99.9% uptime achieved.', industry: 'Web Services', accent: '#91C46B', image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop&q=80' },
+          { name: 'Industrial IoT with AI Delivery', metric: '70% Less Downtime', detail: 'Connected worker safety and predictive maintenance via Tracklynk.', industry: 'IoT', accent: '#2DD4BF', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop&q=80' },
+          { name: 'AI-Driven Outage Response', metric: '55% Faster Resolution', detail: '80% auto-detection across monitoring platforms.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&h=300&fit=crop&q=80' },
+          { name: 'AI-Powered Network Intelligence', metric: '5x Visibility', detail: 'Unprecedented network operations insight through AI-powered development.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop&q=80' },
+          { name: 'Revenue Assurance & Billing Intelligence', metric: '3-7% Leakage Recovered', detail: '98% billing accuracy with AI FinOps for a leading telecom company.', industry: 'Telecom', accent: '#91C46B', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&q=80' },
         ],
         accent: '#91C46B',
       },
     ],
     followUp: [
       'What have you done for telecom?',
-      'What have you done for federal agencies?',
-      'What have you done for healthcare?',
-      'What have you done for oil and gas?',
+      'Tell me about the Leading Telecom Company case study',
+      'What solutions does Radiant Digital offer?',
+      'How can I get started?',
     ],
   },
   {
@@ -1473,17 +1274,281 @@ const knowledgeBase = [
       },
     ],
   },
+  {
+    id: 'persona-finder',
+    keywords: ['right for my role', 'solutions for my role', 'which solutions', 'my role', 'for my role', 'cto', 'cdo', 'vp of cx', 'operations leader', 'what role', 'buyer', 'persona'],
+    question: 'Which solutions are right for my role?',
+    cards: [
+      {
+        type: 'text',
+        title: 'Let Me Match Solutions to Your Role',
+        body: 'Different leaders face different transformation challenges. Tell me which best describes you, and I will surface the Radiant Digital solutions most relevant to your priorities.',
+        accent: '#91C46B',
+      },
+      {
+        type: 'grid',
+        title: 'What kind of leader are you?',
+        clickable: true,
+        columns: 2,
+        items: [
+          {
+            icon: 'Cpu',
+            title: 'CTO / VP of Engineering',
+            accent: '#596AE0',
+            desc: 'Platform modernization, cloud transformation, and scalable AI infrastructure.',
+            query: "I'm a CTO / VP of Engineering",
+          },
+          {
+            icon: 'BarChart3',
+            title: 'CDO / VP of Data and Analytics',
+            accent: '#91C46B',
+            desc: 'Data-driven intelligence, billing anomaly detection, and AI-powered analytics.',
+            query: "I'm a CDO / VP of Data and Analytics",
+          },
+          {
+            icon: 'Users',
+            title: 'VP of CX / Customer Experience',
+            accent: '#F0974E',
+            desc: 'Unified customer signals, journey intelligence, and experience optimization.',
+            query: "I'm a VP of CX / Customer Experience",
+          },
+          {
+            icon: 'Target',
+            title: 'Operations Leader / COO',
+            accent: '#a855f7',
+            desc: 'Workflow automation, document intelligence, and operational efficiency at scale.',
+            query: "I'm an Operations Leader / COO",
+          },
+        ],
+      },
+    ],
+    followUp: [],
+  },
+  {
+    id: 'persona-cto',
+    keywords: ["i'm a cto", 'vp of engineering', 'cto / vp of engineering', "i'm a cto / vp"],
+    question: "I'm a CTO / VP of Engineering",
+    cards: [
+      {
+        type: 'text',
+        title: 'Solutions for Engineering Leaders',
+        body: 'As a CTO or VP of Engineering, your priorities are platform modernization, scalable AI infrastructure, and accelerating delivery without sacrificing quality. Here are the Radiant Digital solutions built for your challenges.',
+        accent: '#596AE0',
+      },
+      {
+        type: 'solutions',
+        title: 'Recommended for Your Role',
+        items: [
+          {
+            num: '01',
+            title: 'Design-to-Code Modernization',
+            label: 'Product Development and Integration',
+            accent: '#00c87d',
+            gradient: 'linear-gradient(135deg, #001208 0%, #003020 50%, #005838 100%)',
+            screenshot: '/screenshots/design-to-code.png',
+            desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Working, auditable output in hours per module.',
+            tags: ['Legacy Modernization', 'Design Systems', 'AI-RAD'],
+            details: ['Legacy application analysis and decomposition', 'Design-system-compliant code generation', 'Working output in hours per module', 'Auditable modernization pipeline'],
+          },
+          {
+            num: '02',
+            title: 'Automarc AI',
+            label: 'Organizational Transformation',
+            accent: '#a855f7',
+            gradient: 'linear-gradient(135deg, #080014 0%, #160038 50%, #2a0068 100%)',
+            screenshot: '/screenshots/automarc.png',
+            desc: 'Extracts, classifies, and processes content to reduce manual effort and improve accuracy, turning document-heavy operations into automated, governed workflows.',
+            tags: ['Documents', 'Automation', 'Technical Writing'],
+            details: ['AI-powered content extraction and classification', 'Automated document processing workflows', 'Technical writing acceleration and consistency', 'Reduced manual effort with improved accuracy'],
+          },
+        ],
+      },
+    ],
+    followUp: [
+      'What is the Radiant Digital AI Platform?',
+      'Show me proof, not promises.',
+      'What have you already built?',
+      "I'd rather talk to a real person.",
+    ],
+  },
+  {
+    id: 'persona-cdo',
+    keywords: ["i'm a cdo", 'vp of data', 'data and analytics', "i'm a cdo / vp"],
+    question: "I'm a CDO / VP of Data and Analytics",
+    cards: [
+      {
+        type: 'text',
+        title: 'Solutions for Data and Analytics Leaders',
+        body: 'As a CDO or VP of Data and Analytics, you need AI that turns raw data into actionable intelligence, detects anomalies before they reach customers, and predicts risk with precision. Here is what Radiant Digital has built for you.',
+        accent: '#91C46B',
+      },
+      {
+        type: 'solutions',
+        title: 'Recommended for Your Role',
+        items: [
+          {
+            num: '01',
+            title: 'Billing Anomaly Detection',
+            label: 'Analytics, Data Science and AI',
+            accent: '#596AE0',
+            gradient: 'linear-gradient(135deg, #050818 0%, #0c1040 50%, #1a2270 100%)',
+            screenshot: '/screenshots/anomaly-detection.png',
+            desc: 'Detects billing anomalies, groups them into patterns, and guides teams to resolve issues before they reach customers, protecting revenue and trust at scale.',
+            tags: ['Billing', 'Anomaly Detection', 'Revenue Protection'],
+            details: ['Real-time billing anomaly detection engine', 'Intelligent pattern grouping and classification', 'Guided resolution workflows for support teams', 'Proactive issue resolution before customer impact'],
+          },
+          {
+            num: '02',
+            title: 'Product Launch Risk Intelligence',
+            label: 'Analytics, Data Science and AI',
+            accent: '#F05030',
+            gradient: 'linear-gradient(135deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)',
+            screenshot: '/screenshots/magic-globe.png',
+            desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations.',
+            tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
+            details: ['Integrated sales, returns, quality and customer data', 'Device launch risk prediction and scoring', 'AI-driven root cause identification', 'Go/no-go recommendations pre and post launch'],
+          },
+        ],
+      },
+    ],
+    followUp: [
+      'What is the Radiant Digital AI Platform?',
+      'Show me proof, not promises.',
+      'Do you work in my industry?',
+      "I'd rather talk to a real person.",
+    ],
+  },
+  {
+    id: 'persona-cx',
+    keywords: ["i'm a vp of cx", 'customer experience', 'vp of cx / customer', "i'm a vp of cx /"],
+    question: "I'm a VP of CX / Customer Experience",
+    cards: [
+      {
+        type: 'text',
+        title: 'Solutions for Customer Experience Leaders',
+        body: 'As a VP of CX, you need unified customer signals, journey intelligence, and the ability to act on experience insights in hours, not weeks. Here is what Radiant Digital has built for you.',
+        accent: '#F0974E',
+      },
+      {
+        type: 'solutions',
+        title: 'Recommended for Your Role',
+        items: [
+          {
+            num: '01',
+            title: 'Enterprise ICX',
+            label: 'Digital Strategy and Experience',
+            accent: '#91C46B',
+            gradient: 'linear-gradient(135deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)',
+            screenshot: '/screenshots/enterprise-icx.png',
+            desc: 'Unifies every customer signal into a single intelligence layer, giving your teams the predictive power to eliminate friction before it becomes churn.',
+            tags: ['Enterprise', 'CX', 'Insight-to-ROI'],
+            details: ['Unified data platform across all CX touchpoints', 'Proactive friction detection and elimination', 'Insight-to-ROI pipeline with measurable outcomes', 'Real-time experience monitoring and alerting'],
+          },
+          {
+            num: '02',
+            title: 'Customer Journey Intelligence',
+            label: 'Digital Strategy and Experience',
+            accent: '#F0974E',
+            gradient: 'linear-gradient(135deg, #1a0a00 0%, #3d1e00 50%, #7a3800 100%)',
+            screenshot: '/screenshots/cx-workbench.png',
+            desc: 'Accelerates the analysis of customer interactions across digital channels, enabling teams to visualize journeys and act on experience insights in hours, not weeks.',
+            tags: ['Workflow', 'Figma Analysis', 'Journey Mapping'],
+            details: ['AI-accelerated interaction tagging on digital channels', 'Figma screen analysis with business rule engine', 'Customer journey visualization and mapping', 'Experience detail extraction and pattern recognition'],
+          },
+        ],
+      },
+    ],
+    followUp: [
+      'Who has worked with you and what did they achieve?',
+      'What is the Radiant Digital AI Platform?',
+      'What makes Radiant Digital different?',
+      "I'd rather talk to a real person.",
+    ],
+  },
+  {
+    id: 'persona-ops',
+    keywords: ["i'm an operations", 'operations leader', 'coo', "i'm an operations leader"],
+    question: "I'm an Operations Leader / COO",
+    cards: [
+      {
+        type: 'text',
+        title: 'Solutions for Operations Leaders',
+        body: 'As an Operations Leader or COO, you need workflow automation, document intelligence, and operational efficiency that scales. Here is what Radiant Digital has built for you.',
+        accent: '#a855f7',
+      },
+      {
+        type: 'solutions',
+        title: 'Recommended for Your Role',
+        items: [
+          {
+            num: '01',
+            title: 'Automarc AI',
+            label: 'Organizational Transformation',
+            accent: '#a855f7',
+            gradient: 'linear-gradient(135deg, #080014 0%, #160038 50%, #2a0068 100%)',
+            screenshot: '/screenshots/automarc.png',
+            desc: 'Extracts, classifies, and processes content to reduce manual effort and improve accuracy, turning document-heavy operations into automated, governed workflows.',
+            tags: ['Documents', 'Automation', 'Technical Writing'],
+            details: ['AI-powered content extraction and classification', 'Automated document processing workflows', 'Technical writing acceleration and consistency', 'Reduced manual effort with improved accuracy'],
+          },
+          {
+            num: '02',
+            title: 'Enterprise ICX',
+            label: 'Digital Strategy and Experience',
+            accent: '#91C46B',
+            gradient: 'linear-gradient(135deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)',
+            screenshot: '/screenshots/enterprise-icx.png',
+            desc: 'Unifies every customer signal into a single intelligence layer, giving your teams the predictive power to eliminate friction before it becomes churn.',
+            tags: ['Enterprise', 'CX', 'Insight-to-ROI'],
+            details: ['Unified data platform across all CX touchpoints', 'Proactive friction detection and elimination', 'Insight-to-ROI pipeline with measurable outcomes', 'Real-time experience monitoring and alerting'],
+          },
+        ],
+      },
+    ],
+    followUp: [
+      'Show me proof, not promises.',
+      'What is the Radiant Digital AI Platform?',
+      'Do you work in my industry?',
+      "I'd rather talk to a real person.",
+    ],
+  },
+  {
+    id: 'main-menu',
+    keywords: ['main menu', 'show me the main menu', 'start over', 'menu', 'all options', 'what can you help with', 'home', 'go back'],
+    question: 'Show me the main menu',
+    cards: [
+      {
+        type: 'main-menu',
+        title: 'What can we help you explore?',
+        subtitle: 'Pick a topic below to get started.',
+      },
+    ],
+    followUp: [],
+  },
+]
+
+const mainMenuItems = [
+  { title: 'What makes Radiant Digital different?', icon: 'Sparkles', query: 'What makes Radiant Digital different?' },
+  { title: 'What have you already built?', icon: 'Layers', query: 'What have you already built?' },
+  { title: 'Show me proof, not promises.', icon: 'BarChart3', query: 'Show me proof, not promises.' },
+  { title: 'Who has worked with you and what did they achieve?', icon: 'Award', query: 'Who has worked with you and what did they achieve?' },
+  { title: 'Do you work in my industry?', icon: 'Globe', query: 'Do you work in my industry?' },
+  { title: 'What is the Radiant Digital AI Platform?', icon: 'Cpu', query: 'What is the Radiant Digital AI Platform?' },
+  { title: 'How AI-ready is my organization?', icon: 'Target', query: 'How AI-ready is my organization?' },
+  { title: 'Which solutions are right for my role?', icon: 'Users', query: 'Which solutions are right for my role?' },
+  { title: "I'd rather talk to a real person.", icon: 'Phone', query: "I'd rather talk to a real person." },
 ]
 
 const suggestions = [
-  'What solutions does Radiant Digital offer?',
-  'Why choose Radiant Digital?',
-  'Show me proof and case studies',
-  'Which industries do you serve?',
-  'What have you done for telecom?',
-  'How does the platform work?',
-  'How secure is Radiant Digital?',
-  'How can I get started?',
+  'What makes Radiant Digital different?',
+  'What have you already built?',
+  'Show me proof, not promises.',
+  'Who has worked with you and what did they achieve?',
+  'Do you work in my industry?',
+  'What is the Radiant Digital AI Platform?',
+  'How AI-ready is my organization?',
+  'Which solutions are right for my role?',
+  "I'd rather talk to a real person.",
 ]
 
 export function findAnswer(query) {
@@ -1512,10 +1577,10 @@ export function findAnswer(query) {
   }
 
   const defaultFollowUp = [
-    'What solutions does Radiant Digital offer?',
-    'Show me case studies',
-    'Which industries do you serve?',
-    'How can I get started?',
+    'What have you already built?',
+    'Show me proof, not promises.',
+    'Do you work in my industry?',
+    'What is the Radiant Digital AI Platform?',
   ]
 
   if (!best || bestScore < 3) {
@@ -1525,8 +1590,8 @@ export function findAnswer(query) {
       cards: [
         {
           type: 'text',
-          title: 'Here\u2019s What I Can Help With',
-          body: 'I can tell you about Radiant Digital\'s solutions, industries we serve, case studies, our platform architecture, security compliance, and how to get started. Try asking one of the suggestions below!',
+          title: 'Let Me Point You in the Right Direction',
+          body: 'I can walk you through what makes Radiant Digital different, the solutions we have already built, proof from real engagements, the industries we serve, and how the Radiant Digital AI Platform works. Pick one of the options below to get started.',
           accent: '#596AE0',
         },
       ],
@@ -1536,13 +1601,12 @@ export function findAnswer(query) {
 
   // Ensure every response has followUp suggestions
   if (!best.followUp) {
-    // For case study entries, suggest related actions
     if (best.id.startsWith('cs-')) {
       best = { ...best, followUp: [
-        'Show me all case studies',
-        'What solutions does Radiant Digital offer?',
-        'Which industries do you serve?',
-        'How can I get started?',
+        'Show me proof, not promises.',
+        'What have you already built?',
+        'Do you work in my industry?',
+        "I'd rather talk to a real person.",
       ]}
     } else {
       best = { ...best, followUp: defaultFollowUp }
@@ -1552,4 +1616,4 @@ export function findAnswer(query) {
   return best
 }
 
-export { knowledgeBase, suggestions }
+export { knowledgeBase, suggestions, mainMenuItems }

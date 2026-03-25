@@ -66,7 +66,7 @@ const markets = [
     accent: '#596AE0',
     gradientFrom: '#1a2060',
     gradientTo: '#596AE0',
-    image: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?w=600&h=900&fit=crop&q=80',
+    image: 'https://images.unsplash.com/photo-1501466044931-62695aada8e9?w=600&h=900&fit=crop&q=80',
     clients: 'DoD, HHS, DHS, Treasury, Commerce, Interior',
     desc: 'Mission-critical enterprise transformation with program-grade delivery, human-in-the-loop governance, and federal compliance alignment.',
     metrics: [
