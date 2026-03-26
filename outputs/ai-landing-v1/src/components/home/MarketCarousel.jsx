@@ -167,7 +167,7 @@ export default function MarketCarousel() {
   }
 
   return (
-    <section ref={sectionRef} className="bg-brand-dark py-32 lg:py-44 relative overflow-x-clip overflow-y-visible">
+    <section id="industries" ref={sectionRef} className="bg-brand-dark py-32 lg:py-44 relative overflow-x-clip overflow-y-visible">
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         {/* Header */}
         <motion.div

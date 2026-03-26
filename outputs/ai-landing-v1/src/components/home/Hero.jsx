@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+import { useRef, useState, useEffect } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Sparkles, Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
@@ -12,9 +13,60 @@ const heroMetrics = [
 
 export default function Hero() {
   const navigate = useNavigate()
+  const inputRef = useRef(null)
+  const [showFloater, setShowFloater] = useState(false)
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      ([entry]) => setShowFloater(!entry.isIntersecting),
+      { threshold: 0 }
+    )
+    if (inputRef.current) obs.observe(inputRef.current)
+    return () => obs.disconnect()
+  }, [])
 
   return (
-    <section className="relative min-h-screen flex flex-col overflow-hidden">
+    <>
+    {/* Floating bottom bar */}
+    <AnimatePresence>
+      {showFloater && (
+        <div className="fixed bottom-6 left-0 right-0 z-50 flex justify-center px-4">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 40 }}
+          transition={{ duration: 0.35, ease: 'easeOut' }}
+          className="w-full max-w-2xl"
+        >
+          <div
+            onClick={() => navigate('/chat')}
+            className="flex items-center gap-4 rounded-2xl px-7 py-4 cursor-pointer transition-all duration-300 hover:border-[rgba(145,196,107,0.35)] hover:shadow-[0_0_0_6px_rgba(145,196,107,0.08)] group relative overflow-hidden"
+            style={{
+              background: 'rgba(5,15,30,0.85)',
+              border: '1.5px solid rgba(255,255,255,0.12)',
+              backdropFilter: 'blur(20px) saturate(1.4)',
+              boxShadow: '0 12px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)',
+            }}
+          >
+            <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{ background: 'radial-gradient(ellipse at 30% 50%, rgba(145,196,107,0.06) 0%, transparent 60%)' }} />
+            <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 relative z-10"
+              style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.2)' }}>
+              <Sparkles size={16} className="text-brand-green" />
+            </div>
+            <span className="text-white/35 text-sm font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
+              What enterprise transformation are you trying to supercharge?
+            </span>
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:bg-brand-green/15"
+              style={{ background: 'rgba(255,255,255,0.05)' }}>
+              <Search size={14} className="text-white/25 group-hover:text-brand-green/70 transition-colors" />
+            </div>
+          </div>
+        </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
+    <section id="hero" className="relative min-h-screen flex flex-col overflow-hidden">
       {/* Video background */}
       <div className="absolute inset-0 z-0">
         <video
@@ -36,7 +88,7 @@ export default function Hero() {
       {/* Main content */}
       <div className="relative flex-1 flex items-center pt-28 pb-10">
         <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full">
-          <div className="max-w-3xl mx-auto text-center">
+          <div className="max-w-5xl mx-auto text-center">
             <div>
               <motion.h1
                 initial={{ opacity: 0, y: 32 }}
@@ -58,13 +110,14 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="text-white/60 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto mb-10"
+                className="text-white/60 text-base lg:text-lg leading-relaxed max-w-4xl mx-auto mb-10"
               >
                 We believe AI only delivers when it truly understands your business. That conviction is why we operationalized AI with precision context at the core of every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.
               </motion.p>
 
               {/* Conversational input */}
               <motion.div
+                ref={inputRef}
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
@@ -125,5 +178,6 @@ export default function Hero() {
         </div>
       </div>
     </section>
+    </>
   )
 }

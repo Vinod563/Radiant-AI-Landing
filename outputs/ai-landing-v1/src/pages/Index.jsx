@@ -1,5 +1,6 @@
 import Navbar from '../components/shared/Navbar.jsx'
 import Footer from '../components/shared/Footer.jsx'
+import SectionNav from '../components/shared/SectionNav.jsx'
 import Hero from '../components/home/Hero.jsx'
 import WhatIsRadiantAI from '../components/home/WhatIsRadiantAI.jsx'
 import Platform from '../components/home/Platform.jsx'
@@ -17,6 +18,7 @@ export default function Index() {
   return (
     <div className="bg-brand-dark min-h-screen">
       <Navbar />
+      <SectionNav />
       <Hero />
       <Divider />
       <WhatIsRadiantAI />

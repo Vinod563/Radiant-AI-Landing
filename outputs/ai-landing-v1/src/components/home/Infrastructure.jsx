@@ -17,7 +17,7 @@ export default function Infrastructure() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section className="py-24 bg-brand-secondary relative overflow-hidden">
+    <section id="infrastructure" className="py-24 bg-brand-secondary relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <motion.div ref={ref}
           initial={{ opacity: 0, y: 24 }}

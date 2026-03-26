@@ -2,6 +2,7 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Quote, ArrowRight, Award } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import CIO100Logo from '../ui/CIO100Logo'
 
 const metrics = [
   { val: '70%',     label: 'Development Time Reduced',  color: 'grad-text' },
@@ -111,15 +112,20 @@ export default function CaseStudy() {
                   className="mag-card p-8"
                   style={{ background: 'rgba(1,15,30,0.85)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}
                 >
-                  {/* CIO 100 card gets award icon */}
-                  {m.val === 'CIO 100' && (
-                    <Award size={20} className="text-brand-orange mb-2" />
+                  {m.val === 'CIO 100' ? (
+                    <>
+                      <CIO100Logo width={140} height={50} className="mb-3" />
+                      <div className="text-brand-orange text-sm font-display font-semibold leading-snug">{m.label}</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className={`font-display font-black leading-none mb-3 ${m.color}`}
+                        style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)' }}>
+                        {m.val}
+                      </div>
+                      <div className="text-text-muted text-sm leading-snug">{m.label}</div>
+                    </>
                   )}
-                  <div className={`font-display font-black leading-none mb-3 ${m.color}`}
-                    style={{ fontSize: m.val === 'CIO 100' ? 'clamp(1.8rem, 3.5vw, 2.6rem)' : 'clamp(2.2rem, 4.5vw, 3.2rem)' }}>
-                    {m.val}
-                  </div>
-                  <div className="text-text-muted text-sm leading-snug">{m.label}</div>
                 </motion.div>
               ))}
             </div>

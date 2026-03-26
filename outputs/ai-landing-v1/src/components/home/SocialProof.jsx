@@ -40,7 +40,7 @@ export default function SocialProof() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section className="relative py-32 overflow-hidden" style={{ background: '#051A30' }}>
+    <section id="social-proof" className="relative py-32 overflow-hidden" style={{ background: '#051A30' }}>
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full opacity-[0.03]"
