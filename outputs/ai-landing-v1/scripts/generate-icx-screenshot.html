@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920,height=1080">
+<title>Enterprise ICX - CX Intelligence Dashboard</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0f1a; color: #e2e8f0; width: 1920px; height: 1080px; overflow: hidden; display: flex; }
+
+  /* Sidebar */
+  .sidebar { width: 220px; background: #0d1320; border-right: 1px solid rgba(255,255,255,0.06); padding: 20px 0; display: flex; flex-direction: column; flex-shrink: 0; }
+  .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 0 20px 24px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px; }
+  .sidebar-logo .icon { width: 32px; height: 32px; background: #91C46B; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; color: #0a0f1a; }
+  .sidebar-logo span { font-weight: 700; font-size: 14px; color: #fff; }
+  .sidebar-section { padding: 0 16px; margin-bottom: 20px; }
+  .sidebar-section-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.3); margin-bottom: 8px; padding: 0 4px; }
+  .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 9px 12px; border-radius: 8px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.5); cursor: pointer; margin-bottom: 2px; }
+  .sidebar-item.active { background: rgba(145,196,107,0.1); color: #91C46B; }
+  .sidebar-item .dot { width: 18px; height: 18px; border-radius: 6px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 10px; }
+  .sidebar-item.active .dot { background: rgba(145,196,107,0.2); }
+
+  /* Main content */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* Top bar */
+  .topbar { height: 56px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; padding: 0 28px; flex-shrink: 0; }
+  .topbar-title { font-weight: 700; font-size: 16px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .topbar-title .live { font-size: 10px; font-weight: 600; color: #91C46B; background: rgba(145,196,107,0.1); border: 1px solid rgba(145,196,107,0.2); padding: 2px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
+  .topbar-title .live::before { content: ''; width: 6px; height: 6px; background: #91C46B; border-radius: 50%; }
+  .topbar-actions { display: flex; align-items: center; gap: 10px; }
+  .topbar-btn { font-size: 12px; font-weight: 600; padding: 6px 14px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: rgba(255,255,255,0.6); cursor: pointer; }
+  .topbar-btn.primary { background: #91C46B; color: #0a0f1a; border-color: #91C46B; }
+  .topbar-avatar { width: 30px; height: 30px; border-radius: 50%; background: linear-gradient(135deg, #596AE0, #91C46B); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: #fff; }
+
+  /* Content area — equal halves */
+  .content-area { flex: 1; display: flex; overflow: hidden; }
+
+  /* Dashboard panel */
+  .dashboard { flex: 1; padding: 20px 24px; overflow-y: auto; min-width: 0; }
+
+  /* Stat cards */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 20px; }
+  .stat-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px 20px; }
+  .stat-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.35); margin-bottom: 8px; }
+  .stat-value { font-size: 32px; font-weight: 800; color: #fff; line-height: 1; }
+  .stat-change { font-size: 11px; font-weight: 600; color: #91C46B; margin-top: 6px; }
+
+  /* Chart area */
+  .charts-row { display: grid; grid-template-columns: 1.6fr 1fr; gap: 14px; margin-bottom: 20px; }
+  .chart-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
+  .chart-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 16px; display: flex; align-items: center; justify-content: space-between; }
+  .chart-toggle { display: flex; gap: 0; }
+  .chart-toggle span { font-size: 10px; padding: 4px 10px; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.4); cursor: pointer; font-weight: 600; }
+  .chart-toggle span:first-child { border-radius: 6px 0 0 6px; }
+  .chart-toggle span:last-child { border-radius: 0 6px 6px 0; }
+  .chart-toggle span.active { background: rgba(145,196,107,0.15); color: #91C46B; border-color: rgba(145,196,107,0.3); }
+  .chart-area { height: 160px; position: relative; }
+
+  /* SVG Chart */
+  .chart-svg { width: 100%; height: 100%; }
+
+  /* Donut */
+  .donut-container { display: flex; align-items: center; justify-content: center; gap: 24px; height: 160px; }
+  .donut-center { font-size: 22px; font-weight: 800; color: #fff; text-align: center; line-height: 1.2; }
+  .donut-center small { font-size: 10px; color: rgba(255,255,255,0.4); font-weight: 500; display: block; }
+  .donut-legend { display: flex; flex-direction: column; gap: 8px; }
+  .donut-legend-item { display: flex; align-items: center; gap: 8px; font-size: 12px; color: rgba(255,255,255,0.6); }
+  .donut-legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .donut-legend-val { margin-left: auto; font-weight: 700; color: #fff; }
+
+  /* Insights table */
+  .insights-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
+  .insights-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .insights-header h3 { font-size: 13px; font-weight: 700; color: #fff; }
+  table { width: 100%; border-collapse: collapse; }
+  th { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.3); text-align: left; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  td { font-size: 12px; color: rgba(255,255,255,0.6); padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .badge { font-size: 10px; font-weight: 600; padding: 3px 10px; border-radius: 20px; }
+  .badge.critical { background: rgba(240,80,48,0.12); color: #F05030; }
+  .badge.resolved { background: rgba(145,196,107,0.12); color: #91C46B; }
+  .badge.warning { background: rgba(240,151,78,0.12); color: #F0974E; }
+  .badge.monitoring { background: rgba(89,106,224,0.12); color: #596AE0; }
+  .score { font-weight: 700; }
+  .score.high { color: #91C46B; }
+  .score.med { color: #F0974E; }
+  .score.low { color: #F05030; }
+
+  /* LLM Chat Panel — equal half */
+  .llm-panel { flex: 1; min-width: 0; border-left: 1px solid rgba(255,255,255,0.06); display: flex; flex-direction: column; background: rgba(255,255,255,0.015); }
+  .llm-header { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 10px; }
+  .llm-header .ai-icon { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #91C46B, #596AE0); display: flex; align-items: center; justify-content: center; }
+  .llm-header .ai-icon svg { width: 14px; height: 14px; }
+  .llm-header-text { font-weight: 700; font-size: 13px; color: #fff; }
+  .llm-header-sub { font-size: 10px; color: rgba(255,255,255,0.35); }
+  .llm-header-badge { margin-left: auto; font-size: 9px; font-weight: 600; background: rgba(145,196,107,0.1); color: #91C46B; border: 1px solid rgba(145,196,107,0.2); padding: 2px 8px; border-radius: 10px; }
+
+  .llm-messages { flex: 1; padding: 16px 20px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; }
+  .llm-msg { max-width: 95%; }
+  .llm-msg.user { align-self: flex-end; }
+  .llm-msg.ai { align-self: flex-start; }
+  .llm-msg-bubble { padding: 12px 16px; border-radius: 14px; font-size: 12.5px; line-height: 1.6; }
+  .llm-msg.user .llm-msg-bubble { background: rgba(145,196,107,0.1); border: 1px solid rgba(145,196,107,0.15); color: #fff; border-bottom-right-radius: 4px; }
+  .llm-msg.ai .llm-msg-bubble { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.8); border-bottom-left-radius: 4px; }
+  .llm-msg .label { font-size: 10px; color: rgba(255,255,255,0.3); margin-bottom: 4px; font-weight: 500; }
+
+  .llm-insight { background: rgba(89,106,224,0.08); border: 1px solid rgba(89,106,224,0.15); border-radius: 10px; padding: 12px 14px; margin-top: 8px; }
+  .llm-insight-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #596AE0; margin-bottom: 6px; }
+  .llm-insight-text { font-size: 11.5px; color: rgba(255,255,255,0.7); line-height: 1.5; }
+  .llm-insight-metric { display: flex; gap: 12px; margin-top: 8px; }
+  .llm-insight-metric span { font-size: 11px; font-weight: 700; color: #fff; }
+  .llm-insight-metric small { font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 400; }
+
+  .llm-suggestions { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 20px 12px; }
+  .llm-suggestion { font-size: 10.5px; padding: 6px 12px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); cursor: pointer; font-weight: 500; }
+
+  .llm-input { padding: 14px 20px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .llm-input-box { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 10px 14px; }
+  .llm-input-box input { background: none; border: none; outline: none; color: rgba(255,255,255,0.3); font-size: 12px; flex: 1; }
+  .llm-input-box .send-btn { width: 28px; height: 28px; border-radius: 8px; background: #91C46B; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">ICX</div>
+    <span>Enterprise ICX</span>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Main</div>
+    <div class="sidebar-item active"><div class="dot">📊</div> Dashboard</div>
+    <div class="sidebar-item"><div class="dot">📈</div> Analytics</div>
+    <div class="sidebar-item"><div class="dot">🗺️</div> Journeys</div>
+    <div class="sidebar-item"><div class="dot">🔔</div> Alerts</div>
+    <div class="sidebar-item"><div class="dot">📋</div> Reports</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Intelligence</div>
+    <div class="sidebar-item"><div class="dot">🔮</div> Predictions</div>
+    <div class="sidebar-item"><div class="dot">👥</div> Segments</div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <!-- Top bar -->
+  <div class="topbar">
+    <div class="topbar-title">
+      CX Intelligence Dashboard
+      <span class="live">Live</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-btn">Last 30 Days</div>
+      <div class="topbar-btn">Export</div>
+      <div class="topbar-btn primary">+ New Report</div>
+      <div class="topbar-avatar">JD</div>
+    </div>
+  </div>
+
+  <div class="content-area">
+    <!-- Dashboard -->
+    <div class="dashboard">
+      <!-- Stats -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-label">CSAT Score</div>
+          <div class="stat-value">94.2</div>
+          <div class="stat-change">▲ +3.1 vs last month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Net Promoter Score</div>
+          <div class="stat-value">+18</div>
+          <div class="stat-change">▲ +4 vs last quarter</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Resolution Rate</div>
+          <div class="stat-value">89%</div>
+          <div class="stat-change">▲ +12% improvement</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Avg Response Time</div>
+          <div class="stat-value">2.1s</div>
+          <div class="stat-change">▲ 0.8s faster</div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="chart-title">
+            Customer Satisfaction Trend
+            <div class="chart-toggle">
+              <span>7D</span>
+              <span class="active">30D</span>
+              <span>90D</span>
+            </div>
+          </div>
+          <div class="chart-area">
+            <svg class="chart-svg" viewBox="0 0 600 140">
+              <defs>
+                <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#91C46B" stop-opacity="0.3"/>
+                  <stop offset="100%" stop-color="#91C46B" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+              <!-- Grid lines -->
+              <line x1="0" y1="35" x2="600" y2="35" stroke="rgba(255,255,255,0.04)" stroke-dasharray="4"/>
+              <line x1="0" y1="70" x2="600" y2="70" stroke="rgba(255,255,255,0.04)" stroke-dasharray="4"/>
+              <line x1="0" y1="105" x2="600" y2="105" stroke="rgba(255,255,255,0.04)" stroke-dasharray="4"/>
+              <!-- Area -->
+              <path d="M0,120 L40,110 L80,100 L120,105 L160,90 L200,85 L240,75 L280,65 L320,55 L360,50 L400,45 L440,40 L480,35 L520,30 L560,28 L600,25 L600,140 L0,140 Z" fill="url(#areaGrad)"/>
+              <!-- Line -->
+              <path d="M0,120 L40,110 L80,100 L120,105 L160,90 L200,85 L240,75 L280,65 L320,55 L360,50 L400,45 L440,40 L480,35 L520,30 L560,28 L600,25" fill="none" stroke="#91C46B" stroke-width="2.5" stroke-linecap="round"/>
+              <!-- Dot -->
+              <circle cx="600" cy="25" r="5" fill="#91C46B"/>
+              <circle cx="600" cy="25" r="8" fill="none" stroke="#91C46B" stroke-width="1" opacity="0.4"/>
+              <!-- Labels -->
+              <text x="5" y="33" fill="rgba(255,255,255,0.25)" font-size="9">95</text>
+              <text x="5" y="68" fill="rgba(255,255,255,0.25)" font-size="9">90</text>
+              <text x="5" y="103" fill="rgba(255,255,255,0.25)" font-size="9">85</text>
+            </svg>
+          </div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Channel Distribution</div>
+          <div class="donut-container">
+            <svg width="120" height="120" viewBox="0 0 120 120">
+              <circle cx="60" cy="60" r="48" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="18"/>
+              <circle cx="60" cy="60" r="48" fill="none" stroke="#91C46B" stroke-width="18" stroke-dasharray="108 193" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="48" fill="none" stroke="#596AE0" stroke-width="18" stroke-dasharray="75 226" stroke-dashoffset="-108" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="48" fill="none" stroke="#F0974E" stroke-width="18" stroke-dasharray="60 241" stroke-dashoffset="-183" transform="rotate(-90 60 60)"/>
+              <circle cx="60" cy="60" r="48" fill="none" stroke="#e05990" stroke-width="18" stroke-dasharray="57 244" stroke-dashoffset="-243" transform="rotate(-90 60 60)"/>
+              <text x="60" y="56" text-anchor="middle" fill="#fff" font-size="18" font-weight="800">4.2M</text>
+              <text x="60" y="70" text-anchor="middle" fill="rgba(255,255,255,0.35)" font-size="9">Interactions</text>
+            </svg>
+            <div class="donut-legend">
+              <div class="donut-legend-item"><span class="donut-legend-dot" style="background:#91C46B"></span> Web <span class="donut-legend-val">36%</span></div>
+              <div class="donut-legend-item"><span class="donut-legend-dot" style="background:#596AE0"></span> Mobile App <span class="donut-legend-val">25%</span></div>
+              <div class="donut-legend-item"><span class="donut-legend-dot" style="background:#F0974E"></span> Chat <span class="donut-legend-val">20%</span></div>
+              <div class="donut-legend-item"><span class="donut-legend-dot" style="background:#e05990"></span> Voice <span class="donut-legend-val">19%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Insights Table -->
+      <div class="insights-card">
+        <div class="insights-header">
+          <h3>Recent CX Insights</h3>
+          <div class="chart-toggle">
+            <span class="active">All</span>
+            <span>Critical</span>
+            <span>Resolved</span>
+          </div>
+        </div>
+        <table>
+          <thead><tr><th>Insight</th><th>Channel</th><th>Impact</th><th>Status</th><th>Score</th></tr></thead>
+          <tbody>
+            <tr><td>Checkout friction spike detected</td><td>Web</td><td>12,400 users affected</td><td><span class="badge critical">Critical</span></td><td class="score low">72</td></tr>
+            <tr><td>Mobile app onboarding completion up 18%</td><td>Mobile</td><td>+$240K revenue impact</td><td><span class="badge resolved">Resolved</span></td><td class="score high">96</td></tr>
+            <tr><td>Support chat response time degradation</td><td>Chat</td><td>3,200 sessions impacted</td><td><span class="badge warning">Warning</span></td><td class="score med">68</td></tr>
+            <tr><td>Voice IVR satisfaction improved post-update</td><td>Voice</td><td>+8 NPS points</td><td><span class="badge monitoring">Monitoring</span></td><td class="score high">91</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- LLM Chat Panel -->
+    <div class="llm-panel">
+      <div class="llm-header">
+        <div class="ai-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z"/><circle cx="12" cy="12" r="3"/></svg>
+        </div>
+        <div>
+          <div class="llm-header-text">ICX Intelligence</div>
+          <div class="llm-header-sub">AI-Powered CX Analyst</div>
+        </div>
+        <div class="llm-header-badge">Online</div>
+      </div>
+
+      <div class="llm-messages">
+        <div class="llm-msg ai">
+          <div class="label">ICX Intelligence</div>
+          <div class="llm-msg-bubble">
+            Good morning. I've analyzed overnight CX data across all channels. Here's what needs your attention:
+            <div class="llm-insight">
+              <div class="llm-insight-title">⚠️ Priority Alert</div>
+              <div class="llm-insight-text">Checkout friction on web increased 23% in the last 12 hours. Root cause: payment gateway timeout affecting 12,400 users.</div>
+              <div class="llm-insight-metric">
+                <span>12.4K <small>users affected</small></span>
+                <span>$180K <small>est. revenue at risk</small></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="llm-msg user">
+          <div class="label" style="text-align:right">You</div>
+          <div class="llm-msg-bubble">What's driving the checkout friction? Show me the root cause breakdown.</div>
+        </div>
+
+        <div class="llm-msg ai">
+          <div class="label">ICX Intelligence</div>
+          <div class="llm-msg-bubble">
+            I've traced the friction to three factors:
+            <div class="llm-insight" style="border-color: rgba(145,196,107,0.2); background: rgba(145,196,107,0.06);">
+              <div class="llm-insight-title" style="color: #91C46B;">📊 Root Cause Analysis</div>
+              <div class="llm-insight-text">
+                <strong>1.</strong> Payment gateway P95 latency: 4.2s → 8.7s<br>
+                <strong>2.</strong> Mobile 3DS redirect failing for 34% of EU users<br>
+                <strong>3.</strong> Session timeout on cart page reduced to 2min
+              </div>
+              <div class="llm-insight-metric">
+                <span>68% <small>gateway related</small></span>
+                <span>22% <small>3DS redirect</small></span>
+                <span>10% <small>timeout</small></span>
+              </div>
+            </div>
+            Recommended action: Escalate to payments team for immediate gateway failover. Estimated recovery: 2-4 hours.
+          </div>
+        </div>
+      </div>
+
+      <div class="llm-suggestions">
+        <div class="llm-suggestion">Show me affected segments</div>
+        <div class="llm-suggestion">Compare to last incident</div>
+        <div class="llm-suggestion">Generate executive summary</div>
+      </div>
+
+      <div class="llm-input">
+        <div class="llm-input-box">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M12 3L20 7.5V16.5L12 21L4 16.5V7.5L12 3Z"/></svg>
+          <input type="text" placeholder="Ask about your CX data..." />
+          <div class="send-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0a0f1a" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

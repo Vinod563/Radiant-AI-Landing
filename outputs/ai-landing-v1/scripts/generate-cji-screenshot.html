@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920,height=1080">
+<title>Customer Journey Intelligence</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0f1a; color: #e2e8f0; width: 1920px; height: 1080px; overflow: hidden; display: flex; }
+
+  /* Sidebar */
+  .sidebar { width: 210px; background: #0d1320; border-right: 1px solid rgba(255,255,255,0.06); padding: 20px 0; display: flex; flex-direction: column; flex-shrink: 0; }
+  .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 0 18px 22px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 14px; }
+  .sidebar-logo .icon { width: 30px; height: 30px; background: #F0974E; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 11px; color: #0a0f1a; }
+  .sidebar-logo span { font-weight: 700; font-size: 13px; color: #fff; line-height: 1.2; }
+  .sidebar-section { padding: 0 14px; margin-bottom: 18px; }
+  .sidebar-section-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.25); margin-bottom: 8px; padding: 0 4px; }
+  .sidebar-item { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 7px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.45); margin-bottom: 2px; }
+  .sidebar-item.active { background: rgba(240,151,78,0.1); color: #F0974E; }
+  .sidebar-item .dot { width: 16px; height: 16px; border-radius: 5px; background: rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: center; font-size: 9px; }
+  .sidebar-item.active .dot { background: rgba(240,151,78,0.2); }
+
+  /* Main */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar { height: 52px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
+  .topbar-title { font-weight: 700; font-size: 15px; color: #fff; display: flex; align-items: center; gap: 10px; }
+  .topbar-title .badge { font-size: 9px; font-weight: 600; color: #91C46B; background: rgba(145,196,107,0.1); border: 1px solid rgba(145,196,107,0.2); padding: 2px 10px; border-radius: 20px; display: flex; align-items: center; gap: 5px; }
+  .topbar-title .badge::before { content: ''; width: 5px; height: 5px; background: #91C46B; border-radius: 50%; }
+  .topbar-actions { display: flex; gap: 8px; }
+  .topbar-btn { font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 7px; border: 1px solid rgba(255,255,255,0.1); background: transparent; color: rgba(255,255,255,0.5); }
+  .topbar-btn.primary { background: #F0974E; color: #0a0f1a; border-color: #F0974E; }
+
+  .content-area { flex: 1; display: flex; overflow: hidden; }
+
+  /* Dashboard half — hidden */
+  .dashboard { display: none; }
+
+  /* Journey map */
+  .journey-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; }
+  .journey-title { font-size: 13px; font-weight: 700; color: #fff; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+  .journey-subtitle { font-size: 10px; color: rgba(255,255,255,0.35); margin-bottom: 18px; }
+  .journey-flow { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .journey-step { display: flex; flex-direction: column; align-items: center; gap: 8px; flex: 1; }
+  .journey-step-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; border: 2px solid; }
+  .journey-step-label { font-size: 10px; font-weight: 600; color: #fff; }
+  .journey-step-users { font-size: 9px; color: rgba(255,255,255,0.35); }
+  .journey-connector { height: 3px; flex: 0.5; border-radius: 2px; margin: 0 -4px; margin-top: -20px; }
+  .journey-conversion { text-align: center; font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; }
+  .journey-conversion strong { color: #fff; font-weight: 700; }
+  .journey-conversion .up { color: #91C46B; font-weight: 600; }
+
+  .flow-toggle { display: flex; gap: 0; }
+  .flow-toggle span { font-size: 9px; padding: 3px 10px; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.35); font-weight: 600; }
+  .flow-toggle span:first-child { border-radius: 5px 0 0 5px; }
+  .flow-toggle span:last-child { border-radius: 0 5px 5px 0; }
+  .flow-toggle span.active { background: rgba(240,151,78,0.12); color: #F0974E; border-color: rgba(240,151,78,0.3); }
+
+  /* Bottom row */
+  .bottom-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  .panel { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 16px 18px; }
+  .panel-title { font-size: 12px; font-weight: 700; color: #fff; margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between; }
+  .panel-title .count { font-size: 10px; color: rgba(255,255,255,0.35); font-weight: 500; }
+
+  /* Tags */
+  .tag-row { display: flex; align-items: center; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .tag-row:last-child { border: none; }
+  .tag-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .tag-name { font-size: 11px; color: rgba(255,255,255,0.6); flex: 1; margin-left: 10px; }
+  .tag-count { font-size: 11px; font-weight: 700; color: #fff; margin-right: 8px; }
+  .tag-badge { font-size: 9px; font-weight: 600; padding: 2px 8px; border-radius: 10px; }
+
+  /* Screen cards */
+  .screens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .screen-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05); border-radius: 8px; padding: 14px 10px; text-align: center; }
+  .screen-thumb { width: 100%; height: 50px; border-radius: 5px; background: rgba(255,255,255,0.04); margin-bottom: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+  .screen-name { font-size: 10px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+  .screen-score { font-size: 18px; font-weight: 800; }
+  .screen-score.high { color: #91C46B; }
+  .screen-score.med { color: #F0974E; }
+  .screen-score.low { color: #F05030; }
+
+  /* Insights */
+  .insight-item { padding: 10px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .insight-item:last-child { border: none; }
+  .insight-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .insight-label.critical { color: #F05030; }
+  .insight-label.opportunity { color: #91C46B; }
+  .insight-label.pattern { color: #596AE0; }
+  .insight-text { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5; }
+  .insight-metric { font-size: 10px; font-weight: 700; margin-top: 4px; }
+  .insight-metric.red { color: #F05030; }
+  .insight-metric.green { color: #91C46B; }
+  .insight-metric.blue { color: #596AE0; }
+
+  /* LLM Panel */
+  .llm-panel { flex: 1; min-width: 0; display: flex; flex-direction: column; background: rgba(255,255,255,0.015); }
+  .llm-header { padding: 14px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 10px; }
+  .llm-header .ai-icon { width: 28px; height: 28px; border-radius: 8px; background: linear-gradient(135deg, #F0974E, #596AE0); display: flex; align-items: center; justify-content: center; }
+  .llm-header .ai-icon svg { width: 14px; height: 14px; }
+  .llm-header-text { font-weight: 700; font-size: 13px; color: #fff; }
+  .llm-header-sub { font-size: 10px; color: rgba(255,255,255,0.3); }
+  .llm-header-badge { margin-left: auto; font-size: 9px; font-weight: 600; background: rgba(240,151,78,0.1); color: #F0974E; border: 1px solid rgba(240,151,78,0.2); padding: 2px 8px; border-radius: 10px; }
+
+  .llm-messages { flex: 1; padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+  .llm-msg { max-width: 95%; }
+  .llm-msg.user { align-self: flex-end; }
+  .llm-msg.ai { align-self: flex-start; }
+  .llm-msg-bubble { padding: 11px 15px; border-radius: 14px; font-size: 12px; line-height: 1.6; }
+  .llm-msg.user .llm-msg-bubble { background: rgba(240,151,78,0.1); border: 1px solid rgba(240,151,78,0.15); color: #fff; border-bottom-right-radius: 4px; }
+  .llm-msg.ai .llm-msg-bubble { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.8); border-bottom-left-radius: 4px; }
+  .llm-msg .label { font-size: 9px; color: rgba(255,255,255,0.25); margin-bottom: 3px; font-weight: 500; }
+
+  .llm-insight { border-radius: 10px; padding: 11px 13px; margin-top: 8px; }
+  .llm-insight-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 5px; }
+  .llm-insight-text { font-size: 11px; color: rgba(255,255,255,0.65); line-height: 1.5; }
+  .llm-insight-metric { display: flex; gap: 14px; margin-top: 6px; }
+  .llm-insight-metric span { font-size: 11px; font-weight: 700; color: #fff; }
+  .llm-insight-metric small { font-size: 9px; color: rgba(255,255,255,0.3); font-weight: 400; }
+
+  .llm-suggestions { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 18px 10px; }
+  .llm-suggestion { font-size: 10px; padding: 5px 11px; border-radius: 20px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); color: rgba(255,255,255,0.45); font-weight: 500; }
+
+  .llm-input { padding: 12px 18px; border-top: 1px solid rgba(255,255,255,0.06); }
+  .llm-input-box { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 9px 12px; }
+  .llm-input-box input { background: none; border: none; outline: none; color: rgba(255,255,255,0.3); font-size: 11px; flex: 1; }
+  .llm-input-box .send-btn { width: 26px; height: 26px; border-radius: 7px; background: #F0974E; display: flex; align-items: center; justify-content: center; border: none; }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">CJI</div>
+    <span>Journey<br>Intelligence</span>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Workspace</div>
+    <div class="sidebar-item active"><div class="dot">🗺️</div> Journey Map</div>
+    <div class="sidebar-item"><div class="dot">📈</div> Analytics</div>
+    <div class="sidebar-item"><div class="dot">🏷️</div> Tag Manager</div>
+    <div class="sidebar-item"><div class="dot">🖥️</div> Screen Analysis</div>
+    <div class="sidebar-item"><div class="dot">📋</div> Business Rules</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Projects</div>
+    <div class="sidebar-item"><div class="dot">🏦</div> Banking Portal</div>
+    <div class="sidebar-item"><div class="dot">🛒</div> E-Commerce</div>
+    <div class="sidebar-item"><div class="dot">📱</div> Mobile App</div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">
+      Customer Journey Intelligence
+      <span class="badge">3 Active Projects</span>
+    </div>
+    <div class="topbar-actions">
+      <div class="topbar-btn">Import Screens</div>
+      <div class="topbar-btn primary">+ New Journey</div>
+    </div>
+  </div>
+
+  <div class="content-area">
+    <!-- Dashboard half -->
+    <div class="dashboard">
+      <!-- Journey Flow -->
+      <div class="journey-card">
+        <div class="journey-title">
+          Banking Portal: Account Opening Journey
+          <div class="flow-toggle">
+            <span class="active">Flow View</span>
+            <span>Heatmap</span>
+            <span>Funnel</span>
+          </div>
+        </div>
+        <div class="journey-subtitle">5-step acquisition flow with 34% overall conversion</div>
+        <div class="journey-flow">
+          <div class="journey-step">
+            <div class="journey-step-icon" style="border-color: #596AE0; background: rgba(89,106,224,0.1);">🔍</div>
+            <div class="journey-step-label">Discovery</div>
+            <div class="journey-step-users">42,100 users</div>
+          </div>
+          <div class="journey-connector" style="background: linear-gradient(90deg, #596AE0, #F0974E);"></div>
+          <div class="journey-step">
+            <div class="journey-step-icon" style="border-color: #F0974E; background: rgba(240,151,78,0.1);">📝</div>
+            <div class="journey-step-label">Application</div>
+            <div class="journey-step-users">28,400 users</div>
+          </div>
+          <div class="journey-connector" style="background: linear-gradient(90deg, #F0974E, #91C46B);"></div>
+          <div class="journey-step">
+            <div class="journey-step-icon" style="border-color: #91C46B; background: rgba(145,196,107,0.1);">✓</div>
+            <div class="journey-step-label">Verification</div>
+            <div class="journey-step-users">19,200 users</div>
+          </div>
+          <div class="journey-connector" style="background: linear-gradient(90deg, #91C46B, #a855f7);"></div>
+          <div class="journey-step">
+            <div class="journey-step-icon" style="border-color: #a855f7; background: rgba(168,85,247,0.1);">⚙️</div>
+            <div class="journey-step-label">Setup</div>
+            <div class="journey-step-users">16,800 users</div>
+          </div>
+          <div class="journey-connector" style="background: linear-gradient(90deg, #a855f7, #2DD4BF);"></div>
+          <div class="journey-step">
+            <div class="journey-step-icon" style="border-color: #2DD4BF; background: rgba(45,212,191,0.1);">🎉</div>
+            <div class="journey-step-label">Activation</div>
+            <div class="journey-step-users">14,300 users</div>
+          </div>
+        </div>
+        <div class="journey-conversion">Overall Conversion: <strong>34.0%</strong> <span class="up">▲ +5.2% vs last month</span></div>
+      </div>
+
+      <!-- Bottom panels -->
+      <div class="bottom-row">
+        <!-- AI Tags -->
+        <div class="panel">
+          <div class="panel-title">AI-Generated Tags <span class="count">248 total</span></div>
+          <div class="tag-row"><span class="tag-dot" style="background:#F05030"></span><span class="tag-name">Friction Point</span><span class="tag-count">64</span><span class="tag-badge" style="background:rgba(240,80,48,0.1);color:#F05030">High</span></div>
+          <div class="tag-row"><span class="tag-dot" style="background:#F0974E"></span><span class="tag-name">Drop-off Risk</span><span class="tag-count">42</span><span class="tag-badge" style="background:rgba(240,151,78,0.1);color:#F0974E">Med</span></div>
+          <div class="tag-row"><span class="tag-dot" style="background:#91C46B"></span><span class="tag-name">Positive Signal</span><span class="tag-count">89</span><span class="tag-badge" style="background:rgba(145,196,107,0.1);color:#91C46B">Good</span></div>
+          <div class="tag-row"><span class="tag-dot" style="background:#596AE0"></span><span class="tag-name">Engagement Peak</span><span class="tag-count">31</span><span class="tag-badge" style="background:rgba(89,106,224,0.1);color:#596AE0">Info</span></div>
+          <div class="tag-row"><span class="tag-dot" style="background:#a855f7"></span><span class="tag-name">UX Pattern</span><span class="tag-count">22</span><span class="tag-badge" style="background:rgba(168,85,247,0.1);color:#a855f7">New</span></div>
+        </div>
+
+        <!-- Screen Analysis -->
+        <div class="panel">
+          <div class="panel-title">Screen Analysis</div>
+          <div class="screens-grid">
+            <div class="screen-card"><div class="screen-thumb">🏠</div><div class="screen-name">Landing Page</div><div class="screen-score high">92</div></div>
+            <div class="screen-card"><div class="screen-thumb">📄</div><div class="screen-name">Form Step 1</div><div class="screen-score med">71</div></div>
+            <div class="screen-card"><div class="screen-thumb">🪪</div><div class="screen-name">ID Upload</div><div class="screen-score low">58</div></div>
+            <div class="screen-card"><div class="screen-thumb">✅</div><div class="screen-name">Confirmation</div><div class="screen-score high">94</div></div>
+          </div>
+        </div>
+
+        <!-- AI Insights -->
+        <div class="panel">
+          <div class="panel-title">AI Insights</div>
+          <div class="insight-item">
+            <div class="insight-label critical">⚠ Critical Friction</div>
+            <div class="insight-text">ID verification step causes 32% drop-off. Users abandon after camera permission prompt.</div>
+            <div class="insight-metric red">~6,100 users lost/month</div>
+          </div>
+          <div class="insight-item">
+            <div class="insight-label opportunity">✓ Opportunity</div>
+            <div class="insight-text">Progressive form completion shows 18% higher conversion vs single-page forms.</div>
+            <div class="insight-metric green">+$320K projected revenue</div>
+          </div>
+          <div class="insight-item">
+            <div class="insight-label pattern">↓ Pattern</div>
+            <div class="insight-text">Mobile users spend 2.4x longer on setup screens. Optimizing for mobile-first could lift completion by 12%.</div>
+            <div class="insight-metric blue">~2,400 additional activations</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LLM Panel -->
+    <div class="llm-panel">
+      <div class="llm-header">
+        <div class="ai-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73L13 2.27a2 2 0 0 0-2 0L4 6.27A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg>
+        </div>
+        <div>
+          <div class="llm-header-text">Journey AI Analyst</div>
+          <div class="llm-header-sub">Powered by Radiant Digital AI</div>
+        </div>
+        <div class="llm-header-badge">Online</div>
+      </div>
+
+      <div class="llm-messages">
+        <div class="llm-msg ai">
+          <div class="label">Journey AI</div>
+          <div class="llm-msg-bubble">
+            I've completed analysis of the Banking Portal account opening journey. Here are the key findings:
+            <div class="llm-insight" style="background:rgba(240,80,48,0.06); border: 1px solid rgba(240,80,48,0.15);">
+              <div class="llm-insight-title" style="color:#F05030">🚨 Highest-Impact Drop-off</div>
+              <div class="llm-insight-text">The ID verification screen (Step 3) is losing 32% of users. Camera permission is the primary blocker. Users on iOS 17+ are 2.1x more likely to abandon.</div>
+              <div class="llm-insight-metric">
+                <span>6,100 <small>users lost/mo</small></span>
+                <span>$540K <small>revenue at risk</small></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="llm-msg user">
+          <div class="label" style="text-align:right">You</div>
+          <div class="llm-msg-bubble">What would happen if we added a document upload alternative to the camera step?</div>
+        </div>
+
+        <div class="llm-msg ai">
+          <div class="label">Journey AI</div>
+          <div class="llm-msg-bubble">
+            Based on similar patterns across our data:
+            <div class="llm-insight" style="background:rgba(145,196,107,0.06); border: 1px solid rgba(145,196,107,0.15);">
+              <div class="llm-insight-title" style="color:#91C46B">📊 Projected Impact: Document Upload Alternative</div>
+              <div class="llm-insight-text">
+                Adding a document upload fallback would recover an estimated 58% of camera-related drop-offs. Here's the projected funnel impact:
+              </div>
+              <div class="llm-insight-metric">
+                <span>+3,540 <small>users recovered/mo</small></span>
+                <span>+$310K <small>annual revenue</small></span>
+              </div>
+            </div>
+            <div class="llm-insight" style="background:rgba(89,106,224,0.06); border: 1px solid rgba(89,106,224,0.15); margin-top: 6px;">
+              <div class="llm-insight-title" style="color:#596AE0">📐 Recommended Screen Flow</div>
+              <div class="llm-insight-text">
+                <strong>Step 3a:</strong> "Choose verification method" (Camera / Upload)<br>
+                <strong>Step 3b:</strong> Selected method with progress indicator<br>
+                <strong>Step 3c:</strong> Real-time validation with retry option
+              </div>
+            </div>
+            I can generate Figma-ready wireframes for this flow. Want me to proceed?
+          </div>
+        </div>
+      </div>
+
+      <div class="llm-suggestions">
+        <div class="llm-suggestion">Generate wireframes</div>
+        <div class="llm-suggestion">Compare mobile vs desktop</div>
+        <div class="llm-suggestion">Show conversion forecast</div>
+      </div>
+
+      <div class="llm-input">
+        <div class="llm-input-box">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73L13 2.27a2 2 0 0 0-2 0L4 6.27A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/></svg>
+          <input type="text" placeholder="Ask about journey patterns, drop-offs, or optimization..." />
+          <div class="send-btn">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0a0f1a" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

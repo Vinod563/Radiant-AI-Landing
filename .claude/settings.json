@@ -20,14 +20,17 @@
       "Bash(node -e \":*)",
       "Bash(npm search:*)",
       "Bash(npm view:*)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(sips -g pixelWidth -g pixelHeight \"/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/public/screenshots/anomaly-detection.png\" \"/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/public/screenshots/cx-workbench.png\" \"/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/public/screenshots/enterprise-icx.png\")",
+      "WebFetch(domain:www.radiant.digital)"
     ],
     "additionalDirectories": [
       "/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/src/components/icx",
       "/Users/vinodkumarmourya/Desktop",
       "/Users/vinodkumarmourya/Documents/GitHub/files webflow/content/reference-websites",
       "/tmp",
-      "/private/tmp"
+      "/private/tmp",
+      "/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/public/screenshots"
     ]
   }
 }

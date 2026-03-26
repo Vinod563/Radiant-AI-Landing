@@ -63,20 +63,6 @@ export default function Hero() {
                 We believe AI only delivers when it truly understands your business. That conviction is why we operationalized AI with precision context at the core of every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.
               </motion.p>
 
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.42 }}
-                className="flex flex-wrap justify-center gap-4 mb-10"
-              >
-                <a href="/chat" className="btn-primary text-sm relative overflow-hidden group">
-                  <span className="relative z-10 flex items-center gap-2">
-                    Start the Conversation <ArrowRight size={15} />
-                  </span>
-                </a>
-                <a href="#proof" className="btn-ghost text-sm">See Our Work</a>
-              </motion.div>
-
               {/* Conversational input */}
               <motion.div
                 initial={{ opacity: 0, y: 16 }}

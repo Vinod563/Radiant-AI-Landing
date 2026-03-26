@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920,height=1080">
+<title>Automarc AI</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #0a0f1a; color: #e2e8f0; width: 1920px; height: 1080px; overflow: hidden; display: flex; }
+
+  /* Sidebar */
+  .sidebar { width: 210px; background: #0d1320; border-right: 1px solid rgba(255,255,255,0.06); padding: 20px 0; flex-shrink: 0; display: flex; flex-direction: column; }
+  .sidebar-logo { display: flex; align-items: center; gap: 10px; padding: 0 18px 22px; border-bottom: 1px solid rgba(255,255,255,0.06); margin-bottom: 14px; }
+  .sidebar-logo .icon { width: 30px; height: 30px; background: #a855f7; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 13px; color: #fff; }
+  .sidebar-logo span { font-weight: 700; font-size: 14px; color: #fff; }
+  .sidebar-logo .badge { font-size: 8px; font-weight: 600; background: rgba(168,85,247,0.15); color: #a855f7; border: 1px solid rgba(168,85,247,0.25); padding: 1px 6px; border-radius: 6px; margin-left: -2px; }
+  .sidebar-section { padding: 0 14px; margin-bottom: 18px; }
+  .sidebar-label { font-size: 9px; font-weight: 600; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.2); margin-bottom: 8px; padding: 0 4px; }
+  .sidebar-item { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 7px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.4); margin-bottom: 2px; }
+  .sidebar-item.active { background: rgba(168,85,247,0.1); color: #a855f7; }
+  .sidebar-item .ico { width: 16px; text-align: center; font-size: 11px; }
+  .sidebar-divider { height: 1px; background: rgba(255,255,255,0.04); margin: 8px 18px; }
+  .sidebar-footer { margin-top: auto; padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.04); }
+  .sidebar-stat { display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 6px; }
+  .sidebar-stat-label { color: rgba(255,255,255,0.25); }
+  .sidebar-stat-val { color: #a855f7; font-weight: 700; }
+  .sidebar-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-top: 2px; }
+  .sidebar-bar-fill { height: 100%; border-radius: 2px; background: #a855f7; }
+
+  /* Main */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .topbar { height: 52px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; flex-shrink: 0; }
+  .topbar-left { display: flex; align-items: center; gap: 8px; }
+  .topbar-path { font-size: 12px; color: rgba(255,255,255,0.3); }
+  .topbar-path strong { color: rgba(255,255,255,0.7); }
+  .topbar-right { display: flex; gap: 8px; }
+  .topbar-btn { font-size: 10px; font-weight: 600; padding: 5px 12px; border-radius: 7px; border: 1px solid rgba(255,255,255,0.08); color: rgba(255,255,255,0.45); background: transparent; }
+  .topbar-btn.purple { background: #a855f7; color: #fff; border-color: #a855f7; }
+
+  .content { flex: 1; display: flex; overflow: hidden; }
+
+  /* Center: LLM Workspace */
+  .workspace { flex: 1.2; display: flex; flex-direction: column; overflow: hidden; min-width: 0; border-right: 1px solid rgba(255,255,255,0.06); }
+
+  /* Compact stats */
+  .stats-row { display: flex; gap: 10px; padding: 14px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .stat-card { flex: 1; background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 12px 14px; }
+  .stat-card-label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.3); margin-bottom: 3px; }
+  .stat-card-val { font-size: 22px; font-weight: 800; color: #fff; line-height: 1; }
+  .stat-card-sub { font-size: 8px; color: #a855f7; margin-top: 2px; }
+
+  /* LLM Chat */
+  .llm-section { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+  .llm-bar { padding: 10px 20px; border-bottom: 1px solid rgba(255,255,255,0.04); display: flex; align-items: center; gap: 10px; }
+  .llm-icon { width: 26px; height: 26px; border-radius: 8px; background: linear-gradient(135deg, #a855f7, #596AE0); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+  .llm-bar-title { font-size: 12px; font-weight: 700; color: #fff; }
+  .llm-bar-sub { font-size: 9px; color: rgba(255,255,255,0.3); }
+  .llm-bar-badge { margin-left: auto; font-size: 8px; font-weight: 600; background: rgba(168,85,247,0.1); color: #a855f7; border: 1px solid rgba(168,85,247,0.2); padding: 2px 8px; border-radius: 8px; }
+
+  .llm-messages { flex: 1; padding: 14px 20px; display: flex; flex-direction: column; gap: 12px; overflow-y: auto; }
+  .msg { max-width: 90%; }
+  .msg.user { align-self: flex-end; }
+  .msg.ai { align-self: flex-start; }
+  .msg-label { font-size: 8px; color: rgba(255,255,255,0.2); margin-bottom: 2px; }
+  .msg-bubble { padding: 12px 16px; border-radius: 14px; font-size: 12px; line-height: 1.65; }
+  .msg.user .msg-bubble { background: rgba(168,85,247,0.08); border: 1px solid rgba(168,85,247,0.15); color: #fff; border-bottom-right-radius: 4px; }
+  .msg.ai .msg-bubble { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.75); border-bottom-left-radius: 4px; }
+
+  .insight-box { border-radius: 9px; padding: 10px 13px; margin-top: 8px; }
+  .insight-title { font-size: 8px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+  .insight-text { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.55; }
+  .insight-metrics { display: flex; gap: 14px; margin-top: 6px; }
+  .insight-metrics span { font-size: 10px; font-weight: 700; color: #fff; }
+  .insight-metrics small { font-size: 8px; color: rgba(255,255,255,0.3); }
+
+  .doc-preview { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 12px; margin-top: 8px; }
+  .doc-preview-header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .doc-preview-icon { width: 28px; height: 28px; border-radius: 6px; background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.2); display: flex; align-items: center; justify-content: center; font-size: 12px; }
+  .doc-preview-name { font-size: 11px; font-weight: 600; color: #fff; }
+  .doc-preview-meta { font-size: 9px; color: rgba(255,255,255,0.3); }
+  .doc-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .doc-field { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 6px; padding: 6px 8px; }
+  .doc-field-label { font-size: 7px; text-transform: uppercase; letter-spacing: 0.5px; color: rgba(255,255,255,0.25); margin-bottom: 1px; }
+  .doc-field-val { font-size: 10px; color: rgba(255,255,255,0.65); font-weight: 500; }
+
+  .llm-pills { display: flex; flex-wrap: wrap; gap: 5px; padding: 8px 20px; }
+  .llm-pill { font-size: 9px; padding: 5px 11px; border-radius: 16px; background: rgba(255,255,255,0.025); border: 1px solid rgba(255,255,255,0.06); color: rgba(255,255,255,0.4); }
+
+  .llm-input { padding: 12px 20px; border-top: 1px solid rgba(255,255,255,0.05); }
+  .llm-input-box { display: flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.035); border: 1px solid rgba(255,255,255,0.07); border-radius: 12px; padding: 10px 14px; }
+  .llm-input-box input { background: none; border: none; outline: none; color: rgba(255,255,255,0.25); font-size: 11px; flex: 1; }
+  .llm-input-box .send { width: 26px; height: 26px; border-radius: 7px; background: #a855f7; border: none; display: flex; align-items: center; justify-content: center; }
+  .llm-input-box .attach { width: 26px; height: 26px; border-radius: 7px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; }
+
+  /* Right: Insights Panel */
+  .insights-panel { width: 340px; flex-shrink: 0; display: flex; flex-direction: column; overflow-y: auto; background: rgba(255,255,255,0.01); }
+  .insights-section { padding: 16px 18px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .insights-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: rgba(255,255,255,0.3); margin-bottom: 12px; }
+
+  /* Document summary card */
+  .summary-card { background: rgba(168,85,247,0.04); border: 1px solid rgba(168,85,247,0.12); border-radius: 10px; padding: 14px; margin-bottom: 10px; }
+  .summary-card-title { font-size: 11px; font-weight: 700; color: #fff; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+  .summary-card-title .type-badge { font-size: 8px; font-weight: 600; background: rgba(168,85,247,0.15); color: #a855f7; padding: 1px 7px; border-radius: 6px; }
+  .summary-card-text { font-size: 10px; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+  /* Classification */
+  .class-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .class-item:last-child { border: none; }
+  .class-label { font-size: 11px; color: rgba(255,255,255,0.6); flex: 1; }
+  .class-bar-wrap { width: 80px; height: 4px; background: rgba(255,255,255,0.06); border-radius: 2px; }
+  .class-bar { height: 100%; border-radius: 2px; }
+  .class-score { font-size: 10px; font-weight: 700; color: #fff; width: 36px; text-align: right; }
+
+  /* Activity feed */
+  .activity-item { display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.03); }
+  .activity-item:last-child { border: none; }
+  .activity-dot { width: 6px; height: 6px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .activity-text { font-size: 10px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+  .activity-text strong { color: rgba(255,255,255,0.75); }
+  .activity-time { font-size: 8px; color: rgba(255,255,255,0.2); margin-top: 2px; }
+
+  /* Confidence */
+  .confidence-ring { width: 70px; height: 70px; margin: 0 auto 8px; position: relative; }
+  .confidence-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+  .confidence-val { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: 800; color: #fff; }
+  .confidence-label { text-align: center; font-size: 9px; color: rgba(255,255,255,0.35); }
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+  <div class="sidebar-logo">
+    <div class="icon">A</div>
+    <span>Automarc</span>
+    <span class="badge">AI</span>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Core</div>
+    <div class="sidebar-item active"><span class="ico">💬</span> AI Workspace</div>
+    <div class="sidebar-item"><span class="ico">📄</span> Documents</div>
+    <div class="sidebar-item"><span class="ico">📊</span> Dashboard</div>
+    <div class="sidebar-item"><span class="ico">🔄</span> Workflows</div>
+  </div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Tools</div>
+    <div class="sidebar-item"><span class="ico">📝</span> Templates</div>
+    <div class="sidebar-item"><span class="ico">🏷️</span> Classification</div>
+    <div class="sidebar-item"><span class="ico">⚡</span> Pipelines</div>
+    <div class="sidebar-item"><span class="ico">📋</span> Audit Log</div>
+  </div>
+  <div class="sidebar-divider"></div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Queues</div>
+    <div class="sidebar-item"><span class="ico">📥</span> Inbox <span style="margin-left:auto;font-size:9px;font-weight:700;color:#a855f7">24</span></div>
+    <div class="sidebar-item"><span class="ico">✅</span> Processed</div>
+    <div class="sidebar-item"><span class="ico">⚠️</span> Review <span style="margin-left:auto;font-size:9px;font-weight:700;color:#F0974E">3</span></div>
+  </div>
+  <div class="sidebar-footer">
+    <div class="sidebar-stat"><span class="sidebar-stat-label">Processed today</span><span class="sidebar-stat-val">1,247</span></div>
+    <div class="sidebar-bar"><div class="sidebar-bar-fill" style="width:78%"></div></div>
+    <div class="sidebar-stat" style="margin-top:8px"><span class="sidebar-stat-label">Accuracy</span><span class="sidebar-stat-val">98.7%</span></div>
+    <div class="sidebar-bar"><div class="sidebar-bar-fill" style="width:98.7%"></div></div>
+  </div>
+</div>
+
+<!-- Main -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-path"><strong>Automarc</strong> / AI Workspace</span>
+    </div>
+    <div class="topbar-right">
+      <div class="topbar-btn">Export Report</div>
+      <div class="topbar-btn purple">+ Upload Documents</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <!-- Center: LLM Workspace -->
+    <div class="workspace">
+      <!-- Mini stats -->
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-card-label">Docs Processed</div><div class="stat-card-val">12,847</div><div class="stat-card-sub">+15% this month</div></div>
+        <div class="stat-card"><div class="stat-card-label">Accuracy</div><div class="stat-card-val">98.7%</div><div class="stat-card-sub">+0.4% vs last week</div></div>
+        <div class="stat-card"><div class="stat-card-label">Avg Processing</div><div class="stat-card-val">2.3s</div><div class="stat-card-sub">per document</div></div>
+        <div class="stat-card"><div class="stat-card-label">Hours Saved</div><div class="stat-card-val">847h</div><div class="stat-card-sub">4,235 manual hours eliminated</div></div>
+      </div>
+
+      <!-- LLM Chat -->
+      <div class="llm-section">
+        <div class="llm-bar">
+          <div class="llm-icon">🧠</div>
+          <div>
+            <div class="llm-bar-title">Automarc Intelligence</div>
+            <div class="llm-bar-sub">Document AI Assistant</div>
+          </div>
+          <div class="llm-bar-badge">Processing Active</div>
+        </div>
+
+        <div class="llm-messages">
+          <div class="msg ai">
+            <div class="msg-label">Automarc AI</div>
+            <div class="msg-bubble">
+              I've processed the latest batch of 24 incoming documents. Here's the summary:
+              <div class="insight-box" style="background:rgba(168,85,247,0.05); border: 1px solid rgba(168,85,247,0.12);">
+                <div class="insight-title" style="color:#a855f7">📄 Batch Processing Complete</div>
+                <div class="insight-text">24 documents classified and extracted. 21 auto-approved, 3 flagged for human review due to low confidence on contract clause extraction.</div>
+                <div class="insight-metrics">
+                  <span>21 <small>auto-approved</small></span>
+                  <span>3 <small>need review</small></span>
+                  <span>98.2% <small>avg confidence</small></span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="msg user">
+            <div class="msg-label" style="text-align:right">You</div>
+            <div class="msg-bubble">Show me the flagged document FedRAMP_Auth_Package_v3.pdf and extract the key compliance fields.</div>
+          </div>
+
+          <div class="msg ai">
+            <div class="msg-label">Automarc AI</div>
+            <div class="msg-bubble">
+              Here's the extracted data from FedRAMP_Auth_Package_v3.pdf:
+              <div class="doc-preview">
+                <div class="doc-preview-header">
+                  <div class="doc-preview-icon">📋</div>
+                  <div>
+                    <div class="doc-preview-name">FedRAMP_Auth_Package_v3.pdf</div>
+                    <div class="doc-preview-meta">42 pages · Compliance Document · Uploaded 2 hours ago</div>
+                  </div>
+                </div>
+                <div class="doc-fields">
+                  <div class="doc-field"><div class="doc-field-label">Authorization Type</div><div class="doc-field-val">Agency ATO</div></div>
+                  <div class="doc-field"><div class="doc-field-label">Impact Level</div><div class="doc-field-val">Moderate</div></div>
+                  <div class="doc-field"><div class="doc-field-label">Sponsor Agency</div><div class="doc-field-val">Department of Commerce</div></div>
+                  <div class="doc-field"><div class="doc-field-label">Expiration</div><div class="doc-field-val">2027-03-15</div></div>
+                  <div class="doc-field"><div class="doc-field-label">Controls Mapped</div><div class="doc-field-val">325 of 325</div></div>
+                  <div class="doc-field"><div class="doc-field-label">POA&M Items</div><div class="doc-field-val" style="color:#F0974E">7 open</div></div>
+                </div>
+              </div>
+              <div class="insight-box" style="background:rgba(240,151,78,0.05); border: 1px solid rgba(240,151,78,0.12); margin-top: 8px;">
+                <div class="insight-title" style="color:#F0974E">⚠ Review Flag</div>
+                <div class="insight-text">Clause 4.3.2 (Incident Response) references an outdated NIST 800-53 revision. Confidence: 72%. Recommend manual verification before approval.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="llm-pills">
+          <span class="llm-pill">Approve remaining 21 docs</span>
+          <span class="llm-pill">Compare to previous version</span>
+          <span class="llm-pill">Generate compliance summary</span>
+          <span class="llm-pill">Flag for legal review</span>
+        </div>
+
+        <div class="llm-input">
+          <div class="llm-input-box">
+            <div class="attach">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+            </div>
+            <input type="text" placeholder="Ask about documents, extract fields, classify, or summarize..." />
+            <div class="send">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Insights Panel -->
+    <div class="insights-panel">
+      <!-- Confidence Score -->
+      <div class="insights-section" style="text-align:center; padding-top: 20px;">
+        <div class="confidence-ring">
+          <svg viewBox="0 0 70 70">
+            <circle cx="35" cy="35" r="30" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="5"/>
+            <circle cx="35" cy="35" r="30" fill="none" stroke="#a855f7" stroke-width="5" stroke-dasharray="173" stroke-dashoffset="17" stroke-linecap="round"/>
+          </svg>
+          <div class="confidence-val">91%</div>
+        </div>
+        <div class="confidence-label">Batch Confidence Score</div>
+      </div>
+
+      <!-- Document Summary -->
+      <div class="insights-section">
+        <div class="insights-section-title">Current Document Summary</div>
+        <div class="summary-card">
+          <div class="summary-card-title">FedRAMP_Auth_Package_v3.pdf <span class="type-badge">Compliance</span></div>
+          <div class="summary-card-text">Federal Risk and Authorization Management Program authorization package for cloud service provider. Contains system security plan, security assessment report, and plan of action and milestones for moderate-impact cloud deployment.</div>
+        </div>
+        <div class="summary-card" style="background: rgba(145,196,107,0.04); border-color: rgba(145,196,107,0.12);">
+          <div class="summary-card-title" style="font-size:10px">Key Entities Extracted</div>
+          <div class="summary-card-text">
+            <strong style="color:#fff">Organization:</strong> Department of Commerce<br>
+            <strong style="color:#fff">CSP:</strong> Classified cloud provider<br>
+            <strong style="color:#fff">Assessor:</strong> 3PAO verified<br>
+            <strong style="color:#fff">Controls:</strong> NIST 800-53 Rev 5 (325/325)
+          </div>
+        </div>
+      </div>
+
+      <!-- Classification Results -->
+      <div class="insights-section">
+        <div class="insights-section-title">Classification Results</div>
+        <div class="class-item">
+          <span class="class-label">Compliance</span>
+          <div class="class-bar-wrap"><div class="class-bar" style="width:95%;background:#a855f7"></div></div>
+          <span class="class-score">95%</span>
+        </div>
+        <div class="class-item">
+          <span class="class-label">Legal Contract</span>
+          <div class="class-bar-wrap"><div class="class-bar" style="width:82%;background:#596AE0"></div></div>
+          <span class="class-score">82%</span>
+        </div>
+        <div class="class-item">
+          <span class="class-label">Technical Spec</span>
+          <div class="class-bar-wrap"><div class="class-bar" style="width:45%;background:#F0974E"></div></div>
+          <span class="class-score">45%</span>
+        </div>
+        <div class="class-item">
+          <span class="class-label">Financial</span>
+          <div class="class-bar-wrap"><div class="class-bar" style="width:12%;background:rgba(255,255,255,0.15)"></div></div>
+          <span class="class-score" style="color:rgba(255,255,255,0.3)">12%</span>
+        </div>
+      </div>
+
+      <!-- Recent Activity -->
+      <div class="insights-section">
+        <div class="insights-section-title">Recent Activity</div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:#a855f7"></div>
+          <div>
+            <div class="activity-text"><strong>Batch #347</strong> completed. 24 documents processed.</div>
+            <div class="activity-time">2 minutes ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:#91C46B"></div>
+          <div>
+            <div class="activity-text"><strong>Classification model</strong> updated to v4.2</div>
+            <div class="activity-time">15 minutes ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:#596AE0"></div>
+          <div>
+            <div class="activity-text"><strong>New pipeline</strong> "SOW Extraction" deployed</div>
+            <div class="activity-time">1 hour ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:#F0974E"></div>
+          <div>
+            <div class="activity-text"><strong>Validation alert:</strong> 3 docs flagged for review</div>
+            <div class="activity-time">2 hours ago</div>
+          </div>
+        </div>
+        <div class="activity-item">
+          <div class="activity-dot" style="background:#91C46B"></div>
+          <div>
+            <div class="activity-text"><strong>Auto-approval</strong> processed 156 invoices</div>
+            <div class="activity-time">3 hours ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
