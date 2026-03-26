@@ -3,8 +3,8 @@ import { motion, useInView } from 'framer-motion'
 
 const proofPoints = [
   { val: '40%', label: 'Average cost reduction across enterprise deployments', accent: '#91C46B' },
-  { val: '6 Weeks', label: 'From kickoff to production: not proof-of-concept', accent: '#F0974E' },
-  { val: '29', label: 'Telecom AI use cases mapped across a single carrier\'s full operating model', accent: '#596AE0' },
+  { val: '3x', label: 'Faster time to market', accent: '#F0974E' },
+  { val: '30+', label: 'AI use cases deployed across enterprise operations', accent: '#596AE0' },
 ]
 
 export default function WhyRadiant() {

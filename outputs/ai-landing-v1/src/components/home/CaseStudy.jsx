@@ -1,13 +1,13 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Quote, ArrowRight } from 'lucide-react'
+import { Quote, ArrowRight, Award } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const metrics = [
-  { val: '3-7%',  label: 'Revenue Leakage Recovered',   color: 'grad-text' },
-  { val: '98%',   label: 'Billing Accuracy Achieved',    color: 'text-brand-green' },
-  { val: '40-70%',label: 'LLM Cost Reduction via AI FinOps', color: 'grad-text' },
-  { val: '6 wks', label: 'From Kickoff to Production',   color: 'text-brand-orange' },
+  { val: '70%',     label: 'Development Time Reduced',  color: 'grad-text' },
+  { val: '50+',     label: 'Screens Delivered in 3 Weeks', color: 'text-brand-green' },
+  { val: '40%',     label: 'Planning Delays Reduced',   color: 'grad-text' },
+  { val: 'CIO 100', label: 'Award Winner 2024',         color: 'text-brand-orange' },
 ]
 
 export default function CaseStudy() {
@@ -40,8 +40,8 @@ export default function CaseStudy() {
           <span className="kicker">Proof, Not Promises</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight max-w-3xl"
             style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5rem)' }}>
-            Not a pilot.<br />
-            <span className="grad-text">A different operating model.</span>
+            From reactive troubleshooting.<br />
+            <span className="grad-text">To proactive network intelligence.</span>
           </h2>
         </motion.div>
 
@@ -54,33 +54,35 @@ export default function CaseStudy() {
             transition={{ duration: 0.65, delay: 0.12 }}
           >
             {/* Client callout */}
-            <div className="flex items-center gap-5 p-6 mag-card border border-white/[0.08] mb-8">
+            <div className="flex items-center gap-5 p-6 mag-card border border-white/[0.08] mb-8 flex-wrap">
               <div className="w-14 h-14 rounded-2xl bg-brand-green flex items-center justify-center font-display font-black text-2xl text-brand-dark flex-shrink-0">T</div>
               <div>
-                <div className="font-display font-bold text-text-primary">Leading Telecom Company</div>
+                <div className="font-display font-bold text-text-primary">Leading Fortune 15 Telecom Enterprise</div>
                 <div className="text-text-muted text-sm">Telecommunications</div>
               </div>
-              <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-green/10 border border-brand-green/20">
-                <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
-                <span className="text-brand-green font-display text-[0.65rem] font-semibold">Case Study</span>
+              <div className="flex items-center gap-2 ml-auto">
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-green/10 border border-brand-green/20">
+                  <span className="w-1.5 h-1.5 rounded-full bg-brand-green" />
+                  <span className="text-brand-green font-display text-[0.65rem] font-semibold">Case Study</span>
+                </div>
+                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-orange/10 border border-brand-orange/20">
+                  <Award size={12} className="text-brand-orange" />
+                  <span className="text-brand-orange font-display text-[0.65rem] font-semibold">CIO 100 Award 2024</span>
+                </div>
               </div>
             </div>
 
             <div className="mb-6">
               <h4 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">Challenge</h4>
               <p className="text-text-secondary text-base leading-relaxed">
-                A tier-1 telecom carrier needed AI that produced measurable operational
-                results: not a proof-of-concept that stalled after 90 days.
+                A Fortune 15 telecom carrier needed to transform how its network operations teams navigate complex network data. Planning delays, poor data quality visibility, and fragmented collaboration between design and development teams were slowing decisions and creating service risk.
               </p>
             </div>
 
             <div className="mb-8">
               <h4 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">What Radiant Digital Did</h4>
               <p className="text-text-secondary text-base leading-relaxed">
-                Radiant Digital built a precision context environment grounded in the carrier's
-                billing systems, operational data, and domain vocabulary. Then deployed
-                AI workflows across revenue assurance, billing intelligence, and
-                customer operations: live in six weeks.
+                Radiant Digital deployed its Design-to-Code Accelerator to deliver over 50 fully functional, responsive screens in under three weeks. The solution provided end-to-end network visualization from edge to core, actionable performance dashboards, and proactive data quality monitoring across regions, markets, and sites. AI-powered development reduced manual effort and cut redundant tasks, shifting the client from reactive troubleshooting to proactive network intelligence.
               </p>
             </div>
 
@@ -88,10 +90,9 @@ export default function CaseStudy() {
             <div className="relative pl-6 border-l-2 border-brand-green/40">
               <Quote size={20} className="absolute -top-1 -left-2.5 text-brand-green" />
               <p className="text-text-primary text-base italic font-light leading-relaxed">
-                "We expected efficiency gains. What we got was a fundamental shift:
-                our operations team now focuses on strategy, not firefighting."
+                "The solution elevated operational efficiency and shifted our approach from reactive troubleshooting to proactive network intelligence, driving strategic clarity and award-winning innovation."
               </p>
-              <span className="text-text-muted text-xs mt-2 block">: Operations Director, Leading Telecom Company</span>
+              <span className="text-text-muted text-xs mt-2 block">Fortune 15 Telecom Enterprise</span>
             </div>
           </motion.div>
 
@@ -110,8 +111,12 @@ export default function CaseStudy() {
                   className="mag-card p-8"
                   style={{ background: 'rgba(1,15,30,0.85)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}
                 >
+                  {/* CIO 100 card gets award icon */}
+                  {m.val === 'CIO 100' && (
+                    <Award size={20} className="text-brand-orange mb-2" />
+                  )}
                   <div className={`font-display font-black leading-none mb-3 ${m.color}`}
-                    style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)' }}>
+                    style={{ fontSize: m.val === 'CIO 100' ? 'clamp(1.8rem, 3.5vw, 2.6rem)' : 'clamp(2.2rem, 4.5vw, 3.2rem)' }}>
                     {m.val}
                   </div>
                   <div className="text-text-muted text-sm leading-snug">{m.label}</div>

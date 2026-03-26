@@ -10,7 +10,7 @@ export const brand = {
   platformName: 'Radiant Digital AI Platform',
   tagline: 'Enterprise Transformation. Supercharged with AI.',
   description:
-    'We have figured out a way to infuse AI into everything we do. That means we can now help enterprises deploy AI into their operations: grounded in the right context, producing measurable results, faster than any other approach.',
+    'We believe AI only delivers when it truly understands your business. That conviction is why we operationalized AI with precision context at the core of every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.',
   differentiator:
     'Every AI firm brings models. Only Radiant Digital brings the Precision Context Engine.',
   differentiatorBody:
@@ -20,15 +20,15 @@ export const brand = {
 // ─── KEY METRICS (used in Hero, WhyRadiant, SocialProof, chat) ────
 export const heroMetrics = [
   { value: '40%', label: 'Avg Cost Reduction' },
-  { value: '6 Weeks', label: 'Pilot to Production' },
+  { value: '3x', label: 'Faster Time to Market' },
   { value: '14+', label: 'Industries Served' },
-  { value: '29', label: 'Telecom AI Use Cases Mapped' },
+  { value: '30+', label: 'AI Use Cases Deployed' },
 ]
 
 export const proofPoints = [
   { value: '40%', label: 'Average cost reduction across enterprise deployments', accent: '#91C46B' },
-  { value: '6 Weeks', label: 'From kickoff to production: not proof-of-concept', accent: '#F0974E' },
-  { value: '29', label: "Telecom AI use cases mapped across a single carrier's full operating model", accent: '#596AE0' },
+  { value: '3x', label: 'Faster time to market', accent: '#F0974E' },
+  { value: '30+', label: 'AI use cases deployed across enterprise operations', accent: '#596AE0' },
 ]
 
 export const trustStats = [
@@ -53,21 +53,21 @@ export const precisionContextEngine = {
 // ─── CASE STUDY (Telecom) ─────────────────────────
 export const telecomCaseStudy = {
   kicker: 'Proof, Not Promises',
-  headline: 'Not a pilot.\nA different operating model.',
-  client: 'Leading Telecom Company',
+  headline: 'From reactive troubleshooting.\nTo proactive network intelligence.',
+  client: 'Leading Fortune 15 Telecom Enterprise',
   clientDetail: 'Telecommunications',
   challenge:
-    'A tier-1 telecom carrier needed AI that produced measurable operational results: not a proof-of-concept that stalled after 90 days.',
+    'A Fortune 15 telecom carrier needed to transform how its network operations teams navigate complex network data. Planning delays, poor data quality visibility, and fragmented collaboration between design and development teams were slowing decisions and creating service risk.',
   whatWeDid:
-    "Radiant Digital built a precision context environment grounded in the carrier's billing systems, operational data, and domain vocabulary. Then deployed AI workflows across revenue assurance, billing intelligence, and customer operations: live in six weeks.",
+    'Radiant Digital deployed its Design-to-Code Accelerator to deliver over 50 fully functional, responsive screens in under three weeks. The solution provided end-to-end network visualization from edge to core, actionable performance dashboards, and proactive data quality monitoring across regions, markets, and sites. AI-powered development reduced manual effort and cut redundant tasks, shifting the client from reactive troubleshooting to proactive network intelligence.',
   quote:
-    'We expected efficiency gains. What we got was a fundamental shift: our operations team now focuses on strategy, not firefighting.',
-  quoteAuthor: 'Operations Director, Leading Telecom Company',
+    'The solution elevated operational efficiency and shifted our approach from reactive troubleshooting to proactive network intelligence, driving strategic clarity and award-winning innovation.',
+  quoteAuthor: 'Fortune 15 Telecom Enterprise',
   metrics: [
-    { value: '3-7%', label: 'Revenue Leakage Recovered' },
-    { value: '98%', label: 'Billing Accuracy Achieved' },
-    { value: '40-70%', label: 'LLM Cost Reduction via AI FinOps' },
-    { value: '6 wks', label: 'From Kickoff to Production' },
+    { value: '70%', label: 'Development Time Reduced' },
+    { value: '50+', label: 'Screens Delivered in 3 Weeks' },
+    { value: '40%', label: 'Planning Delays Reduced' },
+    { value: 'CIO 100', label: 'Award Winner 2024' },
   ],
 }
 
@@ -100,6 +100,7 @@ export const solutions = [
     num: '01', title: 'Enterprise ICX',
     label: 'Digital Strategy and Experience',
     accent: '#91C46B',
+    screenshot: '/screenshots/enterprise-icx.png',
     tagline: 'AI-powered CX insight-to-ROI platform.',
     desc: 'Unifies every customer signal into a single intelligence layer, giving your teams the predictive power to eliminate friction before it becomes churn.',
     proofStat: '15-25% churn reduction',
@@ -116,6 +117,7 @@ export const solutions = [
     num: '02', title: 'Customer Journey Intelligence',
     label: 'Digital Strategy and Experience',
     accent: '#F0974E',
+    screenshot: '/screenshots/cx-workbench.png',
     tagline: 'AI-accelerated interaction tagging and journey visualization.',
     desc: 'Accelerates the analysis of customer interactions across digital channels, enabling teams to visualize journeys and act on experience insights in hours, not weeks. Turns screen-level behavioral data into actionable journey maps using AI-powered pattern recognition and business rule mapping.',
     tags: ['Workflow', 'Figma Analysis', 'Journey Mapping'],
@@ -131,6 +133,7 @@ export const solutions = [
     num: '03', title: 'Design-to-Code Modernization',
     label: 'Product Development and Integration',
     accent: '#00c87d',
+    screenshot: '/screenshots/design-to-code.png',
     tagline: 'AI-first legacy modernization.',
     desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Not wireframes in six months. Working, auditable output in hours per module.',
     proofStat: 'Hours per module vs. six months manual',
@@ -147,6 +150,7 @@ export const solutions = [
     num: '04', title: 'Billing Anomaly Detection',
     label: 'Analytics, Data Science and AI',
     accent: '#596AE0',
+    screenshot: '/screenshots/anomaly-detection.png',
     tagline: 'AI-powered billing intelligence that protects revenue at scale.',
     desc: 'Detects billing anomalies, groups them into patterns, and guides teams to resolve issues before they reach customers, protecting revenue and trust across millions of daily transactions.',
     proofStat: '98% billing accuracy',
@@ -163,6 +167,7 @@ export const solutions = [
     num: '05', title: 'Product Launch Risk Intelligence',
     label: 'Analytics, Data Science and AI',
     accent: '#F05030',
+    screenshot: '/screenshots/magic-globe.png',
     tagline: 'Go/no-go intelligence for high-stakes product and device launches.',
     desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations before and after launch. Turns fragmented operational signals into a single pre-launch decision engine.',
     tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
@@ -178,6 +183,7 @@ export const solutions = [
     num: '06', title: 'Automarc AI',
     label: 'Organizational Transformation',
     accent: '#a855f7',
+    screenshot: '/screenshots/automarc.png',
     tagline: 'AI-powered document workflow automation.',
     desc: 'Extracts, classifies, and processes content to reduce manual effort and improve accuracy, turning document-heavy operations into automated, governed workflows.',
     tags: ['Documents', 'Automation', 'Technical Writing'],

@@ -68,6 +68,7 @@ const knowledgeBase = [
           title: s.title,
           label: s.label,
           accent: s.accent,
+          screenshot: s.screenshot,
           desc: s.desc,
           tags: s.tags,
           details: s.details,

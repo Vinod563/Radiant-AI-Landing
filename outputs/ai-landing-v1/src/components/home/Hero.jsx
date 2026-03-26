@@ -4,9 +4,9 @@ import { useNavigate } from 'react-router-dom'
 
 const heroMetrics = [
   { val: '40%', label: 'Avg Cost Reduction', color: 'text-brand-green' },
-  { val: '6 Weeks', label: 'Pilot to Production', color: 'text-brand-orange' },
+  { val: '3x', label: 'Faster Time to Market', color: 'text-brand-orange' },
   { val: '14+', label: 'Industries Served', color: 'text-brand-green' },
-  { val: '29', label: 'Telecom AI Use Cases Mapped', color: 'text-brand-orange' },
+  { val: '30+', label: 'AI Use Cases Deployed', color: 'text-brand-orange' },
 ]
 
 
@@ -60,7 +60,7 @@ export default function Hero() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-white/60 text-base lg:text-lg leading-relaxed max-w-2xl mx-auto mb-10"
               >
-                We have figured out a way to infuse AI into everything we do. That means we can now help enterprises deploy AI into their operations: grounded in the right context, producing measurable results, faster than any other approach.
+                We believe AI only delivers when it truly understands your business. That conviction is why we operationalized AI with precision context at the core of every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.
               </motion.p>
 
               <motion.div
