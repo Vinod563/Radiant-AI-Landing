@@ -34,20 +34,20 @@ export default function ICXMetrics() {
         </motion.div>
 
         {/* Large metric grid */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 mb-8">
           {metrics.map((m, i) => (
             <motion.div key={m.tag}
               initial={{ opacity: 0, y: 28 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: i * 0.09 }}
-              className="mag-card p-8 relative overflow-hidden"
+              className="mag-card p-6 sm:p-8 relative overflow-hidden"
             >
               <div className="editorial-bg-num absolute -bottom-6 -right-2 text-[6rem] opacity-[0.03]">{m.val}</div>
               <div className={`font-display font-black leading-none mb-4 ${m.style}`}
-                style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)' }}>
+                style={{ fontSize: 'clamp(2.8rem, 7vw, 4.5rem)' }}>
                 {m.val}
               </div>
-              <p className="text-text-secondary text-sm leading-relaxed mb-4">{m.label}</p>
+              <p className="text-text-secondary text-sm leading-relaxed mb-4 line-clamp-2">{m.label}</p>
               <span className="tag">{m.tag}</span>
             </motion.div>
           ))}

@@ -84,14 +84,14 @@ export default function ICXCaseStudy() {
             transition={{ duration: 0.65, delay: 0.15 }}
             className="pt-8"
           >
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {resultMetrics.map(m => (
-                <div key={m.val + m.label} className={`mag-card p-7 ${m.span}`}>
+                <div key={m.val + m.label} className={`mag-card p-6 sm:p-7 ${m.span}`}>
                   <div className={`font-display font-black leading-none mb-3 ${m.style}`}
-                    style={{ fontSize: m.span ? 'clamp(3.5rem, 6vw, 5rem)' : 'clamp(2.5rem, 4vw, 3.5rem)' }}>
+                    style={{ fontSize: m.span ? 'clamp(3rem, 8vw, 5rem)' : 'clamp(2.2rem, 6vw, 3.5rem)' }}>
                     {m.val}
                   </div>
-                  <div className="text-text-secondary text-sm">{m.label}</div>
+                  <div className="text-text-secondary text-sm line-clamp-2">{m.label}</div>
                 </div>
               ))}
             </div>

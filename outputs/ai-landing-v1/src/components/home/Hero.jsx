@@ -38,9 +38,10 @@ export default function Hero() {
           transition={{ duration: 0.35, ease: 'easeOut' }}
           className="w-full max-w-2xl"
         >
-          <div
+          <button
             onClick={() => navigate('/chat')}
-            className="flex items-center gap-4 rounded-2xl px-7 py-4 cursor-pointer transition-all duration-300 hover:border-[rgba(145,196,107,0.35)] hover:shadow-[0_0_0_6px_rgba(145,196,107,0.08)] group relative overflow-hidden"
+            aria-label="Ask Radiant AI about enterprise transformation"
+            className="flex items-center gap-4 rounded-2xl px-7 py-4 cursor-pointer transition-all duration-300 hover:border-[rgba(145,196,107,0.35)] hover:shadow-[0_0_0_6px_rgba(145,196,107,0.08)] group relative overflow-hidden w-full text-left"
             style={{
               background: 'rgba(5,15,30,0.85)',
               border: '1.5px solid rgba(255,255,255,0.12)',
@@ -54,14 +55,14 @@ export default function Hero() {
               style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.2)' }}>
               <Sparkles size={16} className="text-brand-green" />
             </div>
-            <span className="text-white/35 text-sm font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
+            <span className="text-white/70 text-sm font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
               What enterprise transformation are you trying to supercharge?
             </span>
             <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:bg-brand-green/15"
               style={{ background: 'rgba(255,255,255,0.05)' }}>
-              <Search size={14} className="text-white/25 group-hover:text-brand-green/70 transition-colors" />
+              <Search size={14} className="text-white/50 group-hover:text-brand-green/70 transition-colors" />
             </div>
-          </div>
+          </button>
         </motion.div>
         </div>
       )}
@@ -98,19 +99,14 @@ export default function Hero() {
                 style={{ fontSize: 'clamp(3rem, 6vw, 5.8rem)' }}
               >
                 Enterprise Transformation.<br />
-                <span style={{
-                  background: 'linear-gradient(135deg, #91C46B 0%, #F0974E 35%, #596AE0 70%, #a855f7 100%)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                  backgroundClip: 'text',
-                }}>Supercharged with AI.</span>
+                <span className="grad-text">Supercharged with AI.</span>
               </motion.h1>
 
               <motion.p
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="text-white/60 text-base lg:text-lg leading-relaxed max-w-4xl mx-auto mb-10"
+                className="text-white/70 text-base lg:text-lg leading-relaxed max-w-4xl mx-auto mb-10"
               >
                 We believe AI only delivers when it truly understands your business. That conviction is why we operationalized AI with precision context at the core of every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.
               </motion.p>
@@ -123,9 +119,10 @@ export default function Hero() {
                 transition={{ duration: 0.5, delay: 0.5 }}
                 className="max-w-2xl mx-auto"
               >
-                <div
+                <button
                   onClick={() => navigate('/chat')}
-                  className="flex items-center gap-4 rounded-2xl px-7 py-5 cursor-pointer transition-all duration-300 hover:border-[rgba(145,196,107,0.35)] hover:shadow-[0_0_0_6px_rgba(145,196,107,0.08),0_20px_60px_rgba(0,0,0,0.3)] group relative overflow-hidden"
+                  aria-label="Ask Radiant AI about enterprise transformation"
+                  className="flex items-center gap-4 rounded-2xl px-7 py-5 cursor-pointer transition-all duration-300 hover:border-[rgba(145,196,107,0.35)] hover:shadow-[0_0_0_6px_rgba(145,196,107,0.08),0_20px_60px_rgba(0,0,0,0.3)] group relative overflow-hidden w-full text-left"
                   style={{
                     background: 'rgba(255,255,255,0.06)',
                     border: '1.5px solid rgba(255,255,255,0.12)',
@@ -140,14 +137,14 @@ export default function Hero() {
                     style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.2)' }}>
                     <Sparkles size={18} className="text-brand-green" />
                   </div>
-                  <span className="text-white/35 text-base font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
+                  <span className="text-white/70 text-base font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
                     What enterprise transformation are you trying to supercharge?
                   </span>
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:bg-brand-green/15"
                     style={{ background: 'rgba(255,255,255,0.05)' }}>
-                    <Search size={16} className="text-white/25 group-hover:text-brand-green/70 transition-colors" />
+                    <Search size={16} className="text-white/50 group-hover:text-brand-green/70 transition-colors" />
                   </div>
-                </div>
+                </button>
               </motion.div>
 
             </div>

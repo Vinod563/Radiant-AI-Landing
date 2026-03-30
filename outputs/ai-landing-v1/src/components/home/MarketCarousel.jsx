@@ -21,7 +21,7 @@ const markets = [
     accent: '#596AE0',
     gradientFrom: '#1e2a6e',
     gradientTo: '#596AE0',
-    image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&h=900&fit=crop&q=80',
+    image: '/images/telecom-network.jpg',
     clients: 'Major tier-1 carriers',
     desc: 'Radiant Digital has mapped 29 AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
     metrics: [
@@ -36,7 +36,7 @@ const markets = [
     accent: '#e05990',
     gradientFrom: '#7a2050',
     gradientTo: '#e05990',
-    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=900&fit=crop&q=80',
+    image: '/images/healthcare.jpg',
     clients: 'NIH, MD Anderson, CHOP',
     desc: 'Privacy-first AI that scales clinical workflows and research operations: with HIPAA governance built in, not bolted on.',
     metrics: [
@@ -51,7 +51,7 @@ const markets = [
     accent: '#F0974E',
     gradientFrom: '#7a4a10',
     gradientTo: '#F0974E',
-    image: 'https://images.unsplash.com/photo-1560472355-536de3962603?w=600&h=900&fit=crop&q=80',
+    image: '/images/financial-services.jpg',
     clients: 'Navy Federal Credit Union, major BFSI enterprises',
     desc: 'AI for fraud detection, compliance automation, and customer journey transformation: with audit trails from day one.',
     metrics: [
@@ -66,7 +66,7 @@ const markets = [
     accent: '#596AE0',
     gradientFrom: '#1a2060',
     gradientTo: '#596AE0',
-    image: 'https://images.unsplash.com/photo-1501466044931-62695aada8e9?w=600&h=900&fit=crop&q=80',
+    image: '/images/federal-government.jpg',
     clients: 'DoD, HHS, DHS, Treasury, Commerce, Interior',
     desc: 'Mission-critical enterprise transformation with program-grade delivery, human-in-the-loop governance, and federal compliance alignment.',
     metrics: [
@@ -81,7 +81,7 @@ const markets = [
     accent: '#91C46B',
     gradientFrom: '#2a5018',
     gradientTo: '#91C46B',
-    image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=900&fit=crop&q=80',
+    image: '/images/state-local-government.jpg',
     clients: 'FL DCF, FL DEO, FL DOT',
     desc: 'Citizen-centric transformation that delivers better outcomes on constrained budgets. Faster permitting, benefits processing, and case management: at scale.',
     metrics: [
@@ -96,7 +96,7 @@ const markets = [
     accent: '#a855f7',
     gradientFrom: '#4a1880',
     gradientTo: '#a855f7',
-    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=900&fit=crop&q=80',
+    image: '/images/education.jpg',
     clients: 'UT Austin, Baylor University, research institutions',
     desc: 'AI-first campus transformation: research analytics, student outcomes, and FERPA-compliant data governance at scale.',
     metrics: [
@@ -111,7 +111,7 @@ const markets = [
     accent: '#F0974E',
     gradientFrom: '#5a3000',
     gradientTo: '#F0974E',
-    image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=600&h=900&fit=crop&q=80',
+    image: '/images/oil-gas.jpg',
     clients: 'Halliburton, Noble Corporation, offshore operators',
     desc: 'Connected worker safety, predictive maintenance, and digital asset intelligence across remote and field operations.',
     metrics: [
@@ -126,7 +126,7 @@ const markets = [
     accent: '#2DD4BF',
     gradientFrom: '#0a3028',
     gradientTo: '#2DD4BF',
-    image: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=600&h=900&fit=crop&q=80',
+    image: '/images/defense-intelligence.jpg',
     clients: 'Department of Defense',
     desc: 'Mission-critical AI with zero-trust governance: humans orchestrate, never autonomous decisions in classified environments.',
     metrics: [
@@ -264,7 +264,7 @@ export default function MarketCarousel() {
             border: `1px solid ${scrollPos <= 5 ? 'rgba(255,255,255,0.08)' : 'rgba(145,196,107,0.3)'}`,
           }}
         >
-          <ChevronLeft size={22} className={scrollPos <= 5 ? 'text-white/30' : 'text-brand-green'} />
+          <ChevronLeft size={22} className={scrollPos <= 5 ? 'text-white/50' : 'text-brand-green'} />
         </button>
         <button
           onClick={() => scroll(1)}
@@ -276,7 +276,7 @@ export default function MarketCarousel() {
             border: `1px solid ${scrollPos >= maxScroll - 5 ? 'rgba(255,255,255,0.08)' : 'rgba(145,196,107,0.3)'}`,
           }}
         >
-          <ChevronRight size={22} className={scrollPos >= maxScroll - 5 ? 'text-white/30' : 'text-brand-green'} />
+          <ChevronRight size={22} className={scrollPos >= maxScroll - 5 ? 'text-white/50' : 'text-brand-green'} />
         </button>
       </motion.div>
     </section>
@@ -400,23 +400,23 @@ function MarketCard({ market }) {
             </div>
 
             {/* Metrics Grid */}
-            <div className="relative z-10 grid grid-cols-3 gap-2 mb-5">
+            <div className="relative z-10 grid grid-cols-3 gap-1.5 mb-5">
               {market.metrics.map((metric) => (
                 <div
                   key={metric.label}
-                  className="rounded-xl p-3 text-center"
+                  className="rounded-lg px-2 py-3 text-center overflow-hidden"
                   style={{
                     background: 'rgba(0,0,0,0.35)',
                     border: `1px solid ${market.accent}30`,
                   }}
                 >
                   <div
-                    className="font-display font-bold text-xl lg:text-2xl leading-none mb-1"
+                    className="font-display font-bold text-lg leading-none mb-1.5"
                     style={{ color: market.accent }}
                   >
                     {metric.value}
                   </div>
-                  <div className="text-white/60 text-[10px] uppercase tracking-wider font-medium leading-tight">
+                  <div className="text-white/60 text-[8px] uppercase tracking-wide font-semibold leading-tight line-clamp-2">
                     {metric.label}
                   </div>
                 </div>
@@ -435,7 +435,7 @@ function MarketCard({ market }) {
                   border: '1px solid rgba(255,255,255,0.12)',
                 }}
               >
-                <div className="text-[10px] uppercase tracking-[0.2em] text-white/50 mb-1 font-semibold">
+                <div className="text-[10px] uppercase tracking-[0.2em] text-white/70 mb-1 font-semibold">
                   Key Clients
                 </div>
                 <div className="text-white text-sm font-medium">

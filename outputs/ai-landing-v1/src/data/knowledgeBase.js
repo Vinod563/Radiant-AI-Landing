@@ -22,7 +22,7 @@ import {
 const knowledgeBase = [
   {
     id: 'what-is-radiant',
-    keywords: ['what is radiant', 'about radiant', 'who is radiant', 'radiant ai', 'what do you do', 'company', 'precision context engine', 'pce', 'context engine', 'how does radiant work'],
+    keywords: ['what is radiant', 'about radiant', 'who is radiant', 'radiant ai', 'what do you do', 'company', 'precision context engine', 'pce', 'context engine', 'how does radiant work', 'tell me about radiant', 'overview', 'introduction', 'about the company', 'what does radiant do'],
     question: `What is ${brand.name}?`,
     cards: [
       {
@@ -56,7 +56,7 @@ const knowledgeBase = [
   },
   {
     id: 'solutions',
-    keywords: ['solutions', 'products', 'what do you offer', 'what solutions', 'offerings', 'tools', 'six solutions', 'solutions does radiant', 'all solutions', 'already built', 'what have you built', 'have you already built'],
+    keywords: ['solutions', 'products', 'what do you offer', 'what solutions', 'offerings', 'tools', 'seven solutions', 'solutions does radiant', 'all solutions', 'already built', 'what have you built', 'have you already built', 'capabilities', 'features', 'what can you do', 'your products', 'show me solutions', 'list of solutions'],
     question: `What solutions does ${brand.name} offer?`,
     cards: [
       {
@@ -77,7 +77,7 @@ const knowledgeBase = [
     ],
     followUp: [
       'Tell me about Enterprise ICX',
-      'Tell me about Billing Anomaly Detection',
+      'Tell me about Touchless Operations',
       'Tell me about Design-to-Code Modernization',
       'Show me case studies',
     ],
@@ -201,7 +201,7 @@ const knowledgeBase = [
   },
   {
     id: 'sol-billing-anomaly',
-    keywords: ['billing anomaly', 'billing anomaly detection', 'billing intelligence', 'revenue protection', 'billing accuracy'],
+    keywords: ['billing anomaly', 'billing anomaly detection', 'billing intelligence', 'revenue protection', 'billing accuracy', 'billing issues', 'invoice errors', 'revenue leakage', 'billing problems', 'detect billing'],
     question: 'Tell me about Billing Anomaly Detection',
     cards: [
       {
@@ -307,8 +307,51 @@ const knowledgeBase = [
     ],
   },
   {
+    id: 'sol-touchless-ops',
+    keywords: ['touchless operations', 'touchless ops', 'self-healing', 'autonomous operations', 'aiops', 'ai ops', 'observability', 'incident management', 'alert noise', 'alert fatigue', 'autonomous remediation', 'self healing infrastructure', 'predictive optimization', 'runbook', 'auto-resolve'],
+    question: 'Tell me about Touchless Operations',
+    cards: [
+      {
+        type: 'hero',
+        title: 'Touchless Operations: Autonomous IT Infrastructure',
+        subtitle: 'Shifts enterprise IT from reactive incident management to autonomous, self-healing infrastructure. Unified observability, AI-driven root cause analysis, and predictive optimization work together so your teams resolve fewer incidents manually and prevent more before they ever occur.',
+        accent: '#2DD4BF',
+      },
+      {
+        type: 'metrics',
+        title: 'Touchless Operations Impact',
+        items: [
+          { value: '80%', label: 'Alert Noise Reduction' },
+          { value: '60-80%', label: 'Faster Incident Resolution' },
+          { value: '40-60%', label: 'Incidents Auto-Resolved' },
+          { value: '99.98%', label: 'Platform Uptime' },
+        ],
+        accent: '#2DD4BF',
+      },
+      {
+        type: 'text',
+        title: 'How It Works',
+        body: 'Powered by Radiant AIOps, Autonomous Stack, Predictive Analytics and Time Series, and Context-Aware AI. Provides end-to-end observability across infrastructure, network, and application layers. AI-driven root cause analysis identifies issues in seconds. Autonomous remediation executes runbooks automatically. Predictive optimization prevents incidents before they occur.',
+        accent: '#2DD4BF',
+      },
+      {
+        type: 'screenshot',
+        src: '/screenshots/touchless-ops.png',
+        alt: 'Touchless Operations Dashboard',
+        label: 'Touchless Operations Command Center',
+        accent: '#2DD4BF',
+      },
+    ],
+    followUp: [
+      'Tell me about Billing Anomaly Detection',
+      'Tell me about Enterprise ICX',
+      'Show me case studies',
+      'How does the platform work?',
+    ],
+  },
+  {
     id: 'case-studies',
-    keywords: ['case study', 'show me proof', 'proof not promises', 'results', 'roi', 'success', 'leading telecom', 'savings'],
+    keywords: ['case study', 'show me proof', 'proof not promises', 'results', 'roi', 'success', 'leading telecom', 'savings', 'proof', 'evidence', 'track record', 'show me results', 'real results', 'customer success', 'what have you achieved', 'outcomes'],
     question: 'Show me proof — not promises.',
     cards: [
       {
@@ -327,26 +370,27 @@ const knowledgeBase = [
         title: 'More AI Case Studies with Proof',
         subtitle: 'Every engagement below is AI-powered with measurable outcomes.',
         items: [
-          { name: 'Scaling Telecom Service Capacity 5x', metric: '50% More Tickets', detail: 'AI and RPA-driven platform for a Fortune 15 telecom — 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&q=80' },
-          { name: 'AI-Powered Virtual Assistant for Guest Support', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park — 30-40% guest engagement boost, 25-35% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=400&h=300&fit=crop&q=80' },
-          { name: 'AI-Accelerated Digital Platform Modernization', metric: '30-40% Faster', detail: 'AI-driven reverse engineering for a global web tech company — 30% cost reduction, test coverage from 30% to 70%.', industry: 'Web Services', accent: '#91C46B', image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop&q=80' },
-          { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 3-5 weeks to 4-8 days — 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop&q=80' },
-          { name: 'AI-Driven Outage Response & Integration', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack for Fortune 15 telecom — 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&h=300&fit=crop&q=80' },
-          { name: 'AI-Powered Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator — IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop&q=80' },
+          { name: 'Scaling Telecom Service Capacity 5x', metric: '50% More Tickets', detail: 'AI and RPA-driven platform for a Fortune 15 telecom — 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
+          { name: 'AI-Powered Virtual Assistant for Guest Support', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park — 30-40% guest engagement boost, 25-35% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: '/images/customer-support.jpg' },
+          { name: 'AI-Accelerated Digital Platform Modernization', metric: '30-40% Faster', detail: 'AI-driven reverse engineering for a global web tech company — 30% cost reduction, test coverage from 30% to 70%.', industry: 'Web Services', accent: '#91C46B', image: '/images/team-collaboration.jpg' },
+          { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 3-5 weeks to 4-8 days — 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
+          { name: 'AI-Driven Outage Response & Integration', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack for Fortune 15 telecom — 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
+          { name: 'AI-Powered Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator — IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with E2E Observability and self-healing systems — 60-80% faster incident resolution, 40-60% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
         ],
         accent: '#596AE0',
       },
     ],
     followUp: [
       'Tell me about the Scaling Telecom case study',
-      'Tell me about the Improving Guest Support case study',
+      'Tell me about the Touchless Operations case study',
       'What solutions does Radiant Digital offer?',
       'How can I get started?',
     ],
   },
   {
     id: 'industries',
-    keywords: ['industries', 'markets', 'sectors', 'government', 'healthcare', 'telecom', 'defense', 'education', 'financial', 'oil', 'gas', 'who do you serve', 'domain', 'my industry', 'work in my industry', 'do you work in'],
+    keywords: ['industries', 'markets', 'sectors', 'government', 'healthcare', 'telecom', 'defense', 'education', 'financial', 'oil', 'gas', 'who do you serve', 'domain', 'my industry', 'work in my industry', 'do you work in', 'verticals', 'which sectors', 'what industries', 'serve my industry'],
     question: 'Which industries do you serve?',
     cards: [
       {
@@ -375,7 +419,7 @@ const knowledgeBase = [
   },
   {
     id: 'platform',
-    keywords: ['platform', 'technology', 'architecture', 'how does it work', 'under the hood', 'framework', 'agent', 'microagent', 'agentic', 'four platforms', 'radiant ai platform', 'what is the radiant ai platform', 'what is the platform'],
+    keywords: ['platform', 'technology', 'architecture', 'how does it work', 'under the hood', 'framework', 'agent', 'microagent', 'agentic', 'four platforms', 'radiant ai platform', 'what is the radiant ai platform', 'what is the platform', 'tech stack', 'how is it built', 'technical capabilities', 'foundational capabilities', '12 capabilities'],
     question: 'How does the platform work?',
     cards: [
       {
@@ -502,7 +546,7 @@ const knowledgeBase = [
   },
   {
     id: 'why-radiant',
-    keywords: ['why radiant', 'differentiator', 'competitive', 'advantage', 'why choose', 'why choose radiant', 'what makes you different', 'what makes radiant different', 'better'],
+    keywords: ['why radiant', 'differentiator', 'competitive', 'advantage', 'why choose', 'why choose radiant', 'what makes you different', 'what makes radiant different', 'better', 'unique', 'stand out', 'compared to', 'vs', 'versus', 'how are you different', 'why should i choose'],
     question: `Why choose ${brand.name}?`,
     cards: [
       {
@@ -535,8 +579,50 @@ const knowledgeBase = [
     ],
   },
   {
+    id: 'ai-readiness',
+    keywords: ['ai-ready', 'ai ready', 'how ai-ready', 'ai readiness', 'readiness assessment', 'maturity', 'maturity assessment', 'how ready', 'assessment', 'my organization', 'where does my enterprise stand', 'ai readiness score', 'benchmark', 'how ai ready is my', 'ai ready is my company', 'is my organization ready', 'evaluate my organization', 'ai maturity level'],
+    question: 'How AI-ready is my organization?',
+    cards: [
+      {
+        type: 'hero',
+        title: 'AI Readiness Assessment',
+        subtitle: 'Five minutes. No signup. A prioritized roadmap that tells you where you are, where the gaps are, and which AI deployments would produce the fastest results.',
+        accent: '#91C46B',
+      },
+      {
+        type: 'text',
+        title: 'How It Works',
+        body: 'Our AI Readiness Assessment evaluates your organization across five maturity levels — from Reactive (manual processes, siloed data) to Leading (agentic AI, outcome-linked engagement). You will receive a score, a gap analysis, and a prioritized AI deployment roadmap tailored to your industry and current capabilities.',
+        accent: '#596AE0',
+      },
+      {
+        type: 'metrics',
+        title: 'What You Get',
+        items: [
+          { value: '5 min', label: 'Assessment Duration' },
+          { value: '5 Levels', label: 'Maturity Framework' },
+          { value: 'Custom', label: 'AI Roadmap' },
+          { value: 'Free', label: 'No Signup Needed' },
+        ],
+        accent: '#91C46B',
+      },
+      {
+        type: 'text',
+        title: 'The Five Maturity Levels',
+        body: '1. Reactive — Manual processes, siloed data, no AI strategy.\n2. Emerging — Basic analytics, some automation, early experimentation.\n3. Defined — Unified data, journey mapping, AI pilots underway.\n4. Optimized — AI-driven operations, proactive CX, measurable ROI.\n5. Leading — Agentic AI at scale, outcome-linked engagement, governance built in.',
+        accent: '#F0974E',
+      },
+    ],
+    followUp: [
+      'What solutions does Radiant Digital offer?',
+      'Which industries do you serve?',
+      'Show me proof — not promises.',
+      'How can I get started?',
+    ],
+  },
+  {
     id: 'contact',
-    keywords: ['contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'assessment', 'real person', 'talk to a real person', 'rather talk', 'ai-ready', 'ai ready', 'how ai-ready', 'my organization'],
+    keywords: ['contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'real person', 'talk to a real person', 'rather talk', 'speak to someone', 'schedule', 'book a meeting', 'email', 'phone number', 'address', 'office', 'how much does it cost', 'pricing information', 'cost of services', 'how much do you charge'],
     question: 'How can I get started?',
     cards: [
       {
@@ -560,7 +646,7 @@ const knowledgeBase = [
   },
   {
     id: 'all-case-studies',
-    keywords: ['case studies', 'all case studies', 'portfolio', 'all projects', 'show me all', 'full portfolio', 'all engagements', 'complete list', 'who has worked with you', 'what did they achieve', 'worked with you', 'clients', 'references'],
+    keywords: ['case studies', 'all case studies', 'portfolio', 'all projects', 'show me all', 'full portfolio', 'all engagements', 'complete list', 'who has worked with you', 'what did they achieve', 'worked with you', 'clients', 'references', 'more case studies', 'show me more case studies', 'other case studies', 'other examples', 'more examples', 'more proof'],
     question: 'Show me your case studies and proof.',
     cards: [
       {
@@ -574,13 +660,14 @@ const knowledgeBase = [
         title: 'AI Case Studies',
         subtitle: 'Every engagement powered by AI, automation, or intelligent systems.',
         items: [
-          { name: 'Scaling Telecom Service Capacity 5x', metric: '50% More Tickets', detail: 'AI and RPA-driven platform for a Fortune 15 telecom — 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=400&h=300&fit=crop&q=80' },
-          { name: 'AI-Powered Virtual Assistant', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park — 30-40% guest engagement boost, 25-35% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: 'https://images.unsplash.com/photo-1596524430615-b46475ddff6e?w=400&h=300&fit=crop&q=80' },
-          { name: 'AI-Accelerated Platform Modernization', metric: '30-40% Faster', detail: 'AI-driven reverse engineering for a global web tech company — 30% cost reduction, test coverage from 30% to 70%.', industry: 'Web Services', accent: '#91C46B', image: 'https://images.unsplash.com/photo-1551434678-e076c223a692?w=400&h=300&fit=crop&q=80' },
-          { name: 'Industrial IoT with AI Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 3-5 weeks to 4-8 days — 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop&q=80' },
-          { name: 'AI-Driven Outage Response', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack for Fortune 15 telecom — 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=400&h=300&fit=crop&q=80' },
-          { name: 'AI-Powered Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator — IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=400&h=300&fit=crop&q=80' },
-          { name: 'Revenue Assurance & Billing Intelligence', metric: '3-7% Leakage Recovered', detail: '98% billing accuracy with AI FinOps for a leading telecom company.', industry: 'Telecom', accent: '#91C46B', image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=300&fit=crop&q=80' },
+          { name: 'Scaling Telecom Service Capacity 5x', metric: '50% More Tickets', detail: 'AI and RPA-driven platform for a Fortune 15 telecom — 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
+          { name: 'AI-Powered Virtual Assistant', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park — 30-40% guest engagement boost, 25-35% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: '/images/customer-support.jpg' },
+          { name: 'AI-Accelerated Platform Modernization', metric: '30-40% Faster', detail: 'AI-driven reverse engineering for a global web tech company — 30% cost reduction, test coverage from 30% to 70%.', industry: 'Web Services', accent: '#91C46B', image: '/images/team-collaboration.jpg' },
+          { name: 'Industrial IoT with AI Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 3-5 weeks to 4-8 days — 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
+          { name: 'AI-Driven Outage Response', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack for Fortune 15 telecom — 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
+          { name: 'AI-Powered Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator — IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'Revenue Assurance & Billing Intelligence', metric: '3-7% Leakage Recovered', detail: '98% billing accuracy with AI FinOps for a leading telecom company.', industry: 'Telecom', accent: '#91C46B', image: '/images/analytics-dashboard.jpg' },
+          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with E2E Observability and self-healing systems — 60-80% faster incident resolution, 40-60% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
         ],
         accent: '#91C46B',
       },
@@ -735,10 +822,40 @@ const knowledgeBase = [
         title: 'Financial Services Engagements',
         subtitle: 'With audit trails from day one.',
         items: [
+          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', accent: '#F0974E' },
           { name: 'Application Modernization for Navy Federal Credit Union', metric: '40% Faster', accent: '#F0974E' },
         ],
         accent: '#F0974E',
       },
+    ],
+  },
+  {
+    id: 'cs-touchless-ops',
+    keywords: ['touchless operations', 'financial services', 'autonomous operations', 'alert noise', 'self-healing', 'ai ops', 'touchless', 'finserv ops', 'incident management'],
+    question: 'Tell me about the Touchless Operations case study',
+    cards: [
+      {
+        type: 'case-study',
+        title: 'Touchless Operations for Financial Services',
+        subtitle: 'A leading financial services enterprise faced unsustainable operational costs driven by manual incident management, fragmented monitoring, and growing alert fatigue across its IT stack. With enterprise downtime costing over $300K per hour, the client needed to shift its operating model. Radiant Digital deployed its Touchless Operations solution combining E2E Observability with an Autonomous Stack spanning infrastructure, network, agents, applications, and data layers. Self-healing systems and predictive optimization automated remediation workflows, shifting operations from reactive firefighting to autonomous management.',
+        client: 'Leading Financial Services Enterprise',
+        clientDetail: 'Financial Services',
+        metrics: [
+          { value: '80%', label: 'Alert Noise Reduction via AI Ops' },
+          { value: '60-80%', label: 'Faster Incident Resolution' },
+          { value: '40-60%', label: 'Incidents Auto-Resolved' },
+          { value: '$300K+/hr', label: 'Downtime Cost Addressed' },
+        ],
+        quote: 'Manual operations are unsustainable. Touchless Operations is not optional. It is inevitable.',
+        quoteAuthor: 'Leading Financial Services Enterprise',
+        accent: '#F0974E',
+      },
+    ],
+    followUp: [
+      'Tell me about the Scaling Telecom Service Capacity 5x case study',
+      'Show me all case studies',
+      'What solutions does Radiant Digital offer?',
+      'How can I get started?',
     ],
   },
   {
@@ -760,6 +877,12 @@ const knowledgeBase = [
         accent: '#596AE0',
       },
     ],
+    followUp: [
+      'Tell me about the Improving Outage Response case study',
+      'Tell me about the Enabling Network Intelligence case study',
+      'What have you done for telecom?',
+      'What solutions does Radiant Digital offer?',
+    ],
   },
   {
     id: 'cs-hospitality-ai',
@@ -779,6 +902,12 @@ const knowledgeBase = [
         ],
         accent: '#F0974E',
       },
+    ],
+    followUp: [
+      'Tell me about Enterprise ICX',
+      'Show me all case studies',
+      'Which industries do you serve?',
+      'How can I get started?',
     ],
   },
   {
@@ -800,6 +929,12 @@ const knowledgeBase = [
         accent: '#91C46B',
       },
     ],
+    followUp: [
+      'Tell me about Design-to-Code Modernization',
+      'Show me all case studies',
+      'What solutions does Radiant Digital offer?',
+      'How can I get started?',
+    ],
   },
   {
     id: 'cs-iot-tracklynk',
@@ -819,6 +954,12 @@ const knowledgeBase = [
         ],
         accent: '#2DD4BF',
       },
+    ],
+    followUp: [
+      'Tell me about the Halliburton case study',
+      'Show me all case studies',
+      'What have you done for oil and gas?',
+      'How can I get started?',
     ],
   },
   {
@@ -840,6 +981,12 @@ const knowledgeBase = [
         accent: '#596AE0',
       },
     ],
+    followUp: [
+      'Tell me about the Scaling Telecom Service Capacity 5x case study',
+      'Tell me about the Enabling Network Intelligence case study',
+      'What have you done for telecom?',
+      'How can I get started?',
+    ],
   },
   {
     id: 'cs-florida-dcf',
@@ -860,10 +1007,16 @@ const knowledgeBase = [
         accent: '#91C46B',
       },
     ],
+    followUp: [
+      'Tell me about the Florida DEO Reemployment case study',
+      'What have you done for state government?',
+      'Show me all case studies',
+      'How can I get started?',
+    ],
   },
   {
     id: 'cs-navy-federal',
-    keywords: ['navy federal', 'nfcu', 'application modernization', 'credit union', 'navy federal credit union', 'application modernization for navy federal', 'navy federal case study'],
+    keywords: ['navy federal', 'nfcu', 'application modernization', 'credit union', 'navy federal credit union', 'application modernization for navy federal', 'navy federal case study', 'navy federal project', 'tell me about navy federal'],
     question: 'Tell me about the Navy Federal Credit Union case study',
     cards: [
       {
@@ -879,6 +1032,12 @@ const knowledgeBase = [
         ],
         accent: '#F0974E',
       },
+    ],
+    followUp: [
+      'Tell me about the Touchless Operations case study',
+      'What have you done for financial services?',
+      'Show me all case studies',
+      'How can I get started?',
     ],
   },
   {
@@ -900,6 +1059,12 @@ const knowledgeBase = [
         accent: '#F0974E',
       },
     ],
+    followUp: [
+      'Tell me about the Halliburton AR case study',
+      'What have you done for oil and gas?',
+      'Show me all case studies',
+      'How can I get started?',
+    ],
   },
   {
     id: 'cs-uscis',
@@ -919,6 +1084,12 @@ const knowledgeBase = [
         ],
         accent: '#596AE0',
       },
+    ],
+    followUp: [
+      'Tell me about the Head Start Reporting Systems case study',
+      'Tell me about the Federal Operations case study',
+      'What have you done for federal agencies?',
+      'How can I get started?',
     ],
   },
   {
@@ -940,6 +1111,12 @@ const knowledgeBase = [
         accent: '#91C46B',
       },
     ],
+    followUp: [
+      'Tell me about the Florida DCF Accountability System Audit case study',
+      'Tell me about the FLHSMV Test Data Management case study',
+      'What have you done for state government?',
+      'How can I get started?',
+    ],
   },
   {
     id: 'cs-quit4health',
@@ -960,6 +1137,12 @@ const knowledgeBase = [
         accent: '#e05990',
       },
     ],
+    followUp: [
+      'Tell me about the Brighter Bites case study',
+      'Tell me about the QuitBuddy case study',
+      'What have you done for healthcare?',
+      'How can I get started?',
+    ],
   },
   {
     id: 'cs-brighter-bites',
@@ -979,6 +1162,12 @@ const knowledgeBase = [
         ],
         accent: '#e05990',
       },
+    ],
+    followUp: [
+      'Tell me about the Quit4Health case study',
+      'Tell me about the STARTing Strong case study',
+      'What have you done for healthcare?',
+      'How can I get started?',
     ],
   },
   {
@@ -1558,69 +1747,208 @@ const suggestions = [
   "I'd rather talk to a real person.",
 ]
 
+/**
+ * Synonym map — maps common natural-language terms to knowledge base keywords.
+ * This lets free-text queries like "how do you handle billing issues" match entries
+ * that use domain-specific keywords like "billing anomaly detection".
+ */
+const synonyms = {
+  'ai': ['artificial intelligence', 'machine learning', 'ml'],
+  'cx': ['customer experience', 'user experience', 'ux'],
+  'modernize': ['modernization', 'legacy', 'transform', 'upgrade', 'migrate'],
+  'cost': ['pricing', 'savings', 'budget', 'expensive', 'affordable', 'value'],
+  'proof': ['evidence', 'results', 'success', 'case study', 'case studies', 'examples', 'portfolio', 'track record'],
+  'billing': ['invoice', 'charges', 'payment', 'revenue'],
+  'cloud': ['aws', 'azure', 'google cloud', 'infrastructure', 'migration'],
+  'security': ['secure', 'compliance', 'cmmc', 'governance', 'audit', 'safe', 'trust', 'privacy'],
+  'contact': ['talk', 'call', 'email', 'meet', 'demo', 'consultation', 'reach out', 'get in touch', 'schedule'],
+  'healthcare': ['health', 'medical', 'clinical', 'hospital', 'patient', 'hipaa'],
+  'government': ['federal', 'state', 'public sector', 'agency', 'gov'],
+  'telecom': ['telecommunications', 'carrier', 'network', 'telco', '5g'],
+  'finance': ['financial', 'banking', 'fintech', 'insurance', 'credit union'],
+  'document': ['documentation', 'docs', 'content', 'writing', 'automarc'],
+  'launch': ['release', 'go-live', 'deploy', 'rollout'],
+  'industry': ['sector', 'vertical', 'domain', 'market'],
+  'start': ['begin', 'onboard', 'engage', 'get started', 'next steps'],
+}
+
+/**
+ * Expand a query by appending synonym matches so keyword scoring picks them up.
+ */
+function expandQuery(q) {
+  let expanded = q
+  for (const [root, syns] of Object.entries(synonyms)) {
+    for (const syn of syns) {
+      if (q.includes(syn) && !q.includes(root)) {
+        expanded += ' ' + root
+      }
+    }
+    if (q.includes(root)) {
+      for (const syn of syns) {
+        if (!q.includes(syn)) {
+          expanded += ' ' + syn
+        }
+      }
+    }
+  }
+  return expanded
+}
+
 export function findAnswer(query) {
-  const q = query.toLowerCase().trim()
+  const raw = query.toLowerCase().trim()
+  const q = expandQuery(raw)
+
+  // Exact question match takes priority
+  for (const entry of knowledgeBase) {
+    if (entry.question && raw === entry.question.toLowerCase().trim()) {
+      return ensureFollowUp(entry)
+    }
+  }
 
   let best = null
   let bestScore = 0
 
   for (const entry of knowledgeBase) {
     let score = 0
+
+    // Full keyword phrase match (highest weight)
     for (const keyword of entry.keywords) {
       if (q.includes(keyword)) {
-        score += keyword.length
+        score += keyword.length * 1.5
       }
+      // Individual word match for multi-word keywords (require word length > 4 to reduce noise)
       const words = keyword.split(' ')
       for (const word of words) {
-        if (word.length > 3 && q.includes(word)) {
-          score += word.length * 0.5
+        if (word.length > 4 && q.includes(word)) {
+          score += word.length * 0.4
         }
       }
     }
+
+    // Bonus: if query closely matches the entry's question text
+    if (entry.question) {
+      const entryQ = entry.question.toLowerCase()
+      if (q.includes(entryQ) || entryQ.includes(raw)) {
+        score += entryQ.length * 2
+      }
+    }
+
     if (score > bestScore) {
       bestScore = score
       best = entry
     }
   }
 
-  const defaultFollowUp = [
-    'What have you already built?',
-    'Show me proof, not promises.',
-    'Do you work in my industry?',
-    'What is the Radiant Digital AI Platform?',
-  ]
-
-  if (!best || bestScore < 3) {
+  if (!best || bestScore < 5) {
     return {
       id: 'fallback',
       question: query,
       cards: [
         {
-          type: 'text',
-          title: 'Let Me Point You in the Right Direction',
-          body: 'I can walk you through what makes Radiant Digital different, the solutions we have already built, proof from real engagements, the industries we serve, and how the Radiant Digital AI Platform works. Pick one of the options below to get started.',
-          accent: '#596AE0',
+          type: 'hero',
+          title: "Hi — I'm Radiant Digital's AI Assistant",
+          subtitle: "I'm here to help you explore how Radiant Digital transforms enterprises with AI. While I can't answer general questions, I know a lot about what we do.",
+          accent: '#91C46B',
+        },
+        {
+          type: 'grid',
+          title: 'Here is what I can help you with',
+          columns: 2,
+          clickable: true,
+          items: [
+            { icon: 'Sparkles', title: 'Our Approach', accent: '#91C46B', desc: 'What makes Radiant Digital different — the Precision Context Engine', query: 'What makes Radiant Digital different?' },
+            { icon: 'Layers', title: '6 AI Solutions', accent: '#596AE0', desc: 'Enterprise ICX, Billing Intelligence, Design-to-Code, and more', query: 'What solutions does Radiant Digital offer?' },
+            { icon: 'BarChart3', title: '30+ Case Studies', accent: '#F0974E', desc: 'Proof from telecom, healthcare, government, finance, and more', query: 'Show me proof — not promises.' },
+            { icon: 'Globe', title: 'Industries We Serve', accent: '#2DD4BF', desc: 'Telecom, federal, state, healthcare, oil and gas, financial services', query: 'Which industries do you serve?' },
+            { icon: 'Cpu', title: 'AI Platform', accent: '#596AE0', desc: '12 foundational capabilities that power every solution', query: 'What is the Radiant Digital AI Platform?' },
+            { icon: 'Target', title: 'AI Readiness', accent: '#a855f7', desc: 'Assess how AI-ready your organization is today', query: 'How AI-ready is my organization?' },
+          ],
         },
       ],
-      followUp: defaultFollowUp,
+      followUp: [
+        'What makes Radiant Digital different?',
+        'What solutions does Radiant Digital offer?',
+        'Show me proof — not promises.',
+        'How can I get started?',
+      ],
     }
   }
 
-  // Ensure every response has followUp suggestions
-  if (!best.followUp) {
-    if (best.id.startsWith('cs-')) {
-      best = { ...best, followUp: [
-        'Show me proof, not promises.',
-        'What have you already built?',
-        'Do you work in my industry?',
-        "I'd rather talk to a real person.",
-      ]}
-    } else {
-      best = { ...best, followUp: defaultFollowUp }
+  return ensureFollowUp(best)
+}
+
+/**
+ * Guarantee every response has contextual follow-up suggestions.
+ */
+function ensureFollowUp(entry) {
+  if (entry.followUp && entry.followUp.length > 0) return entry
+
+  // Context-aware fallback follow-ups based on entry type
+  if (entry.id.startsWith('cs-by-')) {
+    // Industry group → suggest individual case studies within that industry
+    const industryFollowUps = {
+      'cs-by-telecom': [
+        'Tell me about the Scaling Telecom Service Capacity 5x case study',
+        'Tell me about the Enabling Network Intelligence case study',
+        'Tell me about the Improving Outage Response case study',
+        'What solutions does Radiant Digital offer?',
+      ],
+      'cs-by-federal': [
+        'Tell me about the USCIS case study',
+        'Tell me about the Head Start Reporting Systems case study',
+        'Tell me about the Federal Operations case study',
+        'How secure is Radiant Digital?',
+      ],
+      'cs-by-state': [
+        'Tell me about the Florida DCF Accountability System Audit case study',
+        'Tell me about the Florida DEO Reemployment case study',
+        'Tell me about the FLHSMV Test Data Management case study',
+        'What have you done for federal agencies?',
+      ],
+      'cs-by-healthcare': [
+        'Tell me about the Quit4Health case study',
+        'Tell me about the Brighter Bites case study',
+        'Tell me about the STARTing Strong case study',
+        'Which industries do you serve?',
+      ],
+      'cs-by-oil-gas': [
+        'Tell me about the Halliburton case study',
+        'Tell me about the Advancing Industrial IoT case study',
+        'Tell me about the Halliburton AR case study',
+        'Which industries do you serve?',
+      ],
+      'cs-by-financial': [
+        'Tell me about the Touchless Operations case study',
+        'Tell me about the Navy Federal Credit Union case study',
+        'Show me all case studies',
+        'How can I get started?',
+      ],
     }
+    return { ...entry, followUp: industryFollowUps[entry.id] || [
+      'Show me all case studies',
+      'Which industries do you serve?',
+      'What solutions does Radiant Digital offer?',
+      'How can I get started?',
+    ]}
   }
 
-  return best
+  if (entry.id.startsWith('cs-')) {
+    // Individual case study → suggest related case studies + broader exploration
+    return { ...entry, followUp: [
+      'Show me more case studies',
+      'Which industries do you serve?',
+      'What solutions does Radiant Digital offer?',
+      'How can I get started?',
+    ]}
+  }
+
+  // Generic fallback
+  return { ...entry, followUp: [
+    'What solutions does Radiant Digital offer?',
+    'Show me proof — not promises.',
+    'Which industries do you serve?',
+    'How can I get started?',
+  ]}
 }
 
 export { knowledgeBase, suggestions, mainMenuItems }

@@ -171,7 +171,7 @@ export default function SectionNav() {
             animate={{ opacity: hovered ? 1 : 0.4 }}
             transition={{ duration: 0.2 }}
           >
-            <span className="text-[9px] font-display font-bold tracking-widest text-white/40">
+            <span className="text-[9px] font-display font-bold tracking-widest text-white/60">
               {String(activeIdx + 1).padStart(2, '0')}/{String(sections.length).padStart(2, '0')}
             </span>
           </motion.div>

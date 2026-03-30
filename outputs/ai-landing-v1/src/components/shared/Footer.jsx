@@ -1,6 +1,19 @@
-import { Linkedin, Youtube, Mail, Phone, MapPin } from 'lucide-react'
+import { Linkedin, Youtube, Mail, Phone, MapPin, ExternalLink } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import RadiantLogo from './RadiantLogo'
+
+const navAnchors = {
+  'Solutions': '#solutions',
+  'Industries': '#industries',
+  'Platform': '#platform',
+  'Case Studies': '#proof',
+  'Contact': '#contact',
+}
+
+const socialLinks = {
+  LinkedIn: 'https://in.linkedin.com/company/radiant-digital-systems',
+  YouTube: 'https://www.youtube.com/channel/UClkps2MFEeqsngFlFj3egzw',
+}
 
 export default function Footer({ variant = 'home' }) {
   const isICX = variant === 'icx'
@@ -8,10 +21,6 @@ export default function Footer({ variant = 'home' }) {
   const navLinks = isICX
     ? ['Enterprise ICX', 'Customer Journey Intelligence', 'Billing Anomaly Detection', 'Product Launch Risk Intelligence', 'Design-to-Code Modernization', 'Automarc AI']
     : ['Solutions', 'Industries', 'Platform', 'Case Studies', 'Contact']
-
-  const company = isICX
-    ? ['Case Studies', 'Whitepapers', 'Documentation', 'Blog & Insights', 'Events']
-    : ['About Us', 'Careers', 'Insights', 'Events', 'Contact']
 
   return (
     <footer className="bg-[#000A14] border-t border-white/[0.07]">
@@ -35,7 +44,7 @@ export default function Footer({ variant = 'home' }) {
                 { Icon: Linkedin, label: 'LinkedIn' },
                 { Icon: Youtube, label: 'YouTube' },
               ].map(({ Icon, label }) => (
-                <a key={label} href="#"
+                <a key={label} href={socialLinks[label]} target="_blank" rel="noopener noreferrer"
                   className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-text-muted hover:text-brand-green hover:border-brand-green/30 transition-all">
                   <Icon size={13} />
                 </a>
@@ -43,7 +52,7 @@ export default function Footer({ variant = 'home' }) {
             </div>
           </div>
 
-          {/* Links */}
+          {/* Navigation Links */}
           <div className="md:col-span-2">
             <h4 className="font-display text-[0.65rem] font-bold tracking-[0.15em] uppercase text-text-muted mb-5">
               {isICX ? 'Solutions' : 'Navigation'}
@@ -51,24 +60,22 @@ export default function Footer({ variant = 'home' }) {
             <ul className="space-y-3 list-none">
               {navLinks.map(item => (
                 <li key={item}>
-                  <a href="#" className="text-text-muted text-sm hover:text-brand-green transition-colors no-underline">{item}</a>
+                  <a href={navAnchors[item] || '#'} className="text-text-muted text-sm hover:text-brand-green transition-colors no-underline">{item}</a>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Company */}
+          {/* Main Website Link */}
           <div className="md:col-span-2">
             <h4 className="font-display text-[0.65rem] font-bold tracking-[0.15em] uppercase text-text-muted mb-5">
-              {isICX ? 'Resources' : 'Company'}
+              Company
             </h4>
-            <ul className="space-y-3 list-none">
-              {company.map(item => (
-                <li key={item}>
-                  <a href="#" className="text-text-muted text-sm hover:text-brand-green transition-colors no-underline">{item}</a>
-                </li>
-              ))}
-            </ul>
+            <a href="https://www.radiant.digital/" target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 text-text-muted text-sm hover:text-brand-green transition-colors no-underline">
+              <ExternalLink size={13} />
+              View Main Website
+            </a>
           </div>
 
           {/* Contact */}
@@ -96,11 +103,6 @@ export default function Footer({ variant = 'home' }) {
           <span className="text-text-muted text-xs font-display">
             &copy; 2026 Radiant Digital. All rights reserved.
           </span>
-          <div className="flex gap-6">
-            {['Privacy Policy', 'Terms of Service'].map(l => (
-              <a key={l} href="#" className="text-text-muted text-xs hover:text-text-primary transition-colors no-underline">{l}</a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>

@@ -4,27 +4,27 @@ import { Award, TrendingUp, Cpu, Briefcase } from 'lucide-react'
 
 /* Client logos sourced from Radiant Digital website */
 const clientLogos = [
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/21.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/22.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/25.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/26.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/28.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/29.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/24.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/31.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/35.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/36.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/37.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/39.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/23.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/30-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/38.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/11-1-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/27-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/32-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/34-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/33-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2025/01/new-logo-add.svg',
+  '/logos/client-21.svg',
+  '/logos/client-22.svg',
+  '/logos/client-25.svg',
+  '/logos/client-26.svg',
+  '/logos/client-28.svg',
+  '/logos/client-29.svg',
+  '/logos/client-24.svg',
+  '/logos/client-31.svg',
+  '/logos/client-35.svg',
+  '/logos/client-36.svg',
+  '/logos/client-37.svg',
+  '/logos/client-39.svg',
+  '/logos/client-23.svg',
+  '/logos/client-30-1.svg',
+  '/logos/client-38.svg',
+  '/logos/client-11-1-1.svg',
+  '/logos/client-27-1.svg',
+  '/logos/client-32-1.svg',
+  '/logos/client-34-1.svg',
+  '/logos/client-33-1.svg',
+  '/logos/client-new-logo.svg',
 ]
 
 const stats = [
@@ -40,7 +40,7 @@ export default function SocialProof() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section id="social-proof" className="relative py-32 overflow-hidden" style={{ background: '#051A30' }}>
+    <section id="social-proof" className="relative py-32 overflow-hidden bg-brand-secondary">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full opacity-[0.03]"
@@ -89,10 +89,10 @@ export default function SocialProof() {
         >
           {stats.map((s) => (
             <div key={s.label} className="metric-strip-item py-8 md:py-10">
-              <s.icon className="w-5 h-5 mb-3" style={{ color: '#91C46B', opacity: 0.7 }} />
-              <div className="pull-stat mb-1" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+              <s.icon className="w-5 h-5 mb-3 text-brand-green opacity-70" aria-hidden="true" />
+              <h3 className="pull-stat mb-1" style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
                 {s.value}
-              </div>
+              </h3>
               <div className="text-text-muted text-xs font-semibold tracking-wide uppercase">
                 {s.label}
               </div>
@@ -109,9 +109,9 @@ export default function SocialProof() {
         >
           {/* Fade edges */}
           <div className="absolute left-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to right, #051A30, transparent)' }} />
+            style={{ background: 'linear-gradient(to right, var(--color-brand-secondary, #051A30), transparent)' }} />
           <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
-            style={{ background: 'linear-gradient(to left, #051A30, transparent)' }} />
+            style={{ background: 'linear-gradient(to left, var(--color-brand-secondary, #051A30), transparent)' }} />
 
           {/* Marquee track — duplicated for seamless loop */}
           <div className="flex w-max marquee-track hover:[animation-play-state:paused]">
@@ -123,7 +123,7 @@ export default function SocialProof() {
               >
                 <img
                   src={logo}
-                  alt="Client logo"
+                  alt={`Client partner logo ${i + 1}`}
                   className="max-h-20 max-w-[196px] w-full object-contain brightness-0 invert opacity-60
                     hover:opacity-100 transition-opacity duration-500"
                 />

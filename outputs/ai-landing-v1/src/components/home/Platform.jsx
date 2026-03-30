@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const categories = [
   {
@@ -184,10 +185,10 @@ export default function Platform() {
             Radiant Digital assembles solutions that know your environment
             before they run a single process.
           </p>
-          <a href="/chat?q=How+does+the+Radiant+AI+Platform+work" className="btn-primary group/link whitespace-nowrap">
+          <Link to="/chat?q=How+does+the+Radiant+AI+Platform+work" className="btn-primary group/link whitespace-nowrap">
             <span>Explore the Platform</span>
             <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
-          </a>
+          </Link>
         </motion.div>
       </div>
     </section>

@@ -195,6 +195,23 @@ export const solutions = [
       'Reduced manual effort with improved accuracy',
     ],
   },
+  {
+    num: '07', title: 'Touchless Operations',
+    label: 'Analytics, Data Science and AI',
+    accent: '#2DD4BF',
+    screenshot: '/screenshots/touchless-ops.png',
+    tagline: 'Autonomous IT operations with AI-driven self-healing.',
+    desc: 'Shifts enterprise IT from reactive incident management to autonomous, self-healing infrastructure. Unified observability, AI-driven root cause analysis, and predictive optimization work together so your teams resolve fewer incidents manually and prevent more before they ever occur.',
+    proofStat: '80% Alert Noise Reduction',
+    tags: ['E2E Observability', 'Autonomous Remediation', 'Intelligent Analytics', 'Predictive Optimization'],
+    platformComponents: ['Radiant AIOps', 'Autonomous Stack', 'Predictive Analytics and Time Series', 'Context-Aware AI'],
+    details: [
+      'End-to-end observability across infrastructure, network, and application layers',
+      'AI-driven root cause analysis and autonomous remediation',
+      'Predictive optimization that prevents incidents before they occur',
+      'Self-healing runbook execution with no human action required',
+    ],
+  },
 ]
 
 // ─── INDUSTRIES / MARKETS ─────────────────────────
@@ -202,7 +219,7 @@ export const markets = [
   {
     title: 'Technology, Media and Telecom',
     icon: 'Radio', accent: '#596AE0',
-    image: 'https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?w=600&h=900&fit=crop&q=80',
+    image: '/images/telecom-network.jpg',
     clients: 'Major tier-1 carriers',
     desc: 'Radiant Digital has mapped 29 AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
     metrics: [
@@ -214,7 +231,7 @@ export const markets = [
   {
     title: 'Healthcare and Life Sciences',
     icon: 'HeartPulse', accent: '#e05990',
-    image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=600&h=900&fit=crop&q=80',
+    image: '/images/healthcare.jpg',
     clients: 'NIH, MD Anderson, CHOP',
     desc: 'Privacy-first AI that scales clinical workflows and research operations: with HIPAA governance built in, not bolted on.',
     metrics: [
@@ -226,7 +243,7 @@ export const markets = [
   {
     title: 'Financial Services',
     icon: 'Banknote', accent: '#F0974E',
-    image: 'https://images.unsplash.com/photo-1560472355-536de3962603?w=600&h=900&fit=crop&q=80',
+    image: '/images/financial-services.jpg',
     clients: 'Navy Federal Credit Union, major BFSI enterprises',
     desc: 'AI for fraud detection, compliance automation, and customer journey transformation: with audit trails from day one.',
     metrics: [
@@ -238,7 +255,7 @@ export const markets = [
   {
     title: 'Federal Government',
     icon: 'Landmark', accent: '#596AE0',
-    image: 'https://images.unsplash.com/photo-1501466044931-62695aada8e9?w=600&h=900&fit=crop&q=80',
+    image: '/images/federal-government.jpg',
     clients: 'DoD, HHS, DHS, Treasury, Commerce, Interior',
     desc: 'Mission-critical enterprise transformation with program-grade delivery, human-in-the-loop governance, and federal compliance alignment.',
     metrics: [
@@ -250,7 +267,7 @@ export const markets = [
   {
     title: 'State and Local Government',
     icon: 'Building2', accent: '#91C46B',
-    image: 'https://images.unsplash.com/photo-1577495508048-b635879837f1?w=600&h=900&fit=crop&q=80',
+    image: '/images/state-local-government.jpg',
     clients: 'FL DCF, FL DEO, FL DOT',
     desc: 'Citizen-centric transformation that delivers better outcomes on constrained budgets. Faster permitting, benefits processing, and case management: at scale.',
     metrics: [
@@ -262,7 +279,7 @@ export const markets = [
   {
     title: 'Education',
     icon: 'GraduationCap', accent: '#a855f7',
-    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=900&fit=crop&q=80',
+    image: '/images/education.jpg',
     clients: 'UT Austin, Baylor University, research institutions',
     desc: 'AI-first campus transformation: research analytics, student outcomes, and FERPA-compliant data governance at scale.',
     metrics: [
@@ -274,7 +291,7 @@ export const markets = [
   {
     title: 'Oil and Gas',
     icon: 'Fuel', accent: '#F0974E',
-    image: 'https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=600&h=900&fit=crop&q=80',
+    image: '/images/oil-gas.jpg',
     clients: 'Halliburton, Noble Corporation, offshore operators',
     desc: 'Connected worker safety, predictive maintenance, and digital asset intelligence across remote and field operations.',
     metrics: [
@@ -286,7 +303,7 @@ export const markets = [
   {
     title: 'Defense and Intelligence',
     icon: 'Shield', accent: '#2DD4BF',
-    image: 'https://images.unsplash.com/photo-1521791055366-0d553872125f?w=600&h=900&fit=crop&q=80',
+    image: '/images/defense-intelligence.jpg',
     clients: 'Department of Defense',
     desc: 'Mission-critical AI with zero-trust governance: humans orchestrate, never autonomous decisions in classified environments.',
     metrics: [
@@ -311,25 +328,25 @@ export const contact = {
 
 // ─── CLIENT LOGOS ─────────────────────────────────
 export const clientLogos = [
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/21.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/22.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/25.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/26.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/28.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/29.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/24.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/31.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/35.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/36.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/37.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/39.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/23.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/30-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/38.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/11-1-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/27-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/32-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/34-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2024/11/33-1.svg',
-  'https://stage.radiant.digital/wp-content/uploads/2025/01/new-logo-add.svg',
+  '/logos/client-21.svg',
+  '/logos/client-22.svg',
+  '/logos/client-25.svg',
+  '/logos/client-26.svg',
+  '/logos/client-28.svg',
+  '/logos/client-29.svg',
+  '/logos/client-24.svg',
+  '/logos/client-31.svg',
+  '/logos/client-35.svg',
+  '/logos/client-36.svg',
+  '/logos/client-37.svg',
+  '/logos/client-39.svg',
+  '/logos/client-23.svg',
+  '/logos/client-30-1.svg',
+  '/logos/client-38.svg',
+  '/logos/client-11-1-1.svg',
+  '/logos/client-27-1.svg',
+  '/logos/client-32-1.svg',
+  '/logos/client-34-1.svg',
+  '/logos/client-33-1.svg',
+  '/logos/client-new-logo.svg',
 ]

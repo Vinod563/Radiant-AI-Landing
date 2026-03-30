@@ -37,7 +37,7 @@ export default function Infrastructure() {
               className="mag-card p-5 flex flex-col items-center group cursor-default"
             >
               <div className="h-10 flex items-center justify-center mb-3">
-                <p.icon className="w-8 h-8 text-white/50 group-hover:text-white/90 transition-colors duration-400" />
+                <p.icon className="w-8 h-8 text-white/70 group-hover:text-white/90 transition-colors duration-400" />
               </div>
               <div className="font-display font-bold text-sm text-text-secondary group-hover:text-text-primary transition-colors mb-1">{p.name}</div>
               <div className="text-[0.6rem] text-text-muted">{p.note}</div>

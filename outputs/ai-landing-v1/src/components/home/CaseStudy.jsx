@@ -20,11 +20,13 @@ export default function CaseStudy() {
       {/* Background image */}
       <div className="absolute inset-0 z-0">
         <img
-          src="https://images.unsplash.com/photo-1551434678-e076c223a692?w=1920&h=1080&fit=crop&q=80"
-          alt=""
+          src="/images/team-collaboration.jpg"
+          alt="Team collaborating on network transformation project"
           className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0" style={{ background: 'linear-gradient(to right, rgba(1,15,30,0.97) 0%, rgba(1,15,30,0.92) 30%, rgba(1,15,30,0.75) 50%, rgba(1,15,30,0.35) 70%, rgba(1,15,30,0.05) 100%)' }} />
+        {/* Mobile: full opaque overlay for readability. Desktop: left-to-right fade revealing image on right */}
+        <div className="absolute inset-0 md:hidden" style={{ background: 'rgba(1,15,30,0.93)' }} />
+        <div className="absolute inset-0 hidden md:block" style={{ background: 'linear-gradient(to right, rgba(1,15,30,0.97) 0%, rgba(1,15,30,0.92) 30%, rgba(1,15,30,0.75) 50%, rgba(1,15,30,0.35) 70%, rgba(1,15,30,0.05) 100%)' }} />
       </div>
 
       {/* Editorial bg number */}
@@ -74,14 +76,14 @@ export default function CaseStudy() {
             </div>
 
             <div className="mb-6">
-              <h4 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">Challenge</h4>
+              <h3 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">Challenge</h3>
               <p className="text-text-secondary text-base leading-relaxed">
                 A Fortune 15 telecom carrier needed to transform how its network operations teams navigate complex network data. Planning delays, poor data quality visibility, and fragmented collaboration between design and development teams were slowing decisions and creating service risk.
               </p>
             </div>
 
             <div className="mb-8">
-              <h4 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">What Radiant Digital Did</h4>
+              <h3 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">What Radiant Digital Did</h3>
               <p className="text-text-secondary text-base leading-relaxed">
                 Radiant Digital deployed its Design-to-Code Accelerator to deliver over 50 fully functional, responsive screens in under three weeks. The solution provided end-to-end network visualization from edge to core, actionable performance dashboards, and proactive data quality monitoring across regions, markets, and sites. AI-powered development reduced manual effort and cut redundant tasks, shifting the client from reactive troubleshooting to proactive network intelligence.
               </p>
@@ -103,13 +105,13 @@ export default function CaseStudy() {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.65, delay: 0.2 }}
           >
-            <div className="grid grid-cols-2 gap-4 h-full content-center">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 h-full content-center">
               {metrics.map((m, i) => (
                 <motion.div key={m.label}
                   initial={{ opacity: 0, y: 16 }}
                   animate={inView ? { opacity: 1, y: 0 } : {}}
                   transition={{ duration: 0.45, delay: 0.25 + i * 0.08 }}
-                  className="mag-card p-8"
+                  className="mag-card p-6 sm:p-8"
                   style={{ background: 'rgba(1,15,30,0.85)', backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)' }}
                 >
                   {m.val === 'CIO 100' ? (
@@ -120,7 +122,7 @@ export default function CaseStudy() {
                   ) : (
                     <>
                       <div className={`font-display font-black leading-none mb-3 ${m.color}`}
-                        style={{ fontSize: 'clamp(2.2rem, 4.5vw, 3.2rem)' }}>
+                        style={{ fontSize: 'clamp(2.5rem, 6vw, 3.2rem)' }}>
                         {m.val}
                       </div>
                       <div className="text-text-muted text-sm leading-snug">{m.label}</div>

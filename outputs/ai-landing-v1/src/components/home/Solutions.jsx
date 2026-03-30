@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, BarChart3, Layers, Code2, ShieldAlert, Rocket, FileText } from 'lucide-react'
+import { ArrowRight, BarChart3, Layers, Code2, ShieldAlert, Rocket, FileText, Activity } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const solutions = [
@@ -139,6 +139,29 @@ const solutions = [
       'Reduced manual effort with improved accuracy',
     ],
   },
+  {
+    num: '07', title: 'Touchless Operations',
+    label: 'Analytics, Data Science and AI',
+    accent: '#2DD4BF',
+    bg: '#002e28',
+    gradient: 'linear-gradient(180deg, #010F1E 0%, #001410 15%, #002e28 35%, #005c50 55%, #2dd4bf 75%, #005c50 90%, #010F1E 100%)',
+    screenshotGradient: 'linear-gradient(145deg, #001a14 0%, #003d32 50%, #006b5a 100%)',
+    screenshot: '/screenshots/touchless-ops.png',
+    tagline: 'Autonomous IT operations with AI-driven self-healing.',
+    desc: 'Shifts enterprise IT from reactive incident management to autonomous, self-healing infrastructure. Unified observability, AI-driven root cause analysis, and predictive optimization work together so your teams resolve fewer incidents manually and prevent more before they ever occur.',
+    proofStat: '80% Alert Noise Reduction',
+    tags: ['E2E Observability', 'Autonomous Remediation', 'Intelligent Analytics', 'Predictive Optimization'],
+    platformComponents: ['Radiant AIOps', 'Autonomous Stack', 'Predictive Analytics and Time Series', 'Context-Aware AI'],
+    href: '#',
+    icon: Activity,
+    cta: 'See How It Works',
+    details: [
+      'End-to-end observability across infrastructure, network, and application layers',
+      'AI-driven root cause analysis and autonomous remediation',
+      'Predictive optimization that prevents incidents before they occur',
+      'Self-healing runbook execution with no human action required',
+    ],
+  },
 ]
 
 /* ─────────────────────────────────────────────
@@ -251,14 +274,14 @@ function FloatingScreenshot({ solution, isHovered }) {
               {/* Browser chrome */}
               <div className="flex items-center gap-3">
                 <div className="flex gap-1.5">
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#ff5f57' }} />
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#febc2e' }} />
-                  <div className="w-2.5 h-2.5 rounded-full" style={{ background: '#28c840' }} />
+                  <div className="w-2.5 h-2.5 rounded-full bg-mac-red" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-mac-yellow" />
+                  <div className="w-2.5 h-2.5 rounded-full bg-mac-green" />
                 </div>
                 <div className="flex-1 h-6 rounded-full mx-3"
                   style={{ background: 'rgba(255,255,255,0.05)' }}>
                   <div className="h-full rounded-full flex items-center px-4">
-                    <span className="text-[10px] font-mono" style={{ color: 'rgba(255,255,255,0.2)' }}>
+                    <span className="text-[10px] font-mono" style={{ color: 'rgba(255,255,255,0.55)' }}>
                       radiant.ai/{solution.title.toLowerCase().replace(/\s/g, '-')}
                     </span>
                   </div>
@@ -292,7 +315,7 @@ function FloatingScreenshot({ solution, isHovered }) {
                         animate={isHovered ? { y: [0, -2, 0] } : {}}
                         transition={{ duration: 2.5, delay: i * 0.25, repeat: Infinity }}
                       >
-                        <div className="text-[8px] font-mono mb-1" style={{ color: 'rgba(255,255,255,0.25)' }}>{stat.label}</div>
+                        <div className="text-[8px] font-mono mb-1" style={{ color: 'rgba(255,255,255,0.55)' }}>{stat.label}</div>
                         <div className="text-sm font-bold" style={{ color: 'rgba(255,255,255,0.75)' }}>{stat.value}</div>
                         <div className="text-[8px] font-mono mt-0.5" style={{ color: solution.accent }}>{stat.change}</div>
                       </motion.div>
@@ -334,13 +357,13 @@ function FloatingScreenshot({ solution, isHovered }) {
                     animate={{ opacity: [1, 0.3, 1] }}
                     transition={{ duration: 2, repeat: Infinity }}
                   />
-                  <span className="text-[9px] font-mono" style={{ color: 'rgba(255,255,255,0.2)' }}>
+                  <span className="text-[9px] font-mono" style={{ color: 'rgba(255,255,255,0.55)' }}>
                     Live • {solution.label}
                   </span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Icon size={11} style={{ color: `${solution.accent}70` }} />
-                  <span className="text-[9px] font-mono" style={{ color: 'rgba(255,255,255,0.18)' }}>
+                  <span className="text-[9px] font-mono" style={{ color: 'rgba(255,255,255,0.55)' }}>
                     Radiant AI
                   </span>
                 </div>
@@ -506,7 +529,7 @@ function SolutionBlock({ s }) {
             )}
             <div className="flex-1" />
             <Link to={`/chat?q=${encodeURIComponent('Tell me about ' + s.title)}`} className="btn-primary group/link">
-              <span>{s.cta || 'View Solution'}</span>
+              <span>Explore Solution</span>
               <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
             </Link>
           </motion.div>
@@ -527,7 +550,7 @@ function SolutionBlock({ s }) {
                   className="text-[0.58rem] font-display font-medium px-2.5 py-1 rounded-md"
                   style={{
                     background: 'rgba(255,255,255,0.04)',
-                    color: 'rgba(255,255,255,0.4)',
+                    color: 'rgba(255,255,255,0.65)',
                     border: '1px solid rgba(255,255,255,0.06)',
                   }}>
                   {pc}

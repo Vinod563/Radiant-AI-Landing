@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Compass, BarChart3, Cloud, Blocks, RefreshCw, ArrowUpRight } from 'lucide-react'
+import { Compass, BarChart3, Cloud, Blocks, RefreshCw } from 'lucide-react'
 
 const practices = [
   {
@@ -178,18 +178,9 @@ function PracticeCard({ e, i, inView }) {
           {e.desc}
         </p>
 
-        {/* Bottom row: divider + arrow */}
-        <div className="flex items-center justify-between pt-4 relative z-10"
-          style={{ borderTop: `1px solid ${e.accent}12` }}>
-          <span className="text-[0.6rem] font-display font-semibold uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ color: `${e.accent}80` }}>
-            Learn more
-          </span>
-          <div className="w-8 h-8 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-1 group-hover:translate-y-0"
-            style={{ background: `${e.accent}15`, border: `1px solid ${e.accent}25` }}>
-            <ArrowUpRight size={14} style={{ color: e.accent }} />
-          </div>
-        </div>
+        {/* Bottom accent line */}
+        <div className="pt-4 relative z-10"
+          style={{ borderTop: `1px solid ${e.accent}12` }} />
       </div>
 
       {/* Bottom accent glow on hover */}

@@ -62,6 +62,7 @@ export default function Chat() {
   const mainRef = useRef(null)
   const inputRef = useRef(null)
   const autoSubmitted = useRef(false)
+  const submitTimeoutRef = useRef(null)
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -77,14 +78,22 @@ export default function Chat() {
 
   useEffect(() => {
     inputRef.current?.focus()
+    return () => {
+      if (submitTimeoutRef.current) clearTimeout(submitTimeoutRef.current)
+    }
   }, [])
 
   // Auto-submit query from URL param (e.g., /chat?q=Show+me+case+studies)
   useEffect(() => {
     const q = searchParams.get('q')
-    if (q && !autoSubmitted.current) {
+    if (q) {
+      // Reset state for fresh navigation with a new query
+      setMessages([])
+      setInput('')
+      setIsTyping(false)
       autoSubmitted.current = true
-      setTimeout(() => handleSubmit(q), 400)
+      const timeoutId = setTimeout(() => handleSubmit(q), 400)
+      return () => clearTimeout(timeoutId)
     }
   }, [searchParams])
 
@@ -97,7 +106,7 @@ export default function Chat() {
     setInput('')
     setIsTyping(true)
 
-    setTimeout(() => {
+    submitTimeoutRef.current = setTimeout(() => {
       const answer = findAnswer(q)
       const botMsg = { role: 'assistant', cards: answer.cards, id: answer.id, followUp: answer.followUp }
       setMessages((prev) => [...prev, botMsg])
@@ -115,7 +124,7 @@ export default function Chat() {
   const hasMessages = messages.length > 0
 
   return (
-    <div className="min-h-screen bg-[#010F1E] flex flex-col relative">
+    <div className="h-[100dvh] bg-[#010F1E] flex flex-col relative overflow-hidden">
       {/* Full-page gradient background — layered radial gradients covering entire viewport */}
       <div className="fixed inset-0 pointer-events-none z-0"
         style={{
@@ -133,13 +142,14 @@ export default function Chat() {
       {/* Top bar */}
       <header className="sticky top-0 z-50 backdrop-blur-xl border-b border-white/[0.06]"
         style={{ background: 'rgba(1,15,30,0.85)' }}>
-        <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-12 sm:h-16 flex items-center justify-between">
           <button
             onClick={() => navigate('/')}
+            aria-label="Go back"
             className="flex items-center gap-2.5 text-text-secondary hover:text-white transition-colors text-sm"
           >
             <ArrowLeft size={16} />
-            <span className="font-display font-semibold">Back</span>
+            <span className="font-display font-semibold hidden sm:inline">Back</span>
           </button>
           <div className="flex items-center gap-2">
             <RadiantLogo height={20} />
@@ -148,14 +158,15 @@ export default function Chat() {
               Beta
             </span>
           </div>
-          <div className="w-20 flex justify-end">
+          <div className="w-10 sm:w-20 flex justify-end">
             {messages.length > 0 && (
               <button
                 onClick={() => { setMessages([]); autoSubmitted.current = false }}
-                className="flex items-center gap-1.5 text-text-muted hover:text-white transition-colors text-xs font-display font-semibold px-3 py-1.5 rounded-lg hover:bg-white/[0.05]"
+                aria-label="Reset conversation"
+                className="flex items-center gap-1.5 text-text-muted hover:text-white transition-colors text-xs font-display font-semibold px-2 sm:px-3 py-1.5 rounded-lg hover:bg-white/[0.05]"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-                Reset
+                <span className="hidden sm:inline">Reset</span>
               </button>
             )}
           </div>
@@ -164,7 +175,7 @@ export default function Chat() {
 
       {/* Messages area */}
       <main ref={mainRef} className="flex-1 overflow-y-auto flex flex-col">
-        <div className="max-w-6xl mx-auto px-6 w-full flex-1 flex flex-col">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col">
           <AnimatePresence mode="popLayout">
             {!hasMessages && (
               <motion.div
@@ -173,14 +184,14 @@ export default function Chat() {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5 }}
-                className="flex-1 flex flex-col items-center justify-center pb-6 text-center relative overflow-visible"
+                className="flex-1 flex flex-col items-center justify-start sm:justify-center pt-2 sm:pt-0 pb-4 sm:pb-6 text-center relative overflow-visible"
               >
                 {/* Animated glowing orb */}
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-                  className="relative mx-auto mt-8 mb-6"
-                  style={{ width: '120px', height: '120px' }}
+                  className="relative mx-auto mt-4 sm:mt-8 mb-4 sm:mb-6"
+                  style={{ width: 'clamp(70px, 15vw, 120px)', height: 'clamp(70px, 15vw, 120px)' }}
                 >
                   {/* Large ambient glow spread */}
                   <div
@@ -298,8 +309,8 @@ export default function Chat() {
                   initial={{ opacity: 0, y: 16 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.6, delay: 0.1 }}
-                  className="font-display font-black text-white mb-4 tracking-tight relative z-10"
-                  style={{ fontSize: 'clamp(2.4rem, 4.5vw, 3.5rem)' }}
+                  className="font-display font-black text-white mb-2 sm:mb-4 tracking-tight relative z-10"
+                  style={{ fontSize: 'clamp(1.5rem, 4.5vw, 3.5rem)' }}
                 >
                   <span className="grad-text">Every AI firm</span> promises transformation. We can show you ours.
                 </motion.h1>
@@ -307,14 +318,42 @@ export default function Chat() {
                   initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5, delay: 0.2 }}
-                  className="text-text-secondary text-lg max-w-md mx-auto mb-10 leading-relaxed relative z-10"
+                  className="text-text-secondary text-sm sm:text-lg max-w-md mx-auto mb-6 sm:mb-10 leading-relaxed relative z-10"
                 >
                   Tell us what you're working on. We'll tell you what we've already built for it.
                 </motion.p>
 
                 {/* Suggestion cards — 9 cards: 4+4+1 layout */}
                 <div className="max-w-4xl mx-auto relative z-10">
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {/* Mobile: compact pill layout / Desktop: card grid */}
+                  {/* Mobile pills */}
+                  <div className="flex flex-wrap justify-center gap-2 sm:hidden">
+                    {suggestions.map((s, i) => {
+                      const colors = ['#91C46B', '#596AE0', '#F0974E', '#a855f7', '#2DD4BF', '#818cf8', '#e05990', '#91C46B', '#F0974E']
+                      const c = colors[i]
+                      return (
+                        <motion.button
+                          key={s}
+                          initial={{ opacity: 0, y: 10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.3, delay: 0.15 + i * 0.04 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={() => handleSubmit(s)}
+                          className="px-3.5 py-2 rounded-full text-[11px] font-semibold leading-tight transition-colors"
+                          style={{
+                            background: `${c}10`,
+                            border: `1px solid ${c}25`,
+                            color: `${c}cc`,
+                          }}
+                        >
+                          {s}
+                        </motion.button>
+                      )
+                    })}
+                  </div>
+
+                  {/* Desktop cards */}
+                  <div className="hidden sm:grid grid-cols-2 md:grid-cols-4 gap-4">
                     {suggestions.slice(0, 8).map((s, i) => {
                       const colors = ['#91C46B', '#596AE0', '#F0974E', '#a855f7', '#2DD4BF', '#818cf8', '#e05990', '#91C46B']
                       const icons = [Sparkles, Layers, BarChart3, Award, Globe, Cpu, ClipboardCheck, UserSearch]
@@ -336,7 +375,6 @@ export default function Chat() {
                             boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
                           }}
                         >
-                          {/* Hover glow */}
                           <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                             style={{ background: `radial-gradient(ellipse at 50% 0%, ${c}14 0%, transparent 70%)` }} />
                           <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -367,8 +405,8 @@ export default function Chat() {
                     })}
                   </div>
 
-                  {/* Card 9 — "Talk to a real person" — visually distinct, centered */}
-                  <div className="flex justify-center mt-4">
+                  {/* Card 9 — "Talk to a real person" — desktop only (already in mobile pills above) */}
+                  <div className="hidden sm:flex justify-center mt-4">
                     <motion.button
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -383,11 +421,8 @@ export default function Chat() {
                         boxShadow: '0 4px 24px rgba(0,0,0,0.2)',
                       }}
                     >
-                      {/* Hover glow */}
                       <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                         style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(240,151,78,0.1) 0%, transparent 70%)' }} />
-                      <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
-                        style={{ border: '1px solid rgba(240,151,78,0.35)' }} />
 
                       <div className="flex items-center gap-4 relative z-10">
                         <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-all duration-300 group-hover:scale-110"
@@ -399,17 +434,14 @@ export default function Chat() {
                             {suggestions[8]}
                           </span>
                           <div className="flex items-center gap-1.5">
-                            <span className="text-[11px] font-medium" style={{ color: 'rgba(240,151,78,0.6)' }}>
+                            <span className="text-[11px] font-medium" style={{ color: 'rgba(240,151,78,0.85)' }}>
                               Connect with our team
                             </span>
                             <ChevronRight size={12} className="transition-all duration-300 group-hover:translate-x-1"
-                              style={{ color: 'rgba(240,151,78,0.5)' }} />
+                              style={{ color: 'rgba(240,151,78,0.85)' }} />
                           </div>
                         </div>
                       </div>
-
-                      <div className="absolute bottom-0 left-4 right-4 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-                        style={{ background: 'linear-gradient(90deg, transparent, rgba(240,151,78,0.3), transparent)' }} />
                     </motion.button>
                   </div>
                 </div>
@@ -490,7 +522,7 @@ export default function Chat() {
                         style={{
                           background: 'rgba(255,255,255,0.03)',
                           border: '1px solid rgba(255,255,255,0.07)',
-                          color: 'rgba(240,244,248,0.6)',
+                          color: 'rgba(240,244,248,0.75)',
                         }}
                         onMouseEnter={(e) => {
                           e.currentTarget.style.borderColor = 'rgba(145,196,107,0.3)'
@@ -516,7 +548,7 @@ export default function Chat() {
                     style={{
                       background: 'rgba(255,255,255,0.03)',
                       border: '1px solid rgba(255,255,255,0.07)',
-                      color: 'rgba(240,244,248,0.6)',
+                      color: 'rgba(240,244,248,0.75)',
                     }}
                     onMouseEnter={(e) => {
                       e.currentTarget.style.borderColor = 'rgba(240,151,78,0.3)'
@@ -543,9 +575,9 @@ export default function Chat() {
 
       {/* Input bar */}
       <div className="sticky bottom-0 z-50">
-        <div className="max-w-6xl mx-auto px-6 pt-4 pb-6">
+        <div className="max-w-6xl mx-auto px-3 sm:px-6 pt-2 sm:pt-4 pb-3 sm:pb-6">
           <div
-            className="flex items-center gap-4 rounded-2xl px-6 py-4 transition-all duration-300 focus-within:border-[rgba(145,196,107,0.3)] focus-within:shadow-[0_0_40px_rgba(145,196,107,0.06)]"
+            className="flex items-center gap-3 sm:gap-4 rounded-2xl px-4 sm:px-6 py-3 sm:py-4 transition-all duration-300 focus-within:border-[rgba(145,196,107,0.3)] focus-within:shadow-[0_0_40px_rgba(145,196,107,0.06)]"
             style={{
               background: 'rgba(255,255,255,0.04)',
               border: '1px solid rgba(255,255,255,0.08)',
@@ -560,7 +592,7 @@ export default function Chat() {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="What enterprise transformation are you trying to supercharge?"
-              className="flex-1 bg-transparent text-white text-[15px] placeholder:text-white/25 outline-none font-body"
+              className="flex-1 bg-transparent text-white text-[15px] placeholder:text-white/50 outline-none font-body"
             />
             <button
               onClick={() => handleSubmit()}
@@ -573,7 +605,7 @@ export default function Chat() {
               <Send size={16} className={input.trim() ? 'text-[#010F1E]' : 'text-white/30'} />
             </button>
           </div>
-          <p className="text-center text-text-muted text-[0.6rem] mt-3 opacity-40">
+          <p className="text-center text-text-muted text-[0.6rem] mt-2 sm:mt-3 opacity-70 hidden sm:block">
             Powered by Radiant AI knowledge base
           </p>
         </div>
@@ -701,25 +733,19 @@ function MetricsCard({ card }) {
         TRUSTED
       </div>
 
-      <div className="relative z-10 p-8 lg:p-10">
+      <div className="relative z-10 p-6 sm:p-8 lg:p-10">
         <div className="kicker justify-center mb-8" style={{ justifyContent: 'center' }}>{card.title}</div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className={`grid gap-4 ${card.items.length <= 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2 sm:grid-cols-2 lg:grid-cols-4'}`}>
           {card.items.map((item, i) => {
             const SIcon = statIcons[i % statIcons.length]
             return (
               <div key={item.label} className="text-center py-6">
-                <SIcon className="w-5 h-5 mx-auto mb-3" style={{ color: '#91C46B', opacity: 0.7 }} />
-                <div className="font-display font-black leading-none mb-2"
-                  style={{
-                    fontSize: 'clamp(2rem, 4vw, 3rem)',
-                    background: 'linear-gradient(135deg, #91C46B 0%, #F0974E 70%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text',
-                  }}>
+                <SIcon className="w-5 h-5 mx-auto mb-3 text-brand-green opacity-70" aria-hidden="true" />
+                <div className="font-display font-black leading-none mb-2 grad-text"
+                  style={{ fontSize: 'clamp(2.2rem, 6vw, 3rem)' }}>
                   {item.value}
                 </div>
-                <div className="text-text-muted text-xs font-semibold tracking-wide uppercase">{item.label}</div>
+                <div className="text-text-muted text-xs font-semibold tracking-wide uppercase line-clamp-2">{item.label}</div>
               </div>
             )
           })}
@@ -853,8 +879,8 @@ function PCEDiagramCard() {
         <rect x="60" y="508" width="560" height="76" rx="10"
           fill="rgba(145,196,107,0.08)" stroke="rgba(145,196,107,0.25)" strokeWidth="1.5" />
         <text x="340" y="536" textAnchor="middle" fill="#91C46B" fontSize="15" fontWeight="800" fontFamily="-apple-system, sans-serif">Supercharged Enterprise Transformation</text>
-        <text x="340" y="556" textAnchor="middle" fill="rgba(255,255,255,0.55)" fontSize="11" fontFamily="-apple-system, sans-serif">AI agents and delivery teams aligned from day one.</text>
-        <text x="340" y="572" textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Fastest path from context to production. Every time.</text>
+        <text x="340" y="556" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="11" fontFamily="-apple-system, sans-serif">AI agents and delivery teams aligned from day one.</text>
+        <text x="340" y="572" textAnchor="middle" fill="rgba(255,255,255,0.7)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Fastest path from context to production. Every time.</text>
       </svg>
     </div>
   )
@@ -916,9 +942,11 @@ function TextCard({ card }) {
           <div className="w-1.5 h-12 rounded-full" style={{ background: card.accent }} />
           <h3 className="font-display font-black text-xl lg:text-2xl text-white tracking-tight">{card.title}</h3>
         </div>
-        <p className="text-text-secondary text-base lg:text-lg leading-[1.9] max-w-2xl">
-          {card.body}
-        </p>
+        <div className="text-text-secondary text-base lg:text-lg leading-[1.9] max-w-2xl space-y-3">
+          {card.body.split('\n').filter(Boolean).map((line, i) => (
+            <p key={i}>{line}</p>
+          ))}
+        </div>
       </div>
     </div>
   )
@@ -1044,7 +1072,7 @@ function CaseStudyGridCard({ card, onItemClick }) {
               {/* Industry badge */}
               <div className="absolute top-3 left-3">
                 <span className="text-[0.58rem] font-display font-bold uppercase tracking-wider px-2.5 py-1 rounded-full"
-                  style={{ background: `${item.accent}25`, color: item.accent, border: `1px solid ${item.accent}30`, backdropFilter: 'blur(8px)' }}>
+                  style={{ background: `${item.accent}55`, color: '#fff', border: `1px solid ${item.accent}70`, backdropFilter: 'blur(12px)', textShadow: '0 1px 2px rgba(0,0,0,0.4)' }}>
                   {item.industry}
                 </span>
               </div>
@@ -1058,7 +1086,7 @@ function CaseStudyGridCard({ card, onItemClick }) {
 
             {/* Card body */}
             <div className="p-5">
-              <h4 className="font-display font-bold text-white text-sm leading-snug mb-2 group-hover:text-brand-green transition-colors duration-300">
+              <h4 className="font-display font-bold text-white text-sm leading-snug mb-2 group-hover:text-brand-green transition-colors duration-300 line-clamp-2">
                 {item.name}
               </h4>
               <p className="text-text-muted text-xs leading-relaxed line-clamp-2">
@@ -1187,16 +1215,16 @@ function CaseStudyCard({ card }) {
         <p className="text-text-secondary text-base mb-10 max-w-2xl leading-relaxed">{card.subtitle}</p>
 
         {/* Metrics — large editorial tiles like CaseStudy */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
+        <div className={`grid gap-4 mb-10 ${card.metrics.length <= 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`}>
           {card.metrics.map((m, i) => {
             const metricColors = ['grad-text', 'text-brand-green', 'grad-text', 'text-brand-orange']
             return (
               <div key={m.label} className="mag-card p-6 lg:p-8 text-center">
                 <div className={`font-display font-black leading-none mb-3 ${metricColors[i % metricColors.length]}`}
-                  style={{ fontSize: 'clamp(2rem, 4vw, 2.8rem)' }}>
+                  style={{ fontSize: 'clamp(2.2rem, 6vw, 2.8rem)' }}>
                   {m.value}
                 </div>
-                <div className="text-text-muted text-xs leading-snug">{m.label}</div>
+                <div className="text-text-muted text-xs leading-snug line-clamp-2">{m.label}</div>
               </div>
             )
           })}
@@ -1485,22 +1513,22 @@ function ContactDetailsCard({ card }) {
 
                 <input
                   type="text" name="name" placeholder="Full Name *" value={form.name} onChange={handleChange}
-                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                 />
                 <input
                   type="email" name="email" placeholder="Work Email *" value={form.email} onChange={handleChange}
-                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                 />
                 <input
                   type="text" name="company" placeholder="Company" value={form.company} onChange={handleChange}
-                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                 />
                 <textarea
                   name="message" placeholder="How can we help? *" rows={3} value={form.message} onChange={handleChange}
-                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none resize-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none resize-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                 />
 
@@ -1513,7 +1541,7 @@ function ContactDetailsCard({ card }) {
                   </div>
                   <input
                     type="text" name="captcha" placeholder="Answer" value={form.captcha} onChange={handleChange}
-                    className="w-24 rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/25 outline-none text-center transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                    className="w-24 rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none text-center transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
                     style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                   />
                 </div>
