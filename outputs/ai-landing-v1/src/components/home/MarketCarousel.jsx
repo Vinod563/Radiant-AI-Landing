@@ -404,19 +404,20 @@ function MarketCard({ market }) {
               {market.metrics.map((metric) => (
                 <div
                   key={metric.label}
-                  className="rounded-lg px-2 py-3 text-center overflow-hidden"
+                  className="rounded-lg px-1.5 py-2.5 text-center"
                   style={{
                     background: 'rgba(0,0,0,0.35)',
                     border: `1px solid ${market.accent}30`,
                   }}
                 >
                   <div
-                    className="font-display font-bold text-lg leading-none mb-1.5"
+                    className="font-display font-bold text-base leading-none mb-1"
                     style={{ color: market.accent }}
                   >
                     {metric.value}
                   </div>
-                  <div className="text-white/60 text-[8px] uppercase tracking-wide font-semibold leading-tight line-clamp-2">
+                  <div className="text-white/60 text-[7px] uppercase tracking-wider font-semibold leading-[1.3]"
+                    style={{ wordBreak: 'break-word', hyphens: 'auto' }}>
                     {metric.label}
                   </div>
                 </div>

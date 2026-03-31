@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Compass, BarChart3, Cloud, Blocks, RefreshCw } from 'lucide-react'
+import { Compass, BarChart3, Cloud, Blocks, RefreshCw, Users } from 'lucide-react'
 
 const practices = [
   {
@@ -42,6 +42,14 @@ const practices = [
     desc: 'Empower people and processes with AI enablement.',
     accent: '#a855f7',
     gradient: 'linear-gradient(135deg, #010F1E 0%, #0e0820 60%, #1a1040 100%)',
+  },
+  {
+    icon: Users,
+    num: '06',
+    title: 'Skilled Workforce Solutions',
+    desc: 'Provide qualified technical talent using AI-assisted sourcing.',
+    accent: '#F05030',
+    gradient: 'linear-gradient(135deg, #010F1E 0%, #1a0808 60%, #3d1010 100%)',
   },
 ]
 
@@ -107,14 +115,11 @@ export default function Enablers() {
           ))}
         </div>
 
-        {/* Bottom row: 2 cards centered */}
+        {/* Bottom row: 3 cards */}
         <div className="grid md:grid-cols-3 gap-6">
-          <div className="md:col-start-1">
-            <PracticeCard e={practices[3]} i={3} inView={inView} />
-          </div>
-          <div className="md:col-start-2">
-            <PracticeCard e={practices[4]} i={4} inView={inView} />
-          </div>
+          {practices.slice(3, 6).map((e, i) => (
+            <PracticeCard key={e.title} e={e} i={i + 3} inView={inView} />
+          ))}
         </div>
       </div>
     </section>

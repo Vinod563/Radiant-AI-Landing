@@ -74,7 +74,7 @@ export default function Footer({ variant = 'home' }) {
             <a href="https://www.radiant.digital/" target="_blank" rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-text-muted text-sm hover:text-brand-green transition-colors no-underline">
               <ExternalLink size={13} />
-              View Main Website
+              Radiant Digital
             </a>
           </div>
 

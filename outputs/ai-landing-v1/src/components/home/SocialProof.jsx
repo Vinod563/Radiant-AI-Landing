@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { Award, TrendingUp, Cpu, Briefcase } from 'lucide-react'
+import { Award, TrendingUp, DollarSign, Briefcase } from 'lucide-react'
 
 /* Client logos sourced from Radiant Digital website */
 const clientLogos = [
@@ -22,7 +22,6 @@ const clientLogos = [
   '/logos/client-11-1-1.svg',
   '/logos/client-27-1.svg',
   '/logos/client-32-1.svg',
-  '/logos/client-34-1.svg',
   '/logos/client-33-1.svg',
   '/logos/client-new-logo.svg',
 ]
@@ -31,7 +30,7 @@ const stats = [
   { value: '20+', label: 'Years of Transformation', icon: Award },
   { value: '50+', label: 'Enterprise Clients', icon: Briefcase },
   { value: '$2B+', label: 'Programs Powered', icon: TrendingUp },
-  { value: '40%', label: 'Avg Cost Reduction', icon: Cpu },
+  { value: '40%', label: 'Avg Cost Reduction', icon: DollarSign },
 ]
 
 

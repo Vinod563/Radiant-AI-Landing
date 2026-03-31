@@ -91,6 +91,7 @@ export const aiFabric = {
     { num: '03', title: 'Cloud Transformation', desc: 'Enhance scalability and performance with AI-optimized infrastructure.', icon: 'Cloud' },
     { num: '04', title: 'Analytics, Data Science and AI', desc: 'Turn data into real-time intelligence for faster decisions.', icon: 'BarChart3' },
     { num: '05', title: 'Organizational Transformation', desc: 'Empower people and processes with AI enablement.', icon: 'RefreshCw' },
+    { num: '06', title: 'Skilled Workforce Solutions', desc: 'Provide qualified technical talent using AI-assisted sourcing.', icon: 'Users' },
   ],
 }
 
@@ -196,7 +197,7 @@ export const solutions = [
     ],
   },
   {
-    num: '07', title: 'Touchless Operations',
+    num: '07', title: 'Touchless IT Operations',
     label: 'Analytics, Data Science and AI',
     accent: '#2DD4BF',
     screenshot: '/screenshots/touchless-ops.png',

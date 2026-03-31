@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
@@ -29,6 +29,7 @@ import {
   Radio,
   Fuel,
   Shield,
+  RefreshCw,
   Banknote,
   Award,
   Briefcase,
@@ -750,11 +751,6 @@ function MetricsCard({ card }) {
             )
           })}
         </div>
-        {/* Trust line like SocialProof */}
-        <div className="divider mt-8 mb-4" />
-        <p className="text-center text-text-muted text-xs">
-          CMMC compliant · 20+ Years in Business · 50+ Enterprise Clients
-        </p>
       </div>
     </div>
   )
@@ -1190,17 +1186,17 @@ function CaseStudyCard({ card }) {
           style={{ background: 'radial-gradient(circle, rgba(89,106,224,0.08) 0%, transparent 65%)', filter: 'blur(45px)' }} />
       </div>
 
-      <div className="p-10 lg:p-12 relative z-10">
+      <div className="p-6 sm:p-10 lg:p-12 relative z-10">
         {/* Client info badge like CaseStudy */}
-        <div className="flex items-center gap-4 p-5 rounded-2xl mb-8"
+        <div className="flex items-center gap-3 sm:gap-4 p-4 sm:p-5 rounded-2xl mb-6 sm:mb-8 flex-wrap"
           style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.08)' }}>
-          <div className="w-12 h-12 rounded-2xl flex items-center justify-center font-display font-black text-xl flex-shrink-0"
-            style={{ background: card.accent, color: '#010F1E' }}>T</div>
-          <div>
-            <div className="font-display font-bold text-white text-base">{card.client || 'Leading Telecom Enterprise'}</div>
-            <div className="text-text-muted text-sm">{card.clientDetail || 'Fortune 500 · Telecommunications'}</div>
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center font-display font-black text-lg sm:text-xl flex-shrink-0"
+            style={{ background: card.accent, color: '#010F1E' }}>{(card.client || 'T')[0]}</div>
+          <div className="min-w-0 flex-1">
+            <div className="font-display font-bold text-white text-sm sm:text-base truncate">{card.client || 'Leading Telecom Enterprise'}</div>
+            <div className="text-text-muted text-xs sm:text-sm">{card.clientDetail || 'Fortune 500 · Telecommunications'}</div>
           </div>
-          <div className="ml-auto flex items-center gap-1.5 px-3 py-1.5 rounded-full"
+          <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full flex-shrink-0"
             style={{ background: `${card.accent}12`, border: `1px solid ${card.accent}25` }}>
             <span className="w-1.5 h-1.5 rounded-full" style={{ background: card.accent }} />
             <span className="text-[0.6rem] font-bold uppercase tracking-widest" style={{ color: card.accent }}>Case Study</span>
@@ -1208,23 +1204,23 @@ function CaseStudyCard({ card }) {
         </div>
 
         {/* Headline */}
-        <h3 className="font-display font-black text-white mb-4 tracking-tight leading-[0.95]"
-          style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
+        <h3 className="font-display font-black text-white mb-4 tracking-tight leading-[1.05]"
+          style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2.5rem)' }}>
           {card.title}
         </h3>
-        <p className="text-text-secondary text-base mb-10 max-w-2xl leading-relaxed">{card.subtitle}</p>
+        <p className="text-text-secondary text-sm sm:text-base mb-8 sm:mb-10 max-w-2xl leading-relaxed">{card.subtitle}</p>
 
         {/* Metrics — large editorial tiles like CaseStudy */}
-        <div className={`grid gap-4 mb-10 ${card.metrics.length <= 3 ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`}>
+        <div className={`grid gap-3 sm:gap-4 mb-8 sm:mb-10 ${card.metrics.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`}>
           {card.metrics.map((m, i) => {
             const metricColors = ['grad-text', 'text-brand-green', 'grad-text', 'text-brand-orange']
             return (
-              <div key={m.label} className="mag-card p-6 lg:p-8 text-center">
-                <div className={`font-display font-black leading-none mb-3 ${metricColors[i % metricColors.length]}`}
-                  style={{ fontSize: 'clamp(2.2rem, 6vw, 2.8rem)' }}>
+              <div key={m.label} className="mag-card p-4 sm:p-6 lg:p-8 text-center overflow-hidden">
+                <div className={`font-display font-black leading-tight mb-2 sm:mb-3 ${metricColors[i % metricColors.length]}`}
+                  style={{ fontSize: 'clamp(1.3rem, 4vw, 2.4rem)' }}>
                   {m.value}
                 </div>
-                <div className="text-text-muted text-xs leading-snug line-clamp-2">{m.label}</div>
+                <div className="text-text-muted text-[10px] sm:text-xs leading-snug line-clamp-2">{m.label}</div>
               </div>
             )
           })}
@@ -1357,10 +1353,80 @@ function ContactDetailsCard({ card }) {
     { icon: MapPin, label: 'Office', value: card.address },
   ]
 
-  // Simple math captcha
-  const [captchaA] = useState(() => Math.floor(Math.random() * 9) + 1)
-  const [captchaB] = useState(() => Math.floor(Math.random() * 9) + 1)
+  // Canvas-based visual CAPTCHA
+  const canvasRef = useRef(null)
+  const [captchaCode, setCaptchaCode] = useState('')
   const [form, setForm] = useState({ name: '', email: '', company: '', message: '', captcha: '' })
+
+  const generateCaptcha = useCallback(() => {
+    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
+    let code = ''
+    for (let i = 0; i < 5; i++) code += chars[Math.floor(Math.random() * chars.length)]
+    setCaptchaCode(code)
+    return code
+  }, [])
+
+  const drawCaptcha = useCallback((code) => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    const w = canvas.width, h = canvas.height
+
+    // Background
+    ctx.fillStyle = 'rgba(10, 25, 47, 1)'
+    ctx.fillRect(0, 0, w, h)
+
+    // Noise lines
+    for (let i = 0; i < 5; i++) {
+      ctx.strokeStyle = `rgba(${Math.random()*100+80}, ${Math.random()*100+80}, ${Math.random()*200+55}, 0.4)`
+      ctx.lineWidth = 1
+      ctx.beginPath()
+      ctx.moveTo(Math.random() * w, Math.random() * h)
+      ctx.bezierCurveTo(Math.random()*w, Math.random()*h, Math.random()*w, Math.random()*h, Math.random()*w, Math.random()*h)
+      ctx.stroke()
+    }
+
+    // Noise dots
+    for (let i = 0; i < 40; i++) {
+      ctx.fillStyle = `rgba(${Math.random()*200+55}, ${Math.random()*200+55}, ${Math.random()*200+55}, 0.3)`
+      ctx.beginPath()
+      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 2, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    // Draw each character with rotation and offset
+    const fontSize = 26
+    ctx.textBaseline = 'middle'
+    const startX = 15
+    const spacing = (w - 30) / code.length
+
+    for (let i = 0; i < code.length; i++) {
+      ctx.save()
+      const x = startX + i * spacing + spacing / 2
+      const y = h / 2 + (Math.random() - 0.5) * 12
+      const angle = (Math.random() - 0.5) * 0.5
+      ctx.translate(x, y)
+      ctx.rotate(angle)
+      ctx.font = `bold ${fontSize + Math.floor(Math.random()*6 - 3)}px monospace`
+      const colors = ['#91C46B', '#596AE0', '#2DD4BF', '#F0974E', '#ffffff']
+      ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)]
+      ctx.fillText(code[i], -fontSize / 4, 0)
+      ctx.restore()
+    }
+  }, [])
+
+  useEffect(() => {
+    const code = generateCaptcha()
+    // Small delay to ensure canvas is mounted
+    const t = setTimeout(() => drawCaptcha(code), 50)
+    return () => clearTimeout(t)
+  }, [generateCaptcha, drawCaptcha])
+
+  const refreshCaptcha = () => {
+    const code = generateCaptcha()
+    setForm(prev => ({ ...prev, captcha: '' }))
+    setTimeout(() => drawCaptcha(code), 50)
+  }
   const [submitted, setSubmitted] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState('')
@@ -1377,8 +1443,9 @@ function ContactDetailsCard({ card }) {
       setError('Please fill in all required fields.')
       return
     }
-    if (parseInt(form.captcha, 10) !== captchaA + captchaB) {
-      setError('Incorrect answer. Please try again.')
+    if (form.captcha.trim() !== captchaCode) {
+      setError('Incorrect CAPTCHA. Please try again.')
+      refreshCaptcha()
       return
     }
 
@@ -1532,16 +1599,20 @@ function ContactDetailsCard({ card }) {
                   style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                 />
 
-                {/* Math captcha */}
+                {/* Visual CAPTCHA */}
                 <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 px-4 py-3 rounded-xl flex-shrink-0"
-                    style={{ background: 'rgba(89,106,224,0.08)', border: '1px solid rgba(89,106,224,0.15)' }}>
-                    <Shield size={14} className="text-[#596AE0]" />
-                    <span className="text-white text-sm font-display font-semibold">{captchaA} + {captchaB} = ?</span>
+                  <div className="flex items-center gap-2 rounded-xl overflow-hidden flex-shrink-0"
+                    style={{ border: '1px solid rgba(89,106,224,0.15)' }}>
+                    <canvas ref={canvasRef} width={160} height={48} className="rounded-l-xl" style={{ display: 'block' }} />
+                    <button type="button" onClick={refreshCaptcha} title="New CAPTCHA"
+                      className="px-2 py-3 text-text-muted hover:text-brand-green transition-colors">
+                      <RefreshCw size={14} />
+                    </button>
                   </div>
                   <input
-                    type="text" name="captcha" placeholder="Answer" value={form.captcha} onChange={handleChange}
-                    className="w-24 rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none text-center transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
+                    type="text" name="captcha" placeholder="Enter code" value={form.captcha} onChange={handleChange}
+                    autoComplete="off"
+                    className="w-28 rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none text-center transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
                     style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
                   />
                 </div>

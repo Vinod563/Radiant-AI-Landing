@@ -102,7 +102,7 @@ export default function CTA() {
                   to="/chat?q=I%27d%20rather%20talk%20to%20a%20real%20person."
                   className="btn-primary text-base !px-10 !py-5 shadow-[0_0_60px_rgba(145,196,107,0.25)] w-full sm:w-auto justify-center"
                 >
-                  Connect <ArrowRight size={17} />
+                  Let's Talk <ArrowRight size={17} />
                 </Link>
 
                 <p className="text-text-muted text-xs mt-5">

@@ -140,7 +140,7 @@ const solutions = [
     ],
   },
   {
-    num: '07', title: 'Touchless Operations',
+    num: '07', title: 'Touchless IT Operations',
     label: 'Analytics, Data Science and AI',
     accent: '#2DD4BF',
     bg: '#002e28',
