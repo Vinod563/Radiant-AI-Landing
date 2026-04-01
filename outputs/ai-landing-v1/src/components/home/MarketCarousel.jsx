@@ -9,7 +9,6 @@ import {
   Fuel,
   ChevronLeft,
   ChevronRight,
-  Shield,
   Banknote,
 
 } from 'lucide-react'
@@ -118,21 +117,6 @@ const markets = [
       { value: '60%', label: 'Maintenance Uplift' },
       { value: '70%', label: 'Downtime Reduced' },
       { value: '99.9%', label: 'Safety Uptime' },
-    ],
-  },
-  {
-    title: 'Defense and Intelligence',
-    icon: Shield,
-    accent: '#2DD4BF',
-    gradientFrom: '#0a3028',
-    gradientTo: '#2DD4BF',
-    image: '/images/defense-intelligence.jpg',
-    clients: 'Department of Defense',
-    desc: 'Mission-critical AI with zero-trust governance: humans orchestrate, never autonomous decisions in classified environments.',
-    metrics: [
-      { value: '40%', label: 'Faster Deployment' },
-      { value: '99.9%', label: 'System Uptime' },
-      { value: '35%', label: 'Infra Cost Savings' },
     ],
   },
 ]

@@ -3,7 +3,7 @@ import { motion, useInView } from 'framer-motion'
 import { Bot, Users, Zap, ChevronRight } from 'lucide-react'
 
 const stages = [
-  { num: '01', title: 'Extract', color: '#91C46B', bg: 'rgba(145,196,107,0.08)', border: 'rgba(145,196,107,0.25)', items: ['Situation', 'Complication', 'Question'], note: 'SCQ framing' },
+  { num: '01', title: 'Discover', color: '#91C46B', bg: 'rgba(145,196,107,0.08)', border: 'rgba(145,196,107,0.25)', items: ['Situation', 'Complication', 'Question'], note: 'SCQ framing' },
   { num: '02', title: 'Structure', color: '#F0974E', bg: 'rgba(240,151,78,0.08)', border: 'rgba(240,151,78,0.25)', items: ['Domain', 'knowledge base', 'Scope'], note: 'boundaries set' },
   { num: '03', title: 'Validate', color: '#596AE0', bg: 'rgba(89,106,224,0.08)', border: 'rgba(89,106,224,0.25)', items: ['Pilot module', 'stress-tests', 'the environment'], note: 'Accuracy compounds' },
   { num: '04', title: 'Deploy', color: '#a855f7', bg: 'rgba(168,85,247,0.08)', border: 'rgba(168,85,247,0.25)', items: ['Knowledge Hub', 'Semantic Graph', 'KAG'], note: 'Context-Aware AI' },
@@ -174,7 +174,7 @@ export default function WhatIsRadiantAI() {
                     </div>
                   </div>
                   {/* Bullets */}
-                  <div className="px-6 pb-6 space-y-2.5">
+                  <div className="px-6 pt-4 pb-6 space-y-2.5">
                     {agentItems.map((item, i) => (
                       <div key={i} className="flex gap-3 px-4 py-3.5 rounded-xl"
                         style={{ background: 'rgba(89,106,224,0.04)', border: '1px solid rgba(89,106,224,0.1)' }}>
@@ -197,7 +197,7 @@ export default function WhatIsRadiantAI() {
                     </div>
                   </div>
                   {/* Bullets */}
-                  <div className="px-6 pb-6 space-y-2.5">
+                  <div className="px-6 pt-4 pb-6 space-y-2.5">
                     {teamItems.map((item, i) => (
                       <div key={i} className="flex gap-3 px-4 py-3.5 rounded-xl"
                         style={{ background: 'rgba(145,196,107,0.04)', border: '1px solid rgba(145,196,107,0.1)' }}>

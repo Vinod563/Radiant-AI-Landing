@@ -777,7 +777,7 @@ function PCEDiagramCard() {
         {/* Stage cards */}
         <rect x="40" y="44" width="140" height="132" rx="8" fill="rgba(145,196,107,0.06)" stroke="rgba(145,196,107,0.15)" strokeWidth="1" />
         <text x="52" y="66" fill="rgba(145,196,107,0.35)" fontSize="10" fontWeight="800" fontFamily="-apple-system, sans-serif">01</text>
-        <text x="52" y="86" fill="#91C46B" fontSize="14" fontWeight="800" fontFamily="-apple-system, sans-serif">Extract</text>
+        <text x="52" y="86" fill="#91C46B" fontSize="14" fontWeight="800" fontFamily="-apple-system, sans-serif">Discover</text>
         <text x="52" y="106" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Situation</text>
         <text x="52" y="120" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Complication</text>
         <text x="52" y="134" fill="rgba(255,255,255,0.5)" fontSize="10.5" fontFamily="-apple-system, sans-serif">Question</text>

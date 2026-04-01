@@ -120,7 +120,7 @@ const knowledgeBase = [
     ],
     followUp: [
       'Tell me about Customer Journey Intelligence',
-      'Tell me about Billing Anomaly Detection',
+      'Tell me about Anomaly Detection',
       'Show me case studies',
       'How does the platform work?',
     ],
@@ -172,7 +172,7 @@ const knowledgeBase = [
         type: 'metrics',
         title: 'Modernization Impact',
         items: [
-          { value: 'Hours', label: 'Per Module Output' },
+          { value: '4 Hrs', label: 'Per Module Output' },
           { value: '60%', label: 'Faster Than Manual' },
           { value: '100%', label: 'Auditable Pipeline' },
         ],
@@ -193,28 +193,28 @@ const knowledgeBase = [
       },
     ],
     followUp: [
-      'Tell me about Billing Anomaly Detection',
+      'Tell me about Anomaly Detection',
       'Tell me about Automarc AI',
       'Show me case studies',
       'How does the platform work?',
     ],
   },
   {
-    id: 'sol-billing-anomaly',
-    keywords: ['billing anomaly', 'billing anomaly detection', 'billing intelligence', 'revenue protection', 'billing accuracy', 'billing issues', 'invoice errors', 'revenue leakage', 'billing problems', 'detect billing'],
-    question: 'Tell me about Billing Anomaly Detection',
+    id: 'sol-anomaly-detection',
+    keywords: ['anomaly detection', 'anomaly', 'pattern detection', 'revenue protection', 'accuracy', 'anomalies', 'outlier detection', 'fraud detection', 'risk detection', 'irregular patterns'],
+    question: 'Tell me about Anomaly Detection',
     cards: [
       {
         type: 'hero',
-        title: 'Billing Anomaly Detection and Revenue Protection',
-        subtitle: 'Detects billing anomalies, groups them into patterns, and guides teams to resolve issues before they reach customers, protecting revenue and trust across millions of daily transactions.',
+        title: 'Anomaly Detection and Proactive Risk Prevention',
+        subtitle: 'Detects anomalies across any data stream, groups them into actionable patterns, and guides teams to resolve issues before they escalate — protecting revenue, operations, and trust at enterprise scale.',
         accent: '#596AE0',
       },
       {
         type: 'metrics',
-        title: 'Billing Intelligence Impact',
+        title: 'Anomaly Detection Impact',
         items: [
-          { value: '98%', label: 'Billing Accuracy' },
+          { value: '98%', label: 'Detection Accuracy' },
           { value: '5%', label: 'Revenue Leakage Recovered' },
           { value: '55%', label: 'LLM Cost Reduction' },
           { value: '6 wks', label: 'To Production' },
@@ -224,14 +224,14 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'How It Works',
-        body: 'Powered by Predictive Analytics and Time Series, Radiant Knowledge Hub, Agentic AI and Multi-Agent Orchestration, and Semantic Data Graph. Real-time anomaly detection, intelligent pattern grouping, guided resolution workflows, and proactive issue resolution.',
+        body: 'Powered by Predictive Analytics and Time Series, Radiant Knowledge Hub, Agentic AI and Multi-Agent Orchestration, and Semantic Data Graph. Real-time anomaly detection across billing, logistics, authentication, and operational data — with intelligent pattern grouping, guided resolution workflows, and proactive issue prevention.',
         accent: '#596AE0',
       },
       {
         type: 'screenshot',
         src: '/screenshots/anomaly-detection.png',
-        alt: 'Billing Anomaly Detection Dashboard',
-        label: 'Billing Anomaly Detection',
+        alt: 'Anomaly Detection Dashboard',
+        label: 'Anomaly Detection',
         accent: '#596AE0',
       },
     ],
@@ -261,7 +261,7 @@ const knowledgeBase = [
       },
       {
         type: 'screenshot',
-        src: '/screenshots/magic-globe.png',
+        src: '/screenshots/launch-risk.png',
         alt: 'Product Launch Risk Intelligence',
         label: 'Launch Risk Analysis',
         accent: '#F05030',
@@ -269,7 +269,7 @@ const knowledgeBase = [
     ],
     followUp: [
       'Tell me about Automarc AI',
-      'Tell me about Billing Anomaly Detection',
+      'Tell me about Anomaly Detection',
       'Show me case studies',
       'What solutions does Radiant Digital offer?',
     ],
@@ -324,7 +324,6 @@ const knowledgeBase = [
           { value: '80%', label: 'Alert Noise Reduction' },
           { value: '70%', label: 'Faster Incident Resolution' },
           { value: '50%', label: 'Incidents Auto-Resolved' },
-          { value: '99.98%', label: 'Platform Uptime' },
         ],
         accent: '#2DD4BF',
       },
@@ -343,7 +342,7 @@ const knowledgeBase = [
       },
     ],
     followUp: [
-      'Tell me about Billing Anomaly Detection',
+      'Tell me about Anomaly Detection',
       'Tell me about Enterprise ICX',
       'Show me case studies',
       'How does the platform work?',
@@ -1584,14 +1583,14 @@ const knowledgeBase = [
         items: [
           {
             num: '01',
-            title: 'Billing Anomaly Detection',
+            title: 'Anomaly Detection',
             label: 'Analytics, Data Science and AI',
             accent: '#596AE0',
             gradient: 'linear-gradient(135deg, #050818 0%, #0c1040 50%, #1a2270 100%)',
             screenshot: '/screenshots/anomaly-detection.png',
-            desc: 'Detects billing anomalies, groups them into patterns, and guides teams to resolve issues before they reach customers, protecting revenue and trust at scale.',
-            tags: ['Billing', 'Anomaly Detection', 'Revenue Protection'],
-            details: ['Real-time billing anomaly detection engine', 'Intelligent pattern grouping and classification', 'Guided resolution workflows for support teams', 'Proactive issue resolution before customer impact'],
+            desc: 'Detects anomalies across any data stream, groups them into actionable patterns, and guides teams to resolve issues before they escalate — protecting revenue and operations at scale.',
+            tags: ['Billing', 'Logistics', 'Authentication', 'Device Telemetry', 'Shipping', 'Fraud Detection', 'Revenue Protection'],
+            details: ['Real-time anomaly detection across any data stream', 'Intelligent pattern grouping and classification', 'Guided resolution workflows for operations teams', 'Proactive issue prevention before business impact'],
           },
           {
             num: '02',
@@ -1599,7 +1598,7 @@ const knowledgeBase = [
             label: 'Analytics, Data Science and AI',
             accent: '#F05030',
             gradient: 'linear-gradient(135deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)',
-            screenshot: '/screenshots/magic-globe.png',
+            screenshot: '/screenshots/launch-risk.png',
             desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations.',
             tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
             details: ['Integrated sales, returns, quality and customer data', 'Device launch risk prediction and scoring', 'AI-driven root cause identification', 'Go/no-go recommendations pre and post launch'],
@@ -1847,7 +1846,7 @@ export function findAnswer(query) {
         {
           type: 'text',
           title: "I appreciate the question, but that's outside my knowledge area",
-          body: "I'm Radiant Digital's AI assistant, built on a focused knowledge graph covering our solutions, case studies, platform capabilities, and the industries we serve. I'm not a general-purpose AI, so I can only help with topics related to Radiant Digital and enterprise AI transformation.\n\nBut there's still a lot I can do for you — try one of the topics below, or type a question about our solutions, case studies, or capabilities.",
+          body: "I'm Radiant AI, built on a focused knowledge graph covering our solutions, case studies, platform capabilities, and the industries we serve. I'm not a general-purpose AI, so I can only help with topics related to Radiant Digital and enterprise AI transformation.\n\nBut there's still a lot I can do for you — try one of the topics below, or type a question about our solutions, case studies, or capabilities.",
           accent: '#596AE0',
         },
         {

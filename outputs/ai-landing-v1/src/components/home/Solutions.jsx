@@ -73,26 +73,26 @@ const solutions = [
     ],
   },
   {
-    num: '04', title: 'Billing Anomaly Detection',
+    num: '04', title: 'Anomaly Detection',
     label: 'Analytics, Data Science and AI',
     accent: '#596AE0',
     bg: '#080d2e',
     gradient: 'linear-gradient(180deg, #010F1E 0%, #030818 15%, #080d2e 35%, #131a5c 55%, #596ae0 75%, #131a5c 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #050818 0%, #0c1040 50%, #1a2270 100%)',
     screenshot: '/screenshots/anomaly-detection.png',
-    tagline: 'AI-powered billing intelligence that protects revenue at scale.',
-    desc: 'Detects billing anomalies, groups them into patterns, and guides teams to resolve issues before they reach customers, protecting revenue and trust across millions of daily transactions.',
-    proofStat: '98% billing accuracy',
-    tags: ['Billing', 'Anomaly Detection', 'Revenue Protection'],
+    tagline: 'AI-powered anomaly detection that protects revenue and operations at scale.',
+    desc: 'Detects anomalies across any data stream — billing, logistics, authentication, devices — groups them into actionable patterns, and guides teams to resolve issues before they escalate.',
+    proofStat: '98% detection accuracy',
+    tags: ['Billing', 'Logistics', 'Authentication', 'Device Telemetry', 'Shipping', 'Fraud Detection', 'Revenue Protection'],
     platformComponents: ['Predictive Analytics and Time Series', 'Radiant Knowledge Hub', 'Agentic AI and Multi-Agent Orchestration', 'Semantic Data Graph'],
     href: '#',
     icon: ShieldAlert,
     cta: 'Explore the Solution',
     details: [
-      'Real-time billing anomaly detection engine',
+      'Real-time anomaly detection across any data stream',
       'Intelligent pattern grouping & classification',
-      'Guided resolution workflows for support teams',
-      'Proactive issue resolution before customer impact',
+      'Guided resolution workflows for operations teams',
+      'Proactive issue prevention before business impact',
     ],
   },
   {
@@ -102,7 +102,7 @@ const solutions = [
     bg: '#2d0800',
     gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0400 15%, #2d0800 35%, #5c1400 55%, #f05030 75%, #5c1400 90%, #010F1E 100%)',
     screenshotGradient: 'linear-gradient(145deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)',
-    screenshot: '/screenshots/magic-globe.png',
+    screenshot: '/screenshots/launch-risk.png',
     tagline: 'Go/no-go intelligence for high-stakes product and device launches.',
     desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations before and after launch. Turns fragmented operational signals into a single pre-launch decision engine.',
     tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
@@ -522,8 +522,8 @@ function SolutionBlock({ s }) {
               </motion.span>
             ))}
             {s.proofStat && (
-              <span className="text-[0.7rem] font-display font-bold px-4 py-1.5 rounded-full ml-1"
-                style={{ background: `${s.accent}18`, color: s.accent }}>
+              <span className="text-[0.65rem] font-display font-semibold uppercase tracking-wide px-3.5 py-1.5 rounded-full"
+                style={{ background: `${s.accent}0c`, color: `${s.accent}cc`, border: `1px solid ${s.accent}18` }}>
                 {s.proofStat}
               </span>
             )}

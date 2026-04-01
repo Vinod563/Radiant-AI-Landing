@@ -98,8 +98,8 @@ export default function Hero() {
                 className="font-display font-black leading-[1.1] mb-9 tracking-tight"
                 style={{ fontSize: 'clamp(3rem, 6vw, 5.8rem)' }}
               >
-                Enterprise Transformation.<br />
-                <span className="grad-text">Supercharged with AI.</span>
+                Enterprise Transformation.{' '}
+                <span className="grad-text whitespace-nowrap">Supercharged with AI.</span>
               </motion.h1>
 
               <motion.p

@@ -19,7 +19,7 @@ export default function Footer({ variant = 'home' }) {
   const isICX = variant === 'icx'
 
   const navLinks = isICX
-    ? ['Enterprise ICX', 'Customer Journey Intelligence', 'Billing Anomaly Detection', 'Product Launch Risk Intelligence', 'Design-to-Code Modernization', 'Automarc AI']
+    ? ['Enterprise ICX', 'Customer Journey Intelligence', 'Anomaly Detection', 'Product Launch Risk Intelligence', 'Design-to-Code Modernization', 'Automarc AI']
     : ['Solutions', 'Industries', 'Platform', 'Case Studies', 'Contact']
 
   return (
