@@ -5,7 +5,6 @@ import { Award, TrendingUp, DollarSign, Briefcase } from 'lucide-react'
 /* Client logos sourced from Radiant Digital website */
 const clientLogos = [
   '/logos/client-21.svg',
-  '/logos/client-22.svg',
   '/logos/client-25.svg',
   '/logos/client-26.svg',
   '/logos/client-28.svg',

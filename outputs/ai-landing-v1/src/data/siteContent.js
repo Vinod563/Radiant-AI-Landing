@@ -318,7 +318,6 @@ export const contact = {
 // ─── CLIENT LOGOS ─────────────────────────────────
 export const clientLogos = [
   '/logos/client-21.svg',
-  '/logos/client-22.svg',
   '/logos/client-25.svg',
   '/logos/client-26.svg',
   '/logos/client-28.svg',
