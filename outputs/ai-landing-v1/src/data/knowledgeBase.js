@@ -22,7 +22,7 @@ import {
 const knowledgeBase = [
   {
     id: 'what-is-radiant',
-    keywords: ['what is radiant', 'about radiant', 'who is radiant', 'radiant ai', 'what do you do', 'company', 'precision context engine', 'pce', 'context engine', 'how does radiant work', 'tell me about radiant', 'overview', 'introduction', 'about the company', 'what does radiant do'],
+    keywords: ['what is radiant', 'about radiant', 'who is radiant', 'radiant ai', 'what do you do', 'company', 'precision context engine', 'pce', 'context engine', 'how does radiant work', 'tell me about radiant', 'overview', 'introduction', 'about the company', 'what does radiant do', 'digital transformation', 'enterprise transformation', 'ai transformation'],
     question: `What is ${brand.name}?`,
     cards: [
       {
@@ -62,7 +62,7 @@ const knowledgeBase = [
       {
         type: 'solutions',
         title: 'Purpose-built for your problem. Grounded in your context.',
-        subtitle: `Each solution targets a specific enterprise challenge. Every one is powered by the ${brand.platformName}: 12 foundational capabilities that ensure your AI knows your environment before it starts.`,
+        subtitle: `Each solution targets a specific enterprise challenge. Every one is powered by the ${brand.platformName}: foundational capabilities that ensure your AI knows your environment before it starts.`,
         items: solutionsData.map(s => ({
           num: s.num,
           title: s.title,
@@ -84,7 +84,7 @@ const knowledgeBase = [
   },
   {
     id: 'sol-enterprise-icx',
-    keywords: ['enterprise icx', 'cx intelligence', 'icx platform', 'customer signals', 'churn reduction'],
+    keywords: ['enterprise icx', 'cx intelligence', 'icx platform', 'customer signals', 'churn reduction', 'nps', 'csat', 'customer satisfaction', 'net promoter', 'customer experience platform'],
     question: 'Tell me about Enterprise ICX',
     cards: [
       {
@@ -159,21 +159,21 @@ const knowledgeBase = [
   },
   {
     id: 'sol-design-to-code',
-    keywords: ['design-to-code', 'legacy modernization', 'design to code', 'modernization', 'legacy applications', 'ai-rad'],
+    keywords: ['design-to-code', 'legacy modernization', 'design to code', 'modernization', 'legacy applications', 'ai-rad', 'd2c', 'legacy apps', 'legacy systems'],
     question: 'Tell me about Design-to-Code Modernization',
     cards: [
       {
         type: 'hero',
         title: 'Design-to-Code Modernization',
-        subtitle: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Not wireframes in six months. Working, auditable output in hours per module.',
+        subtitle: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Not wireframes in months. Working, auditable output in days per module.',
         accent: '#00c87d',
       },
       {
         type: 'metrics',
         title: 'Modernization Impact',
         items: [
-          { value: '4 Hrs', label: 'Per Module Output' },
-          { value: '60%', label: 'Faster Than Manual' },
+          { value: 'Days', label: 'Per Module Output' },
+          { value: 'Months', label: 'Reduced to Days' },
           { value: '100%', label: 'Auditable Pipeline' },
         ],
         accent: '#00c87d',
@@ -201,7 +201,7 @@ const knowledgeBase = [
   },
   {
     id: 'sol-anomaly-detection',
-    keywords: ['anomaly detection', 'anomaly', 'pattern detection', 'revenue protection', 'accuracy', 'anomalies', 'outlier detection', 'fraud detection', 'risk detection', 'irregular patterns'],
+    keywords: ['anomaly detection', 'anomaly', 'pattern detection', 'revenue protection', 'accuracy', 'anomalies', 'outlier detection', 'fraud detection', 'risk detection', 'irregular patterns', 'revenue assurance', 'revenue leakage', 'billing intelligence', 'billing anomaly', 'billing issues'],
     question: 'Tell me about Anomaly Detection',
     cards: [
       {
@@ -308,7 +308,7 @@ const knowledgeBase = [
   },
   {
     id: 'sol-touchless-ops',
-    keywords: ['touchless it operations', 'touchless operations', 'touchless ops', 'self-healing', 'autonomous operations', 'aiops', 'ai ops', 'observability', 'incident management', 'alert noise', 'alert fatigue', 'autonomous remediation', 'self healing infrastructure', 'predictive optimization', 'runbook', 'auto-resolve'],
+    keywords: ['touchless it operations', 'touchless operations', 'touchless ops', 'self-healing', 'autonomous operations', 'aiops', 'ai ops', 'observability', 'incident management', 'alert noise', 'alert fatigue', 'autonomous remediation', 'self healing infrastructure', 'predictive optimization', 'runbook', 'auto-resolve', 'downtime', 'downtime reduction', 'incident reduction'],
     question: 'Tell me about Touchless IT Operations',
     cards: [
       {
@@ -369,7 +369,7 @@ const knowledgeBase = [
         title: 'More AI Case Studies with Proof',
         subtitle: 'Every engagement below is AI-powered with measurable outcomes.',
         items: [
-          { name: 'Scaling Telecom Service Capacity 5x', metric: '50% More Tickets', detail: 'AI and RPA-driven platform for a Fortune 15 telecom — 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
+          { name: 'Scaling Telecom Service Capacity 5x', metric: '10x Processing Speed', detail: 'AI and RPA-driven platform for a Fortune 15 telecom — 18% MTTR reduction, 22% fewer missed SLAs, 5x service capacity.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
           { name: 'AI-Powered Virtual Assistant for Guest Support', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park — 35% guest engagement boost, 30% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: '/images/customer-support.jpg' },
           { name: 'AI-Accelerated Digital Platform Modernization', metric: '35% Faster', detail: 'AI-driven reverse engineering for a global web tech company — 30% cost reduction, test coverage from 30% to 70%.', industry: 'Web Services', accent: '#91C46B', image: '/images/team-collaboration.jpg' },
           { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 4 weeks to 6 days — 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
@@ -418,12 +418,12 @@ const knowledgeBase = [
   },
   {
     id: 'platform',
-    keywords: ['platform', 'technology', 'architecture', 'how does it work', 'under the hood', 'framework', 'agent', 'microagent', 'agentic', 'four platforms', 'radiant ai platform', 'what is the radiant ai platform', 'what is the platform', 'tech stack', 'how is it built', 'technical capabilities', 'foundational capabilities', '12 capabilities'],
+    keywords: ['platform', 'technology', 'architecture', 'how does it work', 'under the hood', 'framework', 'agent', 'microagent', 'agentic', 'four platforms', 'radiant ai platform', 'what is the radiant ai platform', 'what is the platform', 'tech stack', 'how is it built', 'technical capabilities', 'foundational capabilities', 'data fabric', 'finops', 'ai finops', 'knowledge hub', 'semantic graph', 'kag'],
     question: 'How does the platform work?',
     cards: [
       {
         type: 'platforms',
-        title: '12 foundational capabilities. The infrastructure beneath every solution.',
+        title: 'Foundational capabilities. The infrastructure beneath every solution.',
         subtitle: 'Radiant Digital does not deploy generic AI. Every solution is assembled from purpose-built platform capabilities: 12 components that cover context acquisition, synthesis, grounding, reasoning, orchestration, observability, and governance. This is the technical foundation of the Precision Context Engine.',
         items: [
           {
@@ -509,7 +509,7 @@ const knowledgeBase = [
   },
   {
     id: 'security',
-    keywords: ['security', 'compliance', 'cmmc', 'governance', 'audit', 'secure', 'trust', 'certifications', 'how secure', 'secure is radiant'],
+    keywords: ['security', 'compliance', 'cmmc', 'governance', 'audit', 'secure', 'trust', 'certifications', 'how secure', 'secure is radiant', 'human in the loop', 'human-in-the-loop', 'zero trust', 'audit trail', 'audit trails'],
     question: `How secure is ${brand.name}?`,
     cards: [
       {
@@ -545,7 +545,7 @@ const knowledgeBase = [
   },
   {
     id: 'why-radiant',
-    keywords: ['why radiant', 'differentiator', 'competitive', 'advantage', 'why choose', 'why choose radiant', 'what makes you different', 'what makes radiant different', 'better', 'unique', 'stand out', 'compared to', 'vs', 'versus', 'how are you different', 'why should i choose'],
+    keywords: ['why radiant', 'differentiator', 'competitive', 'advantage', 'why choose', 'why choose radiant', 'what makes you different', 'what makes radiant different', 'better', 'unique', 'stand out', 'compared to', 'vs', 'versus', 'how are you different', 'why should i choose', 'cost reduction', 'reduce costs', 'save money', 'lower costs'],
     question: `Why choose ${brand.name}?`,
     cards: [
       {
@@ -659,7 +659,7 @@ const knowledgeBase = [
         title: 'AI Case Studies',
         subtitle: 'Every engagement powered by AI, automation, or intelligent systems.',
         items: [
-          { name: 'Scaling Telecom Service Capacity 5x', metric: '50% More Tickets', detail: 'AI and RPA-driven platform for a Fortune 15 telecom — 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
+          { name: 'Scaling Telecom Service Capacity 5x', metric: '10x Processing Speed', detail: 'AI and RPA-driven platform for a Fortune 15 telecom — 18% MTTR reduction, 22% fewer missed SLAs, 5x service capacity.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
           { name: 'AI-Powered Virtual Assistant', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park — 35% guest engagement boost, 30% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: '/images/customer-support.jpg' },
           { name: 'AI-Accelerated Platform Modernization', metric: '35% Faster', detail: 'AI-driven reverse engineering for a global web tech company — 30% cost reduction, test coverage from 30% to 70%.', industry: 'Web Services', accent: '#91C46B', image: '/images/team-collaboration.jpg' },
           { name: 'Industrial IoT with AI Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 4 weeks to 6 days — 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
@@ -680,24 +680,24 @@ const knowledgeBase = [
   },
   {
     id: 'cs-by-telecom',
-    keywords: ['telecom enterprises', 'telecom industry', 'done for telecom', 'telecommunications', 'telecom work', 'telecom projects', 'carrier'],
+    keywords: ['telecom enterprises', 'telecom industry', 'done for telecom', 'telecommunications', 'telecom work', 'telecom projects', 'carrier', 'data quality', 'data visibility'],
     question: 'What have you done for telecom enterprises?',
     cards: [
       {
         type: 'text',
         title: 'Telecom Case Studies',
-        body: 'Radiant Digital has mapped 29 AI use cases across the full telecom operating model. Here are our telecom engagements:',
+        body: 'Radiant Digital has mapped 20+ AI use cases across the full telecom operating model. Here are our telecom engagements:',
         accent: '#596AE0',
       },
       {
-        type: 'list',
+        type: 'case-study-grid',
         title: 'Telecom Engagements',
         subtitle: 'From revenue assurance to network operations to sales velocity.',
         items: [
-          { name: 'Scaling Telecom Service Capacity 5x with Intelligent Automation', metric: '5x Capacity', accent: '#596AE0' },
-          { name: 'Improving Outage Response with AI and System Integration', metric: '55% Faster', accent: '#596AE0' },
-          { name: 'Enabling Network Intelligence through AI-Powered Development', metric: '5x Visibility', accent: '#596AE0' },
-          { name: 'Optimizing Application Development for Telecom Provider', metric: '50% Faster', accent: '#596AE0' },
+          { name: 'Scaling Telecom Service Capacity 5x', metric: '5x Capacity', detail: 'AI and RPA-driven platform — 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
+          { name: 'AI-Driven Outage Response & Integration', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack — 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
+          { name: 'AI-Powered Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator — IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'Optimizing Application Development', metric: '50% Faster Releases', detail: 'Agile methodologies, CI/CD pipelines, and automated testing for a leading telecom provider.', industry: 'Telecom', accent: '#596AE0', image: '/images/team-collaboration.jpg' },
         ],
         accent: '#596AE0',
       },
@@ -715,14 +715,14 @@ const knowledgeBase = [
         accent: '#596AE0',
       },
       {
-        type: 'list',
+        type: 'case-study-grid',
         title: 'Federal Engagements',
         subtitle: 'Program-grade delivery with human-in-the-loop governance.',
         items: [
-          { name: 'Systems Assurance and Technical Services for USCIS', metric: '99.9% Uptime', accent: '#596AE0' },
-          { name: 'Transforming Digital Excellence: Scalable Design System', metric: 'HHS', accent: '#596AE0' },
-          { name: 'Enhancing Head Start Reporting Systems for OHS', metric: '70% Faster', accent: '#596AE0' },
-          { name: 'Transforming Federal Operations with Digital Innovation', metric: 'DHS', accent: '#596AE0' },
+          { name: 'Systems Assurance for USCIS', metric: '99.9% Uptime', detail: 'Mission-critical immigration systems — 100% compliance met, 35% infrastructure cost savings.', industry: 'Federal', accent: '#596AE0', image: '/images/federal-government.jpg' },
+          { name: 'Scalable Design System for HHS', metric: '60% Faster Handoff', detail: 'Unified component library — 200+ components built, 100% brand consistency.', industry: 'Federal', accent: '#596AE0', image: '/images/team-collaboration.jpg' },
+          { name: 'Head Start Reporting for OHS', metric: '70% Faster', detail: 'Improved data accuracy and streamlined federal reporting workflows for early childhood programs.', industry: 'Federal', accent: '#596AE0', image: '/images/analytics-dashboard.jpg' },
+          { name: 'Federal Operations with Digital Innovation', metric: '40% Faster Delivery', detail: 'Modernized legacy systems, automated manual workflows — 35% cost savings, 70% process automated.', industry: 'Federal', accent: '#596AE0', image: '/images/corporate-building.jpg' },
         ],
         accent: '#596AE0',
       },
@@ -740,14 +740,14 @@ const knowledgeBase = [
         accent: '#91C46B',
       },
       {
-        type: 'list',
+        type: 'case-study-grid',
         title: 'State Government Engagements',
         subtitle: 'Better outcomes on constrained budgets.',
         items: [
-          { name: 'Accountability System Audit for Florida DCF', metric: '30% Improved', accent: '#91C46B' },
-          { name: 'Florida DEO Reemployment Assistance Modernization', metric: '70% Faster', accent: '#91C46B' },
-          { name: 'Enhancing Test Data Management at FLHSMV', metric: '50% Faster', accent: '#91C46B' },
-          { name: 'Florida DOT Disaster Recovery Plan for HCI Servers', metric: '99.9% RTO', accent: '#91C46B' },
+          { name: 'Florida DCF Accountability Audit', metric: '30% Improved', detail: 'Comprehensive system audit — process gap identification, modernization roadmap, 25% cost savings.', industry: 'State Gov', accent: '#91C46B', image: '/images/corporate-building.jpg' },
+          { name: 'Florida DEO Reemployment Modernization', metric: '70% Faster', detail: 'Streamlined benefits processing, reduced wait times — 30% cost savings, +25% citizen CSAT.', industry: 'State Gov', accent: '#91C46B', image: '/images/team-collaboration.jpg' },
+          { name: 'FLHSMV Test Data Management', metric: '50% Faster', detail: 'Optimized testing efficiency and data quality across critical transportation systems.', industry: 'State Gov', accent: '#91C46B', image: '/images/analytics-dashboard.jpg' },
+          { name: 'Florida DOT Disaster Recovery', metric: '99.9% RTO', detail: 'Comprehensive DR plan for state-wide HCI server infrastructure — 4hr RTO achieved.', industry: 'State Gov', accent: '#91C46B', image: '/images/server-room.jpg' },
         ],
         accent: '#91C46B',
       },
@@ -765,17 +765,17 @@ const knowledgeBase = [
         accent: '#e05990',
       },
       {
-        type: 'list',
+        type: 'case-study-grid',
         title: 'Healthcare Engagements',
         subtitle: 'From clinical workflows to public health innovation.',
         items: [
-          { name: 'STARTing Strong: HIV Treatment Adherence Platform', metric: '88% Adherence', accent: '#e05990' },
-          { name: 'Brighter Bites: Healthy Food Access Platform', metric: '3x Reach', accent: '#e05990' },
-          { name: 'Quit4Health: Smarter Way to Quit Smoking', metric: '2.5x Quit Rate', accent: '#e05990' },
-          { name: 'QuitBuddy: Social Support for Quitting', metric: '70% Retention', accent: '#e05990' },
-          { name: 'mySmartSkin: Skin Cancer Survivor Monitoring', metric: '3x Detection', accent: '#e05990' },
-          { name: 'MY Health: Young Adult Health Management', metric: '75% Engaged', accent: '#e05990' },
-          { name: 'Pocket Ark: PPE Training Platform', metric: '95% Completion', accent: '#e05990' },
+          { name: 'STARTing Strong: HIV Treatment Adherence', metric: '88% Adherence', detail: 'Digital health intervention platform — medication reminders, peer support, culturally responsive design.', industry: 'Healthcare', accent: '#e05990', image: '/images/healthcare.jpg' },
+          { name: 'Brighter Bites: Healthy Food Access', metric: '3x Reach', detail: 'Digital platform for healthy food distribution — volunteer coordination, 50% less admin work.', industry: 'Healthcare', accent: '#e05990', image: '/images/customer-support.jpg' },
+          { name: 'Quit4Health: Smarter Way to Quit', metric: '2.5x Quit Rate', detail: 'Behavioral science and personalized AI coaching — 85% daily engagement, 40K+ users enrolled.', industry: 'Healthcare', accent: '#e05990', image: '/images/iot-technology.jpg' },
+          { name: 'QuitBuddy: Social Support for Quitting', metric: '70% Retention', detail: 'Peer motivation platform with AI-driven nudges — 2x better outcomes, 15K+ buddy pairs.', industry: 'Healthcare', accent: '#e05990', image: '/images/team-collaboration.jpg' },
+          { name: 'mySmartSkin: Skin Cancer Monitoring', metric: '3x Detection', detail: 'Mobile health platform for survivors — AI-powered risk assessments, 90% adherence rate.', industry: 'Healthcare', accent: '#e05990', image: '/images/analytics-dashboard.jpg' },
+          { name: 'MY Health: Young Adult Health', metric: '75% Engaged', detail: 'Digital wellness platform — personalized health tracking, insurance navigation, preventive care.', industry: 'Healthcare', accent: '#e05990', image: '/images/corporate-building.jpg' },
+          { name: 'Pocket Ark: PPE Training', metric: '95% Completion', detail: 'Mobile training platform — interactive modules, AI recommendations, 60% faster training.', industry: 'Healthcare', accent: '#e05990', image: '/images/server-room.jpg' },
         ],
         accent: '#e05990',
       },
@@ -783,7 +783,7 @@ const knowledgeBase = [
   },
   {
     id: 'cs-by-oil-gas',
-    keywords: ['oil gas', 'oil and gas', 'energy', 'done for oil', 'halliburton work', 'oil field', 'offshore'],
+    keywords: ['oil gas', 'oil and gas', 'energy', 'done for oil', 'halliburton work', 'oil field', 'offshore', 'predictive maintenance', 'connected worker', 'field operations', 'noble corporation'],
     question: 'What have you done for oil and gas?',
     cards: [
       {
@@ -793,13 +793,13 @@ const knowledgeBase = [
         accent: '#F0974E',
       },
       {
-        type: 'list',
+        type: 'case-study-grid',
         title: 'Oil & Gas Engagements',
         subtitle: 'Remote operations and field intelligence.',
         items: [
-          { name: 'Transforming Oil Field Solutions with Halliburton', metric: '60% Uplift', accent: '#F0974E' },
-          { name: 'Augmented Reality App for Halliburton Oil Field Tool', metric: '45% Faster', accent: '#F0974E' },
-          { name: 'Advancing Industrial IoT with AI-Accelerated Product Delivery', metric: 'Tracklynk', accent: '#2DD4BF' },
+          { name: 'Transforming Oil Field Solutions with Halliburton', metric: '60% Uplift', detail: 'Digital asset integration and AR solutions — real-time equipment data, improved operational safety.', industry: 'Oil & Gas', accent: '#F0974E', image: '/images/oil-gas.jpg' },
+          { name: 'Halliburton AR Oil Field Tool', metric: '45% Faster', detail: 'AR application for field technicians — real-time diagnostics, guided maintenance, 60% error reduction.', industry: 'Oil & Gas', accent: '#F0974E', image: '/images/iot-technology.jpg' },
+          { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 4 weeks to 6 days — 45% cost reduction.', industry: 'IoT', accent: '#2DD4BF', image: '/images/server-room.jpg' },
         ],
         accent: '#F0974E',
       },
@@ -817,12 +817,12 @@ const knowledgeBase = [
         accent: '#F0974E',
       },
       {
-        type: 'list',
+        type: 'case-study-grid',
         title: 'Financial Services Engagements',
         subtitle: 'With audit trails from day one.',
         items: [
-          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', accent: '#F0974E' },
-          { name: 'Application Modernization for Navy Federal Credit Union', metric: '40% Faster', accent: '#F0974E' },
+          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with E2E Observability and self-healing systems — 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
+          { name: 'Navy Federal Credit Union Modernization', metric: '40% Faster', detail: 'Legacy application modernization — improved member experience, enhanced security posture.', industry: 'Financial Services', accent: '#F0974E', image: '/images/analytics-dashboard.jpg' },
         ],
         accent: '#F0974E',
       },
@@ -859,7 +859,7 @@ const knowledgeBase = [
   },
   {
     id: 'cs-telecom-5x',
-    keywords: ['scaling telecom', 'service capacity', '5x', 'intelligent automation', 'telecom capacity', 'scaling telecom service capacity 5x with intelligent automation'],
+    keywords: ['scaling telecom', 'service capacity', '5x', 'intelligent automation', 'telecom capacity', 'scaling telecom service capacity 5x with intelligent automation', 'rpa', 'robotic process automation', 'mttr', 'tell me about the scaling telecom case study', 'scaling telecom case study', 'scaling telecom service capacity'],
     question: 'Tell me about the Scaling Telecom Service Capacity 5x case study',
     cards: [
       {
@@ -869,7 +869,7 @@ const knowledgeBase = [
         client: 'Fortune 15 Telecom Company',
         clientDetail: 'Telecommunications',
         metrics: [
-          { value: '50%', label: 'More Tickets/Month' },
+          { value: '5x', label: 'Service Capacity' },
           { value: '18%', label: 'MTTR Reduction' },
           { value: '10x', label: 'Processing Speed' },
         ],
@@ -885,7 +885,7 @@ const knowledgeBase = [
   },
   {
     id: 'cs-hospitality-ai',
-    keywords: ['guest support', 'hospitality', 'virtual assistant', 'ai-powered assistant', 'improving guest support in hospitality'],
+    keywords: ['guest support', 'hospitality', 'virtual assistant', 'ai-powered assistant', 'improving guest support in hospitality', 'rag', 'retrieval augmented generation', 'theme park'],
     question: 'Tell me about the Improving Guest Support case study',
     cards: [
       {
@@ -911,8 +911,8 @@ const knowledgeBase = [
   },
   {
     id: 'cs-web-modernization',
-    keywords: ['modernizing digital platforms', 'web services', 'ai-accelerated delivery', 'modernizing digital platforms with ai-accelerated'],
-    question: 'Tell me about the Modernizing Digital Platforms case study',
+    keywords: ['modernizing digital platforms', 'web services', 'ai-accelerated delivery', 'modernizing digital platforms with ai-accelerated', 'ai-accelerated digital platform modernization', 'digital platform modernization', 'ai-accelerated platform modernization', 'reverse engineering', '.net modernization', 'angular modernization'],
+    question: 'Tell me about the AI-Accelerated Digital Platform Modernization case study',
     cards: [
       {
         type: 'case-study',
@@ -963,7 +963,7 @@ const knowledgeBase = [
   },
   {
     id: 'cs-outage-response',
-    keywords: ['outage response', 'system integration', 'telecom outage', 'incident response', 'improving outage response'],
+    keywords: ['outage response', 'system integration', 'telecom outage', 'incident response', 'improving outage response', 'copilot', 'mern stack', 'north star architecture'],
     question: 'Tell me about the Improving Outage Response case study',
     cards: [
       {
@@ -1271,7 +1271,7 @@ const knowledgeBase = [
   },
   {
     id: 'cs-network-intelligence',
-    keywords: ['network intelligence', 'enabling network', 'ai-powered development', 'telecom network'],
+    keywords: ['network intelligence', 'enabling network', 'ai-powered development', 'telecom network', 'cio 100', 'cio award', 'award winner', 'cio 100 award'],
     question: 'Tell me about the Enabling Network Intelligence case study',
     cards: [
       {
@@ -1541,9 +1541,9 @@ const knowledgeBase = [
             accent: '#00c87d',
             gradient: 'linear-gradient(135deg, #001208 0%, #003020 50%, #005838 100%)',
             screenshot: '/screenshots/design-to-code.png',
-            desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Working, auditable output in hours per module.',
+            desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Working, auditable output in days per module.',
             tags: ['Legacy Modernization', 'Design Systems', 'AI-RAD'],
-            details: ['Legacy application analysis and decomposition', 'Design-system-compliant code generation', 'Working output in hours per module', 'Auditable modernization pipeline'],
+            details: ['Legacy application analysis and decomposition', 'Design-system-compliant code generation', 'Working output in days per module', 'Auditable modernization pipeline'],
           },
           {
             num: '02',
@@ -1708,8 +1708,45 @@ const knowledgeBase = [
     ],
   },
   {
+    id: 'greeting',
+    keywords: ['hello', 'hi', 'hey', 'good morning', 'good afternoon', 'good evening', 'greetings', 'howdy'],
+    question: 'Hello!',
+    cards: [
+      {
+        type: 'hero',
+        title: `Welcome to ${brand.name} AI`,
+        subtitle: 'I can help you explore our AI solutions, case studies, platform capabilities, and the industries we serve. Pick a topic below or ask me anything about enterprise AI transformation.',
+        accent: '#91C46B',
+      },
+      {
+        type: 'main-menu',
+        title: 'What can we help you explore?',
+        subtitle: 'Pick a topic below to get started.',
+      },
+    ],
+    followUp: [],
+  },
+  {
+    id: 'thank-you',
+    keywords: ['thank you', 'thanks', 'appreciate it', 'that helps', 'thats all', "that's all", 'goodbye', 'bye', 'see you', 'cheers'],
+    question: 'Thank you!',
+    cards: [
+      {
+        type: 'text',
+        title: 'Glad I could help!',
+        body: `If you'd like to continue the conversation with our team, we're ready to help. You can reach us at ${contactData.email} or call ${contactData.phone}. Otherwise, feel free to come back anytime — I'm here whenever you need me.`,
+        accent: '#91C46B',
+      },
+    ],
+    followUp: [
+      'How can I get started?',
+      'What solutions does Radiant Digital offer?',
+      'Show me the main menu',
+    ],
+  },
+  {
     id: 'main-menu',
-    keywords: ['main menu', 'show me the main menu', 'start over', 'menu', 'all options', 'what can you help with', 'home', 'go back'],
+    keywords: ['main menu', 'show me the main menu', 'start over', 'menu', 'all options', 'what can you help with', 'home', 'go back', 'help', 'help me', 'what can you do', 'what can i ask'],
     question: 'Show me the main menu',
     cards: [
       {
@@ -1804,6 +1841,13 @@ export function findAnswer(query) {
     }
   }
 
+  // Exact keyword match — if the entire query IS a keyword, return immediately
+  for (const entry of knowledgeBase) {
+    if (entry.keywords.includes(raw)) {
+      return ensureFollowUp(entry)
+    }
+  }
+
   let best = null
   let bestScore = 0
 
@@ -1838,7 +1882,7 @@ export function findAnswer(query) {
     }
   }
 
-  if (!best || bestScore < 5) {
+  if (!best || bestScore < 3) {
     return {
       id: 'fallback',
       question: query,
@@ -1859,7 +1903,7 @@ export function findAnswer(query) {
             { icon: 'Layers', title: '7 AI Solutions', accent: '#596AE0', desc: 'Enterprise ICX, Billing Intelligence, Touchless IT Ops, and more', query: 'What solutions does Radiant Digital offer?' },
             { icon: 'BarChart3', title: 'Case Studies', accent: '#F0974E', desc: 'Proof from telecom, healthcare, government, finance, and more', query: 'Show me proof — not promises.' },
             { icon: 'Globe', title: 'Industries We Serve', accent: '#2DD4BF', desc: 'Telecom, federal, state, healthcare, oil and gas, financial services', query: 'Which industries do you serve?' },
-            { icon: 'Cpu', title: 'AI Platform', accent: '#596AE0', desc: '12 foundational capabilities that power every solution', query: 'What is the Radiant Digital AI Platform?' },
+            { icon: 'Cpu', title: 'AI Platform', accent: '#596AE0', desc: 'Foundational capabilities that power every solution', query: 'What is the Radiant Digital AI Platform?' },
             { icon: 'Users', title: 'Connect with Us', accent: '#F0974E', desc: 'Reach out to our team for a conversation', query: "I'd rather talk to a real person." },
           ],
         },

@@ -2,13 +2,10 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Sparkles, Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { heroMetrics as metricsData, brand } from '../../data/siteContent.js'
 
-const heroMetrics = [
-  { val: '40%', label: 'Avg Cost Reduction', color: 'text-brand-green' },
-  { val: '3x', label: 'Faster Time to Market', color: 'text-brand-orange' },
-  { val: '14+', label: 'Industries Served', color: 'text-brand-green' },
-  { val: '30+', label: 'AI Use Cases Deployed', color: 'text-brand-orange' },
-]
+const metricColors = ['text-brand-green', 'text-brand-orange', 'text-brand-green', 'text-brand-orange']
+const heroMetrics = metricsData.map((m, i) => ({ ...m, color: metricColors[i] }))
 
 
 export default function Hero() {
@@ -98,8 +95,8 @@ export default function Hero() {
                 className="font-display font-black leading-[1.1] mb-9 tracking-tight"
                 style={{ fontSize: 'clamp(3rem, 6vw, 5.8rem)' }}
               >
-                Enterprise Transformation.{' '}
-                <span className="grad-text whitespace-nowrap">Supercharged with AI.</span>
+                {brand.tagline.split('.')[0]}.{' '}
+                <span className="grad-text whitespace-nowrap">{brand.tagline.split('. ')[1]}</span>
               </motion.h1>
 
               <motion.p
@@ -108,7 +105,7 @@ export default function Hero() {
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="text-white/70 text-base lg:text-lg leading-relaxed max-w-4xl mx-auto mb-10"
               >
-                We believe AI only delivers when it truly understands your business. That conviction is why we operationalized AI with precision context at the core of every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.
+                {brand.description}
               </motion.p>
 
               {/* Conversational input */}
@@ -167,7 +164,7 @@ export default function Hero() {
                 transition={{ duration: 0.45, delay: 0.5 + i * 0.08 }}
                 className="metric-strip-item"
               >
-                <span className={`font-display font-black text-2xl leading-none ${m.color}`}>{m.val}</span>
+                <span className={`font-display font-black text-2xl leading-none ${m.color}`}>{m.value}</span>
                 <span className="text-text-muted text-[0.65rem] font-display font-medium mt-1.5 tracking-wide">{m.label}</span>
               </motion.div>
             ))}

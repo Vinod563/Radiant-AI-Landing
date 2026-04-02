@@ -48,13 +48,13 @@ export default function Platform() {
           <span className="kicker">The Radiant Digital AI Platform</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-5"
             style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)' }}>
-            12 foundational capabilities.<br />
+            Foundational capabilities.<br />
             <span className="grad-text">The infrastructure beneath every solution.</span>
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
             Radiant Digital does not deploy generic AI.
             Every solution is assembled from purpose-built platform capabilities:
-            12 components that cover context acquisition, synthesis, grounding,
+            Purpose-built components that cover context acquisition, synthesis, grounding,
             reasoning, orchestration, observability, and governance.
           </p>
         </motion.div>

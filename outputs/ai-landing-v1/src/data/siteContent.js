@@ -35,7 +35,7 @@ export const trustStats = [
   { value: '20+', label: 'Years of Transformation', icon: 'Award' },
   { value: '50+', label: 'Enterprise Clients', icon: 'Briefcase' },
   { value: '$2B+', label: 'Programs Powered', icon: 'TrendingUp' },
-  { value: '40%', label: 'Avg Cost Reduction', icon: 'Cpu' },
+  { value: '40%', label: 'Avg Cost Reduction', icon: 'DollarSign' },
 ]
 
 // ─── PRECISION CONTEXT ENGINE ─────────────────────
@@ -106,7 +106,7 @@ export const solutions = [
     desc: 'Unifies every customer signal into a single intelligence layer, giving your teams the predictive power to eliminate friction before it becomes churn.',
     proofStat: '15-25% churn reduction',
     tags: ['Enterprise', 'CX', 'Insight-to-ROI'],
-    platformComponents: ['Semantic Data Graph', 'Context-Aware AI', 'Predictive Analytics and Time Series', 'Radiant Digital Knowledge Hub'],
+    platformComponents: ['Semantic Data Graph', 'Context-Aware AI', 'Predictive Analytics and Time Series', 'Radiant Knowledge Hub'],
     details: [
       'Unified data platform across all CX touchpoints',
       'Proactive friction detection & elimination',
@@ -122,7 +122,7 @@ export const solutions = [
     tagline: 'AI-accelerated interaction tagging and journey visualization.',
     desc: 'Accelerates the analysis of customer interactions across digital channels, enabling teams to visualize journeys and act on experience insights in hours, not weeks. Turns screen-level behavioral data into actionable journey maps using AI-powered pattern recognition and business rule mapping.',
     tags: ['Workflow', 'Figma Analysis', 'Journey Mapping'],
-    platformComponents: ['Context-Aware AI', 'Radiant Digital Knowledge Hub', 'Semantic Data Graph'],
+    platformComponents: ['Context-Aware AI', 'Radiant Knowledge Hub', 'Semantic Data Graph'],
     details: [
       'AI-accelerated interaction tagging on digital channels',
       'Figma screen analysis with business rule engine',
@@ -136,14 +136,14 @@ export const solutions = [
     accent: '#00c87d',
     screenshot: '/screenshots/design-to-code.png',
     tagline: 'AI-first legacy modernization.',
-    desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Not wireframes in six months. Working, auditable output in hours per module.',
-    proofStat: 'Hours per module vs. six months manual',
+    desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Not wireframes in months. Working, auditable output in days per module.',
+    proofStat: 'Days per module vs. months manual',
     tags: ['Legacy Modernization', 'Design Systems', 'AI-RAD'],
-    platformComponents: ['AI-RAD', 'Radiant Digital Knowledge Hub', 'Context-Aware AI'],
+    platformComponents: ['AI-RAD', 'Radiant Knowledge Hub', 'Context-Aware AI'],
     details: [
       'Legacy application analysis & decomposition',
       'Design-system-compliant code generation',
-      'Working output in hours per module',
+      'Working output in days per module',
       'Auditable modernization pipeline',
     ],
   },
@@ -156,7 +156,7 @@ export const solutions = [
     desc: 'Detects anomalies across any data stream — billing, logistics, authentication, devices — groups them into actionable patterns, and guides teams to resolve issues before they escalate.',
     proofStat: '98% detection accuracy',
     tags: ['Billing', 'Logistics', 'Authentication', 'Device Telemetry', 'Shipping', 'Fraud Detection', 'Revenue Protection'],
-    platformComponents: ['Predictive Analytics and Time Series', 'Radiant Digital Knowledge Hub', 'Agentic AI and Multi-Agent Orchestration', 'Semantic Data Graph'],
+    platformComponents: ['Predictive Analytics and Time Series', 'Radiant Knowledge Hub', 'Agentic AI and Multi-Agent Orchestration', 'Semantic Data Graph'],
     details: [
       'Real-time anomaly detection across any data stream',
       'Intelligent pattern grouping & classification',
@@ -172,7 +172,7 @@ export const solutions = [
     tagline: 'Go/no-go intelligence for high-stakes product and device launches.',
     desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations before and after launch. Turns fragmented operational signals into a single pre-launch decision engine.',
     tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
-    platformComponents: ['Semantic Data Graph', 'Predictive Analytics and Time Series', 'Radiant Digital Knowledge Hub', 'Context-Aware AI'],
+    platformComponents: ['Semantic Data Graph', 'Predictive Analytics and Time Series', 'Radiant Knowledge Hub', 'Context-Aware AI'],
     details: [
       'Integrated sales, returns, quality & customer data',
       'Device launch risk prediction & scoring',
@@ -188,7 +188,7 @@ export const solutions = [
     tagline: 'AI-powered document workflow automation.',
     desc: 'Extracts, classifies, and processes content to reduce manual effort and improve accuracy, turning document-heavy operations into automated, governed workflows.',
     tags: ['Documents', 'Automation', 'Technical Writing'],
-    platformComponents: ['Radiant Digital Knowledge Hub', 'AI-RAD', 'Agentic AI and Multi-Agent Orchestration'],
+    platformComponents: ['Radiant Knowledge Hub', 'AI-RAD', 'Agentic AI and Multi-Agent Orchestration'],
     details: [
       'AI-powered content extraction & classification',
       'Automated document processing workflows',
@@ -222,11 +222,11 @@ export const markets = [
     icon: 'Radio', accent: '#596AE0',
     image: '/images/telecom-network.jpg',
     clients: 'Major tier-1 carriers',
-    desc: 'Radiant Digital has mapped 29 AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
+    desc: 'Radiant Digital has mapped 20+ AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
     metrics: [
-      { value: '29', label: 'AI Use Cases' },
+      { value: '20+', label: 'AI Use Cases' },
       { value: '40%', label: 'Faster Deployment' },
-      { value: '99.9%', label: 'Uptime SLA' },
+      { value: '70%', label: 'Dev Time Reduced' },
     ],
   },
   {
@@ -334,7 +334,6 @@ export const clientLogos = [
   '/logos/client-11-1-1.svg',
   '/logos/client-27-1.svg',
   '/logos/client-32-1.svg',
-  '/logos/client-34-1.svg',
   '/logos/client-33-1.svg',
   '/logos/client-new-logo.svg',
 ]

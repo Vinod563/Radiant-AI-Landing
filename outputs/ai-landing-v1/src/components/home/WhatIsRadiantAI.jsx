@@ -3,10 +3,10 @@ import { motion, useInView } from 'framer-motion'
 import { Bot, Users, Zap, ChevronRight } from 'lucide-react'
 
 const stages = [
-  { num: '01', title: 'Discover', color: '#91C46B', bg: 'rgba(145,196,107,0.08)', border: 'rgba(145,196,107,0.25)', items: ['Situation', 'Complication', 'Question'], note: 'SCQ framing' },
-  { num: '02', title: 'Structure', color: '#F0974E', bg: 'rgba(240,151,78,0.08)', border: 'rgba(240,151,78,0.25)', items: ['Domain', 'knowledge base', 'Scope'], note: 'boundaries set' },
-  { num: '03', title: 'Validate', color: '#596AE0', bg: 'rgba(89,106,224,0.08)', border: 'rgba(89,106,224,0.25)', items: ['Pilot module', 'stress-tests', 'the environment'], note: 'Accuracy compounds' },
-  { num: '04', title: 'Deploy', color: '#a855f7', bg: 'rgba(168,85,247,0.08)', border: 'rgba(168,85,247,0.25)', items: ['Knowledge Hub', 'Semantic Graph', 'KAG'], note: 'Context-Aware AI' },
+  { num: '01', title: 'Discover', color: '#91C46B', bg: 'rgba(145,196,107,0.08)', border: 'rgba(145,196,107,0.25)', items: [{ text: 'Situation', bold: 'S' }, { text: 'Complication', bold: 'C' }, { text: 'Question', bold: 'Q' }], note: 'SCQ Framing' },
+  { num: '02', title: 'Structure', color: '#F0974E', bg: 'rgba(240,151,78,0.08)', border: 'rgba(240,151,78,0.25)', items: [{ text: 'Domain Knowledge Base' }, { text: 'Scope' }], note: 'Boundaries Set' },
+  { num: '03', title: 'Validate', color: '#596AE0', bg: 'rgba(89,106,224,0.08)', border: 'rgba(89,106,224,0.25)', items: [{ text: 'Proof-of-Value Module' }, { text: 'Stress Tests' }, { text: 'Environment' }], note: 'Accuracy Compounds' },
+  { num: '04', title: 'Deploy', color: '#a855f7', bg: 'rgba(168,85,247,0.08)', border: 'rgba(168,85,247,0.25)', items: [{ text: 'Knowledge Hub' }, { text: 'Semantic Graph' }, { text: 'KAG' }], note: 'Context-Aware AI' },
 ]
 
 const agentItems = [
@@ -18,7 +18,7 @@ const agentItems = [
 const teamItems = [
   'Structured problem framing before any solution design begins',
   'Shared knowledge base aligned to your actual environment',
-  'Pilot-validated map so every module after runs faster',
+  'Field-tested map so every module after runs faster',
 ]
 
 export default function WhatIsRadiantAI() {
@@ -92,8 +92,15 @@ export default function WhatIsRadiantAI() {
                       <span className="text-[11px] font-extrabold tracking-widest block mb-1.5 opacity-40" style={{ color: s.color }}>{s.num}</span>
                       <h3 className="text-xl font-extrabold mb-4" style={{ color: s.color }}>{s.title}</h3>
                       <div className="space-y-1.5">
-                        {s.items.map((item) => (
-                          <p key={item} className="text-white/60 text-sm leading-snug">{item}</p>
+                        {s.items.map((item, idx) => (
+                          <div key={idx} className="flex items-baseline gap-2">
+                            <span className="text-white/30 text-[8px] mt-[3px]">●</span>
+                            <p className="text-white/60 text-sm leading-snug">
+                              {item.bold ? (
+                                <><span className="font-bold text-white/90" style={{ color: s.color }}>{item.bold}</span>{item.text.slice(item.bold.length)}</>
+                              ) : item.text}
+                            </p>
+                          </div>
                         ))}
                       </div>
                       <p className="text-white/60 text-xs italic mt-4">{s.note}</p>

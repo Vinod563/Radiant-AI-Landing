@@ -1,36 +1,11 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Award, TrendingUp, DollarSign, Briefcase } from 'lucide-react'
+import { clientLogos, trustStats, socialProof } from '../../data/siteContent.js'
 
-/* Client logos sourced from Radiant Digital website */
-const clientLogos = [
-  '/logos/client-21.svg',
-  '/logos/client-25.svg',
-  '/logos/client-26.svg',
-  '/logos/client-28.svg',
-  '/logos/client-29.svg',
-  '/logos/client-24.svg',
-  '/logos/client-31.svg',
-  '/logos/client-35.svg',
-  '/logos/client-36.svg',
-  '/logos/client-37.svg',
-  '/logos/client-39.svg',
-  '/logos/client-23.svg',
-  '/logos/client-30-1.svg',
-  '/logos/client-38.svg',
-  '/logos/client-11-1-1.svg',
-  '/logos/client-27-1.svg',
-  '/logos/client-32-1.svg',
-  '/logos/client-33-1.svg',
-  '/logos/client-new-logo.svg',
-]
-
-const stats = [
-  { value: '20+', label: 'Years of Transformation', icon: Award },
-  { value: '50+', label: 'Enterprise Clients', icon: Briefcase },
-  { value: '$2B+', label: 'Programs Powered', icon: TrendingUp },
-  { value: '40%', label: 'Avg Cost Reduction', icon: DollarSign },
-]
+/* Resolve icon string names to Lucide components */
+const iconMap = { Award, Briefcase, TrendingUp, DollarSign }
+const stats = trustStats.map(s => ({ ...s, icon: iconMap[s.icon] || Award }))
 
 
 export default function SocialProof() {
@@ -62,15 +37,17 @@ export default function SocialProof() {
           transition={{ duration: 0.65 }}
           className="text-center mb-20"
         >
-          <div className="kicker justify-center">Customers</div>
+          <div className="kicker justify-center">{socialProof.kicker}</div>
           <h2 className="font-display font-black leading-[0.92] tracking-tight mb-4"
             style={{ fontSize: 'clamp(2rem, 4.5vw, 3.6rem)' }}>
-            50+ Enterprises.<br />
-            $2B+ in Programs.{' '}
-            <span className="grad-text">Real Results.</span>
+            {socialProof.headline.split('\n').map((line, i, arr) =>
+              i === arr.length - 1
+                ? <span key={i} className="grad-text">{line}</span>
+                : <span key={i}>{line}<br /></span>
+            )}
           </h2>
           <p className="text-text-secondary text-base max-w-2xl mx-auto mt-4 leading-relaxed">
-            The proof is in who keeps coming back. Fortune 500s and federal agencies choose Radiant Digital because we tie every engagement to measurable business impact, not billable hours.
+            {socialProof.body}
           </p>
         </motion.div>
 
@@ -139,7 +116,7 @@ export default function SocialProof() {
         >
           <div className="divider mb-10" />
           <p className="text-center text-text-muted text-sm leading-relaxed max-w-xl mx-auto">
-            CMMC compliant
+            {socialProof.compliance}
           </p>
         </motion.div>
       </div>

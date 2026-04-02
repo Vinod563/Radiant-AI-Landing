@@ -2,167 +2,20 @@ import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, BarChart3, Layers, Code2, ShieldAlert, Rocket, FileText, Activity } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { solutions as solutionsData } from '../../data/siteContent.js'
 
-const solutions = [
-  {
-    num: '01', title: 'Enterprise ICX',
-    label: 'Digital Strategy and Experience',
-    accent: '#91C46B',
-    bg: '#032d14',
-    gradient: 'linear-gradient(180deg, #010F1E 0%, #021a0c 15%, #032d14 35%, #065c22 55%, #39d353 75%, #065c22 90%, #010F1E 100%)',
-    screenshotGradient: 'linear-gradient(145deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)',
-    screenshot: '/screenshots/enterprise-icx.png',
-    tagline: 'AI-powered CX insight-to-ROI platform.',
-    desc: 'Unifies every customer signal into a single intelligence layer, giving your teams the predictive power to eliminate friction before it becomes churn.',
-    proofStat: '15-25% churn reduction',
-    tags: ['Enterprise', 'CX', 'Insight-to-ROI'],
-    platformComponents: ['Semantic Data Graph', 'Context-Aware AI', 'Predictive Analytics and Time Series', 'Radiant Knowledge Hub'],
-    href: '/icx-solution', featured: true,
-    icon: BarChart3,
-    cta: 'Explore Enterprise ICX',
-    details: [
-      'Unified data platform across all CX touchpoints',
-      'Proactive friction detection & elimination',
-      'Insight-to-ROI pipeline with measurable outcomes',
-      'Real-time experience monitoring & alerting',
-    ],
-  },
-  {
-    num: '02', title: 'Customer Journey Intelligence',
-    label: 'Digital Strategy and Experience',
-    accent: '#F0974E',
-    bg: '#2d1200',
-    gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0800 15%, #2d1200 35%, #6b2d00 55%, #f0974e 75%, #6b2d00 90%, #010F1E 100%)',
-    screenshotGradient: 'linear-gradient(145deg, #1a0a00 0%, #3d1e00 50%, #7a3800 100%)',
-    screenshot: '/screenshots/cx-workbench.png',
-    tagline: 'AI-accelerated interaction tagging and journey visualization.',
-    desc: 'Accelerates the analysis of customer interactions across digital channels, enabling teams to visualize journeys and act on experience insights in hours, not weeks. Turns screen-level behavioral data into actionable journey maps using AI-powered pattern recognition and business rule mapping.',
-    tags: ['Workflow', 'Figma Analysis', 'Journey Mapping'],
-    platformComponents: ['Context-Aware AI', 'Radiant Knowledge Hub', 'Semantic Data Graph'],
-    href: '#',
-    icon: Layers,
-    cta: 'See the Demo',
-    details: [
-      'AI-accelerated interaction tagging on digital channels',
-      'Figma screen analysis with business rule engine',
-      'Customer journey visualization & mapping',
-      'Experience detail extraction & pattern recognition',
-    ],
-  },
-  {
-    num: '03', title: 'Design-to-Code Modernization',
-    label: 'Product Development and Integration',
-    accent: '#00c87d',
-    bg: '#00261a',
-    gradient: 'linear-gradient(180deg, #010F1E 0%, #000f0a 15%, #00261a 35%, #004d2e 55%, #00c87d 75%, #004d2e 90%, #010F1E 100%)',
-    screenshotGradient: 'linear-gradient(145deg, #001208 0%, #003020 50%, #005838 100%)',
-    screenshot: '/screenshots/design-to-code.png',
-    tagline: 'AI-first legacy modernization.',
-    desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Not wireframes in six months. Working, auditable output in hours per module.',
-    proofStat: 'Hours per module vs. six months manual',
-    tags: ['Legacy Modernization', 'Design Systems', 'AI-RAD'],
-    platformComponents: ['AI-RAD', 'Radiant Knowledge Hub', 'Context-Aware AI'],
-    href: '#',
-    icon: Code2,
-    cta: 'See How It Works',
-    details: [
-      'Legacy application analysis & decomposition',
-      'Design-system-compliant code generation',
-      'Working output in hours per module',
-      'Auditable modernization pipeline',
-    ],
-  },
-  {
-    num: '04', title: 'Anomaly Detection',
-    label: 'Analytics, Data Science and AI',
-    accent: '#596AE0',
-    bg: '#080d2e',
-    gradient: 'linear-gradient(180deg, #010F1E 0%, #030818 15%, #080d2e 35%, #131a5c 55%, #596ae0 75%, #131a5c 90%, #010F1E 100%)',
-    screenshotGradient: 'linear-gradient(145deg, #050818 0%, #0c1040 50%, #1a2270 100%)',
-    screenshot: '/screenshots/anomaly-detection.png',
-    tagline: 'AI-powered anomaly detection that protects revenue and operations at scale.',
-    desc: 'Detects anomalies across any data stream — billing, logistics, authentication, devices — groups them into actionable patterns, and guides teams to resolve issues before they escalate.',
-    proofStat: '98% detection accuracy',
-    tags: ['Billing', 'Logistics', 'Authentication', 'Device Telemetry', 'Shipping', 'Fraud Detection', 'Revenue Protection'],
-    platformComponents: ['Predictive Analytics and Time Series', 'Radiant Knowledge Hub', 'Agentic AI and Multi-Agent Orchestration', 'Semantic Data Graph'],
-    href: '#',
-    icon: ShieldAlert,
-    cta: 'Explore the Solution',
-    details: [
-      'Real-time anomaly detection across any data stream',
-      'Intelligent pattern grouping & classification',
-      'Guided resolution workflows for operations teams',
-      'Proactive issue prevention before business impact',
-    ],
-  },
-  {
-    num: '05', title: 'Product Launch Risk Intelligence',
-    label: 'Analytics, Data Science and AI',
-    accent: '#F05030',
-    bg: '#2d0800',
-    gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0400 15%, #2d0800 35%, #5c1400 55%, #f05030 75%, #5c1400 90%, #010F1E 100%)',
-    screenshotGradient: 'linear-gradient(145deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)',
-    screenshot: '/screenshots/launch-risk.png',
-    tagline: 'Go/no-go intelligence for high-stakes product and device launches.',
-    desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations before and after launch. Turns fragmented operational signals into a single pre-launch decision engine.',
-    tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
-    platformComponents: ['Semantic Data Graph', 'Predictive Analytics and Time Series', 'Radiant Knowledge Hub', 'Context-Aware AI'],
-    href: '#',
-    icon: Rocket,
-    cta: 'Learn More',
-    details: [
-      'Integrated sales, returns, quality & customer data',
-      'Device launch risk prediction & scoring',
-      'AI-driven root cause identification',
-      'Go/no-go recommendations pre & post launch',
-    ],
-  },
-  {
-    num: '06', title: 'Automarc AI',
-    label: 'Organizational Transformation',
-    accent: '#a855f7',
-    bg: '#100030',
-    gradient: 'linear-gradient(180deg, #010F1E 0%, #060014 15%, #100030 35%, #220060 55%, #7030d0 75%, #220060 90%, #010F1E 100%)',
-    screenshotGradient: 'linear-gradient(145deg, #080014 0%, #160038 50%, #2a0068 100%)',
-    screenshot: '/screenshots/automarc.png',
-    tagline: 'AI-powered document workflow automation.',
-    desc: 'Extracts, classifies, and processes content to reduce manual effort and improve accuracy, turning document-heavy operations into automated, governed workflows.',
-    tags: ['Documents', 'Automation', 'Technical Writing'],
-    platformComponents: ['Radiant Knowledge Hub', 'AI-RAD', 'Agentic AI and Multi-Agent Orchestration'],
-    href: '#',
-    icon: FileText,
-    cta: 'See It in Action',
-    details: [
-      'AI-powered content extraction & classification',
-      'Automated document processing workflows',
-      'Technical writing acceleration & consistency',
-      'Reduced manual effort with improved accuracy',
-    ],
-  },
-  {
-    num: '07', title: 'Touchless IT Operations',
-    label: 'Analytics, Data Science and AI',
-    accent: '#2DD4BF',
-    bg: '#002e28',
-    gradient: 'linear-gradient(180deg, #010F1E 0%, #001410 15%, #002e28 35%, #005c50 55%, #2dd4bf 75%, #005c50 90%, #010F1E 100%)',
-    screenshotGradient: 'linear-gradient(145deg, #001a14 0%, #003d32 50%, #006b5a 100%)',
-    screenshot: '/screenshots/touchless-ops.png',
-    tagline: 'Autonomous IT operations with AI-driven self-healing.',
-    desc: 'Shifts enterprise IT from reactive incident management to autonomous, self-healing infrastructure. Unified observability, AI-driven root cause analysis, and predictive optimization work together so your teams resolve fewer incidents manually and prevent more before they ever occur.',
-    proofStat: '80% Alert Noise Reduction',
-    tags: ['E2E Observability', 'Autonomous Remediation', 'Intelligent Analytics', 'Predictive Optimization'],
-    platformComponents: ['Radiant AIOps', 'Autonomous Stack', 'Predictive Analytics and Time Series', 'Context-Aware AI'],
-    href: '#',
-    icon: Activity,
-    cta: 'See How It Works',
-    details: [
-      'End-to-end observability across infrastructure, network, and application layers',
-      'AI-driven root cause analysis and autonomous remediation',
-      'Predictive optimization that prevents incidents before they occur',
-      'Self-healing runbook execution with no human action required',
-    ],
-  },
-]
+/* Component-only visual overrides — merged onto siteContent data */
+const visualOverrides = {
+  '01': { bg: '#032d14', gradient: 'linear-gradient(180deg, #010F1E 0%, #021a0c 15%, #032d14 35%, #065c22 55%, #39d353 75%, #065c22 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)', href: '/icx-solution', featured: true, icon: BarChart3, cta: 'Explore Enterprise ICX' },
+  '02': { bg: '#2d1200', gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0800 15%, #2d1200 35%, #6b2d00 55%, #f0974e 75%, #6b2d00 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #1a0a00 0%, #3d1e00 50%, #7a3800 100%)', href: '#', icon: Layers, cta: 'See the Demo' },
+  '03': { bg: '#00261a', gradient: 'linear-gradient(180deg, #010F1E 0%, #000f0a 15%, #00261a 35%, #004d2e 55%, #00c87d 75%, #004d2e 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001208 0%, #003020 50%, #005838 100%)', href: '#', icon: Code2, cta: 'See How It Works' },
+  '04': { bg: '#080d2e', gradient: 'linear-gradient(180deg, #010F1E 0%, #030818 15%, #080d2e 35%, #131a5c 55%, #596ae0 75%, #131a5c 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #050818 0%, #0c1040 50%, #1a2270 100%)', href: '#', icon: ShieldAlert, cta: 'Explore the Solution' },
+  '05': { bg: '#2d0800', gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0400 15%, #2d0800 35%, #5c1400 55%, #f05030 75%, #5c1400 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)', href: '#', icon: Rocket, cta: 'Learn More' },
+  '06': { bg: '#100030', gradient: 'linear-gradient(180deg, #010F1E 0%, #060014 15%, #100030 35%, #220060 55%, #7030d0 75%, #220060 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #080014 0%, #160038 50%, #2a0068 100%)', href: '#', icon: FileText, cta: 'See It in Action' },
+  '07': { bg: '#002e28', gradient: 'linear-gradient(180deg, #010F1E 0%, #001410 15%, #002e28 35%, #005c50 55%, #2dd4bf 75%, #005c50 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001a14 0%, #003d32 50%, #006b5a 100%)', href: '#', icon: Activity, cta: 'See How It Works' },
+}
+
+const solutions = solutionsData.map(s => ({ ...s, ...visualOverrides[s.num] }))
 
 /* ─────────────────────────────────────────────
    Floating Screenshot — real image or generated mockup
@@ -605,7 +458,7 @@ export default function Solutions() {
             <p className="text-text-secondary text-lg max-w-2xl mx-auto leading-relaxed mb-10">
               Each solution targets a specific enterprise challenge.
               Every one is powered by the Radiant Digital AI Platform:
-              12 foundational capabilities that ensure your AI
+              foundational capabilities that ensure your AI
               knows your environment before it starts.
             </p>
 

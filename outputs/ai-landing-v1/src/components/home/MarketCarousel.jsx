@@ -10,116 +10,28 @@ import {
   ChevronLeft,
   ChevronRight,
   Banknote,
-
 } from 'lucide-react'
+import { markets as marketsData } from '../../data/siteContent.js'
 
-const markets = [
-  {
-    title: 'Technology, Media and Telecom',
-    icon: Radio,
-    accent: '#596AE0',
-    gradientFrom: '#1e2a6e',
-    gradientTo: '#596AE0',
-    image: '/images/telecom-network.jpg',
-    clients: 'Major tier-1 carriers',
-    desc: 'Radiant Digital has mapped 29 AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
-    metrics: [
-      { value: '29', label: 'AI Use Cases' },
-      { value: '40%', label: 'Faster Deployment' },
-      { value: '99.9%', label: 'Uptime SLA' },
-    ],
-  },
-  {
-    title: 'Healthcare and Life Sciences',
-    icon: HeartPulse,
-    accent: '#e05990',
-    gradientFrom: '#7a2050',
-    gradientTo: '#e05990',
-    image: '/images/healthcare.jpg',
-    clients: 'NIH, MD Anderson, CHOP',
-    desc: 'Privacy-first AI that scales clinical workflows and research operations: with HIPAA governance built in, not bolted on.',
-    metrics: [
-      { value: '35%', label: 'Cost Reduction' },
-      { value: '70%', label: 'Less Manual Work' },
-      { value: '30%', label: 'Ops Efficiency Gain' },
-    ],
-  },
-  {
-    title: 'Financial Services',
-    icon: Banknote,
-    accent: '#F0974E',
-    gradientFrom: '#7a4a10',
-    gradientTo: '#F0974E',
-    image: '/images/financial-services.jpg',
-    clients: 'Navy Federal Credit Union, major BFSI enterprises',
-    desc: 'AI for fraud detection, compliance automation, and customer journey transformation: with audit trails from day one.',
-    metrics: [
-      { value: '40%', label: 'Conversion Lift' },
-      { value: '25%', label: 'CSAT Improvement' },
-      { value: '70%', label: 'Sync Time Reduced' },
-    ],
-  },
-  {
-    title: 'Federal Government',
-    icon: Landmark,
-    accent: '#596AE0',
-    gradientFrom: '#1a2060',
-    gradientTo: '#596AE0',
-    image: '/images/federal-government.jpg',
-    clients: 'DoD, HHS, DHS, Treasury, Commerce, Interior',
-    desc: 'Mission-critical enterprise transformation with program-grade delivery, human-in-the-loop governance, and federal compliance alignment.',
-    metrics: [
-      { value: '45%', label: 'Infra Cost Reduction' },
-      { value: '40%', label: 'Faster Delivery' },
-      { value: '70%', label: 'Ops Efficiency Gain' },
-    ],
-  },
-  {
-    title: 'State and Local Government',
-    icon: Building2,
-    accent: '#91C46B',
-    gradientFrom: '#2a5018',
-    gradientTo: '#91C46B',
-    image: '/images/state-local-government.jpg',
-    clients: 'FL DCF, FL DEO, FL DOT',
-    desc: 'Citizen-centric transformation that delivers better outcomes on constrained budgets. Faster permitting, benefits processing, and case management: at scale.',
-    metrics: [
-      { value: '30%', label: 'Cost Savings' },
-      { value: '70%', label: 'Faster Processing' },
-      { value: '25%', label: 'Citizen CSAT Lift' },
-    ],
-  },
-  {
-    title: 'Education',
-    icon: GraduationCap,
-    accent: '#a855f7',
-    gradientFrom: '#4a1880',
-    gradientTo: '#a855f7',
-    image: '/images/education.jpg',
-    clients: 'UT Austin, Baylor University, research institutions',
-    desc: 'AI-first campus transformation: research analytics, student outcomes, and FERPA-compliant data governance at scale.',
-    metrics: [
-      { value: '35%', label: 'Cost Reduction' },
-      { value: '50%', label: 'Faster Data Access' },
-      { value: '70%', label: 'Engagement Lift' },
-    ],
-  },
-  {
-    title: 'Oil and Gas',
-    icon: Fuel,
-    accent: '#F0974E',
-    gradientFrom: '#5a3000',
-    gradientTo: '#F0974E',
-    image: '/images/oil-gas.jpg',
-    clients: 'Halliburton, Noble Corporation, offshore operators',
-    desc: 'Connected worker safety, predictive maintenance, and digital asset intelligence across remote and field operations.',
-    metrics: [
-      { value: '60%', label: 'Maintenance Uplift' },
-      { value: '70%', label: 'Downtime Reduced' },
-      { value: '99.9%', label: 'Safety Uptime' },
-    ],
-  },
-]
+/* Resolve icon string names to Lucide components */
+const iconMap = { Radio, HeartPulse, Banknote, Landmark, Building2, GraduationCap, Fuel }
+
+/* Component-only visual overrides */
+const gradientOverrides = {
+  'Technology, Media and Telecom': { gradientFrom: '#1e2a6e', gradientTo: '#596AE0' },
+  'Healthcare and Life Sciences': { gradientFrom: '#7a2050', gradientTo: '#e05990' },
+  'Financial Services': { gradientFrom: '#7a4a10', gradientTo: '#F0974E' },
+  'Federal Government': { gradientFrom: '#1a2060', gradientTo: '#596AE0' },
+  'State and Local Government': { gradientFrom: '#2a5018', gradientTo: '#91C46B' },
+  'Education': { gradientFrom: '#4a1880', gradientTo: '#a855f7' },
+  'Oil and Gas': { gradientFrom: '#5a3000', gradientTo: '#F0974E' },
+}
+
+const markets = marketsData.map(m => ({
+  ...m,
+  icon: iconMap[m.icon] || Radio,
+  ...gradientOverrides[m.title],
+}))
 
 export default function MarketCarousel() {
   const sectionRef = useRef(null)
