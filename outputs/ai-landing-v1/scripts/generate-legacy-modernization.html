@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1440,height=900">
+<title>AI-First Legacy Modernization</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #060d1b;
+    color: #e2e8f0;
+    width: 1440px;
+    height: 900px;
+    overflow: hidden;
+    display: flex;
+  }
+
+  /* ── Left Panel: Legacy System View ── */
+  .legacy-panel {
+    width: 620px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    background: #0a1020;
+    border-right: 1px solid rgba(0,168,107,0.08);
+  }
+
+  .legacy-header {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    gap: 10px;
+  }
+  .legacy-logo {
+    display: flex; align-items: center; gap: 8px;
+  }
+  .legacy-logo-icon {
+    width: 24px; height: 24px; border-radius: 6px;
+    background: linear-gradient(135deg, #1a3a2a, #0d5c38);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .legacy-logo-icon svg { width: 12px; height: 12px; }
+  .legacy-logo-text { font-size: 12px; font-weight: 700; color: rgba(255,255,255,0.8); }
+  .legacy-version { font-size: 8px; font-weight: 600; background: rgba(239,68,68,0.12); color: #f87171; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(239,68,68,0.2); }
+  .legacy-badge-old { font-size: 8px; font-weight: 600; background: rgba(245,158,11,0.1); color: #fbbf24; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(245,158,11,0.2); margin-left: auto; }
+
+  .legacy-nav {
+    display: flex;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    padding: 0 18px;
+  }
+  .legacy-nav-item {
+    padding: 10px 14px;
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.3);
+    border-bottom: 2px solid transparent;
+  }
+  .legacy-nav-item.active {
+    color: #00a86b;
+    border-bottom-color: #00a86b;
+  }
+
+  /* Sidebar + table layout */
+  .legacy-body { display: flex; flex: 1; overflow: hidden; }
+
+  .legacy-sidebar {
+    width: 140px;
+    border-right: 1px solid rgba(255,255,255,0.04);
+    padding: 12px 0;
+    flex-shrink: 0;
+  }
+  .legacy-sidebar-item {
+    padding: 7px 16px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .legacy-sidebar-item.active {
+    color: #00a86b;
+    background: rgba(0,168,107,0.06);
+    border-left: 2px solid #00a86b;
+  }
+  .legacy-sidebar-item .dot {
+    width: 4px; height: 4px; border-radius: 50%;
+    background: currentColor; opacity: 0.5;
+  }
+
+  /* Data Table */
+  .legacy-table-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .legacy-search {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .legacy-search-label { font-size: 9px; color: rgba(255,255,255,0.3); font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; }
+  .legacy-search-box {
+    flex: 1; height: 26px; background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06); border-radius: 5px;
+    padding: 0 8px; font-size: 10px; color: rgba(255,255,255,0.4);
+    display: flex; align-items: center;
+  }
+
+  .legacy-table { flex: 1; overflow: hidden; }
+
+  .legacy-table table { width: 100%; border-collapse: collapse; }
+  .legacy-table th {
+    padding: 8px 10px;
+    font-size: 8px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: rgba(255,255,255,0.25);
+    text-align: left;
+    background: rgba(255,255,255,0.015);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .legacy-table td {
+    padding: 7px 10px;
+    font-size: 10px;
+    color: rgba(255,255,255,0.45);
+    border-bottom: 1px solid rgba(255,255,255,0.025);
+  }
+  .legacy-table tr:hover td { background: rgba(0,168,107,0.02); }
+
+  .status-badge {
+    font-size: 8px; font-weight: 600;
+    padding: 2px 7px; border-radius: 8px;
+  }
+  .status-active { background: rgba(0,168,107,0.1); color: #00a86b; }
+  .status-pending { background: rgba(245,158,11,0.1); color: #fbbf24; }
+  .status-error { background: rgba(239,68,68,0.1); color: #f87171; }
+
+  .legacy-footer {
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    font-size: 9px;
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ── Right Panel: AI Modernization Interface ── */
+  .modern-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #080e1e;
+  }
+
+  .modern-header {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(0,168,107,0.1);
+    gap: 10px;
+  }
+  .modern-logo {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: linear-gradient(135deg, #00a86b, #00c87d);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modern-logo svg { width: 14px; height: 14px; color: #fff; }
+  .modern-title { font-size: 13px; font-weight: 700; color: #fff; }
+  .modern-badge { font-size: 8px; font-weight: 600; background: rgba(0,168,107,0.12); color: #00c87d; padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(0,168,107,0.25); }
+  .modern-status { margin-left: auto; display: flex; align-items: center; gap: 5px; font-size: 10px; color: #00c87d; }
+  .modern-status .pulse { width: 6px; height: 6px; border-radius: 50%; background: #00c87d; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* Stats row */
+  .modern-stats {
+    display: flex; gap: 8px; padding: 14px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .modern-stat {
+    flex: 1; background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.05);
+    border-radius: 10px; padding: 10px 12px;
+    position: relative; overflow: hidden;
+  }
+  .modern-stat::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  }
+  .modern-stat:nth-child(1)::before { background: #00c87d; }
+  .modern-stat:nth-child(2)::before { background: #596ae0; }
+  .modern-stat:nth-child(3)::before { background: #00a86b; }
+  .modern-stat:nth-child(4)::before { background: #34d399; }
+  .modern-stat-label { font-size: 8px; text-transform: uppercase; letter-spacing: 0.8px; color: rgba(255,255,255,0.3); margin-bottom: 2px; }
+  .modern-stat-val { font-size: 20px; font-weight: 800; line-height: 1; }
+  .modern-stat:nth-child(1) .modern-stat-val { color: #00c87d; }
+  .modern-stat:nth-child(2) .modern-stat-val { color: #818cf8; }
+  .modern-stat:nth-child(3) .modern-stat-val { color: #00a86b; }
+  .modern-stat:nth-child(4) .modern-stat-val { color: #34d399; }
+  .modern-stat-sub { font-size: 8px; color: rgba(255,255,255,0.2); margin-top: 2px; }
+
+  /* Chat area */
+  .modern-chat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .chat-messages {
+    flex: 1;
+    padding: 14px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+  }
+
+  .msg { max-width: 92%; }
+  .msg.ai { align-self: flex-start; }
+  .msg.user { align-self: flex-end; }
+  .msg-label { font-size: 8px; color: rgba(255,255,255,0.2); margin-bottom: 2px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .msg-label-right { text-align: right; }
+  .msg-bubble { padding: 12px 16px; border-radius: 14px; font-size: 11.5px; line-height: 1.6; }
+  .msg.ai .msg-bubble {
+    background: rgba(0,168,107,0.04);
+    border: 1px solid rgba(0,168,107,0.1);
+    color: rgba(255,255,255,0.7);
+    border-bottom-left-radius: 4px;
+  }
+  .msg.user .msg-bubble {
+    background: linear-gradient(135deg, #00845a, #00a86b);
+    color: #fff;
+    font-weight: 500;
+    border-bottom-right-radius: 4px;
+  }
+
+  /* Modernization progress card */
+  .mod-progress {
+    background: rgba(0,168,107,0.04);
+    border: 1px solid rgba(0,168,107,0.1);
+    border-radius: 10px;
+    padding: 12px;
+    margin-top: 8px;
+  }
+  .mod-progress-title { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.8px; color: #00c87d; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+  .mod-progress-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 6px; }
+  .mod-progress-item {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.04);
+    border-radius: 7px;
+    padding: 8px 10px;
+  }
+  .mod-progress-item-label { font-size: 8px; color: rgba(255,255,255,0.3); margin-bottom: 3px; }
+  .mod-progress-item-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; margin-bottom: 3px; }
+  .mod-progress-item-bar-fill { height: 100%; border-radius: 2px; }
+  .mod-progress-item-val { font-size: 10px; font-weight: 700; }
+
+  /* Code diff preview */
+  .code-diff {
+    background: rgba(0,10,5,0.5);
+    border: 1px solid rgba(0,168,107,0.1);
+    border-radius: 8px;
+    padding: 10px;
+    margin-top: 8px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 9px;
+    line-height: 1.7;
+  }
+  .code-diff-header {
+    display: flex; align-items: center; gap: 6px;
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .code-diff-header span { font-size: 9px; font-weight: 600; color: rgba(255,255,255,0.5); font-family: 'Inter', sans-serif; }
+  .code-diff-badge { font-size: 7px; font-weight: 600; padding: 1px 6px; border-radius: 4px; font-family: 'Inter', sans-serif; }
+  .code-line { display: flex; }
+  .code-line-num { width: 24px; text-align: right; color: rgba(255,255,255,0.12); padding-right: 8px; flex-shrink: 0; user-select: none; }
+  .code-line-old { color: #f87171; opacity: 0.6; }
+  .code-line-new { color: #34d399; }
+  .code-line-context { color: rgba(255,255,255,0.25); }
+
+  /* Suggestion card */
+  .ai-suggestion {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(0,168,107,0.06);
+    border: 1px solid rgba(0,168,107,0.12);
+    border-radius: 6px;
+    padding: 8px 10px;
+    margin-top: 8px;
+    font-size: 10px; color: #34d399; font-weight: 500;
+  }
+
+  /* Quick action pills */
+  .quick-actions {
+    display: flex; gap: 6px; padding: 8px 20px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255,255,255,0.03);
+  }
+  .quick-action {
+    font-size: 9px; color: #00c87d;
+    background: rgba(0,168,107,0.06);
+    border: 1px solid rgba(0,168,107,0.15);
+    padding: 4px 10px; border-radius: 14px;
+    font-weight: 500;
+  }
+
+  /* Input area */
+  .modern-input {
+    padding: 12px 20px 16px;
+    border-top: 1px solid rgba(0,168,107,0.08);
+    background: linear-gradient(180deg, transparent 0%, rgba(0,168,107,0.02) 100%);
+  }
+  .modern-input-box {
+    display: flex; align-items: center; gap: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 2px solid rgba(0,168,107,0.3);
+    border-radius: 16px;
+    padding: 4px 6px 4px 16px;
+    box-shadow: 0 0 20px rgba(0,168,107,0.08), 0 0 60px rgba(0,168,107,0.04);
+  }
+  .modern-input-box input {
+    flex: 1; background: none; border: none; outline: none;
+    color: rgba(255,255,255,0.5); font-size: 12px; font-family: inherit;
+    padding: 8px 0;
+  }
+  .modern-send {
+    width: 34px; height: 34px; border-radius: 10px;
+    background: linear-gradient(135deg, #00845a, #00a86b);
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 10px rgba(0,168,107,0.35);
+    flex-shrink: 0;
+  }
+  .modern-send svg { width: 14px; height: 14px; color: #fff; }
+  .modern-input-hint {
+    text-align: center; margin-top: 6px;
+    font-size: 9px; color: rgba(255,255,255,0.15);
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+  }
+  .modern-input-hint kbd {
+    font-size: 8px; font-family: inherit;
+    padding: 1px 5px; border-radius: 3px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    color: rgba(255,255,255,0.2);
+  }
+
+  /* ── Divider between panels ── */
+  .panel-divider {
+    width: 2px;
+    background: linear-gradient(180deg, transparent 5%, rgba(0,168,107,0.2) 30%, rgba(0,168,107,0.4) 50%, rgba(0,168,107,0.2) 70%, transparent 95%);
+    position: relative;
+  }
+  .panel-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: #080e1e;
+    border: 2px solid rgba(0,168,107,0.4);
+    box-shadow: 0 0 12px rgba(0,168,107,0.2);
+  }
+  .divider-arrow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+    color: #00c87d;
+    font-size: 11px;
+    font-weight: 800;
+  }
+</style>
+</head>
+<body>
+
+<!-- LEFT: Legacy System -->
+<div class="legacy-panel">
+  <div class="legacy-header">
+    <div class="legacy-logo">
+      <div class="legacy-logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4ade80" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+      </div>
+      <span class="legacy-logo-text">Enterprise Resource Manager v4.2</span>
+    </div>
+    <span class="legacy-version">BEFORE: LEGACY SYSTEM</span>
+    <span class="legacy-badge-old">COBOL + Java EE</span>
+  </div>
+
+  <div class="legacy-nav">
+    <div class="legacy-nav-item active">Order Management</div>
+    <div class="legacy-nav-item">Inventory</div>
+    <div class="legacy-nav-item">Accounts</div>
+    <div class="legacy-nav-item">Reports</div>
+    <div class="legacy-nav-item">Admin</div>
+  </div>
+
+  <div class="legacy-body">
+    <div class="legacy-sidebar">
+      <div class="legacy-sidebar-item active"><span class="dot"></span> Search</div>
+      <div class="legacy-sidebar-item"><span class="dot"></span> Orders</div>
+      <div class="legacy-sidebar-item"><span class="dot"></span> Billing</div>
+      <div class="legacy-sidebar-item"><span class="dot"></span> Customers</div>
+      <div class="legacy-sidebar-item"><span class="dot"></span> Products</div>
+      <div class="legacy-sidebar-item"><span class="dot"></span> Shipping</div>
+      <div class="legacy-sidebar-item"><span class="dot"></span> Returns</div>
+      <div class="legacy-sidebar-item"><span class="dot"></span> Archives</div>
+    </div>
+
+    <div class="legacy-table-area">
+      <div class="legacy-search">
+        <span class="legacy-search-label">Order Management → Search</span>
+        <div class="legacy-search-box">Search orders, customers, or SKU...</div>
+      </div>
+
+      <div class="legacy-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>ORD-84721</td><td>Federal Reserve Board</td><td>2024-01-15</td><td>$284,500</td><td><span class="status-badge status-active">Active</span></td><td style="color:rgba(255,255,255,0.3)">High</td></tr>
+            <tr><td>ORD-84720</td><td>Dept. of Defense</td><td>2024-01-14</td><td>$1,247,000</td><td><span class="status-badge status-active">Active</span></td><td style="color:rgba(255,255,255,0.3)">Critical</td></tr>
+            <tr><td>ORD-84719</td><td>GSA Region 4</td><td>2024-01-14</td><td>$89,200</td><td><span class="status-badge status-pending">Pending</span></td><td style="color:rgba(255,255,255,0.3)">Medium</td></tr>
+            <tr><td>ORD-84718</td><td>VA Medical Center</td><td>2024-01-13</td><td>$432,100</td><td><span class="status-badge status-active">Active</span></td><td style="color:rgba(255,255,255,0.3)">High</td></tr>
+            <tr><td>ORD-84717</td><td>USPS HQ</td><td>2024-01-12</td><td>$67,800</td><td><span class="status-badge status-error">Error</span></td><td style="color:rgba(255,255,255,0.3)">Low</td></tr>
+            <tr><td>ORD-84716</td><td>NASA Goddard</td><td>2024-01-12</td><td>$198,400</td><td><span class="status-badge status-active">Active</span></td><td style="color:rgba(255,255,255,0.3)">Medium</td></tr>
+            <tr><td>ORD-84715</td><td>DOE Headquarters</td><td>2024-01-11</td><td>$524,750</td><td><span class="status-badge status-pending">Pending</span></td><td style="color:rgba(255,255,255,0.3)">High</td></tr>
+            <tr><td>ORD-84714</td><td>CDC Atlanta</td><td>2024-01-11</td><td>$145,300</td><td><span class="status-badge status-active">Active</span></td><td style="color:rgba(255,255,255,0.3)">Medium</td></tr>
+            <tr><td>ORD-84713</td><td>FBI Academy</td><td>2024-01-10</td><td>$312,600</td><td><span class="status-badge status-active">Active</span></td><td style="color:rgba(255,255,255,0.3)">High</td></tr>
+            <tr><td>ORD-84712</td><td>FEMA Region 2</td><td>2024-01-10</td><td>$78,900</td><td><span class="status-badge status-pending">Pending</span></td><td style="color:rgba(255,255,255,0.3)">Low</td></tr>
+            <tr><td>ORD-84711</td><td>DHS Customs</td><td>2024-01-09</td><td>$891,200</td><td><span class="status-badge status-active">Active</span></td><td style="color:rgba(255,255,255,0.3)">Critical</td></tr>
+            <tr><td>ORD-84710</td><td>Treasury Dept.</td><td>2024-01-09</td><td>$256,400</td><td><span class="status-badge status-active">Active</span></td><td style="color:rgba(255,255,255,0.3)">Medium</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="legacy-footer">
+        <span>Showing 1-12 of 847 records</span>
+        <span>Last sync: 18 minutes ago</span>
+        <span>Database: Oracle 11g</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Divider -->
+<div class="panel-divider">
+  <span class="divider-arrow">→</span>
+</div>
+
+<!-- RIGHT: AI Modernization Interface -->
+<div class="modern-panel">
+  <div class="modern-header">
+    <div class="modern-logo">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    </div>
+    <span class="modern-title">IntelliBridge</span>
+    <span class="modern-badge">AFTER: AI MODERNIZED</span>
+    <div class="modern-status"><span class="pulse"></span> Analyzing Legacy Codebase</div>
+  </div>
+
+  <!-- Stats -->
+  <div class="modern-stats">
+    <div class="modern-stat">
+      <div class="modern-stat-label">Modules Analyzed</div>
+      <div class="modern-stat-val">847</div>
+      <div class="modern-stat-sub">of 1,024 total</div>
+    </div>
+    <div class="modern-stat">
+      <div class="modern-stat-label">Converted</div>
+      <div class="modern-stat-val">$2.4M</div>
+      <div class="modern-stat-sub">tech debt resolved</div>
+    </div>
+    <div class="modern-stat">
+      <div class="modern-stat-label">Accuracy</div>
+      <div class="modern-stat-val">96.2%</div>
+      <div class="modern-stat-sub">code equivalence</div>
+    </div>
+    <div class="modern-stat">
+      <div class="modern-stat-label">Speed</div>
+      <div class="modern-stat-val">1.2s</div>
+      <div class="modern-stat-sub">per module avg</div>
+    </div>
+  </div>
+
+  <!-- Chat -->
+  <div class="modern-chat">
+    <div class="chat-messages">
+      <div class="msg ai">
+        <div class="msg-label">IntelliBridge AI Assistant</div>
+        <div class="msg-bubble">
+          Good morning. Here's your daily code intelligence briefing:
+
+          <div class="mod-progress">
+            <div class="mod-progress-title">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#00c87d" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+              Modernization Progress
+            </div>
+            <div class="mod-progress-grid">
+              <div class="mod-progress-item">
+                <div class="mod-progress-item-label">Server-side (COBOL→Java)</div>
+                <div class="mod-progress-item-bar"><div class="mod-progress-item-bar-fill" style="width:82%;background:#00c87d"></div></div>
+                <div class="mod-progress-item-val" style="color:#00c87d">82%</div>
+              </div>
+              <div class="mod-progress-item">
+                <div class="mod-progress-item-label">Frontend (JSP→React)</div>
+                <div class="mod-progress-item-bar"><div class="mod-progress-item-bar-fill" style="width:68%;background:#818cf8"></div></div>
+                <div class="mod-progress-item-val" style="color:#818cf8">68%</div>
+              </div>
+              <div class="mod-progress-item">
+                <div class="mod-progress-item-label">Database (Oracle→Postgres)</div>
+                <div class="mod-progress-item-bar"><div class="mod-progress-item-bar-fill" style="width:91%;background:#34d399"></div></div>
+                <div class="mod-progress-item-val" style="color:#34d399">91%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="msg user">
+        <div class="msg-label msg-label-right">You</div>
+        <div class="msg-bubble">Show me all pending orders over $100k activity ago.</div>
+      </div>
+
+      <div class="msg ai">
+        <div class="msg-label">IntelliBridge AI Assistant</div>
+        <div class="msg-bubble">
+          I've analyzed the Order Management module. Here's the modernized query and code transformation:
+
+          <div class="code-diff">
+            <div class="code-diff-header">
+              <span>OrderService.java → OrderService.ts</span>
+              <span class="code-diff-badge" style="background:rgba(239,68,68,0.1);color:#f87171">- Old</span>
+              <span class="code-diff-badge" style="background:rgba(52,211,153,0.1);color:#34d399">+ New</span>
+            </div>
+            <div class="code-line"><span class="code-line-num">1</span><span class="code-line-old">- ResultSet rs = stmt.executeQuery("SELECT * FROM orders");</span></div>
+            <div class="code-line"><span class="code-line-num">2</span><span class="code-line-old">- while (rs.next()) { processRow(rs); }</span></div>
+            <div class="code-line"><span class="code-line-num">3</span><span class="code-line-new">+ const orders = await prisma.order.findMany({</span></div>
+            <div class="code-line"><span class="code-line-num">4</span><span class="code-line-new">+   where: { amount: { gte: 100000 }, status: 'PENDING' },</span></div>
+            <div class="code-line"><span class="code-line-num">5</span><span class="code-line-new">+   orderBy: { createdAt: 'desc' },</span></div>
+            <div class="code-line"><span class="code-line-num">6</span><span class="code-line-new">+ });</span></div>
+          </div>
+
+          <div class="ai-suggestion">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            Found 5 pending orders over $100k. Confidence: 98.4% code equivalence with 2 new structural improvements.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quick-actions">
+      <span class="quick-action">Analyze next module</span>
+      <span class="quick-action">Run code equivalence test</span>
+      <span class="quick-action">Generate migration report</span>
+      <span class="quick-action">View dependency graph</span>
+    </div>
+
+    <div class="modern-input">
+      <div class="modern-input-box">
+        <input type="text" value="Show me all pending orders over $100k activity ago." placeholder="Ask about legacy code, modernization status, or run transformations..." />
+        <div class="modern-send">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </div>
+      </div>
+      <div class="modern-input-hint">
+        <span><kbd>Enter</kbd> to send</span>
+        <span><kbd>/</kbd> commands</span>
+        <span>AI analyzes legacy code in real-time</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

@@ -48,8 +48,8 @@ export default function Platform() {
           <span className="kicker">The Radiant Digital AI Platform</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-5"
             style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)' }}>
-            Foundational capabilities.<br />
-            <span className="grad-text">The infrastructure beneath every solution.</span>
+            Our foundational AI capabilities.<br />
+            <span className="grad-text">The infrastructure beneath every solution and engagement.</span>
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
             Radiant Digital does not deploy generic AI.

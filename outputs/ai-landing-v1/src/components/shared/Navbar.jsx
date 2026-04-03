@@ -17,8 +17,8 @@ export default function Navbar() {
 
   const homeLinks = [
     { label: 'Solutions', href: '#solutions' },
-    { label: 'Industries', href: '#industries' },
     { label: 'Proof', href: '#proof' },
+    { label: 'Industries', href: '#industries' },
     { label: 'Platform', href: '#platform' },
     { label: 'Contact', href: '#contact' },
   ]
@@ -56,7 +56,7 @@ export default function Navbar() {
                 <Link to="/chat" className="btn-primary !py-2.5 !px-5 !text-[0.78rem]">Book a Demo</Link>
               </>
             ) : (
-              <Link to="/chat" className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">Start the Conversation <ArrowRight size={13} /></Link>
+              <Link to="/chat?q=I%20want%20to%20connect%20with%20Radiant%20Digital" className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">Connect with Us <ArrowRight size={13} /></Link>
             )}
           </div>
 
@@ -74,7 +74,7 @@ export default function Navbar() {
               </a>
             ))}
             <Link to="/chat" onClick={() => setOpen(false)} className="btn-primary w-fit mt-2 !py-3 !px-6">
-              {isICX ? 'Book a Demo' : 'Start the Conversation'}
+              {isICX ? 'Book a Demo' : 'Connect with Us'}
             </Link>
           </div>
         )}

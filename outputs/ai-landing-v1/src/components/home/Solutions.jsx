@@ -6,13 +6,14 @@ import { solutions as solutionsData } from '../../data/siteContent.js'
 
 /* Component-only visual overrides — merged onto siteContent data */
 const visualOverrides = {
-  '01': { bg: '#032d14', gradient: 'linear-gradient(180deg, #010F1E 0%, #021a0c 15%, #032d14 35%, #065c22 55%, #39d353 75%, #065c22 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)', href: '/icx-solution', featured: true, icon: BarChart3, cta: 'Explore Enterprise ICX' },
+  '01': { bg: '#032d14', gradient: 'linear-gradient(180deg, #010F1E 0%, #021a0c 15%, #032d14 35%, #065c22 55%, #39d353 75%, #065c22 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)', href: '/icx-solution', icon: BarChart3, cta: 'Explore Enterprise ICX' },
   '02': { bg: '#2d1200', gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0800 15%, #2d1200 35%, #6b2d00 55%, #f0974e 75%, #6b2d00 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #1a0a00 0%, #3d1e00 50%, #7a3800 100%)', href: '#', icon: Layers, cta: 'See the Demo' },
   '03': { bg: '#00261a', gradient: 'linear-gradient(180deg, #010F1E 0%, #000f0a 15%, #00261a 35%, #004d2e 55%, #00c87d 75%, #004d2e 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001208 0%, #003020 50%, #005838 100%)', href: '#', icon: Code2, cta: 'See How It Works' },
-  '04': { bg: '#080d2e', gradient: 'linear-gradient(180deg, #010F1E 0%, #030818 15%, #080d2e 35%, #131a5c 55%, #596ae0 75%, #131a5c 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #050818 0%, #0c1040 50%, #1a2270 100%)', href: '#', icon: ShieldAlert, cta: 'Explore the Solution' },
-  '05': { bg: '#2d0800', gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0400 15%, #2d0800 35%, #5c1400 55%, #f05030 75%, #5c1400 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)', href: '#', icon: Rocket, cta: 'Learn More' },
-  '06': { bg: '#100030', gradient: 'linear-gradient(180deg, #010F1E 0%, #060014 15%, #100030 35%, #220060 55%, #7030d0 75%, #220060 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #080014 0%, #160038 50%, #2a0068 100%)', href: '#', icon: FileText, cta: 'See It in Action' },
-  '07': { bg: '#002e28', gradient: 'linear-gradient(180deg, #010F1E 0%, #001410 15%, #002e28 35%, #005c50 55%, #2dd4bf 75%, #005c50 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001a14 0%, #003d32 50%, #006b5a 100%)', href: '#', icon: Activity, cta: 'See How It Works' },
+  '04': { bg: '#002a1e', gradient: 'linear-gradient(180deg, #010F1E 0%, #000e08 15%, #002a1e 35%, #00503a 55%, #00a86b 75%, #00503a 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001008 0%, #002e1e 50%, #005038 100%)', href: '#', icon: Code2, cta: 'See How It Works' },
+  '05': { bg: '#080d2e', gradient: 'linear-gradient(180deg, #010F1E 0%, #030818 15%, #080d2e 35%, #131a5c 55%, #596ae0 75%, #131a5c 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #050818 0%, #0c1040 50%, #1a2270 100%)', href: '#', icon: ShieldAlert, cta: 'Explore the Solution' },
+  '06': { bg: '#2d0800', gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0400 15%, #2d0800 35%, #5c1400 55%, #f05030 75%, #5c1400 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)', href: '#', icon: Rocket, cta: 'Learn More' },
+  '07': { bg: '#100030', gradient: 'linear-gradient(180deg, #010F1E 0%, #060014 15%, #100030 35%, #220060 55%, #7030d0 75%, #220060 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #080014 0%, #160038 50%, #2a0068 100%)', href: '#', icon: FileText, cta: 'See It in Action' },
+  '08': { bg: '#002e28', gradient: 'linear-gradient(180deg, #010F1E 0%, #001410 15%, #002e28 35%, #005c50 55%, #2dd4bf 75%, #005c50 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001a14 0%, #003d32 50%, #006b5a 100%)', href: '#', icon: Activity, cta: 'See How It Works' },
 }
 
 const solutions = solutionsData.map(s => ({ ...s, ...visualOverrides[s.num] }))
@@ -49,7 +50,7 @@ function FloatingScreenshot({ solution, isHovered }) {
       <motion.div
         className="relative rounded-2xl lg:rounded-3xl overflow-hidden z-10"
         style={{
-          aspectRatio: hasRealScreenshot ? '16/9' : '16/10',
+          aspectRatio: '16/10',
           background: hasRealScreenshot ? '#0a0a0a' : solution.screenshotGradient,
           boxShadow: `
             0 60px 120px rgba(0,0,0,0.6),
@@ -72,14 +73,14 @@ function FloatingScreenshot({ solution, isHovered }) {
             <img
               src={solution.screenshot}
               alt={solution.title}
-              className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out"
+              className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ease-in-out"
               style={{ opacity: isHovered ? 0 : 1 }}
             />
             {/* Dark mode (on hover) — CSS filter simulated */}
             <img
               src={solution.screenshot}
               alt={`${solution.title} dark mode`}
-              className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-700 ease-in-out"
+              className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ease-in-out"
               style={{
                 opacity: isHovered ? 1 : 0,
                 filter: 'invert(0.88) hue-rotate(180deg) contrast(1.05) brightness(0.95)',
@@ -240,8 +241,8 @@ function FloatingScreenshot({ solution, isHovered }) {
           style={{ background: `linear-gradient(90deg, transparent, ${solution.accent}25, transparent)` }} />
 
         {/* Bottom vignette */}
-        <div className="absolute bottom-0 inset-x-0 h-28 pointer-events-none"
-          style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.35), transparent)' }} />
+        <div className="absolute bottom-0 inset-x-0 h-16 pointer-events-none"
+          style={{ background: 'linear-gradient(to top, rgba(0,0,0,0.15), transparent)' }} />
       </motion.div>
     </motion.div>
   )

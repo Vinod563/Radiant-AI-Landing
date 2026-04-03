@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anomaly Detection — AI Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: #080c18;
+    color: #e2e8f0;
+    width: 1440px;
+    height: 900px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ═══ LAYOUT ═══ */
+  .app-layout { display: flex; height: 100%; }
+
+  /* ── Sidebar ── */
+  .sidebar {
+    width: 200px;
+    background: #0b1025;
+    border-right: 1px solid rgba(99,102,241,0.1);
+    display: flex; flex-direction: column;
+    padding: 18px 0; flex-shrink: 0;
+  }
+  .sidebar-logo {
+    padding: 0 18px 20px;
+    display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid rgba(99,102,241,0.08);
+    margin-bottom: 14px;
+  }
+  .logo-icon {
+    width: 30px; height: 30px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 700; color: #fff;
+  }
+  .logo-text { font-size: 13px; font-weight: 600; color: #c7d2fe; line-height: 1.2; }
+  .sidebar-section { padding: 8px 16px; font-size: 9px; text-transform: uppercase; letter-spacing: 1.2px; color: #3e4460; font-weight: 600; }
+  .sidebar-item {
+    padding: 9px 18px; font-size: 12.5px; color: #64748b;
+    display: flex; align-items: center; gap: 9px;
+    border-left: 3px solid transparent;
+  }
+  .sidebar-item.active {
+    background: rgba(99,102,241,0.08); color: #a5b4fc;
+    border-left-color: #6366f1; font-weight: 500;
+  }
+  .sidebar-item svg { width: 15px; height: 15px; opacity: 0.6; }
+  .sidebar-item.active svg { opacity: 1; }
+  .sidebar-badge { margin-left: auto; background: #ef4444; color: #fff; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 10px; }
+
+  /* ── Main Area ── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .topbar {
+    height: 48px; background: rgba(11,16,37,0.9);
+    border-bottom: 1px solid rgba(99,102,241,0.08);
+    display: flex; align-items: center;
+    padding: 0 24px; gap: 14px; flex-shrink: 0;
+  }
+  .topbar-title { font-size: 14px; font-weight: 600; color: #cbd5e1; }
+  .topbar-live { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #34d399; font-weight: 500; }
+  .topbar-live .dot { width: 6px; height: 6px; border-radius: 50%; background: #34d399; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  .topbar-right { margin-left: auto; display: flex; gap: 10px; }
+  .topbar-btn { background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.15); color: #94a3b8; font-size: 11px; font-weight: 500; padding: 5px 12px; border-radius: 6px; }
+  .topbar-btn.primary { background: linear-gradient(135deg, #4f46e5, #6366f1); color: #fff; border: none; }
+
+  .content { flex: 1; display: flex; overflow: hidden; }
+
+  /* ── Dashboard ── */
+  .dashboard {
+    flex: 1; padding: 12px 18px; display: flex; flex-direction: column; gap: 10px;
+    overflow-y: auto; padding-bottom: 100px; /* space for floating input */
+  }
+
+  .metrics-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+  .metric-card {
+    background: rgba(15,20,40,0.6); border: 1px solid rgba(99,102,241,0.08);
+    border-radius: 10px; padding: 12px 14px; position: relative; overflow: hidden;
+  }
+  .metric-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2.5px; }
+  .metric-card:nth-child(1)::before { background: #ef4444; }
+  .metric-card:nth-child(2)::before { background: #f59e0b; }
+  .metric-card:nth-child(3)::before { background: #6366f1; }
+  .metric-card:nth-child(4)::before { background: #10b981; }
+  .metric-label { font-size: 10px; color: #475569; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .metric-value { font-size: 24px; font-weight: 700; line-height: 1; }
+  .metric-card:nth-child(1) .metric-value { color: #f87171; }
+  .metric-card:nth-child(2) .metric-value { color: #fbbf24; }
+  .metric-card:nth-child(3) .metric-value { color: #818cf8; }
+  .metric-card:nth-child(4) .metric-value { color: #34d399; }
+  .metric-sub { font-size: 10px; color: #3e4460; margin-top: 3px; }
+
+  .charts-row { display: grid; grid-template-columns: 1.5fr 1fr; gap: 10px; }
+  .chart-card {
+    background: rgba(15,20,40,0.6); border: 1px solid rgba(99,102,241,0.08);
+    border-radius: 10px; padding: 12px 14px;
+  }
+  .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+  .chart-title { font-size: 12px; font-weight: 600; color: #94a3b8; }
+  .chart-filter { font-size: 10px; color: #6366f1; background: rgba(99,102,241,0.08); padding: 2px 8px; border-radius: 4px; }
+
+  .category-list { display: flex; flex-direction: column; gap: 9px; }
+  .category-item { display: flex; align-items: center; gap: 8px; }
+  .category-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+  .category-name { font-size: 11px; color: #64748b; flex: 1; }
+  .category-bar-bg { width: 80px; height: 5px; background: rgba(99,102,241,0.08); border-radius: 3px; overflow: hidden; }
+  .category-bar { height: 100%; border-radius: 3px; }
+  .category-count { font-size: 11px; font-weight: 600; color: #cbd5e1; min-width: 24px; text-align: right; }
+
+  .anomaly-table-header {
+    display: grid; grid-template-columns: 40px 1fr 80px 80px 76px; gap: 6px;
+    padding: 6px 10px; font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px;
+    color: #3e4460; font-weight: 600; border-bottom: 1px solid rgba(99,102,241,0.06);
+  }
+  .anomaly-row {
+    display: grid; grid-template-columns: 40px 1fr 80px 80px 76px; gap: 6px;
+    padding: 8px 10px; font-size: 11.5px; border-bottom: 1px solid rgba(99,102,241,0.04); align-items: center;
+  }
+  .severity-badge { font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 3px; text-align: center; }
+  .severity-critical { background: rgba(239,68,68,0.12); color: #f87171; }
+  .severity-high { background: rgba(245,158,11,0.12); color: #fbbf24; }
+  .severity-medium { background: rgba(99,102,241,0.12); color: #818cf8; }
+  .anomaly-desc { color: #b0bec5; font-weight: 500; }
+  .anomaly-source { color: #475569; font-size: 11px; }
+  .anomaly-time { color: #3e4460; font-size: 10.5px; }
+  .status-active { color: #f87171; font-size: 10.5px; font-weight: 500; }
+  .status-inv { color: #fbbf24; font-size: 10.5px; font-weight: 500; }
+  .status-res { color: #34d399; font-size: 10.5px; font-weight: 500; }
+
+  /* ── Right AI Panel ── */
+  .ai-panel {
+    width: 420px;
+    background: linear-gradient(180deg, #0c1128 0%, #0f1630 100%);
+    border-left: 1px solid rgba(99,102,241,0.12);
+    display: flex; flex-direction: column; flex-shrink: 0;
+    padding-bottom: 100px; /* space for floating input */
+  }
+  .ai-header {
+    padding: 12px 18px; border-bottom: 1px solid rgba(99,102,241,0.08);
+    display: flex; align-items: center; gap: 9px;
+  }
+  .ai-header-icon {
+    width: 26px; height: 26px;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    border-radius: 7px; display: flex; align-items: center; justify-content: center;
+  }
+  .ai-header-icon svg { width: 14px; height: 14px; color: #fff; }
+  .ai-header-text { font-size: 13px; font-weight: 600; color: #e2e8f0; }
+  .ai-header-badge { font-size: 9px; background: rgba(99,102,241,0.12); color: #a5b4fc; padding: 3px 8px; border-radius: 4px; font-weight: 500; margin-left: auto; }
+
+  .ai-messages { flex: 1; overflow-y: auto; padding: 14px 18px; display: flex; flex-direction: column; gap: 12px; }
+  .msg { max-width: 94%; }
+  .msg-ai { align-self: flex-start; }
+  .msg-user { align-self: flex-end; }
+  .msg-bubble-ai {
+    background: rgba(99,102,241,0.06); border: 1px solid rgba(99,102,241,0.1);
+    border-radius: 12px 12px 12px 4px; padding: 11px 14px;
+    font-size: 12.5px; line-height: 1.6; color: #b0bec5;
+  }
+  .msg-bubble-user {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    border-radius: 12px 12px 4px 12px; padding: 9px 14px;
+    font-size: 12.5px; line-height: 1.5; color: #f1f5f9;
+  }
+  .msg-label { font-size: 9px; color: #3e4460; margin-bottom: 3px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; }
+  .msg-label-user { text-align: right; }
+  .ai-anomaly-card {
+    background: rgba(239,68,68,0.05); border: 1px solid rgba(239,68,68,0.12);
+    border-radius: 8px; padding: 10px 12px; margin: 8px 0 4px;
+  }
+  .ai-anomaly-card-header { font-size: 10.5px; font-weight: 600; color: #f87171; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+  .ai-anomaly-card-body { font-size: 11.5px; color: #7a8aa5; line-height: 1.5; }
+  .ai-anomaly-stats { display: flex; gap: 14px; margin-top: 7px; }
+  .ai-anomaly-stat { font-size: 10.5px; color: #64748b; }
+  .ai-anomaly-stat strong { color: #e2e8f0; font-weight: 600; }
+  .ai-suggestion {
+    display: flex; align-items: center; gap: 6px;
+    background: rgba(52,211,153,0.06); border: 1px solid rgba(52,211,153,0.12);
+    border-radius: 6px; padding: 7px 10px; margin-top: 6px;
+    font-size: 11px; color: #34d399; font-weight: 500;
+  }
+  .ai-suggestion svg { flex-shrink: 0; }
+
+  /* ═══════════════════════════════════════════════════════════
+     FLOATING LLM INPUT — FIXED AT BOTTOM, FULL WIDTH, HERO
+     ═══════════════════════════════════════════════════════════ */
+  .floating-input {
+    position: absolute;
+    bottom: 0;
+    left: 200px;
+    right: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, rgba(8,12,24,0) 0%, rgba(8,12,24,0.92) 30%, rgba(11,16,40,0.99) 60%);
+    padding: 10px 50px 14px;
+  }
+  .floating-input-inner {
+    max-width: 860px;
+    margin: 0 auto;
+  }
+
+  /* Quick actions row */
+  .float-quick-actions {
+    display: flex; gap: 6px; margin-bottom: 6px; justify-content: center; flex-wrap: wrap;
+  }
+  .float-quick-action {
+    font-size: 11px; color: #a5b4fc;
+    background: rgba(99,102,241,0.08);
+    border: 1px solid rgba(99,102,241,0.18);
+    padding: 4px 12px; border-radius: 24px;
+    font-weight: 500; white-space: nowrap;
+    cursor: pointer; transition: all 0.15s;
+  }
+  .float-quick-action:hover { background: rgba(99,102,241,0.14); border-color: rgba(99,102,241,0.3); }
+
+  /* THE INPUT BOX */
+  .float-input-box {
+    display: flex; align-items: center; gap: 14px;
+    background: rgba(15,20,48,0.9);
+    border: 2px solid rgba(99,102,241,0.4);
+    border-radius: 20px;
+    padding: 5px 8px 5px 20px;
+    box-shadow:
+      0 0 0 1px rgba(99,102,241,0.08),
+      0 0 30px rgba(99,102,241,0.15),
+      0 0 80px rgba(99,102,241,0.08),
+      0 -20px 60px rgba(99,102,241,0.04);
+    position: relative;
+    backdrop-filter: blur(20px);
+  }
+  /* Outer animated glow ring */
+  .float-input-box::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, rgba(99,102,241,0.35), rgba(168,85,247,0.25), rgba(59,130,246,0.3), rgba(99,102,241,0.35));
+    background-size: 300% 300%;
+    animation: glowShift 4s ease infinite;
+    z-index: -1;
+    filter: blur(1px);
+  }
+  @keyframes glowShift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+
+  .float-ai-icon {
+    width: 32px; height: 32px; flex-shrink: 0;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .float-ai-icon svg { width: 17px; height: 17px; color: #fff; }
+
+  .float-input-text {
+    flex: 1; background: none; border: none;
+    color: #f1f5f9; font-size: 15px; font-family: inherit;
+    outline: none; line-height: 1.5;
+    padding: 10px 0;
+  }
+  .float-input-text::placeholder { color: #4a5280; }
+
+  .float-send-btn {
+    width: 40px; height: 40px; flex-shrink: 0;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 18px rgba(99,102,241,0.45);
+    transition: all 0.15s;
+  }
+  .float-send-btn:hover { box-shadow: 0 6px 24px rgba(99,102,241,0.6); transform: translateY(-1px); }
+  .float-send-btn svg { width: 18px; height: 18px; color: #fff; }
+
+  .float-hint {
+    text-align: center; margin-top: 6px;
+    font-size: 11px; color: #3e4460;
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+  }
+  .float-hint kbd {
+    background: rgba(99,102,241,0.1); padding: 2px 6px; border-radius: 4px;
+    font-size: 10px; color: #4a5280; font-family: inherit;
+  }
+  .float-hint-sep { color: #2d3354; }
+</style>
+</head>
+<body>
+
+<div class="app-layout">
+
+<!-- ═══ SIDEBAR ═══ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-icon">⚡</div>
+    <div class="logo-text">Anomaly<br>Detection</div>
+  </div>
+  <div class="sidebar-section">Monitor</div>
+  <div class="sidebar-item active">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+    Dashboard
+  </div>
+  <div class="sidebar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+    Anomalies
+    <span class="sidebar-badge">24</span>
+  </div>
+  <div class="sidebar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+    Data Streams
+  </div>
+  <div class="sidebar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 12h8"/><path d="M12 8v8"/></svg>
+    Pattern Explorer
+  </div>
+  <div class="sidebar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+    Rules Engine
+  </div>
+  <div class="sidebar-section" style="margin-top:6px;">Analyze</div>
+  <div class="sidebar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Reports
+  </div>
+  <div class="sidebar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    Root Cause
+  </div>
+  <div class="sidebar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    Resolution History
+  </div>
+  <div class="sidebar-section" style="margin-top:6px;">System</div>
+  <div class="sidebar-item">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+    Settings
+  </div>
+</aside>
+
+<!-- ═══ MAIN ═══ -->
+<main class="main">
+  <header class="topbar">
+    <div class="topbar-title">Anomaly Detection Dashboard</div>
+    <div class="topbar-live"><span class="dot"></span> Live Monitoring</div>
+    <div class="topbar-right">
+      <div class="topbar-btn">Export</div>
+      <div class="topbar-btn">Settings</div>
+      <div class="topbar-btn primary">+ New Analysis</div>
+    </div>
+  </header>
+
+  <div class="content">
+    <!-- ═══ LEFT: DASHBOARD ═══ -->
+    <div class="dashboard">
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-label">Critical Anomalies</div>
+          <div class="metric-value">207</div>
+          <div class="metric-sub">Total anomalies (24h)</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Fraud Alerts Active</div>
+          <div class="metric-value">207</div>
+          <div class="metric-sub">Across 6 data streams</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Revenue at Risk</div>
+          <div class="metric-value">$4,850</div>
+          <div class="metric-sub">Estimated exposure</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Detection Confidence</div>
+          <div class="metric-value">91.6%</div>
+          <div class="metric-sub">F1 score: 0.912</div>
+        </div>
+      </div>
+
+      <div class="charts-row">
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">Anomaly Cycle Overview</span>
+            <span class="chart-filter">Weekly</span>
+          </div>
+          <svg width="100%" height="130" viewBox="0 0 480 130" preserveAspectRatio="none">
+            <line x1="0" y1="32" x2="480" y2="32" stroke="rgba(99,102,241,0.05)" />
+            <line x1="0" y1="64" x2="480" y2="64" stroke="rgba(99,102,241,0.05)" />
+            <line x1="0" y1="96" x2="480" y2="96" stroke="rgba(99,102,241,0.05)" />
+            <rect x="16" y="62" width="22" height="52" rx="4" fill="rgba(99,102,241,0.5)" />
+            <rect x="42" y="72" width="22" height="42" rx="4" fill="rgba(99,102,241,0.3)" />
+            <rect x="86" y="50" width="22" height="64" rx="4" fill="rgba(99,102,241,0.55)" />
+            <rect x="112" y="58" width="22" height="56" rx="4" fill="rgba(99,102,241,0.35)" />
+            <rect x="156" y="35" width="22" height="79" rx="4" fill="rgba(99,102,241,0.6)" />
+            <rect x="182" y="42" width="22" height="72" rx="4" fill="rgba(99,102,241,0.38)" />
+            <rect x="226" y="28" width="22" height="86" rx="4" fill="rgba(99,102,241,0.65)" />
+            <rect x="252" y="38" width="22" height="76" rx="4" fill="rgba(99,102,241,0.4)" />
+            <rect x="296" y="40" width="22" height="74" rx="4" fill="rgba(99,102,241,0.55)" />
+            <rect x="322" y="50" width="22" height="64" rx="4" fill="rgba(99,102,241,0.35)" />
+            <rect x="366" y="68" width="22" height="46" rx="4" fill="rgba(99,102,241,0.35)" />
+            <rect x="392" y="76" width="22" height="38" rx="4" fill="rgba(99,102,241,0.22)" />
+            <rect x="436" y="74" width="22" height="40" rx="4" fill="rgba(99,102,241,0.28)" />
+            <rect x="462" y="80" width="16" height="34" rx="4" fill="rgba(99,102,241,0.18)" />
+            <text x="38" y="126" fill="#3e4460" font-size="10" text-anchor="middle" font-family="Inter">Mon</text>
+            <text x="108" y="126" fill="#3e4460" font-size="10" text-anchor="middle" font-family="Inter">Tue</text>
+            <text x="178" y="126" fill="#3e4460" font-size="10" text-anchor="middle" font-family="Inter">Wed</text>
+            <text x="248" y="126" fill="#3e4460" font-size="10" text-anchor="middle" font-family="Inter">Thu</text>
+            <text x="318" y="126" fill="#3e4460" font-size="10" text-anchor="middle" font-family="Inter">Fri</text>
+            <text x="388" y="126" fill="#3e4460" font-size="10" text-anchor="middle" font-family="Inter">Sat</text>
+            <text x="452" y="126" fill="#3e4460" font-size="10" text-anchor="middle" font-family="Inter">Sun</text>
+          </svg>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-header">
+            <span class="chart-title">By Category</span>
+          </div>
+          <div class="category-list">
+            <div class="category-item">
+              <span class="category-dot" style="background:#f87171"></span>
+              <span class="category-name">Billing</span>
+              <div class="category-bar-bg"><div class="category-bar" style="width:82%;background:#f87171"></div></div>
+              <span class="category-count">142</span>
+            </div>
+            <div class="category-item">
+              <span class="category-dot" style="background:#fbbf24"></span>
+              <span class="category-name">Authentication</span>
+              <div class="category-bar-bg"><div class="category-bar" style="width:56%;background:#fbbf24"></div></div>
+              <span class="category-count">97</span>
+            </div>
+            <div class="category-item">
+              <span class="category-dot" style="background:#818cf8"></span>
+              <span class="category-name">Shipping</span>
+              <div class="category-bar-bg"><div class="category-bar" style="width:44%;background:#818cf8"></div></div>
+              <span class="category-count">76</span>
+            </div>
+            <div class="category-item">
+              <span class="category-dot" style="background:#34d399"></span>
+              <span class="category-name">Device Telemetry</span>
+              <div class="category-bar-bg"><div class="category-bar" style="width:35%;background:#34d399"></div></div>
+              <span class="category-count">61</span>
+            </div>
+            <div class="category-item">
+              <span class="category-dot" style="background:#f472b6"></span>
+              <span class="category-name">Inventory</span>
+              <div class="category-bar-bg"><div class="category-bar" style="width:22%;background:#f472b6"></div></div>
+              <span class="category-count">38</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Anomaly Table -->
+      <div class="chart-card">
+        <div class="chart-header">
+          <span class="chart-title">Recent Anomalies</span>
+          <span class="chart-filter">View All →</span>
+        </div>
+        <div class="anomaly-table-header">
+          <span>Sev</span><span>Description</span><span>Source</span><span>Time</span><span>Status</span>
+        </div>
+        <div class="anomaly-row">
+          <span class="severity-badge severity-critical">CRIT</span>
+          <span class="anomaly-desc">Duplicate charge cluster — Region West</span>
+          <span class="anomaly-source">Billing</span>
+          <span class="anomaly-time">2 min ago</span>
+          <span class="status-active">● Active</span>
+        </div>
+        <div class="anomaly-row">
+          <span class="severity-badge severity-critical">CRIT</span>
+          <span class="anomaly-desc">Failed login spike — 340% above baseline</span>
+          <span class="anomaly-source">Auth</span>
+          <span class="anomaly-time">8 min ago</span>
+          <span class="status-inv">● Investigating</span>
+        </div>
+        <div class="anomaly-row">
+          <span class="severity-badge severity-high">HIGH</span>
+          <span class="anomaly-desc">Delivery variance exceeding SLA threshold</span>
+          <span class="anomaly-source">Shipping</span>
+          <span class="anomaly-time">14 min ago</span>
+          <span class="status-inv">● Investigating</span>
+        </div>
+        <div class="anomaly-row">
+          <span class="severity-badge severity-medium">MED</span>
+          <span class="anomaly-desc">Sensor heartbeat gap — Warehouse B3</span>
+          <span class="anomaly-source">Telemetry</span>
+          <span class="anomaly-time">22 min ago</span>
+          <span class="status-res">● Resolved</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ RIGHT: AI CHAT PANEL ═══ -->
+    <div class="ai-panel">
+      <div class="ai-header">
+        <div class="ai-header-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        </div>
+        <span class="ai-header-text">AI Analyst</span>
+        <span class="ai-header-badge">● Online</span>
+      </div>
+
+      <div class="ai-messages">
+        <div class="msg msg-ai">
+          <div class="msg-label">AI Analyst</div>
+          <div class="msg-bubble-ai">
+            I'm monitoring <strong>6 active data streams</strong>. I just detected a new critical pattern:
+            <div class="ai-anomaly-card">
+              <div class="ai-anomaly-card-header">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                Billing Anomaly Cluster — Region West
+              </div>
+              <div class="ai-anomaly-card-body">
+                140% increase in duplicate charges from batch processing window 02:00–04:00 UTC. Pattern suggests a retry loop in the payment gateway.
+              </div>
+              <div class="ai-anomaly-stats">
+                <span class="ai-anomaly-stat"><strong>$4,850</strong> at risk</span>
+                <span class="ai-anomaly-stat"><strong>207</strong> accounts</span>
+                <span class="ai-anomaly-stat"><strong>2h 14m</strong> active</span>
+              </div>
+            </div>
+            <div class="ai-suggestion">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              Recommended: Pause batch retries and trigger reconciliation
+            </div>
+          </div>
+        </div>
+
+        <div class="msg msg-user">
+          <div class="msg-label msg-label-user">You</div>
+          <div class="msg-bubble-user">What's causing the spike in Region West?</div>
+        </div>
+
+        <div class="msg msg-ai">
+          <div class="msg-label">AI Analyst</div>
+          <div class="msg-bubble-ai">
+            Root cause analysis points to <strong>3 factors</strong>:<br><br>
+            <strong>1.</strong> Payment gateway timeout reduced from 30s → 10s, causing premature retries.<br><br>
+            <strong>2.</strong> Batch processor v2.3 lacks idempotency keys on retry requests.<br><br>
+            <strong>3.</strong> Duplicate-charge alert threshold was set at 200 — trend crossed 150 two days ago.
+            <div class="ai-suggestion">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+              I can draft an incident report and notify the billing team
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     FLOATING LLM INPUT BAR — BOTTOM OF SCREEN, FULL WIDTH
+     This is the HERO element, always visible, overlaying content
+     ═══════════════════════════════════════════════════════════════ -->
+<div class="floating-input">
+  <div class="floating-input-inner">
+    <div class="float-quick-actions">
+      <span class="float-quick-action">🔍 Run root cause analysis</span>
+      <span class="float-quick-action">📊 Summarize today's anomalies</span>
+      <span class="float-quick-action">🔔 Create alert rule</span>
+      <span class="float-quick-action">📝 Draft incident report</span>
+    </div>
+    <div class="float-input-box">
+      <div class="float-ai-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      <input class="float-input-text" type="text" value="Show me the correlation between auth failures and billing anomalies in Region West" placeholder="Ask about any anomaly, correlation, or data pattern..." />
+      <div class="float-send-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

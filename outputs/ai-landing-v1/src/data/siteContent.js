@@ -10,9 +10,9 @@ export const brand = {
   platformName: 'Radiant Digital AI Platform',
   tagline: 'Enterprise Transformation. Supercharged with AI.',
   description:
-    'We believe AI only delivers when it truly understands your business. That conviction is why we operationalized AI with precision context at the core of every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.',
+    'We believe AI only delivers when it truly understands your business. That conviction is why precision context guides every AI deployment across every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.',
   differentiator:
-    'Every AI firm brings models. Only Radiant Digital brings the Precision Context Engine.',
+    'Every AI firm brings models. Only Radiant Digital grounds them with the Precision Context Engine.',
   differentiatorBody:
     'Before deployment begins, Radiant Digital structures everything your AI agents and your teams need to move fast and get it right.',
 }
@@ -82,7 +82,7 @@ export const socialProof = {
 // ─── AI FABRIC / ENABLERS ─────────────────────────
 export const aiFabric = {
   kicker: 'AI Fabric',
-  headline: 'AI infused into\neverything we do.',
+  headline: 'We hardwire AI into\neverything we do.',
   body: "AI Fabric is not a product. It is the way Radiant Digital operates. Every practice runs with AI embedded: not bolted on.",
   conclusion: "That is what makes Radiant Digital's enterprise transformation fundamentally faster than conventional delivery.",
   practices: [
@@ -131,24 +131,40 @@ export const solutions = [
     ],
   },
   {
-    num: '03', title: 'Design-to-Code Modernization',
+    num: '03', title: 'Code-First Design and Delivery',
     label: 'Product Development and Integration',
     accent: '#00c87d',
     screenshot: '/screenshots/design-to-code.png',
-    tagline: 'AI-first legacy modernization.',
-    desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments. Not wireframes in months. Working, auditable output in days per module.',
-    proofStat: 'Days per module vs. months manual',
-    tags: ['Legacy Modernization', 'Design Systems', 'AI-RAD'],
+    tagline: 'Product design and development without the handoff bottleneck.',
+    desc: 'Requirements are expressed through plain language against a target framework, Storybook is the component authority, and the output is handed directly to developers for integration. No separate design tool. No translation layer. No handoff friction.',
+    tags: ['Frontend Delivery', 'Storybook', 'AI-RAD'],
     platformComponents: ['AI-RAD', 'Radiant Knowledge Hub', 'Context-Aware AI'],
     details: [
-      'Legacy application analysis & decomposition',
-      'Design-system-compliant code generation',
-      'Working output in days per module',
-      'Auditable modernization pipeline',
+      'Plain-language requirements against target framework',
+      'Storybook as component authority',
+      'Direct-to-developer output with no handoff friction',
+      'No separate design tool or translation layer',
     ],
   },
   {
-    num: '04', title: 'Anomaly Detection',
+    num: '04', title: 'AI-First Legacy Modernization',
+    label: 'Product Development and Integration',
+    accent: '#00a86b',
+    screenshot: '/screenshots/legacy-modernization.png',
+    tagline: 'AI-first legacy modernization across server and frontend.',
+    desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments across both server-side and frontend layers. Not wireframes in six months. Working, auditable output in hours per module, grounded in a precision context environment built from the client\'s existing systems and target architecture.',
+    proofStat: 'Hours per module vs. months manual',
+    tags: ['Legacy Modernization', 'Design Systems', 'Full Stack'],
+    platformComponents: ['AI-RAD', 'Radiant Knowledge Hub', 'Context-Aware AI'],
+    details: [
+      'Legacy application analysis and decomposition',
+      'Server-side and frontend modernization',
+      'Design-system-compliant code generation',
+      'Auditable output in hours per module',
+    ],
+  },
+  {
+    num: '05', title: 'Anomaly Detection',
     label: 'Analytics, Data Science and AI',
     accent: '#596AE0',
     screenshot: '/screenshots/anomaly-detection.png',
@@ -165,10 +181,10 @@ export const solutions = [
     ],
   },
   {
-    num: '05', title: 'Product Launch Risk Intelligence',
+    num: '06', title: 'Product Launch Risk Intelligence',
     label: 'Analytics, Data Science and AI',
     accent: '#F05030',
-    screenshot: '/screenshots/launch-risk.png',
+    screenshot: '/screenshots/launch-risk-v2.png',
     tagline: 'Go/no-go intelligence for high-stakes product and device launches.',
     desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations before and after launch. Turns fragmented operational signals into a single pre-launch decision engine.',
     tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
@@ -181,7 +197,7 @@ export const solutions = [
     ],
   },
   {
-    num: '06', title: 'Automarc AI',
+    num: '07', title: 'Automarc AI',
     label: 'Organizational Transformation',
     accent: '#a855f7',
     screenshot: '/screenshots/automarc.png',
@@ -197,10 +213,10 @@ export const solutions = [
     ],
   },
   {
-    num: '07', title: 'Touchless IT Operations',
+    num: '08', title: 'Touchless IT Operations',
     label: 'Analytics, Data Science and AI',
     accent: '#2DD4BF',
-    screenshot: '/screenshots/touchless-ops.png',
+    screenshot: '/screenshots/touchless-ops-v2.png',
     tagline: 'Autonomous IT operations with AI-driven self-healing.',
     desc: 'Shifts enterprise IT from reactive incident management to autonomous, self-healing infrastructure. Unified observability, AI-driven root cause analysis, and predictive optimization work together so your teams resolve fewer incidents manually and prevent more before they ever occur.',
     proofStat: '80% Alert Noise Reduction',
@@ -224,9 +240,9 @@ export const markets = [
     clients: 'Major tier-1 carriers',
     desc: 'Radiant Digital has mapped 20+ AI use cases across the full telecom operating model: from revenue assurance to network operations to sales velocity. Built on deep carrier context, not generic telecommunications patterns.',
     metrics: [
+      { value: '3+', label: 'Clients' },
+      { value: '8+', label: 'Projects' },
       { value: '20+', label: 'AI Use Cases' },
-      { value: '40%', label: 'Faster Deployment' },
-      { value: '70%', label: 'Dev Time Reduced' },
     ],
   },
   {
@@ -236,9 +252,9 @@ export const markets = [
     clients: 'NIH, MD Anderson, CHOP',
     desc: 'Privacy-first AI that scales clinical workflows and research operations: with HIPAA governance built in, not bolted on.',
     metrics: [
-      { value: '35%', label: 'Cost Reduction' },
-      { value: '70%', label: 'Less Manual Work' },
-      { value: '30%', label: 'Ops Efficiency Gain' },
+      { value: '6+', label: 'Clients' },
+      { value: '10+', label: 'Projects' },
+      { value: '12+', label: 'AI Use Cases' },
     ],
   },
   {
@@ -248,9 +264,9 @@ export const markets = [
     clients: 'Navy Federal Credit Union, major BFSI enterprises',
     desc: 'AI for fraud detection, compliance automation, and customer journey transformation: with audit trails from day one.',
     metrics: [
-      { value: '40%', label: 'Conversion Lift' },
-      { value: '25%', label: 'CSAT Improvement' },
-      { value: '70%', label: 'Sync Time Reduced' },
+      { value: '2+', label: 'Clients' },
+      { value: '4+', label: 'Projects' },
+      { value: '6+', label: 'AI Use Cases' },
     ],
   },
   {
@@ -260,9 +276,9 @@ export const markets = [
     clients: 'DoD, HHS, DHS, Treasury, Commerce, Interior',
     desc: 'Mission-critical enterprise transformation with program-grade delivery, human-in-the-loop governance, and federal compliance alignment.',
     metrics: [
-      { value: '45%', label: 'Infra Cost Reduction' },
-      { value: '40%', label: 'Faster Delivery' },
-      { value: '70%', label: 'Ops Efficiency Gain' },
+      { value: '10+', label: 'Clients' },
+      { value: '15+', label: 'Projects' },
+      { value: '18+', label: 'AI Use Cases' },
     ],
   },
   {
@@ -272,9 +288,9 @@ export const markets = [
     clients: 'FL DCF, FL DEO, FL DOT',
     desc: 'Citizen-centric transformation that delivers better outcomes on constrained budgets. Faster permitting, benefits processing, and case management: at scale.',
     metrics: [
-      { value: '30%', label: 'Cost Savings' },
-      { value: '70%', label: 'Faster Processing' },
-      { value: '25%', label: 'Citizen CSAT Lift' },
+      { value: '6+', label: 'Clients' },
+      { value: '8+', label: 'Projects' },
+      { value: '10+', label: 'AI Use Cases' },
     ],
   },
   {
@@ -284,9 +300,9 @@ export const markets = [
     clients: 'UT Austin, Baylor University, research institutions',
     desc: 'AI-first campus transformation: research analytics, student outcomes, and FERPA-compliant data governance at scale.',
     metrics: [
-      { value: '35%', label: 'Cost Reduction' },
-      { value: '50%', label: 'Faster Data Access' },
-      { value: '70%', label: 'Engagement Lift' },
+      { value: '5+', label: 'Clients' },
+      { value: '7+', label: 'Projects' },
+      { value: '8+', label: 'AI Use Cases' },
     ],
   },
   {
@@ -296,9 +312,9 @@ export const markets = [
     clients: 'Halliburton, Noble Corporation, offshore operators',
     desc: 'Connected worker safety, predictive maintenance, and digital asset intelligence across remote and field operations.',
     metrics: [
-      { value: '60%', label: 'Maintenance Uplift' },
-      { value: '70%', label: 'Downtime Reduced' },
-      { value: '99.9%', label: 'Safety Uptime' },
+      { value: '3+', label: 'Clients' },
+      { value: '5+', label: 'Projects' },
+      { value: '6+', label: 'AI Use Cases' },
     ],
   },
 ]

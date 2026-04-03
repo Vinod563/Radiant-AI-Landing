@@ -45,7 +45,7 @@ export default function WhatIsRadiantAI() {
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-6"
             style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}>
             Every AI firm brings models.<br />
-            <span className="grad-text">Only Radiant Digital brings the Precision Context Engine.</span>
+            <span className="grad-text">Only Radiant Digital grounds them with the Precision Context Engine.</span>
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed max-w-3xl mx-auto">
             Before deployment begins, Radiant Digital structures everything your AI agents and your teams need to move fast and get it right.
@@ -169,30 +169,7 @@ export default function WhatIsRadiantAI() {
               {/* Two cards side by side — illustration + title + bullets combined */}
               <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
 
-                {/* ── Card 1: AI Agents ── */}
-                <div className="rounded-2xl overflow-hidden"
-                  style={{ background: 'rgba(89,106,224,0.04)', border: '1px solid rgba(89,106,224,0.15)' }}>
-                  {/* Image */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img src="/images/ai-agents-photo.jpg" alt="Artificial intelligence neural network powering enterprise AI agents" className="w-full h-full object-cover" />
-                    <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,14,26,0.95) 0%, rgba(8,14,26,0.3) 50%, transparent 100%)' }} />
-                    <div className="absolute bottom-4 left-6 right-6 z-10">
-                      <h3 className="text-[#818cf8] text-xl font-extrabold drop-shadow-lg">Your AI Agents</h3>
-                    </div>
-                  </div>
-                  {/* Bullets */}
-                  <div className="px-6 pt-4 pb-6 space-y-2.5">
-                    {agentItems.map((item, i) => (
-                      <div key={i} className="flex gap-3 px-4 py-3.5 rounded-xl"
-                        style={{ background: 'rgba(89,106,224,0.04)', border: '1px solid rgba(89,106,224,0.1)' }}>
-                        <div className="w-1 shrink-0 rounded-full self-stretch" style={{ background: 'rgba(129,140,248,0.5)' }} />
-                        <p className="text-white/70 text-sm leading-relaxed">{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* ── Card 2: Delivery Team ── */}
+                {/* ── Card 1: Delivery Team ── */}
                 <div className="rounded-2xl overflow-hidden"
                   style={{ background: 'rgba(145,196,107,0.04)', border: '1px solid rgba(145,196,107,0.15)' }}>
                   {/* Image */}
@@ -209,6 +186,29 @@ export default function WhatIsRadiantAI() {
                       <div key={i} className="flex gap-3 px-4 py-3.5 rounded-xl"
                         style={{ background: 'rgba(145,196,107,0.04)', border: '1px solid rgba(145,196,107,0.1)' }}>
                         <div className="w-1 shrink-0 rounded-full self-stretch" style={{ background: 'rgba(52,211,153,0.5)' }} />
+                        <p className="text-white/70 text-sm leading-relaxed">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* ── Card 2: AI Agents ── */}
+                <div className="rounded-2xl overflow-hidden"
+                  style={{ background: 'rgba(89,106,224,0.04)', border: '1px solid rgba(89,106,224,0.15)' }}>
+                  {/* Image */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img src="/images/ai-agents-photo.jpg" alt="Artificial intelligence neural network powering enterprise AI agents" className="w-full h-full object-cover" />
+                    <div className="absolute inset-0" style={{ background: 'linear-gradient(to top, rgba(8,14,26,0.95) 0%, rgba(8,14,26,0.3) 50%, transparent 100%)' }} />
+                    <div className="absolute bottom-4 left-6 right-6 z-10">
+                      <h3 className="text-[#818cf8] text-xl font-extrabold drop-shadow-lg">Your AI Agents</h3>
+                    </div>
+                  </div>
+                  {/* Bullets */}
+                  <div className="px-6 pt-4 pb-6 space-y-2.5">
+                    {agentItems.map((item, i) => (
+                      <div key={i} className="flex gap-3 px-4 py-3.5 rounded-xl"
+                        style={{ background: 'rgba(89,106,224,0.04)', border: '1px solid rgba(89,106,224,0.1)' }}>
+                        <div className="w-1 shrink-0 rounded-full self-stretch" style={{ background: 'rgba(129,140,248,0.5)' }} />
                         <p className="text-white/70 text-sm leading-relaxed">{item}</p>
                       </div>
                     ))}

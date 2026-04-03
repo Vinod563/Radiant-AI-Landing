@@ -261,7 +261,7 @@ const knowledgeBase = [
       },
       {
         type: 'screenshot',
-        src: '/screenshots/launch-risk.png',
+        src: '/screenshots/launch-risk-v2.png',
         alt: 'Product Launch Risk Intelligence',
         label: 'Launch Risk Analysis',
         accent: '#F05030',
@@ -1598,7 +1598,7 @@ const knowledgeBase = [
             label: 'Analytics, Data Science and AI',
             accent: '#F05030',
             gradient: 'linear-gradient(135deg, #180400 0%, #3d0e00 50%, #6b1a00 100%)',
-            screenshot: '/screenshots/launch-risk.png',
+            screenshot: '/screenshots/launch-risk-v2.png',
             desc: 'Integrates sales, returns, quality, and customer data to predict launch risk, identify root causes, and provide AI-driven go/no-go recommendations.',
             tags: ['Launch Risk', 'Predictive', 'Go/No-Go'],
             details: ['Integrated sales, returns, quality and customer data', 'Device launch risk prediction and scoring', 'AI-driven root cause identification', 'Go/no-go recommendations pre and post launch'],

@@ -87,7 +87,7 @@ export default function Enablers() {
             <span className="kicker">AI Fabric</span>
             <h2 className="font-display font-black leading-[0.95] tracking-tight"
               style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}>
-              AI infused into{' '}
+              We hardwire AI into{' '}
               <span className="grad-text">everything we do.</span>
             </h2>
           </div>
