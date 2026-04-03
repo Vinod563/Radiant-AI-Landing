@@ -91,10 +91,6 @@ export default function Enablers() {
               <span className="grad-text">everything we do.</span>
             </h2>
           </div>
-          <p className="text-text-secondary text-base lg:text-lg max-w-md leading-relaxed lg:text-right">
-            AI Fabric is not a product. It is the way Radiant operates.
-            Every practice runs with AI embedded: not bolted on.
-          </p>
         </motion.div>
 
         {/* Supporting line */}
@@ -104,8 +100,7 @@ export default function Enablers() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-text-muted text-base max-w-2xl leading-relaxed mb-16"
         >
-          That is what makes Radiant Digital's enterprise transformation
-          fundamentally faster than conventional delivery.
+          That is what makes Radiant Digital's enterprise transformation fundamentally faster than conventional delivery. AI Fabric is not a product. It is the way Radiant operates. Every practice runs with AI embedded: not bolted on.
         </motion.p>
 
         {/* Top row: 3 cards */}
