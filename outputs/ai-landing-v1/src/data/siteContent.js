@@ -84,7 +84,7 @@ export const aiFabric = {
   kicker: 'AI Fabric',
   headline: 'We hardwire AI into\neverything we do.',
   body: "AI Fabric is not a product. It is the way Radiant Digital operates. Every practice runs with AI embedded: not bolted on.",
-  conclusion: "That is what makes Radiant Digital's enterprise transformation fundamentally faster than conventional delivery.",
+  conclusion: "AI Fabric is not a product. It is the way Radiant operates. Every practice runs with AI embedded: not bolted on. That is what makes Radiant Digital's enterprise transformation fundamentally faster than conventional delivery.",
   practices: [
     { num: '01', title: 'Digital Strategy and Experience', desc: 'Design and optimize experiences faster with AI-driven insight and automation.', icon: 'Compass' },
     { num: '02', title: 'Product Development and Integration', desc: 'Accelerate delivery and reduce cost through AI-enabled development.', icon: 'Blocks' },
@@ -152,15 +152,15 @@ export const solutions = [
     accent: '#00a86b',
     screenshot: '/screenshots/legacy-modernization.png',
     tagline: 'AI-first legacy modernization across server and frontend.',
-    desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments across both server-side and frontend layers. Not wireframes in six months. Working, auditable output in hours per module, grounded in a precision context environment built from the client\'s existing systems and target architecture.',
-    proofStat: 'Hours per module vs. months manual',
+    desc: 'Transforms legacy enterprise applications into modern, design-system-compliant environments across both server-side and frontend layers. Not wireframes in six months. Working, auditable output in days, grounded in a precision context environment built from the client\'s existing systems and target architecture.',
+    proofStat: 'Days with AI vs. months manual',
     tags: ['Legacy Modernization', 'Design Systems', 'Full Stack'],
     platformComponents: ['AI-RAD', 'Radiant Knowledge Hub', 'Context-Aware AI'],
     details: [
       'Legacy application analysis and decomposition',
       'Server-side and frontend modernization',
       'Design-system-compliant code generation',
-      'Auditable output in hours per module',
+      'Auditable output in days',
     ],
   },
   {
