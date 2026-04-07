@@ -93,10 +93,10 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.75, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
                 className="font-display font-black leading-[1.1] mb-9 tracking-tight"
-                style={{ fontSize: 'clamp(3rem, 6vw, 5.8rem)' }}
+                style={{ fontSize: 'clamp(2.4rem, 6vw, 5.8rem)' }}
               >
                 {brand.tagline.split('.')[0]}.{' '}
-                <span className="grad-text whitespace-nowrap">{brand.tagline.split('. ')[1]}</span>
+                <span className="grad-text">{brand.tagline.split('. ')[1]}</span>
               </motion.h1>
 
               <motion.p

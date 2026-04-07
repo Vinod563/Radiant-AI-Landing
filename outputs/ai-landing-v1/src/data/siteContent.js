@@ -98,7 +98,7 @@ export const aiFabric = {
 // ─── SOLUTIONS ────────────────────────────────────
 export const solutions = [
   {
-    num: '01', title: 'Enterprise ICX',
+    num: '01', title: 'ICX AI',
     label: 'Digital Strategy and Experience',
     accent: '#91C46B',
     screenshot: '/screenshots/enterprise-icx.png',
@@ -131,7 +131,7 @@ export const solutions = [
     ],
   },
   {
-    num: '03', title: 'Code-First Design and Delivery',
+    num: '03', title: 'Design-to-code',
     label: 'Product Development and Integration',
     accent: '#00c87d',
     screenshot: '/screenshots/design-to-code.png',

@@ -31,7 +31,7 @@ export default function ICXCTA() {
 
           <h2 className="font-display font-black leading-[0.92] tracking-tight mb-6"
             style={{ fontSize: 'clamp(3.2rem, 7vw, 6.5rem)' }}>
-            See Enterprise ICX<br />
+            See ICX AI<br />
             Live — in <span className="grad-text">30 Minutes.</span>
           </h2>
 

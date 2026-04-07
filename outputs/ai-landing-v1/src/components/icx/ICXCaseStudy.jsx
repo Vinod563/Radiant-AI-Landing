@@ -46,7 +46,7 @@ export default function ICXCaseStudy() {
             </h2>
 
             <p className="text-text-secondary text-lg leading-relaxed mb-10">
-              A leading global carrier deployed Enterprise ICX for a high-stakes iPhone launch — coordinating signals from 40M+ customers, 2,000+ retail locations, and 12 digital channels simultaneously.
+              A leading global carrier deployed ICX AI for a high-stakes iPhone launch — coordinating signals from 40M+ customers, 2,000+ retail locations, and 12 digital channels simultaneously.
             </p>
 
             {/* Steps */}

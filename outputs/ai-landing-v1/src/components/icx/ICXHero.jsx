@@ -26,7 +26,7 @@ const LiveDashboard = () => (
             <span className="w-2.5 h-2.5 rounded-full bg-[#FFBD2E]" />
             <span className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
           </div>
-          <span className="font-display text-[0.7rem] font-semibold text-text-muted ml-2">Enterprise ICX · Live</span>
+          <span className="font-display text-[0.7rem] font-semibold text-text-muted ml-2">ICX AI · Live</span>
         </div>
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-green/10 border border-brand-green/20">
           <span className="w-1.5 h-1.5 rounded-full bg-brand-green animate-pulse2" />
@@ -108,7 +108,7 @@ export default function ICXHero() {
             <span className="opacity-40">/</span>
             <span>AI Solutions</span>
             <span className="opacity-40">/</span>
-            <span className="text-brand-green">Enterprise ICX</span>
+            <span className="text-brand-green">ICX AI</span>
           </motion.nav>
 
           <div className="grid md:grid-cols-[1fr_460px] lg:grid-cols-[1fr_520px] gap-14 lg:gap-20 items-center">
@@ -139,7 +139,7 @@ export default function ICXHero() {
                 transition={{ duration: 0.6, delay: 0.2 }}
                 className="text-text-secondary text-lg leading-relaxed max-w-[440px] mb-9"
               >
-                Enterprise ICX unifies every customer signal into one AI-driven intelligence layer — giving your teams the predictive power to act before issues become crises.
+                ICX AI unifies every customer signal into one AI-driven intelligence layer — giving your teams the predictive power to act before issues become crises.
               </motion.p>
 
               <motion.div

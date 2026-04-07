@@ -18,7 +18,7 @@ const Divider = () => <div className="divider" />
 
 export default function ICXSolution() {
   useEffect(() => {
-    document.title = 'Enterprise ICX — 360° CX Intelligence | Radiant Digital'
+    document.title = 'ICX AI — 360° CX Intelligence | Radiant Digital'
     window.scrollTo(0, 0)
   }, [])
 

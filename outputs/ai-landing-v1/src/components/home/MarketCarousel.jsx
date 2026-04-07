@@ -256,13 +256,13 @@ function MarketCard({ market }) {
         </div>
 
         {/* BACK — Metrics-driven with description & clients */}
-        <div className="flip-back">
-          <div
-            className="w-full h-full flex flex-col p-7 lg:p-8"
-            style={{
-              background: `linear-gradient(160deg, ${market.gradientFrom} 0%, ${market.gradientFrom}ee 40%, ${market.gradientTo}88 100%)`,
-            }}
-          >
+        <div
+          className="flip-back"
+          style={{
+            background: `linear-gradient(160deg, ${market.gradientFrom} 0%, ${market.gradientFrom} 40%, ${market.gradientTo} 100%)`,
+          }}
+        >
+          <div className="w-full h-full flex flex-col p-7 lg:p-8">
             {/* Decorative circles */}
             <div
               className="absolute -top-16 -right-16 w-48 h-48 rounded-full opacity-15"

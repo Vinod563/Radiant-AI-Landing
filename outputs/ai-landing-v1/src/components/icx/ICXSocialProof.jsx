@@ -21,7 +21,7 @@ export default function ICXSocialProof() {
             <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-brand-green to-transparent rounded-t-2xl" style={{ position: 'relative', height: '2px', background: 'linear-gradient(90deg, #91C46B, transparent)', marginBottom: '24px', borderRadius: '2px' }} />
             <Quote size={28} className="text-brand-green/40 mb-4" />
             <p className="text-text-secondary text-[0.95rem] leading-relaxed italic flex-1 mb-6">
-              "Enterprise ICX gave us a single source of truth across every customer touchpoint. We went from reactive firefighting to predicting issues before customers even notice them."
+              "ICX AI gave us a single source of truth across every customer touchpoint. We went from reactive firefighting to predicting issues before customers even notice them."
             </p>
             <div>
               <div className="font-display font-bold text-sm text-text-primary">VP of Customer Experience</div>
@@ -43,7 +43,7 @@ export default function ICXSocialProof() {
               The Only Platform That Closes the Loop
             </h3>
             <p className="text-text-secondary text-sm leading-relaxed flex-1">
-              Enterprise ICX is the only CX platform that unifies omnichannel signals, applies predictive AI, and automates resolution workflows — all in one enterprise-grade intelligence layer.
+              ICX AI is the only CX platform that unifies omnichannel signals, applies predictive AI, and automates resolution workflows — all in one enterprise-grade intelligence layer.
             </p>
           </motion.div>
 

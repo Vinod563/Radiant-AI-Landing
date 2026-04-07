@@ -76,7 +76,7 @@ const knowledgeBase = [
       },
     ],
     followUp: [
-      'Tell me about Enterprise ICX',
+      'Tell me about ICX AI',
       'Tell me about Touchless IT Operations',
       'Tell me about Design-to-Code Modernization',
       'Show me case studies',
@@ -85,17 +85,17 @@ const knowledgeBase = [
   {
     id: 'sol-enterprise-icx',
     keywords: ['enterprise icx', 'cx intelligence', 'icx platform', 'customer signals', 'churn reduction', 'nps', 'csat', 'customer satisfaction', 'net promoter', 'customer experience platform'],
-    question: 'Tell me about Enterprise ICX',
+    question: 'Tell me about ICX AI',
     cards: [
       {
         type: 'hero',
-        title: 'Enterprise ICX: CX Intelligence Platform',
+        title: 'ICX AI: CX Intelligence Platform',
         subtitle: 'Unifies every customer signal into a single intelligence layer, giving your teams the predictive power to eliminate friction before it becomes churn.',
         accent: '#91C46B',
       },
       {
         type: 'metrics',
-        title: 'Enterprise ICX Impact',
+        title: 'ICX AI Impact',
         items: [
           { value: '20%', label: 'Churn Reduction' },
           { value: '94.2', label: 'CSAT Score' },
@@ -107,14 +107,14 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'How It Works',
-        body: 'Enterprise ICX is powered by Semantic Data Graph, Context-Aware AI, Predictive Analytics and Time Series, and Radiant Knowledge Hub. It provides unified data across all CX touchpoints, proactive friction detection, insight-to-ROI pipeline, and real-time experience monitoring.',
+        body: 'ICX AI is powered by Semantic Data Graph, Context-Aware AI, Predictive Analytics and Time Series, and Radiant Knowledge Hub. It provides unified data across all CX touchpoints, proactive friction detection, insight-to-ROI pipeline, and real-time experience monitoring.',
         accent: '#91C46B',
       },
       {
         type: 'screenshot',
         src: '/screenshots/enterprise-icx.png',
-        alt: 'Enterprise ICX Dashboard',
-        label: 'Enterprise ICX Dashboard',
+        alt: 'ICX AI Dashboard',
+        label: 'ICX AI Dashboard',
         accent: '#91C46B',
       },
     ],
@@ -151,7 +151,7 @@ const knowledgeBase = [
       },
     ],
     followUp: [
-      'Tell me about Enterprise ICX',
+      'Tell me about ICX AI',
       'Tell me about Design-to-Code Modernization',
       'Show me case studies',
       'What solutions does Radiant Digital offer?',
@@ -237,7 +237,7 @@ const knowledgeBase = [
     ],
     followUp: [
       'Tell me about Product Launch Risk Intelligence',
-      'Tell me about Enterprise ICX',
+      'Tell me about ICX AI',
       'Show me proof and case studies',
       'How does the platform work?',
     ],
@@ -300,7 +300,7 @@ const knowledgeBase = [
       },
     ],
     followUp: [
-      'Tell me about Enterprise ICX',
+      'Tell me about ICX AI',
       'Tell me about Design-to-Code Modernization',
       'Show me case studies',
       'How can I get started?',
@@ -343,7 +343,7 @@ const knowledgeBase = [
     ],
     followUp: [
       'Tell me about Anomaly Detection',
-      'Tell me about Enterprise ICX',
+      'Tell me about ICX AI',
       'Show me case studies',
       'How does the platform work?',
     ],
@@ -621,7 +621,7 @@ const knowledgeBase = [
   },
   {
     id: 'contact',
-    keywords: ['contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'real person', 'talk to a real person', 'rather talk', 'speak to someone', 'schedule', 'book a meeting', 'email', 'phone number', 'address', 'office', 'how much does it cost', 'pricing information', 'cost of services', 'how much do you charge'],
+    keywords: ['contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'real person', 'talk to a real person', 'rather talk', 'speak to someone', 'schedule', 'book a meeting', 'email', 'phone number', 'address', 'office', 'how much does it cost', 'pricing information', 'cost of services', 'how much do you charge', 'connect with our team', 'connect with us', 'connect with radiant'],
     question: 'How can I get started?',
     cards: [
       {
@@ -903,7 +903,7 @@ const knowledgeBase = [
       },
     ],
     followUp: [
-      'Tell me about Enterprise ICX',
+      'Tell me about ICX AI',
       'Show me all case studies',
       'Which industries do you serve?',
       'How can I get started?',
@@ -1630,7 +1630,7 @@ const knowledgeBase = [
         items: [
           {
             num: '01',
-            title: 'Enterprise ICX',
+            title: 'ICX AI',
             label: 'Digital Strategy and Experience',
             accent: '#91C46B',
             gradient: 'linear-gradient(135deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)',
@@ -1688,7 +1688,7 @@ const knowledgeBase = [
           },
           {
             num: '02',
-            title: 'Enterprise ICX',
+            title: 'ICX AI',
             label: 'Digital Strategy and Experience',
             accent: '#91C46B',
             gradient: 'linear-gradient(135deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)',
@@ -1900,7 +1900,7 @@ export function findAnswer(query) {
           clickable: true,
           items: [
             { icon: 'Sparkles', title: 'Our Approach', accent: '#91C46B', desc: 'What makes Radiant Digital different — the Precision Context Engine', query: 'What makes Radiant Digital different?' },
-            { icon: 'Layers', title: '7 AI Solutions', accent: '#596AE0', desc: 'Enterprise ICX, Billing Intelligence, Touchless IT Ops, and more', query: 'What solutions does Radiant Digital offer?' },
+            { icon: 'Layers', title: '7 AI Solutions', accent: '#596AE0', desc: 'ICX AI, Billing Intelligence, Touchless IT Ops, and more', query: 'What solutions does Radiant Digital offer?' },
             { icon: 'BarChart3', title: 'Case Studies', accent: '#F0974E', desc: 'Proof from telecom, healthcare, government, finance, and more', query: 'Show me proof — not promises.' },
             { icon: 'Globe', title: 'Industries We Serve', accent: '#2DD4BF', desc: 'Telecom, federal, state, healthcare, oil and gas, financial services', query: 'Which industries do you serve?' },
             { icon: 'Cpu', title: 'AI Platform', accent: '#596AE0', desc: 'Foundational capabilities that power every solution', query: 'What is the Radiant Digital AI Platform?' },

@@ -32,7 +32,7 @@ export default function ICXPlatform() {
             In One Platform.
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
-            Enterprise ICX centralizes every customer signal into a single AI-driven intelligence layer — giving your teams the predictive power, root-cause clarity, and automated workflows to act decisively at scale.
+            ICX AI centralizes every customer signal into a single AI-driven intelligence layer — giving your teams the predictive power, root-cause clarity, and automated workflows to act decisively at scale.
           </p>
         </motion.div>
 
