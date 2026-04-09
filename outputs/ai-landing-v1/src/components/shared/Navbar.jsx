@@ -1,34 +1,24 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Menu, X, ArrowRight } from 'lucide-react'
 import RadiantLogo from './RadiantLogo'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const { pathname } = useLocation()
-  const isICX = pathname === '/icx-solution'
-
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48)
     window.addEventListener('scroll', fn)
     return () => window.removeEventListener('scroll', fn)
   }, [])
 
-  const homeLinks = [
+  const links = [
     { label: 'Solutions', href: '#solutions' },
     { label: 'Proof', href: '#proof' },
     { label: 'Industries', href: '#industries' },
     { label: 'Platform', href: '#platform' },
     { label: 'Contact', href: '#contact' },
   ]
-  const icxLinks = [
-    { label: 'Solutions', href: '/#solutions' },
-    { label: 'Platform', href: '#platform' },
-    { label: 'Case Studies', href: '#case-study' },
-    { label: 'Contact', href: '#contact' },
-  ]
-  const links = isICX ? icxLinks : homeLinks
 
   return (
     <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 ${
@@ -50,14 +40,7 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            {isICX ? (
-              <>
-                <Link to="/chat" className="btn-ghost !py-2.5 !px-5 !text-[0.78rem]">Learn More</Link>
-                <Link to="/chat" className="btn-primary !py-2.5 !px-5 !text-[0.78rem]">Book a Demo</Link>
-              </>
-            ) : (
-              <Link to="/chat?q=Connect%20with%20our%20team" className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">Connect with Us <ArrowRight size={13} /></Link>
-            )}
+            <Link to="/chat?q=Connect%20with%20our%20team" className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">Connect with Us <ArrowRight size={13} /></Link>
           </div>
 
           <button onClick={() => setOpen(!open)} className="md:hidden text-text-muted hover:text-text-primary p-1 transition-colors">
@@ -73,8 +56,8 @@ export default function Navbar() {
                 {l.label}
               </a>
             ))}
-            <Link to={isICX ? '/chat' : '/chat?q=Connect%20with%20our%20team'} onClick={() => setOpen(false)} className="btn-primary w-fit mt-2 !py-3 !px-6">
-              {isICX ? 'Book a Demo' : 'Connect with Us'}
+            <Link to="/chat?q=Connect%20with%20our%20team" onClick={() => setOpen(false)} className="btn-primary w-fit mt-2 !py-3 !px-6">
+              Connect with Us
             </Link>
           </div>
         )}

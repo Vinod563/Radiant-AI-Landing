@@ -229,7 +229,7 @@ const knowledgeBase = [
       },
       {
         type: 'screenshot',
-        src: '/screenshots/anomaly-detection.png',
+        src: '/screenshots/anomaly-detection-v2.png',
         alt: 'Anomaly Detection Dashboard',
         label: 'Anomaly Detection',
         accent: '#596AE0',
@@ -1587,7 +1587,7 @@ const knowledgeBase = [
             label: 'Analytics, Data Science and AI',
             accent: '#596AE0',
             gradient: 'linear-gradient(135deg, #050818 0%, #0c1040 50%, #1a2270 100%)',
-            screenshot: '/screenshots/anomaly-detection.png',
+            screenshot: '/screenshots/anomaly-detection-v2.png',
             desc: 'Detects anomalies across any data stream, groups them into actionable patterns, and guides teams to resolve issues before they escalate — protecting revenue and operations at scale.',
             tags: ['Billing', 'Logistics', 'Authentication', 'Device Telemetry', 'Shipping', 'Fraud Detection', 'Revenue Protection'],
             details: ['Real-time anomaly detection across any data stream', 'Intelligent pattern grouping and classification', 'Guided resolution workflows for operations teams', 'Proactive issue prevention before business impact'],

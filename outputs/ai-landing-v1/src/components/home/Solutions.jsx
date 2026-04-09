@@ -6,7 +6,7 @@ import { solutions as solutionsData } from '../../data/siteContent.js'
 
 /* Component-only visual overrides — merged onto siteContent data */
 const visualOverrides = {
-  '01': { bg: '#032d14', gradient: 'linear-gradient(180deg, #010F1E 0%, #021a0c 15%, #032d14 35%, #065c22 55%, #39d353 75%, #065c22 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)', href: '/icx-solution', icon: BarChart3, cta: 'Explore ICX AI' },
+  '01': { bg: '#032d14', gradient: 'linear-gradient(180deg, #010F1E 0%, #021a0c 15%, #032d14 35%, #065c22 55%, #39d353 75%, #065c22 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)', href: '#', icon: BarChart3, cta: 'Explore ICX AI' },
   '02': { bg: '#2d1200', gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0800 15%, #2d1200 35%, #6b2d00 55%, #f0974e 75%, #6b2d00 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #1a0a00 0%, #3d1e00 50%, #7a3800 100%)', href: '#', icon: Layers, cta: 'See the Demo' },
   '03': { bg: '#00261a', gradient: 'linear-gradient(180deg, #010F1E 0%, #000f0a 15%, #00261a 35%, #004d2e 55%, #00c87d 75%, #004d2e 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001208 0%, #003020 50%, #005838 100%)', href: '#', icon: Code2, cta: 'See How It Works' },
   '04': { bg: '#002a1e', gradient: 'linear-gradient(180deg, #010F1E 0%, #000e08 15%, #002a1e 35%, #00503a 55%, #00a86b 75%, #00503a 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001008 0%, #002e1e 50%, #005038 100%)', href: '#', icon: Code2, cta: 'See How It Works' },
