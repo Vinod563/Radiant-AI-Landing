@@ -98,7 +98,7 @@ export default function Chat() {
     }
   }, [searchParams])
 
-  const handleSubmit = (query) => {
+  const handleSubmit = async (query) => {
     const q = typeof query === 'string' ? query : input
     if (!q.trim()) return
 
@@ -107,12 +107,47 @@ export default function Chat() {
     setInput('')
     setIsTyping(true)
 
-    submitTimeoutRef.current = setTimeout(() => {
-      const answer = findAnswer(q)
-      const botMsg = { role: 'assistant', cards: answer.cards, id: answer.id, followUp: answer.followUp }
+    try {
+      // ── Call Groq backend API ──────────────────────────────────────────────
+      const apiUrl = import.meta.env.VITE_CHAT_API_URL || 'http://localhost:3001'
+      const res = await fetch(`${apiUrl}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: q.trim() }),
+      })
+
+      if (!res.ok) throw new Error(`API error: ${res.status}`)
+
+      const data = await res.json()
+
+      // Validate we got usable cards back
+      if (!data.cards || !Array.isArray(data.cards) || data.cards.length === 0) {
+        throw new Error('Invalid response structure')
+      }
+
+      const botMsg = {
+        role: 'assistant',
+        cards: data.cards,
+        id: 'llm-response',
+        followUp: data.followUp || [],
+      }
       setMessages((prev) => [...prev, botMsg])
+
+    } catch (error) {
+      // ── Fallback to local keyword matching if API is unavailable ──────────
+      console.warn('Chat API unavailable, falling back to local knowledge base:', error.message)
+      const answer = findAnswer(q)
+      const botMsg = {
+        role: 'assistant',
+        cards: answer.cards,
+        id: answer.id,
+        followUp: answer.followUp,
+      }
+      setMessages((prev) => [...prev, botMsg])
+
+    } finally {
       setIsTyping(false)
-    }, 600 + Math.random() * 400)
+    }
   }
 
   const handleKeyDown = (e) => {
