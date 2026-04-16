@@ -1,39 +1,69 @@
 /**
- * Radiant Digital Chat API v2.0
- * Express server powered by Gemma 4 (Google AI) with dynamic card selection.
- * Gemma 4 intelligently picks the right UI card type based on query intent.
+ * Radiant Digital Chat API v3.0
  *
- * Endpoints:
- *   GET  /           → health check
- *   POST /api/chat   → main chat endpoint
+ * Endpoints (public):
+ *   GET  /              → health check
+ *   POST /api/chat      → mode-aware chat (llm | static)
+ *
+ * Admin panel (secret URL set via ADMIN_PATH env var):
+ *   GET  <ADMIN_PATH>              → serves admin React SPA
+ *   POST <ADMIN_PATH>/auth/login   → login (rate-limited)
+ *   POST <ADMIN_PATH>/auth/logout  → logout
+ *   GET  <ADMIN_PATH>/api/status   → current mode + uptime [JWT]
+ *   POST <ADMIN_PATH>/api/toggle   → switch llm ↔ static [JWT]
  */
 
 import express from 'express'
 import cors from 'cors'
-import { GoogleGenerativeAI } from '@google/generative-ai'
+import cookieParser from 'cookie-parser'
+import { rateLimit } from 'express-rate-limit'
+import bcrypt from 'bcryptjs'
+import jwt from 'jsonwebtoken'
 import dotenv from 'dotenv'
-import { radiantContext } from './knowledge/radiantContext.js'
-import { buildSystemPrompt, validateResponse, getFallbackResponse } from './utils/cardBuilder.js'
+import { readFileSync, writeFileSync } from 'fs'
+import { fileURLToPath } from 'url'
+import { dirname, join } from 'path'
+
+import { handleLLMChat, GEMMA_MODEL } from './handlers/llmHandler.js'
+import { handleStaticChat } from './handlers/staticHandler.js'
+import { requireAuth } from './middleware/auth.js'
 
 dotenv.config()
 
-// ─── Validate env vars on startup ────────────────────────────────────────────
-if (!process.env.GOOGLE_AI_API_KEY) {
-  console.error('ERROR: GOOGLE_AI_API_KEY is missing from .env file')
-  console.error('Get your free key at: https://aistudio.google.com/apikey')
-  process.exit(1)
+const __dirname = dirname(fileURLToPath(import.meta.url))
+
+// ─── Validate required env vars ───────────────────────────────────────────────
+const REQUIRED = ['GOOGLE_AI_API_KEY', 'ADMIN_USERNAME', 'ADMIN_PASSWORD_HASH', 'JWT_SECRET', 'ADMIN_PATH']
+for (const key of REQUIRED) {
+  if (!process.env[key]) {
+    console.error(`ERROR: ${key} is missing from .env`)
+    process.exit(1)
+  }
 }
 
-// ─── Init Google AI client ────────────────────────────────────────────────────
-const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY)
+const ADMIN_PATH = process.env.ADMIN_PATH  // e.g. /admin-a8f2k3p9
+const ADMIN_DIST = join(__dirname, '../radiant-chat-admin/dist')
+const CONFIG_PATH = join(__dirname, 'config.json')
+const COOKIE_NAME = 'admin_token'
 
-const GEMMA_MODEL = 'gemma-4-31b-it'
+// ─── Config helpers (chat mode persisted to config.json) ─────────────────────
+function readConfig() {
+  try {
+    return JSON.parse(readFileSync(CONFIG_PATH, 'utf8'))
+  } catch {
+    return { chatMode: 'llm' }
+  }
+}
 
-// ─── Init Express ─────────────────────────────────────────────────────────────
+function writeConfig(data) {
+  writeFileSync(CONFIG_PATH, JSON.stringify(data, null, 2), 'utf8')
+}
+
+// ─── Express setup ────────────────────────────────────────────────────────────
 const app = express()
 
-// ─── Allowed frontend origins ─────────────────────────────────────────────────
 const allowedOrigins = [
+  'http://localhost:3001',
   'http://localhost:5173',
   'http://localhost:4173',
   process.env.FRONTEND_URL,
@@ -41,132 +71,147 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true)
-    } else {
-      callback(new Error(`CORS blocked: ${origin}`))
-    }
+    if (!origin || allowedOrigins.includes(origin)) callback(null, true)
+    else callback(new Error(`CORS blocked: ${origin}`))
   },
   methods: ['GET', 'POST'],
   allowedHeaders: ['Content-Type'],
+  credentials: true,
 }))
 
 app.use(express.json({ limit: '10kb' }))
+app.use(cookieParser())
 
-// ─── Routes ───────────────────────────────────────────────────────────────────
+// ─── Rate limiter for login endpoint (5 attempts / 15 min per IP) ─────────────
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: { error: 'Too many login attempts — try again in 15 minutes' },
+  standardHeaders: true,
+  legacyHeaders: false,
+})
 
-// Health check
+// ─── Public: Health check ─────────────────────────────────────────────────────
 app.get('/', (_req, res) => {
+  const { chatMode } = readConfig()
   res.json({
     status: 'ok',
     service: 'Radiant Digital Chat API',
     model: GEMMA_MODEL,
-    version: '2.0.0',
+    version: '3.0.0',
+    chatMode,
     timestamp: new Date().toISOString(),
   })
 })
 
-// Main chat endpoint
+// ─── Public: Chat endpoint ────────────────────────────────────────────────────
 app.post('/api/chat', async (req, res) => {
   const { message } = req.body
 
-  // Input validation
   if (!message || typeof message !== 'string') {
     return res.status(400).json({ error: 'message field is required and must be a string' })
   }
 
   const sanitized = message.trim().slice(0, 500)
-
   if (sanitized.length === 0) {
     return res.status(400).json({ error: 'message cannot be empty' })
   }
 
-  console.log(`[${new Date().toISOString()}] Query: "${sanitized}"`)
+  const { chatMode } = readConfig()
+  console.log(`[${new Date().toISOString()}] mode=${chatMode} query="${sanitized}"`)
 
-  // ── Build system prompt — Gemma chooses card types autonomously ───────────────
-  const systemPrompt = buildSystemPrompt(radiantContext)
+  // ── Static mode — instant, no API call ────────────────────────────────────
+  if (chatMode === 'static') {
+    const response = handleStaticChat(sanitized)
+    return res.status(200).json(response)
+  }
 
+  // ── LLM mode — Gemma 4 ────────────────────────────────────────────────────
   try {
-    // ── Init Gemma 4 model with native JSON output + system instruction ────────
-    const model = genAI.getGenerativeModel({
-      model: GEMMA_MODEL,
-      systemInstruction: systemPrompt,
-      generationConfig: {
-        responseMimeType: 'application/json',  // native JSON enforcement
-        temperature: 0.3,
-        maxOutputTokens: 2048,
-      },
-    })
-
-    // ── Call Gemma 4 ──────────────────────────────────────────────────────────
-    const result = await model.generateContent(sanitized)
-
-    // Gemma 4 is a thinking model — it returns thought parts alongside the actual
-    // response. SDK v0.24 concatenates all parts in .text(), so we extract only
-    // the non-thought part manually to get clean JSON.
-    const candidate = result.response.candidates?.[0]
-    const responsePart = candidate?.content?.parts?.find(p => !p.thought)
-    const rawContent = responsePart?.text || result.response.text()
-
-    if (!rawContent) {
-      console.warn('Empty response from Gemma 4')
-      return res.status(200).json(getFallbackResponse())
-    }
-
-    // ── Parse JSON ─────────────────────────────────────────────────────────────
-    let parsed
-    try {
-      parsed = JSON.parse(rawContent)
-    } catch (parseError) {
-      console.error('JSON parse failed:', rawContent.slice(0, 200))
-      return res.status(200).json(getFallbackResponse())
-    }
-
-    // ── Validate structure ─────────────────────────────────────────────────────
-    if (!validateResponse(parsed)) {
-      console.warn('Invalid card structure from Gemma 4:', JSON.stringify(parsed).slice(0, 200))
-      return res.status(200).json(getFallbackResponse())
-    }
-
-    // ── Ensure exactly 4 follow-ups ────────────────────────────────────────────
-    const followUp = Array.isArray(parsed.followUp) && parsed.followUp.length >= 4
-      ? parsed.followUp.slice(0, 4)
-      : [
-          'What solutions does Radiant Digital offer?',
-          'Tell me about the Precision Context Engine',
-          'Show me case studies',
-          'How can I contact Radiant Digital?',
-        ]
-
-    console.log(`[${new Date().toISOString()}] Success: ${parsed.cards.length} cards | Types: ${parsed.cards.map(c => c.type).join(', ')}`)
-
-    return res.status(200).json({
-      message: parsed.message || '',
-      cards: parsed.cards,
-      followUp,
-    })
-
+    const response = await handleLLMChat(sanitized)
+    return res.status(200).json(response)
   } catch (error) {
-    // ── Handle Google AI API errors ────────────────────────────────────────────
     if (error?.status === 429 || error?.message?.includes('429') || error?.message?.includes('quota')) {
-      console.warn('Google AI rate limit hit')
-      return res.status(200).json({
-        ...getFallbackResponse(),
-        cards: [{
-          type: 'hero',
-          title: "One moment — we'll be right back",
-          subtitle: "We're experiencing high demand. Please try your question again in a moment, or reach out at info@radiant.digital.",
-          accent: '#596AE0',
-        }],
-      })
+      console.warn('Google AI rate limit hit — falling back to static')
+      return res.status(200).json(handleStaticChat(sanitized))
     }
-
-    console.error('Google AI API error:', error?.message || error)
-    return res.status(200).json(getFallbackResponse())
+    console.error('LLM error:', error?.message || error)
+    return res.status(200).json(handleStaticChat(sanitized))
   }
 })
 
-// ─── 404 handler ──────────────────────────────────────────────────────────────
+// ─── Admin: Serve React SPA static files ─────────────────────────────────────
+app.use(ADMIN_PATH, express.static(ADMIN_DIST))
+
+// ─── Admin: Login ─────────────────────────────────────────────────────────────
+app.post(`${ADMIN_PATH}/auth/login`, loginLimiter, (req, res) => {
+  const { username, password } = req.body
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password required' })
+  }
+
+  const validUser = username === process.env.ADMIN_USERNAME
+  const validPass = bcrypt.compareSync(password, process.env.ADMIN_PASSWORD_HASH)
+
+  // Identical error for wrong user or wrong pass — don't reveal which
+  if (!validUser || !validPass) {
+    return res.status(401).json({ error: 'Invalid credentials' })
+  }
+
+  const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '4h' })
+
+  res.cookie(COOKIE_NAME, token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 4 * 60 * 60 * 1000,
+  })
+
+  return res.status(200).json({ ok: true })
+})
+
+// ─── Admin: Logout ────────────────────────────────────────────────────────────
+app.post(`${ADMIN_PATH}/auth/logout`, (_req, res) => {
+  res.clearCookie(COOKIE_NAME, { httpOnly: true, sameSite: 'strict' })
+  return res.status(200).json({ ok: true })
+})
+
+// ─── Admin: Status [JWT protected] ───────────────────────────────────────────
+app.get(`${ADMIN_PATH}/api/status`, requireAuth, (_req, res) => {
+  const config = readConfig()
+  return res.status(200).json({
+    chatMode: config.chatMode,
+    uptime: process.uptime(),
+    model: GEMMA_MODEL,
+    timestamp: new Date().toISOString(),
+  })
+})
+
+// ─── Admin: Toggle mode [JWT protected] ──────────────────────────────────────
+app.post(`${ADMIN_PATH}/api/toggle`, requireAuth, (req, res) => {
+  const { mode } = req.body
+
+  if (mode !== 'llm' && mode !== 'static') {
+    return res.status(400).json({ error: 'mode must be "llm" or "static"' })
+  }
+
+  const config = readConfig()
+  const previous = config.chatMode
+  config.chatMode = mode
+  writeConfig(config)
+
+  console.log(`[Admin] Chat mode: ${previous} → ${mode} (by ${req.admin.username})`)
+
+  return res.status(200).json({ ok: true, chatMode: mode, previous })
+})
+
+// ─── Admin: SPA catch-all (client-side routing) ───────────────────────────────
+app.get(`${ADMIN_PATH}/*`, (_req, res) => {
+  res.sendFile(join(ADMIN_DIST, 'index.html'))
+})
+
+// ─── 404 handler ─────────────────────────────────────────────────────────────
 app.use((_req, res) => {
   res.status(404).json({ error: 'Endpoint not found' })
 })
@@ -174,13 +219,14 @@ app.use((_req, res) => {
 // ─── Start server ─────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
+  const { chatMode } = readConfig()
   console.log(`
-  ┌─────────────────────────────────────────────────────┐
-  │   Radiant Digital Chat API v2.0                     │
-  │   Running on http://localhost:${PORT}                  │
-  │   Model: ${GEMMA_MODEL}                    │
-  │   Dynamic UI: 9 card types, intent-aware routing    │
-  │   Allowed origins: ${allowedOrigins.length} configured                      │
-  └─────────────────────────────────────────────────────┘
+  ┌──────────────────────────────────────────────────────┐
+  │   Radiant Digital Chat API v3.0                      │
+  │   http://localhost:${PORT}                              │
+  │   Chat mode : ${chatMode.padEnd(38)}│
+  │   Model     : ${GEMMA_MODEL.padEnd(38)}│
+  │   Admin URL : localhost:${PORT}${ADMIN_PATH.padEnd(27)}│
+  └──────────────────────────────────────────────────────┘
   `)
 })
