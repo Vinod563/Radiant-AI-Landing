@@ -3,17 +3,21 @@ import { motion, useInView } from 'framer-motion'
 import { Quote, ArrowRight, Award } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import CIO100Logo from '../ui/CIO100Logo'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
-const metrics = [
-  { val: '70%',     label: 'Development Time Reduced',  color: 'grad-text' },
-  { val: '50+',     label: 'Screens Delivered in 3 Weeks', color: 'text-brand-green' },
-  { val: '40%',     label: 'Planning Delays Reduced',   color: 'grad-text' },
-  { val: 'CIO 100', label: 'Award Winner 2024',         color: 'text-brand-orange' },
-]
+const metricColors = ['grad-text', 'text-brand-green', 'grad-text', 'text-brand-orange']
 
 export default function CaseStudy() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { content } = useSiteContentContext()
+  const cs = content.telecomCaseStudy || {}
+  const metrics = (cs.metrics || [
+    { value: '70%',     label: 'Development Time Reduced'     },
+    { value: '50+',     label: 'Screens Delivered in 3 Weeks' },
+    { value: '40%',     label: 'Planning Delays Reduced'      },
+    { value: 'CIO 100', label: 'Award Winner 2024'            },
+  ]).map((m, i) => ({ val: m.value ?? m.val, label: m.label, color: metricColors[i] || 'grad-text' }))
 
   return (
     <section id="proof" className="py-32 relative overflow-hidden">
@@ -40,11 +44,11 @@ export default function CaseStudy() {
           transition={{ duration: 0.7 }}
           className="mb-16"
         >
-          <span className="kicker">Proof, Not Promises</span>
+          <span className="kicker">{cs.kicker || 'Proof, Not Promises'}</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight max-w-3xl"
             style={{ fontSize: 'clamp(2.8rem, 5.5vw, 5rem)' }}>
-            From reactive troubleshooting.<br />
-            <span className="grad-text">To proactive network intelligence.</span>
+            {(cs.headline || 'From reactive troubleshooting.\nTo proactive network intelligence.').split('\n')[0]}<br />
+            <span className="grad-text">{(cs.headline || 'From reactive troubleshooting.\nTo proactive network intelligence.').split('\n')[1]}</span>
           </h2>
         </motion.div>
 
@@ -58,10 +62,12 @@ export default function CaseStudy() {
           >
             {/* Client callout */}
             <div className="flex items-center gap-5 p-6 mag-card border border-white/[0.08] mb-8 flex-wrap">
-              <div className="w-14 h-14 rounded-2xl bg-brand-green flex items-center justify-center font-display font-black text-2xl text-brand-dark flex-shrink-0">T</div>
+              <div className="w-14 h-14 rounded-2xl bg-brand-green flex items-center justify-center font-display font-black text-2xl text-brand-dark flex-shrink-0">
+                {(cs.client || 'T').charAt(0)}
+              </div>
               <div>
-                <div className="font-display font-bold text-text-primary">Leading Fortune 15 Telecom Enterprise</div>
-                <div className="text-text-muted text-sm">Telecommunications</div>
+                <div className="font-display font-bold text-text-primary">{cs.client || 'Leading Fortune 15 Telecom Enterprise'}</div>
+                <div className="text-text-muted text-sm">{cs.clientDetail || 'Telecommunications'}</div>
               </div>
               <div className="flex items-center gap-2 ml-auto">
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-brand-green/10 border border-brand-green/20">
@@ -78,14 +84,14 @@ export default function CaseStudy() {
             <div className="mb-6">
               <h3 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">Challenge</h3>
               <p className="text-text-secondary text-base leading-relaxed">
-                A Fortune 15 telecom carrier needed to transform how its network operations teams navigate complex network data. Planning delays, poor data quality visibility, and fragmented collaboration between design and development teams were slowing decisions and creating service risk.
+                {cs.challenge || 'A Fortune 15 telecom carrier needed to transform how its network operations teams navigate complex network data. Planning delays, poor data quality visibility, and fragmented collaboration between design and development teams were slowing decisions and creating service risk.'}
               </p>
             </div>
 
             <div className="mb-8">
               <h3 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">What Radiant Digital Did</h3>
               <p className="text-text-secondary text-base leading-relaxed">
-                Radiant Digital deployed its Design-to-Code Accelerator to deliver over 50 fully functional, responsive screens in under three weeks. The solution provided end-to-end network visualization from edge to core, actionable performance dashboards, and proactive data quality monitoring across regions, markets, and sites. AI-powered development reduced manual effort and cut redundant tasks, shifting the client from reactive troubleshooting to proactive network intelligence.
+                {cs.whatWeDid || 'Radiant Digital deployed its Design-to-Code Accelerator to deliver over 50 fully functional, responsive screens in under three weeks. The solution provided end-to-end network visualization from edge to core, actionable performance dashboards, and proactive data quality monitoring across regions, markets, and sites. AI-powered development reduced manual effort and cut redundant tasks, shifting the client from reactive troubleshooting to proactive network intelligence.'}
               </p>
             </div>
 
@@ -93,9 +99,9 @@ export default function CaseStudy() {
             <div className="relative pl-6 border-l-2 border-brand-green/40">
               <Quote size={20} className="absolute -top-1 -left-2.5 text-brand-green" />
               <p className="text-text-primary text-base italic font-light leading-relaxed">
-                "The solution elevated operational efficiency and shifted our approach from reactive troubleshooting to proactive network intelligence, driving strategic clarity and award-winning innovation."
+                "{cs.quote || 'The solution elevated operational efficiency and shifted our approach from reactive troubleshooting to proactive network intelligence, driving strategic clarity and award-winning innovation.'}"
               </p>
-              <span className="text-text-muted text-xs mt-2 block">Fortune 15 Telecom Enterprise</span>
+              <span className="text-text-muted text-xs mt-2 block">{cs.quoteAuthor || 'Fortune 15 Telecom Enterprise'}</span>
             </div>
           </motion.div>
 

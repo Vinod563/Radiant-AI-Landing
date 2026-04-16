@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, BarChart3, Layers, Code2, ShieldAlert, Rocket, FileText, Activity } from 'lucide-react'
 import { Link } from 'react-router-dom'
-import { solutions as solutionsData } from '../../data/siteContent.js'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
 /* Component-only visual overrides — merged onto siteContent data */
 const visualOverrides = {
@@ -16,7 +16,7 @@ const visualOverrides = {
   '08': { bg: '#002e28', gradient: 'linear-gradient(180deg, #010F1E 0%, #001410 15%, #002e28 35%, #005c50 55%, #2dd4bf 75%, #005c50 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #001a14 0%, #003d32 50%, #006b5a 100%)', href: '#', icon: Activity, cta: 'See How It Works' },
 }
 
-const solutions = solutionsData.map(s => ({ ...s, ...visualOverrides[s.num] }))
+// solutions resolved inside component via hook
 
 /* ─────────────────────────────────────────────
    Floating Screenshot — real image or generated mockup
@@ -436,6 +436,8 @@ function SolutionBlock({ s }) {
 export default function Solutions() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { content } = useSiteContentContext()
+  const solutions = (content.solutions || []).map(s => ({ ...s, ...visualOverrides[s.num] }))
 
   return (
     <section id="solutions" className="relative overflow-hidden">

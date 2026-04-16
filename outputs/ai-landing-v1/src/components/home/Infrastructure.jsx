@@ -2,19 +2,23 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { SiGooglecloud, SiNvidia, SiOpenai, SiAnthropic } from 'react-icons/si'
 import { FaAws, FaMicrosoft } from 'react-icons/fa'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
-const partners = [
-  { name: 'AWS',             note: 'Cloud Infrastructure', icon: FaAws },
-  { name: 'Google Cloud',    note: 'AI & ML Platform',     icon: SiGooglecloud },
-  { name: 'Microsoft Azure', note: 'Enterprise Cloud',     icon: FaMicrosoft },
-  { name: 'NVIDIA',          note: 'GPU Acceleration',     icon: SiNvidia },
-  { name: 'OpenAI',          note: 'Foundation Models',    icon: SiOpenai },
-  { name: 'Anthropic',       note: 'Safety-First AI',      icon: SiAnthropic },
-]
+const iconMap = {
+  'AWS': FaAws,
+  'Google Cloud': SiGooglecloud,
+  'Microsoft Azure': FaMicrosoft,
+  'NVIDIA': SiNvidia,
+  'OpenAI': SiOpenai,
+  'Anthropic': SiAnthropic,
+}
 
 export default function Infrastructure() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { content } = useSiteContentContext()
+  const infra = content.infrastructure || {}
+  const partners = (infra.partners || []).map(p => ({ ...p, icon: iconMap[p.name] || FaAws }))
 
   return (
     <section id="infrastructure" className="py-24 bg-brand-secondary relative overflow-hidden">
@@ -25,7 +29,7 @@ export default function Infrastructure() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="hr-label">Powered by world-class infrastructure</span>
+          <span className="hr-label">{infra.label || 'Powered by world-class infrastructure'}</span>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

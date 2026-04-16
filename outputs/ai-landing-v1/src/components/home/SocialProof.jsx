@@ -1,16 +1,19 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Award, TrendingUp, DollarSign, Briefcase } from 'lucide-react'
-import { clientLogos, trustStats, socialProof } from '../../data/siteContent.js'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
 /* Resolve icon string names to Lucide components */
 const iconMap = { Award, Briefcase, TrendingUp, DollarSign }
-const stats = trustStats.map(s => ({ ...s, icon: iconMap[s.icon] || Award }))
 
 
 export default function SocialProof() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { content } = useSiteContentContext()
+  const clientLogos = content.clientLogos || []
+  const socialProof = content.socialProof || {}
+  const stats = (content.trustStats || []).map(s => ({ ...s, icon: iconMap[s.icon] || Award }))
 
   return (
     <section id="social-proof" className="relative py-32 overflow-hidden bg-brand-secondary">

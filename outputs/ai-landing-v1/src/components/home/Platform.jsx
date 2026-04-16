@@ -2,37 +2,26 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
-const categories = [
-  {
-    label: 'Context and Knowledge',
-    num: '01',
-    accent: '#596AE0',
-    gradient: 'linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 40%, #1a3a7e 100%)',
-    capabilities: ['Radiant Knowledge Hub', 'Semantic Data Graph', 'KAG', 'Context-Aware AI'],
-    desc: 'The foundation layer that ensures every deployment knows your environment before it starts.',
-  },
-  {
-    label: 'Intelligence and Automation',
-    num: '02',
-    accent: '#F0974E',
-    gradient: 'linear-gradient(135deg, #1a0800 0%, #3d1500 40%, #8b4000 100%)',
-    capabilities: ['Talk to Data', 'Agentic Orchestration', 'Predictive Analytics'],
-    desc: 'Natural language data access and orchestrated agents that turn context into action.',
-  },
-  {
-    label: 'Operations and Governance',
-    num: '03',
-    accent: '#91C46B',
-    gradient: 'linear-gradient(135deg, #001a00 0%, #003300 40%, #1a6620 100%)',
-    capabilities: ['Radiant AIOps', 'Autonomous Stack', 'Radiant Data Fabric', 'AI-RAD', 'AI FinOps'],
-    desc: 'The operational layer ensuring every deployment is governed, observable, and cost-efficient.',
-  },
+const categoryAccents = ['#596AE0', '#F0974E', '#91C46B']
+const categoryGradients = [
+  'linear-gradient(135deg, #0a0a1a 0%, #0d1b3e 40%, #1a3a7e 100%)',
+  'linear-gradient(135deg, #1a0800 0%, #3d1500 40%, #8b4000 100%)',
+  'linear-gradient(135deg, #001a00 0%, #003300 40%, #1a6620 100%)',
 ]
 
 export default function Platform() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { content } = useSiteContentContext()
+  const pl = content.platform || {}
+  const categories = (pl.categories || []).map((cat, i) => ({
+    ...cat,
+    accent: categoryAccents[i] || '#596AE0',
+    gradient: categoryGradients[i] || categoryGradients[0],
+    capabilities: Array.isArray(cat.capabilities) ? cat.capabilities : [],
+  }))
 
   return (
     <section id="platform" className="py-32 bg-brand-secondary relative overflow-hidden">
@@ -45,17 +34,14 @@ export default function Platform() {
           transition={{ duration: 0.7 }}
           className="max-w-3xl mb-8"
         >
-          <span className="kicker">The Radiant Digital AI Platform</span>
+          <span className="kicker">{pl.kicker || 'The Radiant Digital AI Platform'}</span>
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-5"
             style={{ fontSize: 'clamp(2.8rem, 5vw, 4.5rem)' }}>
-            Our foundational AI capabilities.<br />
-            <span className="grad-text">The infrastructure beneath every solution and engagement.</span>
+            {(pl.headline || 'Our foundational AI capabilities.\nThe infrastructure beneath every solution and engagement.').split('\n')[0]}<br />
+            <span className="grad-text">{(pl.headline || 'Our foundational AI capabilities.\nThe infrastructure beneath every solution and engagement.').split('\n')[1]}</span>
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
-            Radiant Digital does not deploy generic AI.
-            Every solution is assembled from purpose-built platform capabilities:
-            Purpose-built components that cover context acquisition, synthesis, grounding,
-            reasoning, orchestration, observability, and governance.
+            {pl.body || 'Radiant Digital does not deploy generic AI. Every solution is assembled from purpose-built platform capabilities.'}
           </p>
         </motion.div>
 
@@ -65,7 +51,7 @@ export default function Platform() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-white/60 text-sm font-display font-medium mb-16 max-w-2xl"
         >
-          This is the technical foundation of the Precision Context Engine.
+          {pl.subBody || 'This is the technical foundation of the Precision Context Engine.'}
         </motion.p>
 
         {/* Three category cards */}

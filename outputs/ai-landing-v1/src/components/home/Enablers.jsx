@@ -1,61 +1,29 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Compass, BarChart3, Cloud, Blocks, RefreshCw, Users } from 'lucide-react'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
-const practices = [
-  {
-    icon: Compass,
-    num: '01',
-    title: 'Digital Strategy and Experience',
-    desc: 'Design and optimize experiences faster with AI-driven insight and automation.',
-    accent: '#91C46B',
-    gradient: 'linear-gradient(135deg, #010F1E 0%, #0a2810 60%, #144d1e 100%)',
-  },
-  {
-    icon: Blocks,
-    num: '02',
-    title: 'Product Development and Integration',
-    desc: 'Accelerate delivery and reduce cost through AI-enabled development.',
-    accent: '#F0974E',
-    gradient: 'linear-gradient(135deg, #010F1E 0%, #1a1008 60%, #3d2200 100%)',
-  },
-  {
-    icon: Cloud,
-    num: '03',
-    title: 'Cloud Transformation',
-    desc: 'Enhance scalability and performance with AI-optimized infrastructure.',
-    accent: '#596AE0',
-    gradient: 'linear-gradient(135deg, #010F1E 0%, #0a0d2e 60%, #151a50 100%)',
-  },
-  {
-    icon: BarChart3,
-    num: '04',
-    title: 'Analytics, Data Science and AI',
-    desc: 'Turn data into real-time intelligence for faster decisions.',
-    accent: '#2DD4BF',
-    gradient: 'linear-gradient(135deg, #010F1E 0%, #041a18 60%, #0a3530 100%)',
-  },
-  {
-    icon: RefreshCw,
-    num: '05',
-    title: 'Organizational Transformation',
-    desc: 'Empower people and processes with AI enablement.',
-    accent: '#a855f7',
-    gradient: 'linear-gradient(135deg, #010F1E 0%, #0e0820 60%, #1a1040 100%)',
-  },
-  {
-    icon: Users,
-    num: '06',
-    title: 'Skilled Workforce Solutions',
-    desc: 'Provide qualified technical talent using AI-assisted sourcing.',
-    accent: '#F05030',
-    gradient: 'linear-gradient(135deg, #010F1E 0%, #1a0808 60%, #3d1010 100%)',
-  },
+const iconMap = { Compass, BarChart3, Cloud, Blocks, RefreshCw, Users }
+
+const visualOverrides = [
+  { accent: '#91C46B', gradient: 'linear-gradient(135deg, #010F1E 0%, #0a2810 60%, #144d1e 100%)' },
+  { accent: '#F0974E', gradient: 'linear-gradient(135deg, #010F1E 0%, #1a1008 60%, #3d2200 100%)' },
+  { accent: '#596AE0', gradient: 'linear-gradient(135deg, #010F1E 0%, #0a0d2e 60%, #151a50 100%)' },
+  { accent: '#2DD4BF', gradient: 'linear-gradient(135deg, #010F1E 0%, #041a18 60%, #0a3530 100%)' },
+  { accent: '#a855f7', gradient: 'linear-gradient(135deg, #010F1E 0%, #0e0820 60%, #1a1040 100%)' },
+  { accent: '#F05030', gradient: 'linear-gradient(135deg, #010F1E 0%, #1a0808 60%, #3d1010 100%)' },
 ]
 
 export default function Enablers() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { content } = useSiteContentContext()
+  const aiFabric = content.aiFabric || {}
+  const practices = (aiFabric.practices || []).map((p, i) => ({
+    ...p,
+    icon: iconMap[p.icon] || Compass,
+    ...(visualOverrides[i] || {}),
+  }))
 
   return (
     <section id="ai-fabric" className="py-32 lg:py-40 relative overflow-hidden">
@@ -84,11 +52,11 @@ export default function Enablers() {
           className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 mb-10"
         >
           <div className="max-w-2xl">
-            <span className="kicker">AI Fabric</span>
+            <span className="kicker">{aiFabric.kicker || 'AI Fabric'}</span>
             <h2 className="font-display font-black leading-[0.95] tracking-tight"
               style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}>
-              We hardwire AI into{' '}
-              <span className="grad-text">everything we do.</span>
+              {(aiFabric.headline || 'We hardwire AI into\neverything we do.').split('\n')[0]}{' '}
+              <span className="grad-text">{(aiFabric.headline || 'We hardwire AI into\neverything we do.').split('\n')[1]}</span>
             </h2>
           </div>
         </motion.div>
@@ -100,7 +68,7 @@ export default function Enablers() {
           transition={{ duration: 0.6, delay: 0.1 }}
           className="text-text-muted text-base max-w-2xl leading-relaxed mb-16"
         >
-          That is what makes Radiant Digital's enterprise transformation fundamentally faster than conventional delivery. AI Fabric is not a product. It is the way Radiant operates. Every practice runs with AI embedded: not bolted on.
+          {aiFabric.body || "That is what makes Radiant Digital's enterprise transformation fundamentally faster than conventional delivery. AI Fabric is not a product. It is the way Radiant operates. Every practice runs with AI embedded: not bolted on."}
         </motion.p>
 
         {/* Top row: 3 cards */}

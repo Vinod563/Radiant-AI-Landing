@@ -2,16 +2,18 @@ import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, Sparkles, Search } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { heroMetrics as metricsData, brand } from '../../data/siteContent.js'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
 const metricColors = ['text-brand-green', 'text-brand-orange', 'text-brand-green', 'text-brand-orange']
-const heroMetrics = metricsData.map((m, i) => ({ ...m, color: metricColors[i] }))
 
 
 export default function Hero() {
   const navigate = useNavigate()
   const inputRef = useRef(null)
   const [showFloater, setShowFloater] = useState(false)
+  const { content } = useSiteContentContext()
+  const brand = content.brand
+  const heroMetrics = (content.heroMetrics || []).map((m, i) => ({ ...m, color: metricColors[i] }))
 
   useEffect(() => {
     const obs = new IntersectionObserver(

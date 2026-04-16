@@ -11,7 +11,7 @@ import {
   ChevronRight,
   Banknote,
 } from 'lucide-react'
-import { markets as marketsData } from '../../data/siteContent.js'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
 /* Resolve icon string names to Lucide components */
 const iconMap = { Radio, HeartPulse, Banknote, Landmark, Building2, GraduationCap, Fuel }
@@ -27,11 +27,7 @@ const gradientOverrides = {
   'Oil and Gas': { gradientFrom: '#5a3000', gradientTo: '#F0974E' },
 }
 
-const markets = marketsData.map(m => ({
-  ...m,
-  icon: iconMap[m.icon] || Radio,
-  ...gradientOverrides[m.title],
-}))
+// markets resolved inside component via hook
 
 export default function MarketCarousel() {
   const sectionRef = useRef(null)
@@ -39,6 +35,12 @@ export default function MarketCarousel() {
   const inView = useInView(sectionRef, { once: true, margin: '-80px' })
   const [scrollPos, setScrollPos] = useState(0)
   const [maxScroll, setMaxScroll] = useState(0)
+  const { content } = useSiteContentContext()
+  const markets = (content.markets || []).map(m => ({
+    ...m,
+    icon: iconMap[m.icon] || Radio,
+    ...gradientOverrides[m.title],
+  }))
 
   useEffect(() => {
     const track = trackRef.current

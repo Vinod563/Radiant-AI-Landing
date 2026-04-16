@@ -331,6 +331,85 @@ export const contact = {
   },
 }
 
+// ─── WHAT IS RADIANT AI (Differentiator / PCE section) ───
+export const whatIsRadiant = {
+  kicker: 'Why Radiant Digital',
+  headline: 'Every AI firm brings models.\nOnly Radiant Digital grounds them with the Precision Context Engine.',
+  body: 'Before deployment begins, Radiant Digital structures everything your AI agents and your teams need to move fast and get it right.',
+  teamCard: {
+    title: 'Your Delivery Team',
+    items: [
+      'Structured problem framing before any solution design begins',
+      'Shared knowledge base aligned to your actual environment',
+      'Field-tested map so every module after runs faster',
+    ],
+  },
+  agentCard: {
+    title: 'Your AI Agents',
+    items: [
+      'Scoped vocabulary and domain rules so outputs are accurate from run one',
+      'Scope boundaries that prevent well-intentioned errors downstream',
+      'Validated context that compounds accuracy at scale',
+    ],
+  },
+  outcome: {
+    title: 'Supercharged Enterprise Transformation',
+    body: 'AI agents and delivery teams aligned from day one.',
+    subBody: 'Fastest path from context to production. Every time.',
+  },
+}
+
+// ─── AI PLATFORM ─────────────────────────────────
+export const platform = {
+  kicker: 'The Radiant Digital AI Platform',
+  headline: 'Our foundational AI capabilities.\nThe infrastructure beneath every solution and engagement.',
+  body: 'Radiant Digital does not deploy generic AI. Every solution is assembled from purpose-built platform capabilities: Purpose-built components that cover context acquisition, synthesis, grounding, reasoning, orchestration, observability, and governance.',
+  subBody: 'This is the technical foundation of the Precision Context Engine.',
+  categories: [
+    {
+      label: 'Context and Knowledge',
+      num: '01',
+      desc: 'The foundation layer that ensures every deployment knows your environment before it starts.',
+      capabilities: ['Radiant Knowledge Hub', 'Semantic Data Graph', 'KAG', 'Context-Aware AI'],
+    },
+    {
+      label: 'Intelligence and Automation',
+      num: '02',
+      desc: 'Natural language data access and orchestrated agents that turn context into action.',
+      capabilities: ['Talk to Data', 'Agentic Orchestration', 'Predictive Analytics'],
+    },
+    {
+      label: 'Operations and Governance',
+      num: '03',
+      desc: 'The operational layer ensuring every deployment is governed, observable, and cost-efficient.',
+      capabilities: ['Radiant AIOps', 'Autonomous Stack', 'Radiant Data Fabric', 'AI-RAD', 'AI FinOps'],
+    },
+  ],
+}
+
+// ─── INFRASTRUCTURE PARTNERS ─────────────────────
+export const infrastructure = {
+  label: 'Powered by world-class infrastructure',
+  partners: [
+    { name: 'AWS',             note: 'Cloud Infrastructure' },
+    { name: 'Google Cloud',    note: 'AI & ML Platform'     },
+    { name: 'Microsoft Azure', note: 'Enterprise Cloud'     },
+    { name: 'NVIDIA',          note: 'GPU Acceleration'     },
+    { name: 'OpenAI',          note: 'Foundation Models'    },
+    { name: 'Anthropic',       note: 'Safety-First AI'      },
+  ],
+}
+
+// ─── CTA SECTION ─────────────────────────────────
+export const cta = {
+  kicker: "Let's Talk",
+  headline: 'Ready to transform\nyour enterprise with AI?',
+  body: 'Whether you are exploring AI for the first time or scaling existing deployments, our team is ready to help you build the right roadmap and deliver measurable outcomes.',
+  cardHeadline: 'Connect with Us',
+  cardBody: 'Reach out to our team directly. Share your goals and challenges, and we will get back to you with a tailored plan.',
+  responseNote: 'Our team typically responds within one business day',
+}
+
 // ─── CLIENT LOGOS ─────────────────────────────────
 export const clientLogos = [
   '/logos/client-21.svg',

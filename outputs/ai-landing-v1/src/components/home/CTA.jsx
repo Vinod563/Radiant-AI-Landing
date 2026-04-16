@@ -2,15 +2,21 @@ import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { ArrowRight, Mail, Phone, MapPin, MessageSquare, Sparkles } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
-const contactReasons = [
-  { icon: MessageSquare, text: 'Discuss your AI transformation goals', accent: '#91C46B' },
-  { icon: Sparkles, text: 'Get a tailored solution recommendation', accent: '#596AE0' },
-]
+const contactReasonIcons = [MessageSquare, Sparkles]
+const contactReasonAccents = ['#91C46B', '#596AE0']
 
 export default function CTA() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { content } = useSiteContentContext()
+  const ctaData = content.cta || {}
+  const contactData = content.contact || {}
+  const contactReasons = [
+    { icon: MessageSquare, text: 'Discuss your AI transformation goals', accent: '#91C46B' },
+    { icon: Sparkles,      text: 'Get a tailored solution recommendation', accent: '#596AE0' },
+  ]
 
   return (
     <section id="contact" className="py-28 lg:py-36 bg-brand-dark relative overflow-hidden">
@@ -28,15 +34,14 @@ export default function CTA() {
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
           >
-            <span className="kicker">Let&rsquo;s Talk</span>
+            <span className="kicker">{ctaData.kicker || "Let's Talk"}</span>
             <h2 className="font-display font-black leading-[0.92] tracking-tight mb-6"
               style={{ fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)' }}>
-              Ready to transform<br />
-              <span className="grad-text">your enterprise with AI?</span>
+              {(ctaData.headline || 'Ready to transform\nyour enterprise with AI?').split('\n')[0]}<br />
+              <span className="grad-text">{(ctaData.headline || 'Ready to transform\nyour enterprise with AI?').split('\n')[1]}</span>
             </h2>
             <p className="text-text-secondary text-lg leading-relaxed mb-10 max-w-lg">
-              Whether you are exploring AI for the first time or scaling existing deployments,
-              our team is ready to help you build the right roadmap and deliver measurable outcomes.
+              {ctaData.body || 'Whether you are exploring AI for the first time or scaling existing deployments, our team is ready to help you build the right roadmap and deliver measurable outcomes.'}
             </p>
 
             {/* Reasons */}
@@ -54,14 +59,14 @@ export default function CTA() {
 
             {/* Contact info */}
             <div className="flex flex-wrap gap-6 text-sm text-text-muted">
-              <a href="mailto:hello@radiant.digital" className="flex items-center gap-2 hover:text-brand-green transition-colors">
-                <Mail size={14} /> hello@radiant.digital
+              <a href={`mailto:${contactData.email || 'hello@radiant.digital'}`} className="flex items-center gap-2 hover:text-brand-green transition-colors">
+                <Mail size={14} /> {contactData.email || 'hello@radiant.digital'}
               </a>
-              <a href="tel:3013065102" className="flex items-center gap-2 hover:text-brand-green transition-colors">
-                <Phone size={14} /> 301.306.5102
+              <a href={`tel:${(contactData.phone || '301.306.5102').replace(/\D/g, '')}`} className="flex items-center gap-2 hover:text-brand-green transition-colors">
+                <Phone size={14} /> {contactData.phone || '301.306.5102'}
               </a>
               <span className="flex items-center gap-2">
-                <MapPin size={14} /> Vienna, VA
+                <MapPin size={14} /> {contactData.address || 'Vienna, VA'}
               </span>
             </div>
           </motion.div>
@@ -91,10 +96,10 @@ export default function CTA() {
                 </div>
 
                 <h3 className="font-display font-black text-2xl lg:text-3xl text-white mb-3 tracking-tight">
-                  Connect with Us
+                  {ctaData.cardHeadline || 'Connect with Us'}
                 </h3>
                 <p className="text-text-secondary text-base leading-relaxed mb-8 max-w-sm mx-auto">
-                  Reach out to our team directly. Share your goals and challenges, and we will get back to you with a tailored plan.
+                  {ctaData.cardBody || 'Reach out to our team directly. Share your goals and challenges, and we will get back to you with a tailored plan.'}
                 </p>
 
                 {/* Primary CTA — opens chat contact form */}
@@ -106,7 +111,7 @@ export default function CTA() {
                 </Link>
 
                 <p className="text-text-muted text-xs mt-5">
-                  Our team typically responds within one business day
+                  {ctaData.responseNote || 'Our team typically responds within one business day'}
                 </p>
               </div>
             </div>

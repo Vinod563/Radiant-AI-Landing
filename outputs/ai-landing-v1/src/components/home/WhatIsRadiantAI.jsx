@@ -1,6 +1,7 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { Bot, Users, Zap, ChevronRight } from 'lucide-react'
+import { useSiteContentContext } from '../../context/SiteContentContext'
 
 const stages = [
   { num: '01', title: 'Discover', color: '#91C46B', bg: 'rgba(145,196,107,0.08)', border: 'rgba(145,196,107,0.25)', items: [{ text: 'Situation', bold: 'S' }, { text: 'Complication', bold: 'C' }, { text: 'Question', bold: 'Q' }], note: 'SCQ Framing' },
@@ -9,21 +10,22 @@ const stages = [
   { num: '04', title: 'Deploy', color: '#a855f7', bg: 'rgba(168,85,247,0.08)', border: 'rgba(168,85,247,0.25)', items: [{ text: 'Knowledge Hub' }, { text: 'Semantic Graph' }, { text: 'KAG' }], note: 'Context-Aware AI' },
 ]
 
-const agentItems = [
-  'Scoped vocabulary and domain rules so outputs are accurate from run one',
-  'Scope boundaries that prevent well-intentioned errors downstream',
-  'Validated context that compounds accuracy at scale',
-]
-
-const teamItems = [
-  'Structured problem framing before any solution design begins',
-  'Shared knowledge base aligned to your actual environment',
-  'Field-tested map so every module after runs faster',
-]
-
 export default function WhatIsRadiantAI() {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
+  const { content } = useSiteContentContext()
+  const wir = content.whatIsRadiant || {}
+  const teamItems = wir.teamCard?.items || [
+    'Structured problem framing before any solution design begins',
+    'Shared knowledge base aligned to your actual environment',
+    'Field-tested map so every module after runs faster',
+  ]
+  const agentItems = wir.agentCard?.items || [
+    'Scoped vocabulary and domain rules so outputs are accurate from run one',
+    'Scope boundaries that prevent well-intentioned errors downstream',
+    'Validated context that compounds accuracy at scale',
+  ]
+  const outcome = wir.outcome || {}
 
   return (
     <section id="differentiator" className="py-32 bg-brand-dark relative overflow-hidden">
@@ -40,15 +42,15 @@ export default function WhatIsRadiantAI() {
           className="mb-20 text-center"
         >
           <p className="text-brand-green font-body text-sm font-semibold tracking-widest uppercase mb-5">
-            Why Radiant Digital
+            {wir.kicker || 'Why Radiant Digital'}
           </p>
           <h2 className="font-display font-black leading-[0.95] tracking-tight mb-6"
             style={{ fontSize: 'clamp(2.4rem, 5vw, 4.2rem)' }}>
-            Every AI firm brings models.<br />
-            <span className="grad-text">Only Radiant Digital grounds them with the Precision Context Engine.</span>
+            {(wir.headline || 'Every AI firm brings models.\nOnly Radiant Digital grounds them with the Precision Context Engine.').split('\n')[0]}<br />
+            <span className="grad-text">{(wir.headline || 'Every AI firm brings models.\nOnly Radiant Digital grounds them with the Precision Context Engine.').split('\n')[1]}</span>
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed max-w-3xl mx-auto">
-            Before deployment begins, Radiant Digital structures everything your AI agents and your teams need to move fast and get it right.
+            {wir.body || 'Before deployment begins, Radiant Digital structures everything your AI agents and your teams need to move fast and get it right.'}
           </p>
         </motion.div>
 
@@ -255,14 +257,14 @@ export default function WhatIsRadiantAI() {
                   <Zap size={18} className="text-[#91C46B]" />
                 </div>
                 <h3 className="text-brand-green text-xl font-extrabold">
-                  Supercharged Enterprise Transformation
+                  {outcome.title || 'Supercharged Enterprise Transformation'}
                 </h3>
               </div>
               <p className="text-white/65 text-sm">
-                AI agents and delivery teams aligned from day one.
+                {outcome.body || 'AI agents and delivery teams aligned from day one.'}
               </p>
               <p className="text-white/70 text-xs mt-1">
-                Fastest path from context to production. Every time.
+                {outcome.subBody || 'Fastest path from context to production. Every time.'}
               </p>
             </div>
           </motion.div>
