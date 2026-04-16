@@ -578,48 +578,6 @@ const knowledgeBase = [
     ],
   },
   {
-    id: 'ai-readiness',
-    keywords: ['ai-ready', 'ai ready', 'how ai-ready', 'ai readiness', 'readiness assessment', 'maturity', 'maturity assessment', 'how ready', 'assessment', 'my organization', 'where does my enterprise stand', 'ai readiness score', 'benchmark', 'how ai ready is my', 'ai ready is my company', 'is my organization ready', 'evaluate my organization', 'ai maturity level'],
-    question: 'How AI-ready is my organization?',
-    cards: [
-      {
-        type: 'hero',
-        title: 'AI Readiness Assessment',
-        subtitle: 'Five minutes. No signup. A prioritized roadmap that tells you where you are, where the gaps are, and which AI deployments would produce the fastest results.',
-        accent: '#91C46B',
-      },
-      {
-        type: 'text',
-        title: 'How It Works',
-        body: 'Our AI Readiness Assessment evaluates your organization across five maturity levels — from Reactive (manual processes, siloed data) to Leading (agentic AI, outcome-linked engagement). You will receive a score, a gap analysis, and a prioritized AI deployment roadmap tailored to your industry and current capabilities.',
-        accent: '#596AE0',
-      },
-      {
-        type: 'metrics',
-        title: 'What You Get',
-        items: [
-          { value: '5 min', label: 'Assessment Duration' },
-          { value: '5 Levels', label: 'Maturity Framework' },
-          { value: 'Custom', label: 'AI Roadmap' },
-          { value: 'Free', label: 'No Signup Needed' },
-        ],
-        accent: '#91C46B',
-      },
-      {
-        type: 'text',
-        title: 'The Five Maturity Levels',
-        body: '1. Reactive — Manual processes, siloed data, no AI strategy.\n2. Emerging — Basic analytics, some automation, early experimentation.\n3. Defined — Unified data, journey mapping, AI pilots underway.\n4. Optimized — AI-driven operations, proactive CX, measurable ROI.\n5. Leading — Agentic AI at scale, outcome-linked engagement, governance built in.',
-        accent: '#F0974E',
-      },
-    ],
-    followUp: [
-      'What solutions does Radiant Digital offer?',
-      'Which industries do you serve?',
-      'Show me proof — not promises.',
-      'How can I get started?',
-    ],
-  },
-  {
     id: 'contact',
     keywords: ['contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'real person', 'talk to a real person', 'rather talk', 'speak to someone', 'schedule', 'book a meeting', 'email', 'phone number', 'address', 'office', 'how much does it cost', 'pricing information', 'cost of services', 'how much do you charge', 'connect with our team', 'connect with us', 'connect with radiant'],
     question: 'How can I get started?',

@@ -1,7 +1,7 @@
 {
   "name": "radiant-chat-api",
-  "version": "1.0.0",
-  "description": "Radiant Digital Chat API — Groq LLaMA 3.3 backend with structured JSON card responses",
+  "version": "2.0.0",
+  "description": "Radiant Digital Chat API — Gemma 4 (Google AI) backend with dynamic JSON card responses",
   "type": "module",
   "main": "index.js",
   "scripts": {
@@ -9,10 +9,10 @@
     "dev": "node --watch index.js"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "groq-sdk": "^0.3.3"
+    "express": "^4.19.2"
   },
   "engines": {
     "node": ">=18.0.0"

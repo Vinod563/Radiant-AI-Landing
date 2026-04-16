@@ -1,7 +1,7 @@
 /**
- * Radiant Digital Chat API
- * Express server that connects the chat UI to Groq (LLaMA 3.3)
- * and returns structured JSON cards matching the frontend card schema.
+ * Radiant Digital Chat API v2.0
+ * Express server powered by Gemma 4 (Google AI) with dynamic card selection.
+ * Gemma 4 intelligently picks the right UI card type based on query intent.
  *
  * Endpoints:
  *   GET  /           → health check
@@ -10,7 +10,7 @@
 
 import express from 'express'
 import cors from 'cors'
-import Groq from 'groq-sdk'
+import { GoogleGenerativeAI } from '@google/generative-ai'
 import dotenv from 'dotenv'
 import { radiantContext } from './knowledge/radiantContext.js'
 import { buildSystemPrompt, validateResponse, getFallbackResponse } from './utils/cardBuilder.js'
@@ -18,25 +18,29 @@ import { buildSystemPrompt, validateResponse, getFallbackResponse } from './util
 dotenv.config()
 
 // ─── Validate env vars on startup ────────────────────────────────────────────
-if (!process.env.GROQ_API_KEY) {
-  console.error('ERROR: GROQ_API_KEY is missing from .env file')
+if (!process.env.GOOGLE_AI_API_KEY) {
+  console.error('ERROR: GOOGLE_AI_API_KEY is missing from .env file')
+  console.error('Get your free key at: https://aistudio.google.com/apikey')
   process.exit(1)
 }
 
-// ─── Init ─────────────────────────────────────────────────────────────────────
+// ─── Init Google AI client ────────────────────────────────────────────────────
+const genAI = new GoogleGenerativeAI(process.env.GOOGLE_AI_API_KEY)
+
+const GEMMA_MODEL = 'gemma-4-31b-it'
+
+// ─── Init Express ─────────────────────────────────────────────────────────────
 const app = express()
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY })
 
 // ─── Allowed frontend origins ─────────────────────────────────────────────────
 const allowedOrigins = [
-  'http://localhost:5173',          // Vite dev server
-  'http://localhost:4173',          // Vite preview
-  process.env.FRONTEND_URL,        // Production Vercel URL (set in .env)
+  'http://localhost:5173',
+  'http://localhost:4173',
+  process.env.FRONTEND_URL,
 ].filter(Boolean)
 
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (e.g., curl, Postman) or from allowed origins
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true)
     } else {
@@ -49,17 +53,15 @@ app.use(cors({
 
 app.use(express.json({ limit: '10kb' }))
 
-// ─── Build system prompt once at startup (not on every request) ───────────────
-const SYSTEM_PROMPT = buildSystemPrompt(radiantContext)
-
 // ─── Routes ───────────────────────────────────────────────────────────────────
 
 // Health check
-app.get('/', (req, res) => {
+app.get('/', (_req, res) => {
   res.json({
     status: 'ok',
     service: 'Radiant Digital Chat API',
-    model: 'llama-3.3-70b-versatile',
+    model: GEMMA_MODEL,
+    version: '2.0.0',
     timestamp: new Date().toISOString(),
   })
 })
@@ -73,7 +75,7 @@ app.post('/api/chat', async (req, res) => {
     return res.status(400).json({ error: 'message field is required and must be a string' })
   }
 
-  const sanitized = message.trim().slice(0, 500) // limit input length
+  const sanitized = message.trim().slice(0, 500)
 
   if (sanitized.length === 0) {
     return res.status(400).json({ error: 'message cannot be empty' })
@@ -81,29 +83,33 @@ app.post('/api/chat', async (req, res) => {
 
   console.log(`[${new Date().toISOString()}] Query: "${sanitized}"`)
 
+  // ── Build system prompt — Gemma chooses card types autonomously ───────────────
+  const systemPrompt = buildSystemPrompt(radiantContext)
+
   try {
-    // ── Call Groq API ──────────────────────────────────────────────────────────
-    const completion = await groq.chat.completions.create({
-      model: 'llama-3.3-70b-versatile',
-      messages: [
-        {
-          role: 'system',
-          content: SYSTEM_PROMPT,
-        },
-        {
-          role: 'user',
-          content: sanitized,
-        },
-      ],
-      temperature: 0.3,         // low temperature = consistent JSON structure
-      max_tokens: 1800,
-      response_format: { type: 'json_object' },  // forces valid JSON output
+    // ── Init Gemma 4 model with native JSON output + system instruction ────────
+    const model = genAI.getGenerativeModel({
+      model: GEMMA_MODEL,
+      systemInstruction: systemPrompt,
+      generationConfig: {
+        responseMimeType: 'application/json',  // native JSON enforcement
+        temperature: 0.3,
+        maxOutputTokens: 2048,
+      },
     })
 
-    const rawContent = completion.choices[0]?.message?.content
+    // ── Call Gemma 4 ──────────────────────────────────────────────────────────
+    const result = await model.generateContent(sanitized)
+
+    // Gemma 4 is a thinking model — it returns thought parts alongside the actual
+    // response. SDK v0.24 concatenates all parts in .text(), so we extract only
+    // the non-thought part manually to get clean JSON.
+    const candidate = result.response.candidates?.[0]
+    const responsePart = candidate?.content?.parts?.find(p => !p.thought)
+    const rawContent = responsePart?.text || result.response.text()
 
     if (!rawContent) {
-      console.warn('Empty response from Groq')
+      console.warn('Empty response from Gemma 4')
       return res.status(200).json(getFallbackResponse())
     }
 
@@ -118,7 +124,7 @@ app.post('/api/chat', async (req, res) => {
 
     // ── Validate structure ─────────────────────────────────────────────────────
     if (!validateResponse(parsed)) {
-      console.warn('Invalid card structure from LLM:', JSON.stringify(parsed).slice(0, 200))
+      console.warn('Invalid card structure from Gemma 4:', JSON.stringify(parsed).slice(0, 200))
       return res.status(200).json(getFallbackResponse())
     }
 
@@ -128,39 +134,40 @@ app.post('/api/chat', async (req, res) => {
       : [
           'What solutions does Radiant Digital offer?',
           'Tell me about the Precision Context Engine',
-          'Show me a case study',
+          'Show me case studies',
           'How can I contact Radiant Digital?',
         ]
 
-    console.log(`[${new Date().toISOString()}] Success: ${parsed.cards.length} cards returned`)
+    console.log(`[${new Date().toISOString()}] Success: ${parsed.cards.length} cards | Types: ${parsed.cards.map(c => c.type).join(', ')}`)
 
     return res.status(200).json({
+      message: parsed.message || '',
       cards: parsed.cards,
       followUp,
     })
 
   } catch (error) {
-    // ── Handle Groq API errors ─────────────────────────────────────────────────
-    if (error?.status === 429) {
-      console.warn('Groq rate limit hit')
+    // ── Handle Google AI API errors ────────────────────────────────────────────
+    if (error?.status === 429 || error?.message?.includes('429') || error?.message?.includes('quota')) {
+      console.warn('Google AI rate limit hit')
       return res.status(200).json({
         ...getFallbackResponse(),
         cards: [{
           type: 'hero',
           title: "One moment — we'll be right back",
-          subtitle: "We're experiencing high demand. Please try your question again in a moment, or reach out to us at info@radiant.digital.",
+          subtitle: "We're experiencing high demand. Please try your question again in a moment, or reach out at info@radiant.digital.",
           accent: '#596AE0',
         }],
       })
     }
 
-    console.error('Groq API error:', error?.message || error)
+    console.error('Google AI API error:', error?.message || error)
     return res.status(200).json(getFallbackResponse())
   }
 })
 
 // ─── 404 handler ──────────────────────────────────────────────────────────────
-app.use((req, res) => {
+app.use((_req, res) => {
   res.status(404).json({ error: 'Endpoint not found' })
 })
 
@@ -168,11 +175,12 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`
-  ┌─────────────────────────────────────────────┐
-  │   Radiant Digital Chat API                  │
-  │   Running on http://localhost:${PORT}          │
-  │   Model: llama-3.3-70b-versatile            │
-  │   Allowed origins: ${allowedOrigins.length} configured            │
-  └─────────────────────────────────────────────┘
+  ┌─────────────────────────────────────────────────────┐
+  │   Radiant Digital Chat API v2.0                     │
+  │   Running on http://localhost:${PORT}                  │
+  │   Model: ${GEMMA_MODEL}                    │
+  │   Dynamic UI: 9 card types, intent-aware routing    │
+  │   Allowed origins: ${allowedOrigins.length} configured                      │
+  └─────────────────────────────────────────────────────┘
   `)
 })

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback } from 'react'
+import { useState, useRef, useEffect, useCallback, useId } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import {
@@ -34,6 +34,9 @@ import {
   Award,
   Briefcase,
   Target,
+  Rocket,
+  Lock,
+  Star,
   Phone,
   ClipboardCheck,
   UserSearch,
@@ -48,9 +51,9 @@ import RadiantLogo from '../components/shared/RadiantLogo'
 
 const iconMap = {
   Layers, PenTool, Receipt, Globe, BarChart3, Zap, Bot, Brain,
-  Search, Database, Cpu, Users, TrendingUp,
+  Search, Database, Cpu, Users, TrendingUp, CheckCircle2, ArrowRight,
   Building2, Landmark, GraduationCap, HeartPulse, Radio, Fuel, Shield, Banknote,
-  Award, Briefcase, Target,
+  Award, Briefcase, Target, Rocket, Lock, Star, RefreshCw,
 }
 
 export default function Chat() {
@@ -127,6 +130,7 @@ export default function Chat() {
 
       const botMsg = {
         role: 'assistant',
+        message: data.message || '',
         cards: data.cards,
         id: 'llm-response',
         followUp: data.followUp || [],
@@ -495,39 +499,14 @@ export default function Chat() {
                 {msg.role === 'user' ? (
                   <UserBubble content={msg.content} />
                 ) : (
-                  <AssistantCards cards={msg.cards} onSubmit={handleSubmit} />
+                  <AssistantCards message={msg.message} cards={msg.cards} onSubmit={handleSubmit} />
                 )}
               </motion.div>
             ))}
           </AnimatePresence>
 
           <AnimatePresence>
-            {isTyping && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                className="py-8"
-              >
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                    style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.15)' }}>
-                    <Sparkles size={16} className="text-brand-green" />
-                  </div>
-                  <div className="flex gap-1.5 px-5 py-4 rounded-2xl mt-1"
-                    style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-                    {[0, 1, 2].map((d) => (
-                      <motion.div
-                        key={d}
-                        className="w-2.5 h-2.5 rounded-full bg-brand-green/50"
-                        animate={{ opacity: [0.3, 1, 0.3], scale: [0.85, 1.15, 0.85] }}
-                        transition={{ duration: 1.2, repeat: Infinity, delay: d * 0.2 }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            )}
+            {isTyping && <ThinkingIndicator />}
           </AnimatePresence>
 
           <AnimatePresence>
@@ -664,18 +643,169 @@ function UserBubble({ content }) {
   )
 }
 
+/* ═══════════════════════════════════════════════
+   THINKING INDICATOR — Shown while Gemma 4 is
+   generating. Rotating status messages + skeleton
+   card placeholders so the user isn't staring at
+   a blank screen during the 5–10s thinking phase.
+   ═══════════════════════════════════════════════ */
+const THINKING_STEPS = [
+  'Reading your question…',
+  'Scanning the knowledge base…',
+  'Connecting the dots…',
+  'Identifying the best approach…',
+  'Pulling relevant insights…',
+  'Crafting a tailored response…',
+  'Selecting the right cards…',
+  'Arranging the layout…',
+  'Almost there — polishing the details…',
+  'Finalising your answer…',
+]
+
+function ThinkingIndicator() {
+  const [stepIndex, setStepIndex] = useState(0)
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setStepIndex(i => (i + 1) % THINKING_STEPS.length)
+    }, 1600)
+    return () => clearInterval(id)
+  }, [])
+
+  const progress = Math.round(((stepIndex + 1) / THINKING_STEPS.length) * 100)
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className="py-6"
+    >
+      <div className="flex gap-4 items-start">
+        {/* Avatar */}
+        <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1"
+          style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.15)' }}>
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
+          >
+            <Sparkles size={16} className="text-brand-green" />
+          </motion.div>
+        </div>
+
+        <div className="flex-1 space-y-4 min-w-0">
+          {/* Status message */}
+          <div className="space-y-2 w-fit max-w-sm">
+            <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <div className="flex gap-1.5">
+                {[0, 1, 2].map((d) => (
+                  <motion.div
+                    key={d}
+                    className="w-1.5 h-1.5 rounded-full"
+                    style={{ background: '#91C46B' }}
+                    animate={{ opacity: [0.3, 1, 0.3] }}
+                    transition={{ duration: 1.2, repeat: Infinity, delay: d * 0.2 }}
+                  />
+                ))}
+              </div>
+              <div className="flex items-center gap-2 flex-1">
+                <AnimatePresence mode="wait">
+                  <motion.span
+                    key={stepIndex}
+                    initial={{ opacity: 0, y: 4 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -4 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-sm"
+                    style={{ color: 'rgba(255,255,255,0.55)' }}
+                  >
+                    {THINKING_STEPS[stepIndex]}
+                  </motion.span>
+                </AnimatePresence>
+                <motion.span
+                  key={`pct-${stepIndex}`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-xs ml-auto pl-3 tabular-nums"
+                  style={{ color: 'rgba(145,196,107,0.55)' }}
+                >
+                  {progress}%
+                </motion.span>
+              </div>
+            </div>
+
+            {/* Thin progress bar */}
+            <div className="h-0.5 rounded-full overflow-hidden" style={{ background: 'rgba(255,255,255,0.06)' }}>
+              <motion.div
+                className="h-full rounded-full"
+                style={{ background: 'linear-gradient(90deg, #91C46B, rgba(89,106,224,0.8))' }}
+                initial={{ width: '0%' }}
+                animate={{ width: `${progress}%` }}
+                transition={{ duration: 0.5, ease: 'easeOut' }}
+              />
+            </div>
+          </div>
+
+          {/* Skeleton card placeholders */}
+          {[
+            { w: '55%', lines: [{ w: '80%' }, { w: '60%' }] },
+            { w: '100%', lines: [{ w: '40%' }, { w: '90%' }, { w: '70%' }] },
+          ].map((block, bi) => (
+            <motion.div
+              key={bi}
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: bi * 0.15 }}
+              className="rounded-[20px] overflow-hidden p-7"
+              style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.05)' }}
+            >
+              {/* shimmer bar at top */}
+              <motion.div
+                className="h-0.5 mb-6 rounded-full"
+                style={{ width: block.w, background: 'linear-gradient(90deg, rgba(145,196,107,0.15), rgba(89,106,224,0.15))' }}
+                animate={{ opacity: [0.4, 0.8, 0.4] }}
+                transition={{ duration: 1.8, repeat: Infinity, delay: bi * 0.3 }}
+              />
+              <div className="space-y-3">
+                {block.lines.map((line, li) => (
+                  <motion.div
+                    key={li}
+                    className="h-3 rounded-full"
+                    style={{ width: line.w, background: 'rgba(255,255,255,0.06)' }}
+                    animate={{ opacity: [0.4, 0.7, 0.4] }}
+                    transition={{ duration: 1.8, repeat: Infinity, delay: (bi * 0.3) + (li * 0.1) }}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+
 /* ── Assistant Card Renderer ── */
-function AssistantCards({ cards, onSubmit }) {
+function AssistantCards({ message, cards, onSubmit }) {
   return (
     <div className="flex gap-4 items-start">
       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1"
         style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.15)' }}>
         <Sparkles size={16} className="text-brand-green" />
       </div>
-      <div className="flex-1 space-y-6 min-w-0">
-        {cards.map((card, i) => (
-          <CardRenderer key={i} card={card} index={i} onSubmit={onSubmit} />
-        ))}
+      <div className="flex-1 space-y-5 min-w-0">
+        {message && (
+          <p className="text-white/90 text-sm sm:text-base leading-relaxed">{message}</p>
+        )}
+        {cards && cards.length > 0 && (
+          <div className="space-y-6">
+            {cards.map((card, i) => (
+              <CardRenderer key={i} card={card} index={i} onSubmit={onSubmit} />
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
@@ -705,6 +835,9 @@ function CardRenderer({ card, index, onSubmit }) {
       {card.type === 'industries' && <IndustriesCard card={card} />}
       {card.type === 'pce-diagram' && <PCEDiagramCard />}
       {card.type === 'screenshot' && <ScreenshotCard card={card} />}
+      {card.type === 'service-grid' && <ServiceGridCard card={card} />}
+      {card.type === 'comparison-table' && <ComparisonTableCard card={card} />}
+      {card.type === 'chart' && <AmChartCard card={card} />}
     </motion.div>
   )
 }
@@ -1092,11 +1225,16 @@ function CaseStudyGridCard({ card, onItemClick }) {
           >
             {/* Thumbnail image */}
             <div className="relative h-36 overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
+              {item.image ? (
+                <img
+                  src={item.image}
+                  alt={item.name}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              ) : (
+                <div className="w-full h-full"
+                  style={{ background: `linear-gradient(135deg, ${item.accent}25 0%, rgba(1,15,30,0.8) 60%, ${item.accent}10 100%)` }} />
+              )}
               {/* Gradient overlay */}
               <div className="absolute inset-0"
                 style={{ background: `linear-gradient(to top, rgba(1,15,30,0.95) 0%, ${item.accent}15 50%, rgba(1,15,30,0.3) 100%)` }} />
@@ -1139,59 +1277,48 @@ function CaseStudyGridCard({ card, onItemClick }) {
   )
 }
 
-function ListCard({ card, onItemClick }) {
+function ListCard({ card }) {
+  const accent = card.accent || '#2DD4BF'
   return (
-    <div className="space-y-5">
-      {/* Section header */}
-      <div className="mag-card p-8 lg:p-10 relative overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none"
-          style={{ background: `radial-gradient(ellipse at 0% 0%, ${card.accent}06 0%, transparent 50%)` }} />
-        <div className="relative z-10">
-          <span className="kicker mb-4">{card.title.includes('Pillar') ? 'Services' : 'Overview'}</span>
-          <h3 className="font-display font-black text-2xl lg:text-3xl text-white mb-2 tracking-tight">{card.title}</h3>
-          {card.subtitle && <p className="text-text-secondary text-base leading-relaxed">{card.subtitle}</p>}
+    <div className="rounded-[20px] overflow-hidden relative"
+      style={{ background: 'rgba(1,15,30,0.85)', border: '1px solid rgba(255,255,255,0.07)' }}>
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at 0% 0%, ${accent}08 0%, transparent 55%)` }} />
+
+      <div className="relative z-10 p-8 lg:p-10">
+        <span className="kicker mb-4">Overview</span>
+        <h3 className="font-display font-black text-2xl lg:text-3xl text-white mb-2 tracking-tight">{card.title}</h3>
+        {card.subtitle && (
+          <p className="text-text-secondary text-base leading-relaxed mb-6">{card.subtitle}</p>
+        )}
+
+        <div className="space-y-3 mt-6">
+          {card.items.map((item, i) => {
+            const IconComp = iconMap[item.icon]
+            return (
+              <motion.div
+                key={item.label || i}
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.35, delay: i * 0.07 }}
+                className="flex items-start gap-4 rounded-xl p-4"
+                style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${accent}12` }}
+              >
+                <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 mt-0.5"
+                  style={{ background: `${accent}14`, border: `1px solid ${accent}20` }}>
+                  {IconComp
+                    ? <IconComp size={16} style={{ color: accent }} />
+                    : <CheckCircle2 size={16} style={{ color: accent }} />
+                  }
+                </div>
+                <div>
+                  <div className="font-display font-semibold text-white text-sm mb-0.5">{item.label}</div>
+                  {item.desc && <div className="text-text-secondary text-xs leading-relaxed">{item.desc}</div>}
+                </div>
+              </motion.div>
+            )
+          })}
         </div>
-      </div>
-
-      {/* Items as individual clickable cards */}
-      <div className="grid sm:grid-cols-2 gap-4">
-        {card.items.map((item, i) => (
-          <motion.div
-            key={item.name}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: i * 0.06 }}
-            className={`group relative rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1 ${onItemClick ? 'cursor-pointer' : ''}`}
-            style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${item.accent}15` }}
-            onClick={() => onItemClick && onItemClick(`Tell me about the ${item.name} case study`)}
-          >
-            {/* Hover glow */}
-            <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-              style={{ background: `radial-gradient(ellipse at 50% 0%, ${item.accent}0c 0%, transparent 70%)` }} />
-
-            <div className="relative z-10 flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-4 h-4 rounded-full flex-shrink-0 transition-transform duration-300 group-hover:scale-125"
-                  style={{ background: item.accent, boxShadow: `0 0 16px ${item.accent}35` }} />
-                <span className="font-display font-semibold text-white text-[15px]">{item.name}</span>
-              </div>
-              <span className="text-sm font-bold font-display tracking-tight ml-4 whitespace-nowrap" style={{ color: item.accent }}>
-                {item.metric}
-              </span>
-            </div>
-
-            {/* Click hint on hover */}
-            {onItemClick && (
-              <div className="absolute top-2 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                <ChevronRight size={14} className="text-white/30" />
-              </div>
-            )}
-
-            {/* Bottom accent line */}
-            <div className="absolute bottom-0 left-6 right-6 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-              style={{ background: `linear-gradient(90deg, transparent, ${item.accent}30, transparent)` }} />
-          </motion.div>
-        ))}
       </div>
     </div>
   )
@@ -1678,24 +1805,9 @@ function ContactDetailsCard({ card }) {
 }
 
 function CTACard({ card }) {
-  const levels = [
-    { label: 'Reactive', color: '#F05030' },
-    { label: 'Emerging', color: '#F0974E' },
-    { label: 'Defined', color: '#596AE0' },
-    { label: 'Optimized', color: '#91C46B' },
-    { label: 'Leading', color: '#00c87d' },
-  ]
-  const benefits = [
-    { icon: BarChart3, text: 'Benchmark against leaders' },
-    { icon: Target, text: 'Identify CX gaps' },
-    { icon: TrendingUp, text: 'Get AI roadmap' },
-    { icon: Shield, text: 'Score in minutes' },
-  ]
-
   return (
     <div className="rounded-[20px] overflow-hidden relative"
       style={{ background: 'rgba(1,15,30,0.9)', border: '1px solid rgba(145,196,107,0.12)' }}>
-      {/* Background glows */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full"
           style={{ background: 'radial-gradient(ellipse, rgba(145,196,107,0.08) 0%, transparent 60%)' }} />
@@ -1704,73 +1816,25 @@ function CTACard({ card }) {
         style={{ background: 'linear-gradient(90deg, transparent 10%, rgba(145,196,107,0.3) 50%, transparent 90%)' }} />
 
       <div className="relative z-10 p-10 lg:p-12 text-center">
-        <span className="kicker justify-center mb-6" style={{ justifyContent: 'center' }}>CX Maturity Assessment</span>
         <h3 className="font-display font-black text-white tracking-tight mb-4 leading-[0.95]"
           style={{ fontSize: 'clamp(2rem, 4vw, 3rem)' }}>
           {card.title}
         </h3>
-        <p className="text-text-secondary text-base lg:text-lg mb-10 max-w-lg mx-auto leading-relaxed">
-          {card.body}
-        </p>
-
-        {/* Maturity scale bars like CTA.jsx */}
-        <div className="max-w-md mx-auto mb-8">
-          <div className="flex items-end justify-between gap-2 mb-3">
-            {levels.map((l, i) => (
-              <div key={l.label} className="flex-1 flex flex-col items-center">
-                <motion.div
-                  className="w-full rounded-t-lg"
-                  style={{
-                    height: `${24 + i * 12}px`,
-                    background: `linear-gradient(180deg, ${l.color} 0%, ${l.color}40 100%)`,
-                    boxShadow: `0 0 16px ${l.color}20`,
-                  }}
-                  initial={{ scaleY: 0 }}
-                  animate={{ scaleY: 1 }}
-                  transition={{ duration: 0.5, delay: 0.1 + i * 0.08 }}
-                />
-              </div>
-            ))}
-          </div>
-          <div className="flex justify-between gap-2">
-            {levels.map(l => (
-              <div key={l.label} className="flex-1 text-center">
-                <div className="text-[0.6rem] font-display font-semibold" style={{ color: l.color }}>{l.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Benefits grid like CTA.jsx */}
-        <div className="grid grid-cols-4 gap-3 mb-10 max-w-md mx-auto">
-          {benefits.map(b => (
-            <div key={b.text} className="flex flex-col items-center gap-2 text-center">
-              <div className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ background: 'rgba(145,196,107,0.08)', border: '1px solid rgba(145,196,107,0.15)' }}>
-                <b.icon size={16} className="text-brand-green" />
-              </div>
-              <span className="text-text-secondary text-[10px] leading-snug">{b.text}</span>
-            </div>
-          ))}
-        </div>
-
+        {card.subtitle && (
+          <p className="text-text-secondary text-base lg:text-lg mb-10 max-w-lg mx-auto leading-relaxed">
+            {card.subtitle}
+          </p>
+        )}
         <div className="flex flex-wrap justify-center gap-4">
-          {card.actions.map((action, i) => (
+          {card.buttonLabel && (
             <a
-              key={action.label}
-              href={action.href}
-              className={i === 0
-                ? 'btn-primary text-sm !px-10 !py-4 shadow-[0_0_60px_rgba(145,196,107,0.25)]'
-                : 'btn-ghost text-sm !px-8 !py-4'}
+              href={card.buttonUrl || 'https://radiant.digital/contact-us/'}
+              className="btn-primary text-sm !px-10 !py-4 shadow-[0_0_60px_rgba(145,196,107,0.25)]"
             >
-              {action.label} <ArrowRight size={15} />
+              {card.buttonLabel} <ArrowRight size={15} />
             </a>
-          ))}
+          )}
         </div>
-
-        <p className="text-text-muted text-xs mt-4 opacity-60">
-          Free · No signup required · Results in under 5 minutes
-        </p>
       </div>
     </div>
   )
@@ -2112,6 +2176,389 @@ function IndustriesCard({ card }) {
         }
         .ind-flip-back { transform: rotateY(180deg); }
       `}</style>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   SERVICE-GRID CARD — Dynamic grid of service/
+   solution cards with icon, title, metric, desc.
+   Gemma 4 populates this when intent = solutions.
+   ═══════════════════════════════════════════════ */
+function ServiceGridCard({ card }) {
+  const iconMap2 = {
+    Brain, Zap, Database, Cpu, Users, TrendingUp, Shield, Target,
+    Layers, Globe, BarChart3, Bot, Search, Award, Briefcase, Sparkles,
+    Rocket, Lock, RefreshCw, CheckCircle2,
+  }
+  return (
+    <div className="space-y-5">
+      {/* Section header */}
+      <div className="mag-card p-8 lg:p-10 relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at 0% 0%, rgba(240,151,78,0.07) 0%, transparent 55%)' }} />
+        <div className="relative z-10">
+          <span className="kicker mb-4">Solutions</span>
+          <h3 className="font-display font-black text-2xl lg:text-3xl text-white mb-2 tracking-tight">{card.title}</h3>
+          {card.subtitle && <p className="text-text-secondary text-base leading-relaxed">{card.subtitle}</p>}
+        </div>
+      </div>
+
+      {/* Service cards grid */}
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {(card.items || []).map((item, i) => {
+          const Icon = iconMap2[item.icon] || Sparkles
+          const accent = item.accent || '#F0974E'
+          return (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="mag-card p-6 flex flex-col gap-3 group hover:scale-[1.02] transition-transform duration-300"
+              style={{ border: `1px solid ${accent}18` }}
+            >
+              {/* Icon badge */}
+              <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={{ background: `${accent}20`, border: `1.5px solid ${accent}40` }}>
+                <Icon size={18} style={{ color: accent }} />
+              </div>
+
+              {/* Title + metric */}
+              <div>
+                <h4 className="font-display font-bold text-white text-sm leading-snug mb-1">{item.title}</h4>
+                {item.metric && (
+                  <span className="inline-block text-[11px] font-bold px-2 py-0.5 rounded-full"
+                    style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}30` }}>
+                    {item.metric}
+                  </span>
+                )}
+              </div>
+
+              {/* Description */}
+              {item.desc && (
+                <p className="text-text-secondary text-xs leading-relaxed flex-1">{item.desc}</p>
+              )}
+
+              {/* Bottom accent line */}
+              <div className="h-0.5 rounded-full opacity-30 mt-auto"
+                style={{ background: `linear-gradient(90deg, ${accent}, transparent)` }} />
+            </motion.div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   COMPARISON-TABLE CARD — Side-by-side table for
+   comparing approaches, services, or options.
+   Gemma 4 populates this when intent = comparison.
+   ═══════════════════════════════════════════════ */
+function ComparisonTableCard({ card }) {
+  const accent = card.accent || '#596AE0'
+  const [col1, col2, col3] = card.headers || ['Feature', 'Radiant Digital', 'Traditional']
+  return (
+    <div className="mag-card overflow-hidden">
+      {/* Header */}
+      <div className="p-8 lg:p-10 relative"
+        style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: `radial-gradient(ellipse at 50% 0%, ${accent}08 0%, transparent 60%)` }} />
+        <div className="relative z-10">
+          <span className="kicker mb-4">Comparison</span>
+          <h3 className="font-display font-black text-2xl lg:text-3xl text-white tracking-tight">{card.title}</h3>
+        </div>
+      </div>
+
+      {/* Table */}
+      <div className="overflow-x-auto">
+        <table className="w-full text-sm">
+          {/* Column headers */}
+          <thead>
+            <tr style={{ borderBottom: `1px solid ${accent}25` }}>
+              <th className="text-left px-6 py-4 text-text-muted font-semibold text-xs uppercase tracking-widest w-1/3">{col1}</th>
+              <th className="text-left px-6 py-4 text-xs uppercase tracking-widest font-bold w-1/3"
+                style={{ color: accent }}>{col2}</th>
+              <th className="text-left px-6 py-4 text-text-muted font-semibold text-xs uppercase tracking-widest w-1/3">{col3}</th>
+            </tr>
+          </thead>
+
+          {/* Rows */}
+          <tbody>
+            {(card.rows || []).map((row, i) => (
+              <motion.tr
+                key={i}
+                initial={{ opacity: 0, x: -8 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: i * 0.06 }}
+                className="group"
+                style={{
+                  borderBottom: i < (card.rows.length - 1) ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                  background: i % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.015)',
+                }}
+              >
+                {/* Feature label */}
+                <td className="px-6 py-4 text-text-muted font-medium text-xs">{row[0]}</td>
+
+                {/* Radiant column — highlighted */}
+                <td className="px-6 py-4">
+                  <span className="text-white font-semibold text-xs flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: accent }} />
+                    {row[1]}
+                  </span>
+                </td>
+
+                {/* Traditional column — muted */}
+                <td className="px-6 py-4 text-text-muted text-xs">{row[2]}</td>
+              </motion.tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   AMCHART CARD — Data visualization using
+   AmCharts 5. Supports bar, line, pie, donut.
+   Gemma 4 selects this when data is best shown
+   as a chart rather than a metrics or table card.
+   ═══════════════════════════════════════════════ */
+function AmChartCard({ card }) {
+  const reactId = useId()
+  const chartId = `amchart-${reactId.replace(/:/g, 'x')}`
+  const rootRef = useRef(null)
+  const accent = card.accent || '#596AE0'
+
+  useEffect(() => {
+    let disposed = false
+
+    async function initChart() {
+      const am5 = await import('@amcharts/amcharts5')
+      const am5themes_Animated = (await import('@amcharts/amcharts5/themes/Animated')).default
+
+      if (disposed) return
+
+      // Dispose previous root if re-rendering
+      if (rootRef.current) {
+        rootRef.current.dispose()
+        rootRef.current = null
+      }
+
+      const root = am5.Root.new(chartId)
+      rootRef.current = root
+
+      // Dark theme overrides
+      root.interfaceColors.setAll({
+        background:           am5.color(0x010F1E),
+        alternativeBackground: am5.color(0x051A30),
+        text:                 am5.color(0xFFFFFF),
+        alternativeText:      am5.color(0x8BACCF),
+        grid:                 am5.color(0x1A3050),
+        stroke:               am5.color(0x1A3050),
+        fill:                 am5.color(0x010F1E),
+      })
+
+      root.setThemes([am5themes_Animated.new(root)])
+
+      const type = card.chartType || 'bar'
+      const data = card.data || []
+
+      if (type === 'pie' || type === 'donut') {
+        const am5percent = await import('@amcharts/amcharts5/percent')
+        const chart = root.container.children.push(
+          am5percent.PieChart.new(root, {
+            layout: root.horizontalLayout,
+            innerRadius: type === 'donut' ? am5.percent(55) : 0,
+          })
+        )
+
+        // Build palette from accent color + brand shades
+        const sliceColors = [accent, '#91C46B', '#F0974E', '#2DD4BF', '#a855f7', '#F05030', '#00c87d', '#e05990']
+
+        const series = chart.series.push(
+          am5percent.PieSeries.new(root, {
+            valueField: 'value',
+            categoryField: 'category',
+            fillField: 'sliceColor',
+          })
+        )
+
+        series.slices.template.setAll({
+          strokeWidth: 2,
+          stroke: am5.color(0x010F1E),
+          cornerRadiusTL: 4,
+          cornerRadiusTR: 4,
+          cornerRadiusBL: 4,
+          cornerRadiusBR: 4,
+          tooltipText: '{category}: {value}',
+        })
+
+        series.labels.template.setAll({
+          fill: am5.color(0xFFFFFF),
+          fontSize: 11,
+          text: '{category}',
+        })
+
+        series.ticks.template.setAll({ stroke: am5.color(0x2A4060), strokeOpacity: 0.5 })
+
+        const coloredData = data.map((d, i) => ({ ...d, sliceColor: am5.color(sliceColors[i % sliceColors.length]) }))
+        series.data.setAll(coloredData)
+        series.appear(1000, 100)
+
+      } else {
+        // bar or line
+        const am5xy = await import('@amcharts/amcharts5/xy')
+        const chart = root.container.children.push(
+          am5xy.XYChart.new(root, {
+            panX: false,
+            panY: false,
+            wheelX: 'none',
+            wheelY: 'none',
+            paddingLeft: 0,
+            paddingRight: 0,
+          })
+        )
+
+        // X axis
+        const xRenderer = am5xy.AxisRendererX.new(root, { minGridDistance: 40 })
+        xRenderer.labels.template.setAll({
+          fill: am5.color(0x8BACCF),
+          fontSize: 11,
+          paddingTop: 8,
+          oversizedBehavior: 'truncate',
+          maxWidth: 80,
+        })
+        xRenderer.grid.template.setAll({ stroke: am5.color(0x1A3050), strokeOpacity: 0.5 })
+
+        const xAxis = chart.xAxes.push(
+          am5xy.CategoryAxis.new(root, {
+            renderer: xRenderer,
+            categoryField: 'category',
+          })
+        )
+
+        // Y axis
+        const yRenderer = am5xy.AxisRendererY.new(root, {})
+        yRenderer.labels.template.setAll({
+          fill: am5.color(0x8BACCF),
+          fontSize: 11,
+        })
+        yRenderer.grid.template.setAll({ stroke: am5.color(0x1A3050), strokeOpacity: 0.4 })
+
+        const yAxis = chart.yAxes.push(
+          am5xy.ValueAxis.new(root, {
+            renderer: yRenderer,
+            extraMax: 0.1,
+          })
+        )
+
+        if (type === 'line') {
+          const series = chart.series.push(
+            am5xy.LineSeries.new(root, {
+              xAxis,
+              yAxis,
+              valueYField: 'value',
+              categoryXField: 'category',
+              stroke: am5.color(accent),
+              fill: am5.color(accent),
+              tooltip: am5.Tooltip.new(root, { labelText: '{categoryX}: {valueY}' }),
+            })
+          )
+
+          series.fills.template.setAll({
+            visible: true,
+            fillOpacity: 0.12,
+          })
+
+          series.strokes.template.setAll({ strokeWidth: 2.5 })
+
+          series.bullets.push(() =>
+            am5.Bullet.new(root, {
+              sprite: am5.Circle.new(root, {
+                radius: 5,
+                fill: am5.color(accent),
+                stroke: am5.color(0x010F1E),
+                strokeWidth: 2,
+              }),
+            })
+          )
+
+          series.data.setAll(data)
+          xAxis.data.setAll(data)
+          series.appear(1000)
+
+        } else {
+          // bar (column)
+          const series = chart.series.push(
+            am5xy.ColumnSeries.new(root, {
+              xAxis,
+              yAxis,
+              valueYField: 'value',
+              categoryXField: 'category',
+              fill: am5.color(accent),
+              stroke: am5.color(accent),
+              tooltip: am5.Tooltip.new(root, { labelText: '{categoryX}: {valueY}' }),
+            })
+          )
+
+          series.columns.template.setAll({
+            cornerRadiusTL: 5,
+            cornerRadiusTR: 5,
+            strokeOpacity: 0,
+            fillOpacity: 0.9,
+          })
+
+          series.columns.template.states.create('hover', {
+            fillOpacity: 1,
+          })
+
+          series.data.setAll(data)
+          xAxis.data.setAll(data)
+          series.appear(1000)
+        }
+
+        chart.appear(1000, 100)
+      }
+    }
+
+    initChart()
+
+    return () => {
+      disposed = true
+      if (rootRef.current) {
+        rootRef.current.dispose()
+        rootRef.current = null
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartId])
+
+  return (
+    <div className="mag-card overflow-hidden">
+      {/* Header */}
+      <div className="p-8 lg:p-10 relative" style={{ borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{ background: `radial-gradient(ellipse at 50% 0%, ${accent}08 0%, transparent 60%)` }}
+        />
+        <div className="relative z-10">
+          <span className="kicker mb-4">Data Insight</span>
+          <h3 className="font-display font-black text-2xl lg:text-3xl text-white tracking-tight">{card.title}</h3>
+          {card.subtitle && (
+            <p className="text-text-secondary text-sm mt-2 max-w-xl">{card.subtitle}</p>
+          )}
+          {card.valueLabel && (
+            <p className="text-xs mt-1" style={{ color: `${accent}99` }}>{card.valueLabel}</p>
+          )}
+        </div>
+      </div>
+
+      {/* Chart area */}
+      <div id={chartId} style={{ height: '320px', padding: '16px 16px 8px' }} />
     </div>
   )
 }
