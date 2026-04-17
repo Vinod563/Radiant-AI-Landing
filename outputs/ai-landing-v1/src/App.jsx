@@ -15,22 +15,22 @@ export default function App() {
   return (
     <AuthProvider>
       <SiteContentProvider>
-      <BrowserRouter>
-        <Routes>
-          {/* Public */}
-          <Route path="/"    element={<Index />} />
-          <Route path="/chat" element={<Chat />} />
+        <BrowserRouter>
+          <Routes>
+            {/* Public */}
+            <Route path="/"     element={<Index />} />
+            <Route path="/chat" element={<Chat />} />
 
-          {/* Admin auth */}
-          <Route path="/admin/login" element={<Login />} />
+            {/* Admin auth */}
+            <Route path="/admin/login" element={<Login />} />
 
-          {/* Admin panel — protected */}
-          <Route path="/admin" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
-          <Route path="/admin/cms"        element={<ProtectedRoute><CMS /></ProtectedRoute>} />
-          <Route path="/admin/visibility" element={<ProtectedRoute><Visibility /></ProtectedRoute>} />
-          <Route path="/admin/chat"       element={<ProtectedRoute><ChatControl /></ProtectedRoute>} />
-        </Routes>
-      </BrowserRouter>
+            {/* Admin panel — protected */}
+            <Route path="/admin"            element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+            <Route path="/admin/cms"        element={<ProtectedRoute><CMS /></ProtectedRoute>} />
+            <Route path="/admin/visibility" element={<ProtectedRoute><Visibility /></ProtectedRoute>} />
+            <Route path="/admin/chat"       element={<ProtectedRoute><ChatControl /></ProtectedRoute>} />
+          </Routes>
+        </BrowserRouter>
       </SiteContentProvider>
     </AuthProvider>
   )
