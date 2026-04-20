@@ -42,7 +42,7 @@ for (const key of REQUIRED) {
 }
 
 const ADMIN_PATH = process.env.ADMIN_PATH  // e.g. /admin-a8f2k3p9
-const ADMIN_DIST = join(__dirname, '../radiant-chat-admin/dist')
+const ADMIN_DIST = join(__dirname, 'admin-panel')
 const CONFIG_PATH = join(__dirname, 'config.json')
 const COOKIE_NAME = 'admin_token'
 
