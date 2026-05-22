@@ -63,15 +63,14 @@ function writeConfig(data) {
 const app = express()
 
 const allowedOrigins = [
-  'http://localhost:3001',
-  'http://localhost:5173',
-  'http://localhost:4173',
   process.env.FRONTEND_URL,
 ].filter(Boolean)
 
+const localhostPattern = /^http:\/\/localhost:\d+$/
+
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) callback(null, true)
+    if (!origin || localhostPattern.test(origin) || allowedOrigins.includes(origin)) callback(null, true)
     else callback(new Error(`CORS blocked: ${origin}`))
   },
   methods: ['GET', 'POST'],
