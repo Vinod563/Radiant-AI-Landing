@@ -111,8 +111,10 @@ export default function Chat() {
     setIsTyping(true)
 
     try {
-      // ── Call Groq backend API ──────────────────────────────────────────────
-      const apiUrl = import.meta.env.VITE_CHAT_API_URL || 'http://localhost:3001'
+      // ── Call chat backend API ──────────────────────────────────────────────
+      // Same-origin in production (backend reverse-proxied under /api on same domain).
+      // For local dev, set VITE_CHAT_API_URL=http://localhost:3001 in .env.local.
+      const apiUrl = import.meta.env.VITE_CHAT_API_URL || ''
       const res = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

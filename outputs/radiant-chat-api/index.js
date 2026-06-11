@@ -68,15 +68,29 @@ const allowedOrigins = [
 
 const localhostPattern = /^http:\/\/localhost:\d+$/
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || localhostPattern.test(origin) || allowedOrigins.includes(origin)) callback(null, true)
-    else callback(new Error(`CORS blocked: ${origin}`))
-  },
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
-  credentials: true,
-}))
+// Per-request CORS so we can detect same-origin (Origin host === request host)
+// and allow it without needing FRONTEND_URL to be set. This makes the
+// reverse-proxy-under-same-domain deploy on Liquid Web work out of the box.
+app.use((req, res, next) => {
+  const origin = req.headers.origin
+  const host = req.headers.host
+  let sameOrigin = false
+  if (origin && host) {
+    try {
+      sameOrigin = new URL(origin).host === host
+    } catch { /* malformed Origin — treat as cross-origin */ }
+  }
+
+  return cors({
+    origin: (o, callback) => {
+      if (!o || sameOrigin || localhostPattern.test(o) || allowedOrigins.includes(o)) callback(null, true)
+      else callback(new Error(`CORS blocked: ${o}`))
+    },
+    methods: ['GET', 'POST'],
+    allowedHeaders: ['Content-Type'],
+    credentials: true,
+  })(req, res, next)
+})
 
 app.use(express.json({ limit: '10kb' }))
 app.use(cookieParser())
