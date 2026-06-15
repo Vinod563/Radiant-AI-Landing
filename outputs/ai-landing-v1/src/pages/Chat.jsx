@@ -100,6 +100,22 @@ function assessmentProfileSummary(kind, profile) {
   return `${profile.fullName} · ${profile.companyName}`
 }
 
+// Match a typed reply to one of a question's options (by number or by text).
+function matchAssessmentAnswer(question, input) {
+  const t = input.trim().toLowerCase()
+  if (/^\d+$/.test(t)) {
+    return question.options.find(o => o.score === parseInt(t, 10)) || null
+  }
+  let m = question.options.find(o => o.label.toLowerCase() === t)
+  if (m) return m
+  if (t.length >= 4) {
+    m = question.options.find(o => o.label.toLowerCase().startsWith(t))
+      || question.options.find(o => o.label.toLowerCase().includes(t))
+    if (m) return m
+  }
+  return null
+}
+
 const iconMap = {
   Layers, PenTool, Receipt, Globe, BarChart3, Zap, Bot, Brain,
   Search, Database, Cpu, Users, TrendingUp, CheckCircle2, ArrowRight,
@@ -156,6 +172,25 @@ export default function Chat() {
   const handleSubmit = async (query) => {
     const q = typeof query === 'string' ? query : input
     if (!q.trim()) return
+
+    // ── Assessment in progress → interpret the reply as an answer ───────────
+    const sess = assessRef.current
+    if (sess.active != null && sess.questions[sess.active]) {
+      const question = sess.questions[sess.active]
+      const matched = matchAssessmentAnswer(question, q)
+      if (matched) {
+        answerAssessment(sess.kind, sess.active, matched.score, q.trim())
+        setInput('')
+        return
+      }
+      setMessages((prev) => [...prev,
+        { role: 'user', content: q.trim() },
+        { role: 'assistant', id: 'assess-hint', cards: [], followUp: [],
+          message: `Please reply with a number (${question.options.map(o => o.score).join('/')}), the answer text, or tap an option above.` },
+      ])
+      setInput('')
+      return
+    }
 
     const userMsg = { role: 'user', content: q.trim() }
     setMessages((prev) => [...prev, userMsg])
@@ -222,7 +257,7 @@ export default function Chat() {
 
   // ── Conversational assessment: each step is its own chat message ───────────
   const startAssessment = (kind) => {
-    assessRef.current = { kind, profile: null, questions: [], answers: {} }
+    assessRef.current = { kind, profile: null, questions: [], answers: {}, active: null }
     setMessages((prev) => [...prev,
       { role: 'user', content: kind === 'cx' ? 'Take the CX Maturity Assessment' : 'Take the AI Adoption Assessment' },
       {
@@ -237,7 +272,7 @@ export default function Chat() {
 
   const submitAssessmentProfile = (kind, profile) => {
     const questions = buildAssessmentQuestions(kind, profile)
-    assessRef.current = { kind, profile, questions, answers: {} }
+    assessRef.current = { kind, profile, questions, answers: {}, active: 0 }
     setMessages((prev) => {
       const updated = prev.map(m => (m.id === `assess-profile-${kind}` && m.cards)
         ? { ...m, cards: m.cards.map(c => c.type === 'assessment-profile' ? { ...c, done: true } : c) }
@@ -255,16 +290,18 @@ export default function Chat() {
     })
   }
 
-  const answerAssessment = (kind, qIndex, score, label) => {
+  const answerAssessment = (kind, qIndex, score, displayText) => {
     const st = assessRef.current
     const q = st.questions[qIndex]
     st.answers = { ...st.answers, [q.id]: score }
+    const isLast = qIndex + 1 >= st.questions.length
+    st.active = isLast ? null : qIndex + 1
     setMessages((prev) => {
       const updated = prev.map(m => (m.id === `assess-q-${kind}-${qIndex}` && m.cards)
         ? { ...m, cards: m.cards.map(c => c.type === 'assessment-question' ? { ...c, answeredScore: score } : c) }
         : m)
-      const next = [...updated, { role: 'user', content: label }]
-      if (qIndex + 1 < st.questions.length) {
+      const next = [...updated, { role: 'user', content: displayText }]
+      if (!isLast) {
         next.push(assessmentQuestionMessage(kind, st.questions, qIndex + 1))
       } else {
         next.push({
