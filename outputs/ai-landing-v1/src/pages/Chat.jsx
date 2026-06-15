@@ -49,6 +49,11 @@ import {
 import { findAnswer, suggestions, mainMenuItems } from '../data/knowledgeBase.js'
 import RadiantLogo from '../components/shared/RadiantLogo'
 import ContactForm from '../components/shared/ContactForm'
+import ProfileForm from '../components/assessment/ProfileForm'
+import AssessmentQuestionCard from '../components/assessment/AssessmentQuestionCard'
+import AssessmentReport from '../components/assessment/AssessmentReport'
+import { getAQ, sectionMeta, roles } from '../data/aiAssessment.js'
+import { cxSections } from '../data/cxAssessment.js'
 
 // Queries whose answer is known up front — resolved locally with no LLM wait.
 const INSTANT_TRIGGERS = new Set([
@@ -69,6 +74,32 @@ function getInstantAnswer(raw) {
   return findAnswer(raw)
 }
 
+// ── Inline (conversational) assessment helpers ───────────────────────────────
+function buildAssessmentQuestions(kind, profile) {
+  if (kind === 'ai') {
+    const track = roles.find(r => r.key === profile.role)?.track
+    return getAQ(profile.role).map(q => ({
+      ...q, sectionLabel: sectionMeta[q.section].label, accent: sectionMeta[q.section].accent, trackLabel: track,
+    }))
+  }
+  return cxSections.flatMap(s => s.questions.map(q => ({ ...q, sectionLabel: s.label, accent: s.accent })))
+}
+
+function assessmentQuestionMessage(kind, questions, idx) {
+  return {
+    role: 'assistant', id: `assess-q-${kind}-${idx}`, followUp: [],
+    cards: [{ type: 'assessment-question', kind, qIndex: idx, total: questions.length, question: questions[idx] }],
+  }
+}
+
+function assessmentProfileSummary(kind, profile) {
+  if (kind === 'ai') {
+    const roleName = roles.find(r => r.key === profile.role)?.name
+    return `${profile.fullName} · ${roleName} · ${profile.companyName}`
+  }
+  return `${profile.fullName} · ${profile.companyName}`
+}
+
 const iconMap = {
   Layers, PenTool, Receipt, Globe, BarChart3, Zap, Bot, Brain,
   Search, Database, Cpu, Users, TrendingUp, CheckCircle2, ArrowRight,
@@ -87,6 +118,7 @@ export default function Chat() {
   const inputRef = useRef(null)
   const autoSubmitted = useRef(false)
   const submitTimeoutRef = useRef(null)
+  const assessRef = useRef({ kind: null, profile: null, questions: [], answers: {} })
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -186,6 +218,63 @@ export default function Chat() {
     } finally {
       setIsTyping(false)
     }
+  }
+
+  // ── Conversational assessment: each step is its own chat message ───────────
+  const startAssessment = (kind) => {
+    assessRef.current = { kind, profile: null, questions: [], answers: {} }
+    setMessages((prev) => [...prev,
+      { role: 'user', content: kind === 'cx' ? 'Take the CX Maturity Assessment' : 'Take the AI Adoption Assessment' },
+      {
+        role: 'assistant', id: `assess-profile-${kind}`, followUp: [],
+        message: kind === 'cx'
+          ? "Let's measure your CX maturity. First, a little context — share a few details below and we'll begin."
+          : "Let's find out how AI-ready you are. First, a little context — share a few details below and I'll tailor your questions to your role.",
+        cards: [{ type: 'assessment-profile', kind }],
+      },
+    ])
+  }
+
+  const submitAssessmentProfile = (kind, profile) => {
+    const questions = buildAssessmentQuestions(kind, profile)
+    assessRef.current = { kind, profile, questions, answers: {} }
+    setMessages((prev) => {
+      const updated = prev.map(m => (m.id === `assess-profile-${kind}` && m.cards)
+        ? { ...m, cards: m.cards.map(c => c.type === 'assessment-profile' ? { ...c, done: true } : c) }
+        : m)
+      return [...updated,
+        { role: 'user', content: assessmentProfileSummary(kind, profile) },
+        {
+          role: 'assistant', id: `assess-intro-${kind}`, cards: [], followUp: [],
+          message: kind === 'cx'
+            ? "Thanks. Here are 9 quick questions across three dimensions — answer each as it best fits your organization today."
+            : `Thanks. Based on your role, here are ${questions.length} questions across four dimensions — answer each as it best fits your organization today.`,
+        },
+        assessmentQuestionMessage(kind, questions, 0),
+      ]
+    })
+  }
+
+  const answerAssessment = (kind, qIndex, score, label) => {
+    const st = assessRef.current
+    const q = st.questions[qIndex]
+    st.answers = { ...st.answers, [q.id]: score }
+    setMessages((prev) => {
+      const updated = prev.map(m => (m.id === `assess-q-${kind}-${qIndex}` && m.cards)
+        ? { ...m, cards: m.cards.map(c => c.type === 'assessment-question' ? { ...c, answeredScore: score } : c) }
+        : m)
+      const next = [...updated, { role: 'user', content: label }]
+      if (qIndex + 1 < st.questions.length) {
+        next.push(assessmentQuestionMessage(kind, st.questions, qIndex + 1))
+      } else {
+        next.push({
+          role: 'assistant', id: `assess-report-${kind}`, followUp: [],
+          message: "Here's your report — your stage, your scores, and where to focus next.",
+          cards: [{ type: 'assessment-report', kind, profile: st.profile, answers: { ...st.answers } }],
+        })
+      }
+      return next
+    })
   }
 
   const handleKeyDown = (e) => {
@@ -533,7 +622,8 @@ export default function Chat() {
                 {msg.role === 'user' ? (
                   <UserBubble content={msg.content} />
                 ) : (
-                  <AssistantCards message={msg.message} cards={msg.cards} onSubmit={handleSubmit} />
+                  <AssistantCards message={msg.message} cards={msg.cards} onSubmit={handleSubmit}
+                    onAssessment={startAssessment} onAssessmentProfile={submitAssessmentProfile} onAssessmentAnswer={answerAssessment} />
                 )}
               </motion.div>
             ))}
@@ -822,7 +912,7 @@ function ThinkingIndicator() {
 }
 
 /* ── Assistant Card Renderer ── */
-function AssistantCards({ message, cards, onSubmit }) {
+function AssistantCards({ message, cards, onSubmit, onAssessment, onAssessmentProfile, onAssessmentAnswer }) {
   return (
     <div className="flex gap-4 items-start">
       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1"
@@ -836,7 +926,8 @@ function AssistantCards({ message, cards, onSubmit }) {
         {cards && cards.length > 0 && (
           <div className="space-y-6">
             {cards.map((card, i) => (
-              <CardRenderer key={i} card={card} index={i} onSubmit={onSubmit} />
+              <CardRenderer key={i} card={card} index={i} onSubmit={onSubmit} onAssessment={onAssessment}
+                onAssessmentProfile={onAssessmentProfile} onAssessmentAnswer={onAssessmentAnswer} />
             ))}
           </div>
         )}
@@ -846,7 +937,7 @@ function AssistantCards({ message, cards, onSubmit }) {
 }
 
 /* ── Card Router ── */
-function CardRenderer({ card, index, onSubmit }) {
+function CardRenderer({ card, index, onSubmit, onAssessment, onAssessmentProfile, onAssessmentAnswer }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -856,14 +947,21 @@ function CardRenderer({ card, index, onSubmit }) {
       {card.type === 'hero' && <HeroCard card={card} />}
       {card.type === 'metrics' && <MetricsCard card={card} />}
       {card.type === 'text' && <TextCard card={card} />}
-      {card.type === 'grid' && <GridCard card={card} onSubmit={onSubmit} />}
+      {card.type === 'grid' && <GridCard card={card} onSubmit={onSubmit} onAssessment={onAssessment} />}
+      {card.type === 'assessment-profile' && <AssessmentProfileCard card={card} onSubmit={onAssessmentProfile} />}
+      {card.type === 'assessment-question' && (
+        <AssessmentQuestionCard card={card} onAnswer={(qi, score, label) => onAssessmentAnswer(card.kind, qi, score, label)} />
+      )}
+      {card.type === 'assessment-report' && (
+        <AssessmentReport kind={card.kind} profile={card.profile} answers={card.answers} onSubmit={onSubmit} />
+      )}
       {card.type === 'list' && <ListCard card={card} onItemClick={onSubmit} />}
       {card.type === 'case-study-grid' && <CaseStudyGridCard card={card} onItemClick={onSubmit} />}
       {card.type === 'case-study' && <CaseStudyCard card={card} />}
       {card.type === 'partners' && <PartnersCard card={card} />}
       {card.type === 'main-menu' && <MainMenuCard card={card} onSubmit={onSubmit} />}
       {card.type === 'contact-details' && <ContactDetailsCard card={card} />}
-      {card.type === 'cta' && <CTACard card={card} onSubmit={onSubmit} />}
+      {card.type === 'cta' && <CTACard card={card} onSubmit={onSubmit} onAssessment={onAssessment} />}
       {card.type === 'solutions' && <SolutionsCard card={card} />}
       {card.type === 'platforms' && <PlatformsCard card={card} />}
       {card.type === 'industries' && <IndustriesCard card={card} />}
@@ -1154,7 +1252,30 @@ function TextCard({ card }) {
    GRID CARD — Matches WhyRadiant.jsx with icon boxes,
    hover glow, bottom accent line
    ═══════════════════════════════════════════════ */
-function GridCard({ card, onSubmit }) {
+function AssessmentProfileCard({ card, onSubmit }) {
+  if (card.done) {
+    return (
+      <div className="mag-card p-5 flex items-center gap-3">
+        <CheckCircle2 size={18} className="text-brand-green flex-shrink-0" />
+        <span className="text-text-secondary text-sm">Details received — your assessment is underway.</span>
+      </div>
+    )
+  }
+  return (
+    <div className="mag-card p-6 lg:p-8">
+      <ProfileForm
+        showRole={card.kind === 'ai'}
+        heading="First, a little context"
+        subtext={card.kind === 'ai'
+          ? "Your role tailors the questions you'll see. Everything stays confidential — this is a diagnostic, not a sales pitch."
+          : 'A few details so we can tailor your results. Everything stays confidential — this is a diagnostic, not a sales pitch.'}
+        onSubmit={(p) => onSubmit(card.kind, p)}
+      />
+    </div>
+  )
+}
+
+function GridCard({ card, onSubmit, onAssessment }) {
   return (
     <div className="space-y-5">
       {/* Header */}
@@ -1174,13 +1295,16 @@ function GridCard({ card, onSubmit }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {card.items.map((item) => {
           const Icon = iconMap[item.icon] || Layers
-          const hasLink = !!item.link
-          const isClickable = !hasLink && card.clickable && item.query
-          const interactive = hasLink || isClickable
-          const Tag = hasLink ? Link : (isClickable ? 'button' : 'div')
-          const tagProps = hasLink
-            ? { to: item.link }
-            : (isClickable ? { onClick: () => onSubmit(item.query) } : {})
+          // Assessment links load inline in the chat instead of navigating away.
+          const assessmentMatch = item.link && item.link.match(/^\/assessment\/(ai|cx)\b/)
+          const inlineAssessment = !!(assessmentMatch && onAssessment)
+          const hasLink = !!item.link && !inlineAssessment
+          const isClickable = !item.link && card.clickable && item.query
+          const interactive = inlineAssessment || hasLink || isClickable
+          const Tag = inlineAssessment ? 'button' : (hasLink ? Link : (isClickable ? 'button' : 'div'))
+          const tagProps = inlineAssessment
+            ? { onClick: () => onAssessment(assessmentMatch[1]) }
+            : (hasLink ? { to: item.link } : (isClickable ? { onClick: () => onSubmit(item.query) } : {}))
           return (
             <Tag
               key={item.name || item.title}
@@ -1643,7 +1767,7 @@ function ContactDetailsCard({ card }) {
   )
 }
 
-function CTACard({ card, onSubmit }) {
+function CTACard({ card, onSubmit, onAssessment }) {
   return (
     <div className="rounded-[20px] overflow-hidden relative"
       style={{ background: 'rgba(1,15,30,0.9)', border: '1px solid rgba(145,196,107,0.12)' }}>
@@ -1677,8 +1801,8 @@ function CTACard({ card, onSubmit }) {
             <div className="text-text-muted text-xs leading-snug">Talk to our team directly</div>
           </button>
 
-          <Link to="/assessment/ai"
-            className="group rounded-2xl p-5 text-center no-underline transition-all duration-300 hover:-translate-y-1"
+          <button type="button" onClick={() => (onAssessment ? onAssessment('ai') : null)}
+            className="group rounded-2xl p-5 text-center transition-all duration-300 hover:-translate-y-1"
             style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(145,196,107,0.18)' }}>
             <div className="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center"
               style={{ background: 'rgba(145,196,107,0.12)', border: '1px solid rgba(145,196,107,0.25)' }}>
@@ -1686,10 +1810,10 @@ function CTACard({ card, onSubmit }) {
             </div>
             <div className="font-display font-bold text-white text-sm mb-1">AI Maturity Assessment</div>
             <div className="text-text-muted text-xs leading-snug">Benchmark your AI readiness</div>
-          </Link>
+          </button>
 
-          <Link to="/assessment/cx"
-            className="group rounded-2xl p-5 text-center no-underline transition-all duration-300 hover:-translate-y-1"
+          <button type="button" onClick={() => (onAssessment ? onAssessment('cx') : null)}
+            className="group rounded-2xl p-5 text-center transition-all duration-300 hover:-translate-y-1"
             style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(89,106,224,0.22)' }}>
             <div className="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center"
               style={{ background: 'rgba(89,106,224,0.12)', border: '1px solid rgba(89,106,224,0.28)' }}>
@@ -1697,7 +1821,7 @@ function CTACard({ card, onSubmit }) {
             </div>
             <div className="font-display font-bold text-white text-sm mb-1">CX Maturity Assessment</div>
             <div className="text-text-muted text-xs leading-snug">Measure your CX maturity</div>
-          </Link>
+          </button>
         </div>
       </div>
     </div>
