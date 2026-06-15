@@ -81,9 +81,14 @@ export const cxSections = [
 
 // ── Levels ──────────────────────────────────────────────────────────────────
 
+export const levelIndex = { Foundational: 1, Developing: 2, Advanced: 3 }
+
 export const cxLevels = {
   Foundational: {
     name: 'Foundational', color: '#F0974E',
+    index: 1,
+    tagline: 'Early foundations. CX is emerging but not yet unified.',
+    description: "Your CX culture and structure are still developing. Some teams show customer-centric thinking, but CX isn't organization-wide yet, and roles remain unclear. The opportunity now is to define a clear CX direction and connect it to business goals.",
     blurb: {
       vision: 'Your organization is starting to define its CX direction, but the vision is not yet unified or consistently communicated.',
       governance: 'CX oversight and measurement are still emerging, with inconsistent review and ownership.',
@@ -92,6 +97,9 @@ export const cxLevels = {
   },
   Developing: {
     name: 'Developing', color: '#596AE0',
+    index: 2,
+    tagline: 'Taking shape. Goals are aligning, but not yet unified.',
+    description: 'Your organization is starting to align CX goals with business objectives, but the CX vision is not yet fully unified or consistently communicated. Governance and customer-centric behaviors are spreading, though empowerment and collaboration are not yet organization-wide.',
     blurb: {
       vision: 'Your organization is starting to align CX goals with business objectives, but the CX vision is not yet fully unified or consistently communicated.',
       governance: 'Governance practices are taking shape; metrics inform some decisions but are applied unevenly.',
@@ -100,6 +108,9 @@ export const cxLevels = {
   },
   Advanced: {
     name: 'Advanced', color: '#91C46B',
+    index: 3,
+    tagline: 'Mature CX. A clear vision drives decisions and outcomes.',
+    description: 'You have strong governance and measurement practices. A clear, unified CX vision actively drives leadership decisions and is connected to measurable business outcomes. Customer empathy is core to your identity, with organization-wide empowerment and strong cross-functional teamwork.',
     blurb: {
       vision: 'A clear, unified CX vision actively drives leadership decisions and is connected to measurable business outcomes.',
       governance: 'You have strong governance and measurement practices. CX roles are clear, data is collected, and metrics often guide decisions — your strongest area.',

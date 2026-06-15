@@ -1,10 +1,11 @@
 import { motion } from 'framer-motion'
 
 /**
- * CX results dimension table + per-dimension read.
- * Props: dimensions [{ key, label, level, color, blurb, avg }]
+ * CX results dimension table. The per-dimension write-ups are part of the full
+ * report (PDF) — pass `compact` to show only the table.
+ * Props: dimensions [{ key, label, level, color, blurb, avg }], compact
  */
-export default function DimensionTable({ dimensions }) {
+export default function DimensionTable({ dimensions, compact = false }) {
   return (
     <div className="space-y-5">
       <div className="mag-card p-8 lg:p-10">
@@ -27,7 +28,7 @@ export default function DimensionTable({ dimensions }) {
         </div>
       </div>
 
-      {dimensions.map((d, i) => (
+      {!compact && dimensions.map((d, i) => (
         <motion.div key={d.key}
           initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.08 * i, duration: 0.5 }}
           className="rounded-2xl p-6 lg:p-7"

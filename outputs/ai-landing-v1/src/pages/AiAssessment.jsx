@@ -1,21 +1,13 @@
 import { useState, useMemo, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 import { ArrowRight, Brain, Clock, CheckCircle2, RotateCcw } from 'lucide-react'
 import Navbar from '../components/shared/Navbar'
 import Footer from '../components/shared/Footer'
-import ResultsContact from '../components/assessment/ResultsContact'
-import PrintReportButton from '../components/assessment/PrintReportButton'
 import ProfileForm from '../components/assessment/ProfileForm'
 import QuestionRunner from '../components/assessment/QuestionRunner'
-import StageReveal from '../components/assessment/StageReveal'
-import ScoreBars from '../components/assessment/ScoreBars'
-import FindingsPanel from '../components/assessment/FindingsPanel'
-import NextStepCard from '../components/assessment/NextStepCard'
-import {
-  roles, getAQ, scoreAssessment, buildFindings, recommendNextStep, sectionMeta,
-  sampleProfile, sampleAnswers,
-} from '../data/aiAssessment.js'
+import AssessmentResults from '../components/assessment/AssessmentResults'
+import { roles, getAQ, sectionMeta, sampleProfile, sampleAnswers } from '../data/aiAssessment.js'
 
 const ACCENT = '#91C46B'
 
@@ -40,16 +32,6 @@ export default function AiAssessment() {
       trackLabel,
     }))
   }, [profile, trackLabel])
-
-  const result = useMemo(() => {
-    if (step !== 'results' || !profile) return null
-    const scored = scoreAssessment(answers, getAQ(profile.role))
-    return {
-      ...scored,
-      findings: buildFindings(scored.sectionAverages),
-      nextStep: recommendNextStep(scored.sectionAverages),
-    }
-  }, [step, profile, answers])
 
   const reset = () => { setProfile(null); setAnswers({}); setStep('intro') }
 
@@ -106,49 +88,10 @@ export default function AiAssessment() {
             />
           )}
 
-          {step === 'results' && result && (
+          {step === 'results' && profile && (
             <div className="space-y-5">
-              <div className="flex items-center justify-between no-print">
-                <span className="text-text-muted text-xs font-display font-semibold uppercase tracking-widest">AI Adoption Report</span>
-                <PrintReportButton />
-              </div>
-              <StageReveal stage={result.stage} accent={ACCENT} />
-              <ScoreBars sectionAverages={result.sectionAverages} />
-              <FindingsPanel findings={result.findings} />
-              <NextStepCard nextStep={result.nextStep} accent={ACCENT} />
-
-              {/* Contact (reused two-column block) */}
-              <ResultsContact
-                accent={ACCENT}
-                kicker="Talk it Through"
-                title="Turn this into a plan"
-                body="Share your results with our team and we'll come back with a tailored roadmap for your next move."
-                bullets={[
-                  'A prioritized roadmap for your weakest dimension',
-                  'Benchmarks against organizations at your stage',
-                  'A 30-minute working session, no obligation',
-                ]}
-                subjectPrefix="AI Adoption Assessment lead"
-                meta={{
-                  assessment: 'AI Adoption',
-                  stage: result.stage.name,
-                  overall_score: result.overall.toFixed(2),
-                  ...(profile ? { respondent_role: profile.role, company: profile.companyName } : {}),
-                }}
-                defaults={{
-                  name: profile?.fullName || '',
-                  email: profile?.workEmail || '',
-                  company: profile?.companyName || '',
-                  message: `Our AI assessment came out at Stage ${result.stage.index} — ${result.stage.name}. I'd like to discuss next steps.`,
-                }}
-              />
-
-              <div className="flex flex-wrap items-center justify-center gap-6 pt-2 no-print">
-                {!isSample && (
-                  <Link to="/assessment/ai?view=sample" className="text-text-muted hover:text-white transition-colors text-sm font-display font-semibold">
-                    See the full report format
-                  </Link>
-                )}
+              <AssessmentResults kind="ai" profile={profile} answers={answers} />
+              <div className="flex justify-center pt-2 no-print">
                 <button onClick={reset} className="flex items-center gap-2 text-text-muted hover:text-white transition-colors text-sm font-display font-semibold">
                   <RotateCcw size={14} /> Retake the assessment
                 </button>

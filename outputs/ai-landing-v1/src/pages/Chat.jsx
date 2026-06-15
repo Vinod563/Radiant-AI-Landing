@@ -51,7 +51,7 @@ import RadiantLogo from '../components/shared/RadiantLogo'
 import ContactForm from '../components/shared/ContactForm'
 import ProfileForm from '../components/assessment/ProfileForm'
 import AssessmentQuestionCard from '../components/assessment/AssessmentQuestionCard'
-import AssessmentReport from '../components/assessment/AssessmentReport'
+import AssessmentResults from '../components/assessment/AssessmentResults'
 import { getAQ, sectionMeta, roles } from '../data/aiAssessment.js'
 import { cxSections } from '../data/cxAssessment.js'
 
@@ -990,7 +990,7 @@ function CardRenderer({ card, index, onSubmit, onAssessment, onAssessmentProfile
         <AssessmentQuestionCard card={card} onAnswer={(qi, score, label) => onAssessmentAnswer(card.kind, qi, score, label)} />
       )}
       {card.type === 'assessment-report' && (
-        <AssessmentReport kind={card.kind} profile={card.profile} answers={card.answers} onSubmit={onSubmit} />
+        <AssessmentResults kind={card.kind} profile={card.profile} answers={card.answers} />
       )}
       {card.type === 'list' && <ListCard card={card} onItemClick={onSubmit} />}
       {card.type === 'case-study-grid' && <CaseStudyGridCard card={card} onItemClick={onSubmit} />}
@@ -1292,23 +1292,24 @@ function TextCard({ card }) {
 function AssessmentProfileCard({ card, onSubmit }) {
   if (card.done) {
     return (
-      <div className="mag-card p-5 flex items-center gap-3">
+      <div className="flex items-center gap-3 rounded-xl px-5 py-4"
+        style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}>
         <CheckCircle2 size={18} className="text-brand-green flex-shrink-0" />
         <span className="text-text-secondary text-sm">Details received — your assessment is underway.</span>
       </div>
     )
   }
+  // No card box — the custom dropdowns need to overflow freely. Left-aligned in chat.
   return (
-    <div className="mag-card p-6 lg:p-8">
-      <ProfileForm
-        showRole={card.kind === 'ai'}
-        heading="First, a little context"
-        subtext={card.kind === 'ai'
-          ? "Your role tailors the questions you'll see. Everything stays confidential — this is a diagnostic, not a sales pitch."
-          : 'A few details so we can tailor your results. Everything stays confidential — this is a diagnostic, not a sales pitch.'}
-        onSubmit={(p) => onSubmit(card.kind, p)}
-      />
-    </div>
+    <ProfileForm
+      wrapperClass="max-w-2xl"
+      showRole={card.kind === 'ai'}
+      heading="First, a little context"
+      subtext={card.kind === 'ai'
+        ? "Your role tailors the questions you'll see. Everything stays confidential — this is a diagnostic, not a sales pitch."
+        : 'A few details so we can tailor your results. Everything stays confidential — this is a diagnostic, not a sales pitch.'}
+      onSubmit={(p) => onSubmit(card.kind, p)}
+    />
   )
 }
 

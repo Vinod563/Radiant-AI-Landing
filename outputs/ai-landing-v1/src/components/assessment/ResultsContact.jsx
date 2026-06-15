@@ -20,6 +20,8 @@ export default function ResultsContact({
   subjectPrefix,
   meta,
   defaults,
+  submitLabel,
+  onSuccess,
 }) {
   return (
     <div className="mag-card p-8 lg:p-10 no-print">
@@ -63,7 +65,8 @@ export default function ResultsContact({
 
         {/* Right — form */}
         <div>
-          <ContactForm accent={accent} subjectPrefix={subjectPrefix} meta={meta} defaults={defaults} />
+          <ContactForm accent={accent} subjectPrefix={subjectPrefix} meta={meta} defaults={defaults}
+            submitLabel={submitLabel} onSuccess={onSuccess} />
         </div>
       </div>
     </div>

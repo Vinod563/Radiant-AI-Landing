@@ -27,6 +27,7 @@ import { dirname, join } from 'path'
 import { handleLLMChat, GEMMA_MODEL } from './handlers/llmHandler.js'
 import { handleStaticChat } from './handlers/staticHandler.js'
 import { requireAuth } from './middleware/auth.js'
+import { sendReportEmail, isMailConfigured } from './utils/mailer.js'
 
 dotenv.config()
 
@@ -92,8 +93,23 @@ app.use((req, res, next) => {
   })(req, res, next)
 })
 
-app.use(express.json({ limit: '10kb' }))
+// The report endpoint carries a base64 PDF, so it needs a larger body limit.
+// Every other route keeps the tight 10kb cap.
+const REPORT_PATH = '/api/assessment-report'
+app.use((req, res, next) => {
+  if (req.path === REPORT_PATH) return express.json({ limit: '4mb' })(req, res, next)
+  return express.json({ limit: '10kb' })(req, res, next)
+})
 app.use(cookieParser())
+
+// Rate limit the report endpoint (10 requests / hour per IP)
+const reportLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 10,
+  message: { error: 'Too many report requests — try again later' },
+  standardHeaders: true,
+  legacyHeaders: false,
+})
 
 // ─── Rate limiter for login endpoint (5 attempts / 15 min per IP) ─────────────
 const loginLimiter = rateLimit({
@@ -150,6 +166,47 @@ app.post('/api/chat', async (req, res) => {
     }
     console.error('LLM error:', error?.message || error)
     return res.status(200).json(handleStaticChat(sanitized))
+  }
+})
+
+// ─── Public: Email the assessment report PDF ─────────────────────────────────
+app.post(REPORT_PATH, reportLimiter, async (req, res) => {
+  const { name, email, company, sector, orgSize, department, consent,
+    assessment, headline, pdfBase64, filename, website } = req.body || {}
+
+  // Honeypot — silently accept bot submissions without sending anything
+  if (website) return res.status(200).json({ ok: true })
+
+  if (!email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+    return res.status(400).json({ error: 'A valid email is required' })
+  }
+  if (!pdfBase64 || typeof pdfBase64 !== 'string' || pdfBase64.length > 5_000_000) {
+    return res.status(400).json({ error: 'A valid report attachment is required' })
+  }
+
+  if (!isMailConfigured()) {
+    return res.status(503).json({ error: 'email_not_configured' })
+  }
+
+  try {
+    const pdfBuffer = Buffer.from(pdfBase64, 'base64')
+    const lead = {
+      name: (name || '').toString().slice(0, 120),
+      email: email.trim().slice(0, 160),
+      company: (company || '').toString().slice(0, 160),
+      sector: (sector || '').toString().slice(0, 80),
+      orgSize: (orgSize || '').toString().slice(0, 40),
+      department: (department || '').toString().slice(0, 80),
+      consent: !!consent,
+      assessment: (assessment || 'Assessment').toString().slice(0, 60),
+      headline: (headline || '').toString().slice(0, 200),
+    }
+    await sendReportEmail(lead, pdfBuffer, (filename || 'Radiant-Report.pdf').toString().slice(0, 120))
+    console.log(`[${new Date().toISOString()}] report emailed → ${lead.email} (${lead.assessment})`)
+    return res.status(200).json({ ok: true })
+  } catch (error) {
+    console.error('Report email failed:', error?.message || error)
+    return res.status(500).json({ error: 'send_failed' })
   }
 })
 

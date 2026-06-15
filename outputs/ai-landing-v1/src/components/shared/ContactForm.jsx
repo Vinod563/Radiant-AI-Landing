@@ -27,6 +27,7 @@ export default function ContactForm({
   defaults = {},
   meta = null,
   heading = 'Send us a message',
+  submitLabel = 'Send Message',
   onSuccess,
 }) {
   const canvasRef = useRef(null)
@@ -225,7 +226,7 @@ export default function ContactForm({
         disabled={submitting}
         className="btn-primary w-full justify-center !py-3.5 group/btn disabled:opacity-60 disabled:cursor-not-allowed"
       >
-        <span>{submitting ? 'Sending...' : 'Send Message'}</span>
+        <span>{submitting ? 'Sending...' : submitLabel}</span>
         {!submitting && <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />}
       </button>
 
