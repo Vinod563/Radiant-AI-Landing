@@ -37,6 +37,10 @@ export default function Navbar() {
                 {l.label}
               </a>
             ))}
+            <Link to="/assessment"
+              className="font-body text-[0.8rem] font-semibold text-brand-green hover:text-brand-green-dark transition-colors no-underline tracking-wide">
+              Assessment
+            </Link>
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
@@ -56,6 +60,10 @@ export default function Navbar() {
                 {l.label}
               </a>
             ))}
+            <Link to="/assessment" onClick={() => setOpen(false)}
+              className="font-body text-sm font-semibold text-brand-green hover:text-brand-green-dark transition-colors no-underline">
+              Assessment
+            </Link>
             <Link to="/chat?q=Connect%20with%20our%20team" onClick={() => setOpen(false)} className="btn-primary w-fit mt-2 !py-3 !px-6">
               Connect with Us
             </Link>

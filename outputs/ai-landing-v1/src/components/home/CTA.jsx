@@ -1,9 +1,10 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { ArrowRight, Mail, Phone, MapPin, MessageSquare, Sparkles } from 'lucide-react'
+import { ArrowRight, Mail, Phone, MapPin, MessageSquare, Sparkles, Gauge } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 const contactReasons = [
+  { icon: Gauge, text: 'Benchmark your AI & CX maturity in minutes', accent: '#F0974E' },
   { icon: MessageSquare, text: 'Discuss your AI transformation goals', accent: '#91C46B' },
   { icon: Sparkles, text: 'Get a tailored solution recommendation', accent: '#596AE0' },
 ]
@@ -87,26 +88,37 @@ export default function CTA() {
                 {/* Icon */}
                 <div className="w-16 h-16 rounded-2xl mx-auto mb-6 flex items-center justify-center"
                   style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.25)' }}>
-                  <MessageSquare size={28} className="text-brand-green" />
+                  <Gauge size={28} className="text-brand-green" />
                 </div>
 
                 <h3 className="font-display font-black text-2xl lg:text-3xl text-white mb-3 tracking-tight">
-                  Connect with Us
+                  Not sure where to start?
                 </h3>
                 <p className="text-text-secondary text-base leading-relaxed mb-8 max-w-sm mx-auto">
-                  Reach out to our team directly. Share your goals and challenges, and we will get back to you with a tailored plan.
+                  Take a free maturity assessment to see exactly where you stand — your stage, your biggest gaps,
+                  and the next move. Or reach out to our team directly.
                 </p>
 
-                {/* Primary CTA — opens chat contact form */}
+                {/* Primary CTA — free assessment */}
                 <Link
-                  to="/chat?q=I%27d%20rather%20talk%20to%20a%20real%20person."
+                  to="/assessment"
                   className="btn-primary text-base !px-10 !py-5 shadow-[0_0_60px_rgba(145,196,107,0.25)] w-full sm:w-auto justify-center"
                 >
-                  Let's Talk <ArrowRight size={17} />
+                  Take the free assessment <ArrowRight size={17} />
                 </Link>
 
+                {/* Secondary CTA — opens chat contact form */}
+                <div className="mt-4">
+                  <Link
+                    to="/chat?q=I%27d%20rather%20talk%20to%20a%20real%20person."
+                    className="btn-outline text-base !px-10 !py-4 w-full sm:w-auto justify-center"
+                  >
+                    <MessageSquare size={16} /> Talk to our team
+                  </Link>
+                </div>
+
                 <p className="text-text-muted text-xs mt-5">
-                  Our team typically responds within one business day
+                  Free · No signup · Results in minutes
                 </p>
               </div>
             </div>
@@ -116,37 +128,4 @@ export default function CTA() {
       </div>
     </section>
   )
-}
-
-
-/* ═══════════════════════════════════════════════════════
-   AI READINESS WIDGET — Saved for future use.
-   To restore, swap the default export back to this component.
-   ═══════════════════════════════════════════════════════ */
-export { AIReadinessWidget }
-
-const readinessLevels = [
-  { label: 'Reactive', desc: 'Manual processes, siloed data', color: '#F05030' },
-  { label: 'Emerging', desc: 'Basic analytics, some automation', color: '#F0974E' },
-  { label: 'Defined', desc: 'Unified data, journey mapping', color: '#596AE0' },
-  { label: 'Optimized', desc: 'AI-driven, proactive CX', color: '#91C46B' },
-  { label: 'Leading', desc: 'Agentic AI, outcome-linked', color: '#00c87d' },
-]
-
-const readinessBenefits = [
-  { icon: 'BarChart3', text: 'Benchmark against industry leaders' },
-  { icon: 'Target', text: 'Identify your biggest CX gaps' },
-  { icon: 'TrendingUp', text: 'Get a prioritized AI roadmap' },
-  { icon: 'Shield', text: 'Receive your score in minutes' },
-]
-
-function AIReadinessWidget() {
-  return {
-    levels: readinessLevels,
-    benefits: readinessBenefits,
-    headline: 'Where does your enterprise stand on AI readiness?',
-    subtext: 'Five minutes. No signup. A prioritized roadmap that tells you where you are, where the gaps are, and which AI deployments would produce the fastest results.',
-    cta: 'Take the Assessment',
-    note: 'Free · No signup required · Results in under 5 minutes',
-  }
 }

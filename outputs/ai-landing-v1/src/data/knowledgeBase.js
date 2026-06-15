@@ -602,6 +602,65 @@ const knowledgeBase = [
     ],
   },
   {
+    id: 'ai-maturity-assessment',
+    keywords: ['assessment', 'assessments', 'take the assessment', 'ai readiness', 'ai-ready', 'how ai-ready is my organization', 'ai maturity', 'maturity assessment', 'readiness assessment', 'ai readiness score', 'ai adoption assessment', 'benchmark', 'where do we stand', 'where does my organization stand', 'maturity level', 'diagnostic', 'evaluate our ai', 'assess my ai', 'how ready are we for ai'],
+    question: 'How AI-ready is my organization?',
+    cards: [
+      {
+        type: 'text',
+        title: 'Find out exactly where you stand',
+        body: 'We have two free, self-serve diagnostics. The AI Adoption Assessment is a role-adaptive diagnostic across strategy, data, people, and adoption — you get an instant stage diagnosis, per-dimension scores, specific findings, and a recommended next step. The CX Maturity Assessment evaluates your customer experience across vision, governance, and culture. No signup. Results in minutes.',
+        accent: '#91C46B',
+      },
+      {
+        type: 'grid',
+        kicker: 'Choose Your Assessment',
+        title: 'Two ways to benchmark your maturity',
+        columns: 2,
+        clickable: true,
+        items: [
+          { icon: 'Brain', title: 'AI Adoption Assessment', accent: '#91C46B', desc: 'Role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage and a prioritized roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
+          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Evaluate CX across vision, governance, and culture. Get your maturity level and a recommended solution.', link: '/assessment/cx', cta: 'Start · 3–5 min' },
+        ],
+      },
+    ],
+    followUp: [
+      'Assess my CX maturity',
+      'What solutions does Radiant Digital offer?',
+      'Show me proof, not promises.',
+      "I'd rather talk to a real person.",
+    ],
+  },
+  {
+    id: 'cx-maturity-assessment',
+    keywords: ['cx maturity', 'cx assessment', 'cx maturity assessment', 'customer experience maturity', 'assess my cx', 'assess my cx maturity', 'customer experience assessment', 'how mature is our cx', 'cx readiness', 'experience maturity', 'evaluate our customer experience'],
+    question: 'Assess my CX maturity',
+    cards: [
+      {
+        type: 'text',
+        title: 'Measure your CX maturity',
+        body: 'The CX Maturity Assessment evaluates your organization across three dimensions — Vision & Strategy, Governance & Metrics, and Organizational Culture. You get a personalized maturity level, a breakdown by dimension, and a recommended solution to reach the next level. Takes 3–5 minutes, no signup.',
+        accent: '#596AE0',
+      },
+      {
+        type: 'grid',
+        kicker: 'Choose Your Assessment',
+        title: 'Start your assessment',
+        columns: 2,
+        clickable: true,
+        items: [
+          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Vision, governance, and culture — your maturity level and a tailored next step.', link: '/assessment/cx', cta: 'Start · 3–5 min' },
+          { icon: 'Brain', title: 'AI Adoption Assessment', accent: '#91C46B', desc: 'Prefer to benchmark AI readiness? Role-adaptive diagnostic with a stage and roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
+        ],
+      },
+    ],
+    followUp: [
+      'How AI-ready is my organization?',
+      'What solutions does Radiant Digital offer?',
+      "I'd rather talk to a real person.",
+    ],
+  },
+  {
     id: 'all-case-studies',
     keywords: ['case studies', 'all case studies', 'portfolio', 'all projects', 'show me all', 'full portfolio', 'all engagements', 'complete list', 'who has worked with you', 'what did they achieve', 'worked with you', 'clients', 'references', 'more case studies', 'show me more case studies', 'other case studies', 'other examples', 'more examples', 'more proof'],
     question: 'Show me your case studies and proof.',

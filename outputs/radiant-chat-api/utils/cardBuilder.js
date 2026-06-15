@@ -119,15 +119,15 @@ Rule: 3–7 rows. Keep cell text short (max 6 words per cell).
   "accent": "#91C46B"
 }
 
-9. CTA — call to action, next step prompt
+9. CTA — closing next-step prompt
 {
   "type": "cta",
-  "title": "Ready to see what's possible?",
-  "subtitle": "Let's map your AI opportunity in 30 minutes.",
-  "buttonLabel": "Book a Discovery Call",
-  "buttonUrl": "https://radiant.digital/contact-us/",
+  "title": "Ready to take the next step?",
+  "subtitle": "Pick the path that fits — talk to our team, or benchmark where you stand.",
+  "buttonLabel": "Contact Us",
   "accent": "#91C46B"
 }
+Note: The CTA card automatically renders three standard next-step actions — Contact Us, the AI Maturity Assessment, and the CX Maturity Assessment. You only need to supply a fitting title and subtitle (and buttonLabel for compatibility). Do NOT invent your own buttonUrl or external links.
 
 10. SCREENSHOT — product UI screenshot for a specific Radiant solution
 {
@@ -157,7 +157,20 @@ Rule: Only use these approved screenshot paths:
   ],
   "accent": "#596AE0"
 }
-Rule: 4–8 items. Icons from: CheckCircle2, Zap, Brain, Database, Cpu, Users, TrendingUp, Shield, Target, Layers, Globe, BarChart3, Bot, Search, Award, Briefcase, Sparkles, Rocket, Lock, RefreshCw, ArrowRight, Star, Building2, Landmark, GraduationCap, HeartPulse, Radio, Fuel, Banknote
+Rule: 4–8 items for differentiators. Icons from: CheckCircle2, Zap, Brain, Database, Cpu, Users, TrendingUp, Shield, Target, Layers, Globe, BarChart3, Bot, Search, Award, Briefcase, Sparkles, Rocket, Lock, RefreshCw, ArrowRight, Star, Building2, Landmark, GraduationCap, HeartPulse, Radio, Fuel, Banknote
+Optional per-item fields: "link" (an internal route the card navigates to, e.g. "/assessment/ai") and "cta" (the short call-to-action label shown on the card, e.g. "Start · 10–15 min"). Use these ONLY for the assessment routing block below.
+
+ASSESSMENT ROUTING — when the user asks about AI readiness, AI maturity, "where do we stand", taking an assessment, or CX maturity, output a 2-item grid (kicker: "Choose Your Assessment") that deep-links to the self-serve diagnostics:
+{
+  "type": "grid",
+  "kicker": "Choose Your Assessment",
+  "title": "Two ways to benchmark your maturity",
+  "clickable": true,
+  "items": [
+    { "icon": "Brain",  "title": "AI Adoption Assessment", "accent": "#91C46B", "desc": "Role-adaptive diagnostic — get your stage, scores, and a roadmap.", "link": "/assessment/ai", "cta": "Start · 10–15 min" },
+    { "icon": "Target", "title": "CX Maturity Assessment", "accent": "#596AE0", "desc": "Evaluate CX across vision, governance, and culture.", "link": "/assessment/cx", "cta": "Start · 3–5 min" }
+  ]
+}
 
 12. CASE-STUDY (single) — deep-dive into one case study with metrics grid and pull quote
 {
@@ -267,6 +280,8 @@ COMBINATION EXAMPLES (message always comes first — cards are supporting only):
   "Tell me about ICX AI"                      → hero + screenshot + metrics
   "Why should I choose Radiant?"              → grid + cta
   "Tell me about the telecom case study"      → case-study + cta
+  "How AI-ready is my organization?"          → text + grid (ASSESSMENT ROUTING, with link items)
+  "Assess my CX maturity"                     → text + grid (ASSESSMENT ROUTING, with link items)
   "Who are your technology partners?"         → partners
   "Show me AI adoption across industries"     → chart (chartType: bar)
   "What's the cost reduction breakdown?"      → chart (chartType: pie or bar) + metrics

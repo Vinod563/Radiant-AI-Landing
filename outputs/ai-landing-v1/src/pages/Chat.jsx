@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback, useId } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { useNavigate, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import {
   Send,
   ArrowLeft,
@@ -48,6 +48,26 @@ import {
 } from 'lucide-react'
 import { findAnswer, suggestions, mainMenuItems } from '../data/knowledgeBase.js'
 import RadiantLogo from '../components/shared/RadiantLogo'
+import ContactForm from '../components/shared/ContactForm'
+
+// Queries whose answer is known up front — resolved locally with no LLM wait.
+const INSTANT_TRIGGERS = new Set([
+  "i'd rather talk to a real person.",
+  "i'd rather talk to a real person",
+  'connect with our team',
+  'connect with us',
+  'connect with radiant',
+  'talk to a real person',
+  'how ai-ready is my organization?',
+  'how ai-ready is my organization',
+  'assess my cx maturity',
+])
+
+function getInstantAnswer(raw) {
+  const n = raw.trim().toLowerCase().replace(/[‘’ʼ`]/g, "'")
+  if (!INSTANT_TRIGGERS.has(n)) return null
+  return findAnswer(raw)
+}
 
 const iconMap = {
   Layers, PenTool, Receipt, Globe, BarChart3, Zap, Bot, Brain,
@@ -108,6 +128,18 @@ export default function Chat() {
     const userMsg = { role: 'user', content: q.trim() }
     setMessages((prev) => [...prev, userMsg])
     setInput('')
+
+    // ── Instant answers ────────────────────────────────────────────────────
+    // For known intents (contact form, assessment options) we already know the
+    // exact card to show — skip the LLM round-trip and render it immediately.
+    const instant = getInstantAnswer(q)
+    if (instant) {
+      setMessages((prev) => [...prev, {
+        role: 'assistant', cards: instant.cards, id: instant.id, followUp: instant.followUp,
+      }])
+      return
+    }
+
     setIsTyping(true)
 
     try {
@@ -831,7 +863,7 @@ function CardRenderer({ card, index, onSubmit }) {
       {card.type === 'partners' && <PartnersCard card={card} />}
       {card.type === 'main-menu' && <MainMenuCard card={card} onSubmit={onSubmit} />}
       {card.type === 'contact-details' && <ContactDetailsCard card={card} />}
-      {card.type === 'cta' && <CTACard card={card} />}
+      {card.type === 'cta' && <CTACard card={card} onSubmit={onSubmit} />}
       {card.type === 'solutions' && <SolutionsCard card={card} />}
       {card.type === 'platforms' && <PlatformsCard card={card} />}
       {card.type === 'industries' && <IndustriesCard card={card} />}
@@ -1128,7 +1160,7 @@ function GridCard({ card, onSubmit }) {
       {/* Header */}
       <div className="text-center py-6">
         <p className="text-brand-green font-body text-xs font-semibold tracking-widest uppercase mb-4">
-          Why Radiant Digital
+          {card.kicker || 'Why Radiant Digital'}
         </p>
         <h3 className="font-display font-black text-2xl lg:text-3xl text-white mb-3 tracking-tight">
           {card.title}
@@ -1142,13 +1174,18 @@ function GridCard({ card, onSubmit }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
         {card.items.map((item) => {
           const Icon = iconMap[item.icon] || Layers
-          const isClickable = card.clickable && item.query
-          const Tag = isClickable ? 'button' : 'div'
+          const hasLink = !!item.link
+          const isClickable = !hasLink && card.clickable && item.query
+          const interactive = hasLink || isClickable
+          const Tag = hasLink ? Link : (isClickable ? 'button' : 'div')
+          const tagProps = hasLink
+            ? { to: item.link }
+            : (isClickable ? { onClick: () => onSubmit(item.query) } : {})
           return (
             <Tag
               key={item.name || item.title}
-              {...(isClickable ? { onClick: () => onSubmit(item.query) } : {})}
-              className={`group relative rounded-2xl p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1 text-left ${isClickable ? 'cursor-pointer' : ''}`}
+              {...tagProps}
+              className={`group relative rounded-2xl p-7 lg:p-8 transition-all duration-300 hover:-translate-y-1 text-left no-underline block ${interactive ? 'cursor-pointer' : ''}`}
               style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.06)' }}
             >
               {/* Hover glow */}
@@ -1172,9 +1209,9 @@ function GridCard({ card, onSubmit }) {
                     ))}
                   </div>
                 )}
-                {isClickable && (
+                {interactive && (
                   <div className="flex items-center gap-1.5 mt-4">
-                    <span className="text-xs font-medium" style={{ color: `${item.accent}` }}>Show me solutions</span>
+                    <span className="text-xs font-medium" style={{ color: `${item.accent}` }}>{item.cta || 'Show me solutions'}</span>
                     <ChevronRight size={14} className="transition-transform duration-300 group-hover:translate-x-1" style={{ color: item.accent }} />
                   </div>
                 )}
@@ -1517,130 +1554,6 @@ function ContactDetailsCard({ card }) {
     { icon: MapPin, label: 'Office', value: card.address },
   ]
 
-  // Canvas-based visual CAPTCHA
-  const canvasRef = useRef(null)
-  const [captchaCode, setCaptchaCode] = useState('')
-  const [form, setForm] = useState({ name: '', email: '', company: '', message: '', captcha: '' })
-
-  const generateCaptcha = useCallback(() => {
-    const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghjkmnpqrstuvwxyz23456789'
-    let code = ''
-    for (let i = 0; i < 5; i++) code += chars[Math.floor(Math.random() * chars.length)]
-    setCaptchaCode(code)
-    return code
-  }, [])
-
-  const drawCaptcha = useCallback((code) => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    const w = canvas.width, h = canvas.height
-
-    // Background
-    ctx.fillStyle = 'rgba(10, 25, 47, 1)'
-    ctx.fillRect(0, 0, w, h)
-
-    // Noise lines
-    for (let i = 0; i < 5; i++) {
-      ctx.strokeStyle = `rgba(${Math.random()*100+80}, ${Math.random()*100+80}, ${Math.random()*200+55}, 0.4)`
-      ctx.lineWidth = 1
-      ctx.beginPath()
-      ctx.moveTo(Math.random() * w, Math.random() * h)
-      ctx.bezierCurveTo(Math.random()*w, Math.random()*h, Math.random()*w, Math.random()*h, Math.random()*w, Math.random()*h)
-      ctx.stroke()
-    }
-
-    // Noise dots
-    for (let i = 0; i < 40; i++) {
-      ctx.fillStyle = `rgba(${Math.random()*200+55}, ${Math.random()*200+55}, ${Math.random()*200+55}, 0.3)`
-      ctx.beginPath()
-      ctx.arc(Math.random() * w, Math.random() * h, Math.random() * 2, 0, Math.PI * 2)
-      ctx.fill()
-    }
-
-    // Draw each character with rotation and offset
-    const fontSize = 26
-    ctx.textBaseline = 'middle'
-    const startX = 15
-    const spacing = (w - 30) / code.length
-
-    for (let i = 0; i < code.length; i++) {
-      ctx.save()
-      const x = startX + i * spacing + spacing / 2
-      const y = h / 2 + (Math.random() - 0.5) * 12
-      const angle = (Math.random() - 0.5) * 0.5
-      ctx.translate(x, y)
-      ctx.rotate(angle)
-      ctx.font = `bold ${fontSize + Math.floor(Math.random()*6 - 3)}px monospace`
-      const colors = ['#91C46B', '#596AE0', '#2DD4BF', '#F0974E', '#ffffff']
-      ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)]
-      ctx.fillText(code[i], -fontSize / 4, 0)
-      ctx.restore()
-    }
-  }, [])
-
-  useEffect(() => {
-    const code = generateCaptcha()
-    // Small delay to ensure canvas is mounted
-    const t = setTimeout(() => drawCaptcha(code), 50)
-    return () => clearTimeout(t)
-  }, [generateCaptcha, drawCaptcha])
-
-  const refreshCaptcha = () => {
-    const code = generateCaptcha()
-    setForm(prev => ({ ...prev, captcha: '' }))
-    setTimeout(() => drawCaptcha(code), 50)
-  }
-  const [submitted, setSubmitted] = useState(false)
-  const [submitting, setSubmitting] = useState(false)
-  const [error, setError] = useState('')
-
-  // Get your free access key at https://web3forms.com (enter vinod.mourya@radiant.digital)
-  const WEB3FORMS_KEY = '3a375f4a-b42f-45e0-a66f-0d787bf9e535'
-
-  const handleChange = (e) => setForm(prev => ({ ...prev, [e.target.name]: e.target.value }))
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    setError('')
-    if (!form.name || !form.email || !form.message) {
-      setError('Please fill in all required fields.')
-      return
-    }
-    if (form.captcha.trim() !== captchaCode) {
-      setError('Incorrect CAPTCHA. Please try again.')
-      refreshCaptcha()
-      return
-    }
-
-    setSubmitting(true)
-    try {
-      const res = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
-          subject: `New inquiry from ${form.name} — Radiant Digital AI`,
-          from_name: form.name,
-          name: form.name,
-          email: form.email,
-          company: form.company || 'Not provided',
-          message: form.message,
-        }),
-      })
-      const data = await res.json()
-      if (data.success) {
-        setSubmitted(true)
-      } else {
-        setError('Something went wrong. Please try again or email us directly.')
-      }
-    } catch {
-      setError('Network error. Please try again or email us directly.')
-    } finally {
-      setSubmitting(false)
-    }
-  }
-
   return (
     <div className="rounded-[20px] overflow-hidden relative"
       style={{ background: 'rgba(1,15,30,0.9)', border: '1px solid rgba(145,196,107,0.12)' }}>
@@ -1720,85 +1633,9 @@ function ContactDetailsCard({ card }) {
             )}
           </div>
 
-          {/* Right — Contact form */}
+          {/* Right — Contact form (shared component) */}
           <div>
-            {submitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="rounded-2xl p-8 text-center h-full flex flex-col items-center justify-center"
-                style={{ background: 'rgba(145,196,107,0.06)', border: '1px solid rgba(145,196,107,0.15)' }}
-              >
-                <div className="w-14 h-14 rounded-full flex items-center justify-center mb-4"
-                  style={{ background: 'rgba(145,196,107,0.15)' }}>
-                  <CheckCircle2 size={28} className="text-brand-green" />
-                </div>
-                <h4 className="font-display font-bold text-white text-lg mb-2">Message Sent</h4>
-                <p className="text-text-secondary text-sm leading-relaxed">
-                  Thank you, {form.name}. Our team will get back to you shortly.
-                </p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="text-text-muted text-[10px] font-display font-semibold uppercase tracking-widest mb-1">Send us a message</div>
-
-                <input
-                  type="text" name="name" placeholder="Full Name *" value={form.name} onChange={handleChange}
-                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
-                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-                />
-                <input
-                  type="email" name="email" placeholder="Work Email *" value={form.email} onChange={handleChange}
-                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
-                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-                />
-                <input
-                  type="text" name="company" placeholder="Company" value={form.company} onChange={handleChange}
-                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
-                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-                />
-                <textarea
-                  name="message" placeholder="How can we help? *" rows={3} value={form.message} onChange={handleChange}
-                  className="w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none resize-none transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
-                  style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-                />
-
-                {/* Visual CAPTCHA */}
-                <div className="flex items-center gap-3">
-                  <div className="flex items-center gap-2 rounded-xl overflow-hidden flex-shrink-0"
-                    style={{ border: '1px solid rgba(89,106,224,0.15)' }}>
-                    <canvas ref={canvasRef} width={160} height={48} className="rounded-l-xl" style={{ display: 'block' }} />
-                    <button type="button" onClick={refreshCaptcha} title="New CAPTCHA"
-                      className="px-2 py-3 text-text-muted hover:text-brand-green transition-colors">
-                      <RefreshCw size={14} />
-                    </button>
-                  </div>
-                  <input
-                    type="text" name="captcha" placeholder="Enter code" value={form.captcha} onChange={handleChange}
-                    autoComplete="off"
-                    className="w-28 rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none text-center transition-all duration-200 focus:border-[rgba(145,196,107,0.4)]"
-                    style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}
-                  />
-                </div>
-
-                {error && (
-                  <p className="text-red-400 text-xs font-medium">{error}</p>
-                )}
-
-                <button
-                  type="submit"
-                  disabled={submitting}
-                  className="btn-primary w-full justify-center !py-3.5 group/btn disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  <span>{submitting ? 'Sending...' : 'Send Message'}</span>
-                  {!submitting && <ArrowRight size={14} className="transition-transform group-hover/btn:translate-x-1" />}
-                </button>
-
-                <p className="text-text-muted text-[10px] text-center leading-relaxed">
-                  By submitting, you agree to be contacted by Radiant Digital.
-                </p>
-              </form>
-            )}
+            <ContactForm subjectPrefix="New inquiry" />
           </div>
         </div>
       </div>
@@ -1806,7 +1643,7 @@ function ContactDetailsCard({ card }) {
   )
 }
 
-function CTACard({ card }) {
+function CTACard({ card, onSubmit }) {
   return (
     <div className="rounded-[20px] overflow-hidden relative"
       style={{ background: 'rgba(1,15,30,0.9)', border: '1px solid rgba(145,196,107,0.12)' }}>
@@ -1827,15 +1664,40 @@ function CTACard({ card }) {
             {card.subtitle}
           </p>
         )}
-        <div className="flex flex-wrap justify-center gap-4">
-          {card.buttonLabel && (
-            <a
-              href={card.buttonUrl || 'https://radiant.digital/contact-us/'}
-              className="btn-primary text-sm !px-10 !py-4 shadow-[0_0_60px_rgba(145,196,107,0.25)]"
-            >
-              {card.buttonLabel} <ArrowRight size={15} />
-            </a>
-          )}
+        {/* Closing actions — the three next steps a user can take. */}
+        <div className="grid sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
+          <button type="button" onClick={() => onSubmit?.("I'd rather talk to a real person.")}
+            className="group rounded-2xl p-5 text-center transition-all duration-300 hover:-translate-y-1"
+            style={{ background: 'rgba(145,196,107,0.1)', border: '1px solid rgba(145,196,107,0.3)' }}>
+            <div className="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center"
+              style={{ background: 'rgba(145,196,107,0.15)', border: '1px solid rgba(145,196,107,0.3)' }}>
+              <Phone size={18} className="text-brand-green" />
+            </div>
+            <div className="font-display font-bold text-white text-sm mb-1">Contact Us</div>
+            <div className="text-text-muted text-xs leading-snug">Talk to our team directly</div>
+          </button>
+
+          <Link to="/assessment/ai"
+            className="group rounded-2xl p-5 text-center no-underline transition-all duration-300 hover:-translate-y-1"
+            style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(145,196,107,0.18)' }}>
+            <div className="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center"
+              style={{ background: 'rgba(145,196,107,0.12)', border: '1px solid rgba(145,196,107,0.25)' }}>
+              <Brain size={18} className="text-brand-green" />
+            </div>
+            <div className="font-display font-bold text-white text-sm mb-1">AI Maturity Assessment</div>
+            <div className="text-text-muted text-xs leading-snug">Benchmark your AI readiness</div>
+          </Link>
+
+          <Link to="/assessment/cx"
+            className="group rounded-2xl p-5 text-center no-underline transition-all duration-300 hover:-translate-y-1"
+            style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(89,106,224,0.22)' }}>
+            <div className="w-11 h-11 rounded-xl mx-auto mb-3 flex items-center justify-center"
+              style={{ background: 'rgba(89,106,224,0.12)', border: '1px solid rgba(89,106,224,0.28)' }}>
+              <Target size={18} style={{ color: '#596AE0' }} />
+            </div>
+            <div className="font-display font-bold text-white text-sm mb-1">CX Maturity Assessment</div>
+            <div className="text-text-muted text-xs leading-snug">Measure your CX maturity</div>
+          </Link>
         </div>
       </div>
     </div>

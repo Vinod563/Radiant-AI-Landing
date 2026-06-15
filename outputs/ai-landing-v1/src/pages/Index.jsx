@@ -11,6 +11,7 @@ import CaseStudy from '../components/home/CaseStudy.jsx'
 import SocialProof from '../components/home/SocialProof.jsx'
 import MarketCarousel from '../components/home/MarketCarousel.jsx'
 import CTA from '../components/home/CTA.jsx'
+import AssessmentEntry from '../components/home/AssessmentEntry.jsx'
 
 const Divider = () => <div className="divider" />
 
@@ -37,7 +38,10 @@ export default function Index() {
       <Divider />
       <Infrastructure />
       <Divider />
-      <CTA />
+      <AssessmentEntry />
+      {/* CTA section hidden for now — re-enable by uncommenting */}
+      {/* <Divider />
+      <CTA /> */}
       <Footer variant="home" />
     </div>
   )

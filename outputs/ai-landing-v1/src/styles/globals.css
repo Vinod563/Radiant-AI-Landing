@@ -296,3 +296,27 @@
 @media (prefers-reduced-motion: reduce) {
   .marquee-track { animation: none; }
 }
+
+/* ── PRINT / SAVE-AS-PDF (assessment reports) ── */
+@media print {
+  /* Print backgrounds and colors exactly as shown on screen */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  /* Hide app chrome and non-report elements */
+  header,
+  footer,
+  .no-print {
+    display: none !important;
+  }
+  /* Drop fixed/animated background layers and excess spacing for clean pages */
+  main {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+  .mag-card {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+}

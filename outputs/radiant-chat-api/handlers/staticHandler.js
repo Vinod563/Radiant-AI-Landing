@@ -281,15 +281,44 @@ const knowledgeBase = [
   },
   {
     id: 'ai-readiness',
-    keywords: ['ai-ready', 'ai ready', 'how ai-ready', 'ai readiness', 'readiness assessment', 'maturity', 'maturity assessment', 'how ready', 'assessment', 'my organization', 'where does my enterprise stand', 'ai readiness score', 'benchmark', 'how ai ready is my', 'ai ready is my company', 'is my organization ready', 'evaluate my organization', 'ai maturity level'],
+    keywords: ['ai-ready', 'ai ready', 'how ai-ready', 'ai readiness', 'readiness assessment', 'maturity', 'maturity assessment', 'how ready', 'assessment', 'assessments', 'take the assessment', 'ai adoption assessment', 'diagnostic', 'my organization', 'where does my enterprise stand', 'where do we stand', 'ai readiness score', 'benchmark', 'how ai ready is my', 'ai ready is my company', 'is my organization ready', 'evaluate my organization', 'assess my ai', 'ai maturity level'],
     question: 'How AI-ready is my organization?',
     cards: [
-      { type: 'hero', title: 'AI Readiness Assessment', subtitle: 'Five minutes. No signup. A prioritized roadmap that tells you where you are, where the gaps are, and which AI deployments would produce the fastest results.', accent: '#91C46B' },
-      { type: 'text', title: 'How It Works', body: 'Our AI Readiness Assessment evaluates your organization across five maturity levels — from Reactive (manual processes, siloed data) to Leading (agentic AI, outcome-linked engagement). You will receive a score, a gap analysis, and a prioritized AI deployment roadmap tailored to your industry and current capabilities.', accent: '#596AE0' },
-      { type: 'metrics', title: 'What You Get', items: [{ value: '5 min', label: 'Assessment Duration' }, { value: '5 Levels', label: 'Maturity Framework' }, { value: 'Custom', label: 'AI Roadmap' }, { value: 'Free', label: 'No Signup Needed' }], accent: '#91C46B' },
+      { type: 'hero', title: 'Find out where you stand', subtitle: 'Two free, self-serve diagnostics — no signup, results in minutes. Benchmark your AI adoption or your CX maturity and get a prioritized next step.', accent: '#91C46B' },
+      {
+        type: 'grid',
+        kicker: 'Choose Your Assessment',
+        title: 'Two ways to benchmark your maturity',
+        columns: 2,
+        clickable: true,
+        items: [
+          { icon: 'Brain', title: 'AI Adoption Assessment', accent: '#91C46B', desc: 'Role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage, scores, and a prioritized roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
+          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Evaluate CX across vision, governance, and culture. Get your maturity level and a recommended solution.', link: '/assessment/cx', cta: 'Start · 3–5 min' },
+        ],
+      },
       { type: 'text', title: 'The Five Maturity Levels', body: '1. Reactive — Manual processes, siloed data, no AI strategy.\n2. Emerging — Basic analytics, some automation, early experimentation.\n3. Defined — Unified data, journey mapping, AI pilots underway.\n4. Optimized — AI-driven operations, proactive CX, measurable ROI.\n5. Leading — Agentic AI at scale, outcome-linked engagement, governance built in.', accent: '#F0974E' },
     ],
-    followUp: ['What solutions does Radiant Digital offer?', 'Which industries do you serve?', 'Show me proof — not promises.', 'How can I get started?'],
+    followUp: ['Assess my CX maturity', 'What solutions does Radiant Digital offer?', 'Show me proof — not promises.', 'How can I get started?'],
+  },
+  {
+    id: 'cx-maturity',
+    keywords: ['cx maturity', 'cx assessment', 'cx maturity assessment', 'customer experience maturity', 'assess my cx', 'assess my cx maturity', 'customer experience assessment', 'how mature is our cx', 'cx readiness', 'experience maturity', 'evaluate our customer experience'],
+    question: 'Assess my CX maturity',
+    cards: [
+      { type: 'hero', title: 'Measure your CX maturity', subtitle: 'Evaluate your customer experience across vision, governance, and culture. Get a personalized maturity level and a recommended solution. 3–5 minutes, no signup.', accent: '#596AE0' },
+      {
+        type: 'grid',
+        kicker: 'Choose Your Assessment',
+        title: 'Start your assessment',
+        columns: 2,
+        clickable: true,
+        items: [
+          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Vision, governance, and culture — your maturity level and a tailored next step.', link: '/assessment/cx', cta: 'Start · 3–5 min' },
+          { icon: 'Brain', title: 'AI Adoption Assessment', accent: '#91C46B', desc: 'Prefer to benchmark AI readiness? Role-adaptive diagnostic with a stage and roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
+        ],
+      },
+    ],
+    followUp: ['How AI-ready is my organization?', 'What solutions does Radiant Digital offer?', 'How can I get started?'],
   },
   {
     id: 'contact',
