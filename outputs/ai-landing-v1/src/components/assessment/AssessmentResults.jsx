@@ -1,15 +1,14 @@
 import { useMemo, useState, useRef } from 'react'
-import { motion } from 'framer-motion'
-import { FileText, CheckCircle2, ExternalLink, Mail } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FileText, X } from 'lucide-react'
 import StageReveal from './StageReveal'
 import ScoreBars from './ScoreBars'
 import DimensionTable from './DimensionTable'
-import MaturityStaircase from './MaturityStaircase'
+import { STAGES as AI_STAGES } from './MaturityStaircase'
 import GartnerPositioningView from './GartnerPositioningView'
 import WhatAILeadersDo from './WhatAILeadersDo'
-import ReportPreviewTeaser from './ReportPreviewTeaser'
 import AssessmentLeadForm from './AssessmentLeadForm'
-import HTMLReportViewer from './HTMLReportViewer'
+import LockedReport from './LockedReport'
 import { buildEmailSafeReportHtml } from '../../utils/emailSafeReport.js'
 import { getAQ, scoreAssessment, buildFindings, recommendNextStep } from '../../data/aiAssessment.js'
 import { scoreCx, cxLevels } from '../../data/cxAssessment.js'
@@ -18,7 +17,7 @@ import { scoreCx, cxLevels } from '../../data/cxAssessment.js'
  * AssessmentResults — shared results component for both AI Adoption and CX Maturity.
  *
  * FREE preview (visible to all):
- *   AI:  StageReveal → ScoreBars → MaturityStaircase → GartnerPositioningView → WhatAILeadersDo → teaser → gate
+ *   AI:  StageReveal (with inline stage staircase) → ScoreBars → GartnerPositioningView → WhatAILeadersDo → teaser → gate
  *   CX:  StageReveal (level) → DimensionTable → teaser → gate
  *
  * GATED (unlocked after lead form):
@@ -38,10 +37,9 @@ export default function AssessmentResults({ kind, profile, answers }) {
   const ACCENT = isAi ? '#91C46B' : '#596AE0'
 
   const [submitted, setSubmitted] = useState(false)
-  const [reportOpen, setReportOpen] = useState(false)
+  const [unlockOpen, setUnlockOpen] = useState(false)
   const [sentTo, setSentTo] = useState('')
   const [emailDelivered, setEmailDelivered] = useState(false)
-  const [sending, setSending] = useState(false)
 
   const gateRef = useRef(null)
 
@@ -67,12 +65,6 @@ export default function AssessmentResults({ kind, profile, answers }) {
   const headline = isAi
     ? `Your result: Stage ${result.stage.index} — ${result.stage.name}.`
     : `Your result: ${result.overallLevel}.`
-  const teaserStageLabel = isAi
-    ? `Stage ${result.stage.index} — ${result.stage.name}`
-    : result.overallLevel
-
-  const scrollToGate = () =>
-    gateRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
   // ── Report delivery (email-only) ──────────────────────────────────────────
   // The full report is delivered by email as a well-formatted PDF (the vector
@@ -81,7 +73,6 @@ export default function AssessmentResults({ kind, profile, answers }) {
   // an email-safe HTML fallback to the backend, which emails it to the
   // respondent and notifies the Radiant team.
   const sendReport = async (lead) => {
-    setSending(true)
     const { getReportPdfBase64 } = await import('../../utils/generateReportPdf.js')
     const { base64, filename } = getReportPdfBase64({ kind, profile, answers })
     const emailHtml = buildEmailSafeReportHtml({ kind, profile, result })
@@ -108,10 +99,10 @@ export default function AssessmentResults({ kind, profile, answers }) {
       delivered = false
     }
 
-    setSending(false)
     setSentTo(lead.email)
     setEmailDelivered(delivered)
     setSubmitted(true)
+    setUnlockOpen(false)
   }
 
   const defaults = {
@@ -125,16 +116,6 @@ export default function AssessmentResults({ kind, profile, answers }) {
 
   return (
     <>
-      {/* ── HTML Report Modal (secondary "view online" option) ───────────── */}
-      <HTMLReportViewer
-        open={reportOpen}
-        onClose={() => setReportOpen(false)}
-        kind={kind}
-        profile={profile}
-        result={result}
-        sentTo={emailDelivered ? sentTo : ''}
-      />
-
       <div className="space-y-5">
         {/* Header */}
         <div className="flex items-center justify-between no-print">
@@ -144,30 +125,20 @@ export default function AssessmentResults({ kind, profile, answers }) {
           {!submitted && (
             <button
               type="button"
-              onClick={scrollToGate}
+              onClick={() => setUnlockOpen(true)}
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-display font-semibold transition-colors"
               style={{ background: `${ACCENT}1a`, border: `1px solid ${ACCENT}40`, color: ACCENT }}
             >
               <FileText size={15} /> Get full report
             </button>
           )}
-          {submitted && (
-            <button
-              type="button"
-              onClick={() => setReportOpen(true)}
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-display font-semibold transition-colors"
-              style={{ background: `${ACCENT}1a`, border: `1px solid ${ACCENT}40`, color: ACCENT }}
-            >
-              <ExternalLink size={15} /> View online
-            </button>
-          )}
         </div>
 
         {/* ── FREE PREVIEW ─────────────────────────────────────────────── */}
 
-        {/* Card 1 — maturity reveal */}
+        {/* Card 1 — maturity reveal (AI shows the ascending stage staircase inline) */}
         {isAi
-          ? <StageReveal stage={result.stage} accent={ACCENT} />
+          ? <StageReveal stage={result.stage} accent={ACCENT} stages={AI_STAGES} />
           : <StageReveal stage={result.reveal} accent={ACCENT} total={3} kicker="Your CX Maturity Level" prefix="" />}
 
         {/* Card 2 — score breakdown */}
@@ -175,124 +146,90 @@ export default function AssessmentResults({ kind, profile, answers }) {
           ? <ScoreBars sectionAverages={result.sectionAverages} />
           : <DimensionTable dimensions={result.dimensions} compact />}
 
-        {/* AI-only: Staircase + Positioning + Leader Guidance */}
+        {/* AI-only: Positioning + Leader Guidance */}
         {isAi && (
           <>
-            {/* Card 3 — 5-stage staircase */}
-            <MaturityStaircase currentIndex={result.stage.index} accent={ACCENT} />
-
-            {/* Card 4 — Gartner positioning */}
+            {/* Card 3 — Gartner positioning */}
             <GartnerPositioningView
               sectionAverages={result.sectionAverages}
               companyName={profile?.companyName || 'Your Organization'}
               accent={ACCENT}
             />
 
-            {/* Card 5 — What AI leaders do */}
+            {/* Card 4 — What AI leaders do */}
             <WhatAILeadersDo currentIndex={result.stage.index} accent={ACCENT} />
           </>
         )}
 
-        {/* Card 6 — preview vs. full report teaser (only before the gate is unlocked) */}
-        {!submitted && (
-          <ReportPreviewTeaser kind={kind} accent={ACCENT} stageLabel={teaserStageLabel} />
-        )}
-
-        {/* ── GATE ─────────────────────────────────────────────────────── */}
+        {/* ── LOCKED FULL REPORT (blurred → modal form → unlocked) ──────── */}
         <div ref={gateRef} className="scroll-mt-24">
-          {submitted ? (
-            <ConfirmationCard
-              accent={ACCENT}
-              assessment={assessment}
-              sentTo={sentTo}
-              emailDelivered={emailDelivered}
-              onOpenReport={() => setReportOpen(true)}
-            />
-          ) : (
-            <AssessmentLeadForm
-              accent={ACCENT}
-              title="Get your full assessment report"
-              body={
-                isAi
-                  ? "We'll email you a complete read of your AI maturity — your specific strengths, gap analysis, Radiant's strategic perspective, and the highest-leverage action to take next."
-                  : "We'll email you a complete read of your CX maturity — dimension-level analysis, recommended solution, and case studies matched to your context."
-              }
-              bullets={
-                isAi
-                  ? [
-                      'Full findings: your top 3 strengths and top 3 gaps by dimension',
-                      'Radiant\'s strategic read — editorial perspective on your stage',
-                      'One prioritized next step with rationale',
-                      'Competitive positioning vs. AI leaders in your sector',
-                      'Delivered to your inbox as a PDF',
-                    ]
-                  : [
-                      'Per-dimension breakdown: Vision, Governance, Culture',
-                      'Radiant\'s read at your maturity level',
-                      'Experience AI recommendation tailored to where you are',
-                      'Relevant case studies matched to your context',
-                      'Delivered to your inbox as a PDF',
-                    ]
-              }
-              defaults={defaults}
-              submitLabel={sending ? 'Sending…' : 'Email me my full report'}
-              onSend={sendReport}
-            />
-          )}
+          <LockedReport
+            kind={kind}
+            result={result}
+            accent={ACCENT}
+            unlocked={submitted}
+            onUnlock={() => setUnlockOpen(true)}
+            emailDelivered={emailDelivered}
+            sentTo={sentTo}
+          />
         </div>
       </div>
-    </>
-  )
-}
 
-// ── Confirmation card ─────────────────────────────────────────────────────────
-
-function ConfirmationCard({ accent, assessment, sentTo, emailDelivered, onOpenReport }) {
-  return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="mag-card p-8 lg:p-10 text-center"
-    >
-      <div
-        className="w-14 h-14 rounded-full mx-auto mb-5 flex items-center justify-center"
-        style={{ background: `${accent}1f`, border: `1px solid ${accent}40` }}
-      >
-        {emailDelivered
-          ? <CheckCircle2 size={26} style={{ color: accent }} />
-          : <Mail size={26} style={{ color: accent }} />}
-      </div>
-
-      <h3 className="font-display font-black text-white text-xl lg:text-2xl tracking-tight mb-2">
-        {emailDelivered ? 'Your report is on its way' : 'Thanks — we have your details'}
-      </h3>
-
-      <p className="text-text-secondary text-sm leading-relaxed max-w-md mx-auto mb-6">
-        {emailDelivered ? (
-          <>
-            We've emailed your full {assessment} report
-            {sentTo ? <> to <span className="text-white font-semibold">{sentTo}</span></> : ''}.
-            Check your inbox in the next few minutes — and your spam folder, just in case.
-          </>
-        ) : (
-          <>
-            We've recorded your details
-            {sentTo ? <> for <span className="text-white font-semibold">{sentTo}</span></> : ''} and
-            our team will make sure your full {assessment} report reaches you shortly.
-          </>
+      {/* ── Unlock modal — lead form ─────────────────────────────────────── */}
+      <AnimatePresence>
+        {unlockOpen && !submitted && (
+          <motion.div
+            className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 sm:p-6"
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
+          >
+            <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={() => setUnlockOpen(false)} />
+            <motion.div
+              className="relative z-10 w-full max-w-2xl my-auto"
+              initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 16, opacity: 0 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <button
+                type="button"
+                onClick={() => setUnlockOpen(false)}
+                className="absolute -top-2 -right-2 z-20 w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors"
+                style={{ background: 'rgba(2,16,30,0.95)', border: '1px solid rgba(255,255,255,0.16)' }}
+                aria-label="Close"
+              >
+                <X size={16} />
+              </button>
+              <AssessmentLeadForm
+                accent={ACCENT}
+                title="Get your full assessment report"
+                body={
+                  isAi
+                    ? "We'll email you a complete read of your AI maturity — your specific strengths, gap analysis, Radiant's strategic perspective, and the highest-leverage action to take next."
+                    : "We'll email you a complete read of your CX maturity — dimension-level analysis, recommended solution, and case studies matched to your context."
+                }
+                bullets={
+                  isAi
+                    ? [
+                        'Full findings: your top 3 strengths and top 3 gaps by dimension',
+                        'Radiant\'s strategic read — editorial perspective on your stage',
+                        'One prioritized next step with rationale',
+                        'Competitive positioning vs. AI leaders in your sector',
+                        'Delivered to your inbox as a PDF',
+                      ]
+                    : [
+                        'Per-dimension breakdown: Vision, Governance, Culture',
+                        'Radiant\'s read at your maturity level',
+                        'Experience AI recommendation tailored to where you are',
+                        'Relevant case studies matched to your context',
+                        'Delivered to your inbox as a PDF',
+                      ]
+                }
+                defaults={defaults}
+                submitLabel="Email me my full report"
+                onSend={sendReport}
+              />
+            </motion.div>
+          </motion.div>
         )}
-      </p>
-
-      <button
-        type="button"
-        onClick={onOpenReport}
-        className="inline-flex items-center gap-2 text-sm font-display font-semibold transition-colors"
-        style={{ color: accent }}
-      >
-        <ExternalLink size={15} />
-        View report online
-      </button>
-    </motion.div>
+      </AnimatePresence>
+    </>
   )
 }

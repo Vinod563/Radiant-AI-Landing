@@ -11,7 +11,7 @@ import { motion } from 'framer-motion'
  *   accent        string — accent color (default brand-green)
  */
 
-const STAGES = [
+export const STAGES = [
   { index: 1, key: 'assess', name: 'Assess', tagline: 'No strategy yet' },
   { index: 2, key: 'train', name: 'Train', tagline: 'Pilots & literacy gaps' },
   { index: 3, key: 'adopt', name: 'Adopt', tagline: 'AI live, not scaled' },

@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ArrowLeft, Info } from 'lucide-react'
 
@@ -20,13 +20,6 @@ export default function QuestionRunner({ questions, answers, onAnswer, onComplet
   const q = questions[index]
   const total = questions.length
   const accent = q.accent || '#91C46B'
-
-  // Per-section counters
-  const { inSection, sectionTotal } = useMemo(() => {
-    const sameSection = questions.filter(x => x.sectionLabel === q.sectionLabel)
-    const pos = sameSection.findIndex(x => x.id === q.id) + 1
-    return { inSection: pos, sectionTotal: sameSection.length }
-  }, [questions, q])
 
   const selected = answers[q.id]
   const pct = Math.round(((index + (selected ? 1 : 0)) / total) * 100)
@@ -57,7 +50,7 @@ export default function QuestionRunner({ questions, answers, onAnswer, onComplet
         </div>
         <div className="mt-2 text-[11px] text-text-muted font-medium">
           {q.trackLabel && <span>{q.trackLabel} · </span>}
-          Question {inSection} of {sectionTotal} in this section · {index + 1} of {total}
+          Question {index + 1} of {total}
         </div>
       </div>
 
