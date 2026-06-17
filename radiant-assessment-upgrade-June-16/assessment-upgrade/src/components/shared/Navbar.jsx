@@ -76,13 +76,10 @@ export default function Navbar() {
             ))}
 
             {/* Assessments dropdown */}
-            <div
-              ref={dropRef}
-              className="relative"
-              onMouseEnter={() => setDropOpen(true)}
-              onMouseLeave={() => setDropOpen(false)}
-            >
+            <div ref={dropRef} className="relative">
               <button
+                onMouseEnter={() => setDropOpen(true)}
+                onMouseLeave={() => setDropOpen(false)}
                 onClick={() => setDropOpen(v => !v)}
                 className={`flex items-center gap-1 font-body text-[0.8rem] font-semibold tracking-wide transition-colors no-underline cursor-pointer bg-transparent border-0 p-0 ${
                   isAssessmentActive ? 'text-brand-green' : 'text-brand-green hover:text-brand-green'
@@ -94,17 +91,15 @@ export default function Navbar() {
                 <ChevronDown size={13} className={`transition-transform duration-200 ${dropOpen ? 'rotate-180' : ''}`} />
               </button>
 
-              {/* Dropdown panel — top-full + pt-3 creates a transparent hover bridge
-                  (no dead gap), so the mouse stays inside the hover area while
-                  travelling from the trigger down to the panel. */}
+              {/* Dropdown panel */}
               <div
-                className={`absolute top-full right-0 pt-3 w-80 transition-all duration-200 origin-top-right ${
+                onMouseEnter={() => setDropOpen(true)}
+                onMouseLeave={() => setDropOpen(false)}
+                className={`absolute top-full right-0 mt-3 w-80 rounded-2xl overflow-hidden transition-all duration-200 origin-top-right ${
                   dropOpen ? 'opacity-100 scale-100 translate-y-0 pointer-events-auto' : 'opacity-0 scale-95 -translate-y-2 pointer-events-none'
                 }`}
-              >
-               <div className="rounded-2xl overflow-hidden"
                 style={{ background: 'rgba(5,26,48,0.98)', border: '1px solid rgba(255,255,255,0.09)', boxShadow: '0 24px 48px rgba(0,0,0,0.5)' }}
-               >
+              >
                 <div className="p-2">
                   {ASSESSMENTS.map(a => {
                     const Icon = a.icon
@@ -136,7 +131,6 @@ export default function Navbar() {
                     View all assessments →
                   </Link>
                 </div>
-               </div>
               </div>
             </div>
           </nav>
@@ -205,3 +199,4 @@ export default function Navbar() {
     </header>
   )
 }
+                    

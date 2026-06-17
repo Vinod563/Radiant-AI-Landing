@@ -1,6 +1,6 @@
 import { useMemo, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { FileText, CheckCircle2, ExternalLink, Mail } from 'lucide-react'
+import { FileText, CheckCircle2, ExternalLink, Download } from 'lucide-react'
 import StageReveal from './StageReveal'
 import ScoreBars from './ScoreBars'
 import DimensionTable from './DimensionTable'
@@ -41,7 +41,7 @@ export default function AssessmentResults({ kind, profile, answers }) {
   const [reportOpen, setReportOpen] = useState(false)
   const [sentTo, setSentTo] = useState('')
   const [emailDelivered, setEmailDelivered] = useState(false)
-  const [sending, setSending] = useState(false)
+  const [redownloading, setRedownloading] = useState(false)
 
   const gateRef = useRef(null)
 
@@ -74,15 +74,14 @@ export default function AssessmentResults({ kind, profile, answers }) {
   const scrollToGate = () =>
     gateRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-  // ── Report delivery (email-only) ──────────────────────────────────────────
-  // The full report is delivered by email as a well-formatted PDF (the vector
-  // report from generateReportPdf, paginated with clean page breaks). Nothing is
-  // downloaded in the browser — on submit we POST the lead + the PDF (base64) +
-  // an email-safe HTML fallback to the backend, which emails it to the
-  // respondent and notifies the Radiant team.
+  // ── Report delivery ───────────────────────────────────────────────────────
+  // PDF is the primary deliverable — it's generated and downloaded client-side,
+  // so it works even if the email backend is down or can't carry attachments.
+  // The backend call is best-effort: it gets the lead, the raw PDF (base64, for
+  // providers that support attachments), and an email-safe HTML fallback (for
+  // providers like Web3Forms that only support text/HTML in the message body).
   const sendReport = async (lead) => {
-    setSending(true)
-    const { getReportPdfBase64 } = await import('../../utils/generateReportPdf.js')
+    const { getReportPdfBase64, generateReportPdf } = await import('../../utils/generateReportPdf.js')
     const { base64, filename } = getReportPdfBase64({ kind, profile, answers })
     const emailHtml = buildEmailSafeReportHtml({ kind, profile, result })
 
@@ -96,9 +95,11 @@ export default function AssessmentResults({ kind, profile, answers }) {
           ...lead,
           assessment,
           headline,
+          // Preferred: real attachment, for backends/providers that support it.
           pdfBase64: base64,
           pdfFilename: filename,
-          // HTML fallback for text-only email providers
+          // Fallback: full report embedded directly in the email body —
+          // this is what Web3Forms (text-only) should use today.
           emailHtml,
           emailHtmlFilename: `radiant-${kind}-assessment-report.html`,
         }),
@@ -108,10 +109,24 @@ export default function AssessmentResults({ kind, profile, answers }) {
       delivered = false
     }
 
-    setSending(false)
+    // Guaranteed path: trigger the PDF download locally right now, regardless
+    // of whether the email backend succeeded. This is what makes PDF the real
+    // primary output instead of something that only works if email does.
+    generateReportPdf({ kind, profile, answers })
+
     setSentTo(lead.email)
     setEmailDelivered(delivered)
     setSubmitted(true)
+  }
+
+  const redownloadPdf = async () => {
+    setRedownloading(true)
+    try {
+      const { generateReportPdf } = await import('../../utils/generateReportPdf.js')
+      generateReportPdf({ kind, profile, answers })
+    } finally {
+      setRedownloading(false)
+    }
   }
 
   const defaults = {
@@ -152,14 +167,25 @@ export default function AssessmentResults({ kind, profile, answers }) {
             </button>
           )}
           {submitted && (
-            <button
-              type="button"
-              onClick={() => setReportOpen(true)}
-              className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-display font-semibold transition-colors"
-              style={{ background: `${ACCENT}1a`, border: `1px solid ${ACCENT}40`, color: ACCENT }}
-            >
-              <ExternalLink size={15} /> View online
-            </button>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={redownloadPdf}
+                disabled={redownloading}
+                className="inline-flex items-center gap-2 rounded-xl px-3.5 py-2.5 text-sm font-display font-semibold transition-colors text-text-muted hover:text-white disabled:opacity-50"
+                style={{ border: '1px solid rgba(255,255,255,0.12)' }}
+              >
+                <Download size={15} /> PDF
+              </button>
+              <button
+                type="button"
+                onClick={() => setReportOpen(true)}
+                className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-display font-semibold transition-colors"
+                style={{ background: `${ACCENT}1a`, border: `1px solid ${ACCENT}40`, color: ACCENT }}
+              >
+                <ExternalLink size={15} /> View online
+              </button>
+            </div>
           )}
         </div>
 
@@ -207,6 +233,8 @@ export default function AssessmentResults({ kind, profile, answers }) {
               sentTo={sentTo}
               emailDelivered={emailDelivered}
               onOpenReport={() => setReportOpen(true)}
+              onRedownload={redownloadPdf}
+              redownloading={redownloading}
             />
           ) : (
             <AssessmentLeadForm
@@ -214,8 +242,8 @@ export default function AssessmentResults({ kind, profile, answers }) {
               title="Get your full assessment report"
               body={
                 isAi
-                  ? "We'll email you a complete read of your AI maturity — your specific strengths, gap analysis, Radiant's strategic perspective, and the highest-leverage action to take next."
-                  : "We'll email you a complete read of your CX maturity — dimension-level analysis, recommended solution, and case studies matched to your context."
+                  ? "Unlock a complete read of your AI maturity — your specific strengths, gap analysis, Radiant's strategic perspective, and the highest-leverage action to take next."
+                  : "Unlock a complete read of your CX maturity — dimension-level analysis, recommended solution, and case studies matched to your context."
               }
               bullets={
                 isAi
@@ -224,18 +252,18 @@ export default function AssessmentResults({ kind, profile, answers }) {
                       'Radiant\'s strategic read — editorial perspective on your stage',
                       'One prioritized next step with rationale',
                       'Competitive positioning vs. AI leaders in your sector',
-                      'Delivered to your inbox as a PDF',
+                      'Downloaded instantly as a PDF, with a copy by email',
                     ]
                   : [
                       'Per-dimension breakdown: Vision, Governance, Culture',
                       'Radiant\'s read at your maturity level',
                       'Experience AI recommendation tailored to where you are',
                       'Relevant case studies matched to your context',
-                      'Delivered to your inbox as a PDF',
+                      'Downloaded instantly as a PDF, with a copy by email',
                     ]
               }
               defaults={defaults}
-              submitLabel={sending ? 'Sending…' : 'Email me my full report'}
+              submitLabel="Get my full PDF report"
               onSend={sendReport}
             />
           )}
@@ -247,7 +275,7 @@ export default function AssessmentResults({ kind, profile, answers }) {
 
 // ── Confirmation card ─────────────────────────────────────────────────────────
 
-function ConfirmationCard({ accent, assessment, sentTo, emailDelivered, onOpenReport }) {
+function ConfirmationCard({ accent, assessment, sentTo, emailDelivered, onOpenReport, onRedownload, redownloading }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }}
@@ -259,40 +287,49 @@ function ConfirmationCard({ accent, assessment, sentTo, emailDelivered, onOpenRe
         className="w-14 h-14 rounded-full mx-auto mb-5 flex items-center justify-center"
         style={{ background: `${accent}1f`, border: `1px solid ${accent}40` }}
       >
-        {emailDelivered
-          ? <CheckCircle2 size={26} style={{ color: accent }} />
-          : <Mail size={26} style={{ color: accent }} />}
+        <CheckCircle2 size={26} style={{ color: accent }} />
       </div>
 
       <h3 className="font-display font-black text-white text-xl lg:text-2xl tracking-tight mb-2">
-        {emailDelivered ? 'Your report is on its way' : 'Thanks — we have your details'}
+        Your full PDF report is downloading
       </h3>
 
       <p className="text-text-secondary text-sm leading-relaxed max-w-md mx-auto mb-6">
-        {emailDelivered ? (
-          <>
-            We've emailed your full {assessment} report
-            {sentTo ? <> to <span className="text-white font-semibold">{sentTo}</span></> : ''}.
-            Check your inbox in the next few minutes — and your spam folder, just in case.
-          </>
-        ) : (
-          <>
-            We've recorded your details
-            {sentTo ? <> for <span className="text-white font-semibold">{sentTo}</span></> : ''} and
-            our team will make sure your full {assessment} report reaches you shortly.
-          </>
-        )}
+        It should land in your downloads folder now.{' '}
+        {sentTo ? (
+          emailDelivered ? (
+            <>A copy is also on its way to <span className="text-white font-semibold">{sentTo}</span>.</>
+          ) : (
+            <>We couldn't confirm delivery to <span className="text-white font-semibold">{sentTo}</span> — use the buttons below if you need another copy.</>
+          )
+        ) : null}
       </p>
 
-      <button
-        type="button"
-        onClick={onOpenReport}
-        className="inline-flex items-center gap-2 text-sm font-display font-semibold transition-colors"
-        style={{ color: accent }}
-      >
-        <ExternalLink size={15} />
-        View report online
-      </button>
+      <div className="flex flex-wrap items-center justify-center gap-3">
+        <button
+          type="button"
+          onClick={onRedownload}
+          disabled={redownloading}
+          className="btn-primary !px-8 !py-3.5 text-sm inline-flex items-center gap-2 disabled:opacity-60"
+          style={{ background: accent, borderColor: accent }}
+        >
+          <Download size={15} />
+          {redownloading ? 'Preparing…' : 'Download PDF again'}
+        </button>
+        <button
+          type="button"
+          onClick={onOpenReport}
+          className="inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-display font-semibold transition-colors text-white"
+          style={{ border: '1px solid rgba(255,255,255,0.16)' }}
+        >
+          <ExternalLink size={15} />
+          View report online
+        </button>
+      </div>
+
+      <p className="text-text-muted text-xs mt-5">
+        Prefer to read it in-browser first? "View report online" opens the same findings without leaving the page.
+      </p>
     </motion.div>
   )
 }

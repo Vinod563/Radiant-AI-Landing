@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Adoption Report — Sarah Chen</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;900&family=Inter:wght@400;500;600&display=swap');
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: #1e293b; line-height: 1.6; }
+    .report { max-width: 800px; margin: 0 auto; }
+    .header { background: #010F1E; padding: 40px 48px 32px; }
+    .header-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+    .logo { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 18px; color: #91C46B; letter-spacing: -0.02em; }
+    .logo span { color: #fff; }
+    .report-date { font-size: 11px; color: rgba(255,255,255,0.35); font-weight: 500; }
+    .header-headline { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 38px; color: #fff; line-height: 1.05; letter-spacing: -0.02em; }
+    .header-headline .accent { color: #91C46B; }
+    .header-meta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+    .meta-chip { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 100px; background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.55); border: 1px solid rgba(255,255,255,0.1); }
+    .section { padding: 36px 48px; border-bottom: 1px solid #e2e8f0; background: #fff; }
+    .section-alt { background: #f8fafc; }
+    .kicker { font-family: 'Poppins', sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: #91C46B; margin-bottom: 8px; display: block; }
+    .section-title { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 22px; color: #0f172a; letter-spacing: -0.015em; margin-bottom: 6px; }
+    .stage-block { background: #010F1E; border-radius: 16px; padding: 32px; margin-top: 20px; }
+    .stage-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); margin-bottom: 8px; }
+    .stage-name { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 36px; color: #91C46B; letter-spacing: -0.02em; }
+    .stage-tagline { font-size: 14px; color: rgba(255,255,255,0.6); font-weight: 600; margin: 8px 0 16px; }
+    .pip-row { display: flex; gap: 6px; margin-bottom: 20px; }
+    .pip { height: 8px; flex: 1; border-radius: 100px; }
+    .pip-filled { background: #91C46B; }
+    .pip-empty { background: rgba(255,255,255,0.08); }
+    .stage-desc { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.8; }
+    .score-row { margin-bottom: 20px; }
+    .score-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+    .score-label { font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 13px; color: #1e293b; }
+    .score-value { font-size: 12px; font-weight: 700; }
+    .bar-track { height: 10px; background: #e2e8f0; border-radius: 100px; overflow: hidden; }
+    .bar-fill { height: 100%; border-radius: 100px; }
+    .findings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 20px; }
+    .finding-group-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; }
+    .finding { display: flex; gap: 12px; margin-bottom: 16px; }
+    .finding-icon { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+    .finding-title { font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 13px; color: #0f172a; margin-bottom: 4px; }
+    .finding-section { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: #94a3b8; margin-bottom: 4px; }
+    .finding-body { font-size: 12px; color: #64748b; line-height: 1.65; }
+    .next-step-block { background: linear-gradient(135deg, #010F1E 0%, #051A30 100%); border-radius: 16px; padding: 28px 32px; margin-top: 20px; border-left: 3px solid #91C46B; }
+    .next-step-section { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #91C46B; margin-bottom: 6px; }
+    .next-step-text { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.75; }
+    .cta-block { background: #010F1E; padding: 36px 48px; text-align: center; }
+    .cta-title { font-family: 'Poppins', sans-serif; font-weight: 900; font-size: 24px; color: #fff; margin-bottom: 12px; letter-spacing: -0.015em; }
+    .cta-body { font-size: 14px; color: rgba(255,255,255,0.55); margin-bottom: 28px; line-height: 1.7; }
+    .cta-btn { display: inline-block; background: #91C46B; color: #010F1E; font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 14px; padding: 14px 32px; border-radius: 100px; text-decoration: none; }
+    .cta-email { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 16px; }
+    .radiant-read { background: rgba(145,196,107,0.06); border: 1px solid rgba(145,196,107,0.15); border-radius: 12px; padding: 20px 24px; margin-top: 20px; }
+    .radiant-read-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #91C46B; margin-bottom: 8px; }
+    .radiant-read-text { font-size: 13px; color: #334155; line-height: 1.75; }
+    @media print { body { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+  </style>
+</head>
+<body>
+<div class="report">
+  <div class="header">
+    <div class="header-top">
+      <div class="logo"><span>\</span>RADIANT AI</div>
+      <div class="report-date">June 15, 2026</div>
+    </div>
+    <div class="header-headline">
+      AI Adoption Report<br/>
+      <span class="accent">Stage 3 — Adopt</span>
+    </div>
+    <div class="header-meta">
+      <span class="meta-chip">Sarah Chen</span>
+      <span class="meta-chip">Acme Corp</span>
+      <span class="meta-chip">Financial Services</span>
+      <span class="meta-chip">1,000–5,000 employees</span>
+      <span class="meta-chip">Executive Track</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="kicker">Your AI Maturity</span>
+    <div class="stage-block">
+      <div class="stage-label">Your Stage</div>
+      <div class="stage-name">Stage 3 — Adopt</div>
+      <div class="stage-tagline">AI is live. Scaling to the enterprise is the stall point.</div>
+      <div class="pip-row"><div class="pip pip-filled"></div><div class="pip pip-filled"></div><div class="pip pip-filled"></div><div class="pip pip-empty"></div><div class="pip pip-empty"></div></div>
+      <div class="stage-desc">You have production AI deployments. The challenge now isn't building—it's scaling. Most organizations at this stage have 2–5 use cases live, but struggle to replicate success across teams. The gap between what's working in pockets and what's embedded in the enterprise is now an organizational problem, not a technical one.</div>
+    </div>
+  </div>
+
+  <div class="section section-alt">
+    <span class="kicker">Scores by Dimension</span>
+    <div class="section-title">How You Scored</div>
+    <div style="margin-top:20px">
+      <div class="score-row">
+        <div class="score-header">
+          <span class="score-label">Strategy & Leadership</span>
+          <span class="score-value" style="color:#06B6D4">3.2 · On track</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:64.0%; background:#06B6D4;"></div>
+        </div>
+      </div>
+      <div class="score-row">
+        <div class="score-header">
+          <span class="score-label">Data & Technology</span>
+          <span class="score-value" style="color:#F59E0B">2.8 · Below target</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:56.0%; background:#F59E0B;"></div>
+        </div>
+      </div>
+      <div class="score-row">
+        <div class="score-header">
+          <span class="score-label">People & Governance</span>
+          <span class="score-value" style="color:#F59E0B">2.4 · Below target</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:48.0%; background:#F59E0B;"></div>
+        </div>
+      </div>
+      <div class="score-row">
+        <div class="score-header">
+          <span class="score-label">Adoption & Value</span>
+          <span class="score-value" style="color:#06B6D4">3.5 · On track</span>
+        </div>
+        <div class="bar-track">
+          <div class="bar-fill" style="width:70.0%; background:#06B6D4;"></div>
+        </div>
+      </div></div>
+  </div>
+
+  <div class="section">
+    <span class="kicker">What We See</span>
+    <div class="section-title">Your Strengths &amp; Gaps</div>
+    <div class="findings-grid">
+      <div>
+        <div class="finding-group-label" style="color:#22C55E">Strengths</div>
+        <div class="finding">
+      <svg class="finding-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22C55E" stroke-width="1.5"/><path d="M6.5 10l2.5 2.5 4.5-5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div>
+        <div class="finding-section">Adoption & Value</div>
+        <div class="finding-title">Production AI delivering measurable ROI</div>
+        <div class="finding-body">Your Adoption scores show live deployments with clear success metrics. You're ahead of most peers who are still in pilot mode.</div>
+      </div>
+    </div>
+<div class="finding">
+      <svg class="finding-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22C55E" stroke-width="1.5"/><path d="M6.5 10l2.5 2.5 4.5-5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div>
+        <div class="finding-section">Strategy & Leadership</div>
+        <div class="finding-title">Executive alignment on AI direction</div>
+        <div class="finding-body">Strategy scores indicate leadership has committed to AI investment with named owners and defined outcomes.</div>
+      </div>
+    </div>
+<div class="finding">
+      <svg class="finding-icon" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" stroke="#22C55E" stroke-width="1.5"/><path d="M6.5 10l2.5 2.5 4.5-5" stroke="#22C55E" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <div>
+        <div class="finding-section">Strategy & Leadership</div>
+        <div class="finding-title">Investment decisions backed by business cases</div>
+        <div class="finding-body">Your organization is not running speculative AI projects — approvals are tied to anticipated value.</div>
+      </div>
+    </div>
+      </div>
+      <div>
+        <div class="finding-group-label" style="color:#F59E0B">Gaps to Close</div>
+        <div class="finding">
+      <svg class="finding-icon" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3z" stroke="#F59E0B" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 9v4M10 14.5v.5" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div>
+        <div class="finding-section">People & Governance</div>
+        <div class="finding-title">AI literacy gaps blocking enterprise adoption</div>
+        <div class="finding-body">People & Governance is your lowest-scoring dimension. Until the broader workforce understands how to use AI tools in their roles, adoption stalls at the team level.</div>
+      </div>
+    </div>
+<div class="finding">
+      <svg class="finding-icon" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3z" stroke="#F59E0B" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 9v4M10 14.5v.5" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div>
+        <div class="finding-section">Data & Technology</div>
+        <div class="finding-title">Data quality constraining new use cases</div>
+        <div class="finding-body">Data readiness scores suggest that while existing use cases work, new use cases are blocked by data that isn't clean, structured, or accessible enough to use.</div>
+      </div>
+    </div>
+<div class="finding">
+      <svg class="finding-icon" viewBox="0 0 20 20" fill="none"><path d="M10 3L18 17H2L10 3z" stroke="#F59E0B" stroke-width="1.5" stroke-linejoin="round"/><path d="M10 9v4M10 14.5v.5" stroke="#F59E0B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <div>
+        <div class="finding-section">People & Governance</div>
+        <div class="finding-title">No formal AI governance policy</div>
+        <div class="finding-body">Shadow GenAI use is almost certainly happening. Without a published acceptable-use policy, you have compliance and security exposure that grows with every new deployment.</div>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section section-alt">
+    <span class="kicker">Recommended Next Step</span>
+    <div class="section-title">Where to Focus First</div>
+    <div style="font-size:14px;color:#475569;line-height:1.75;margin-top:8px">The lowest-scoring dimension points to the highest-leverage action.</div>
+    <div class="next-step-block">
+      <div class="next-step-section">Priority action — People &amp; Governance</div>
+      <div class="next-step-text">Publish a GenAI acceptable-use policy before your next deployment. It should cover: approved tools, prohibited use cases, data handling rules, and a process for requesting new tools. Two pages. Board-approved. Distributed to every employee. This single document unblocks enterprise adoption faster than any technology investment.</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <span class="kicker">Radiant's Read</span>
+    <div class="section-title">What This Means for You</div>
+    <div class="radiant-read">
+      <div class="radiant-read-label">Our perspective on Stage 3 organizations</div>
+      <div class="radiant-read-text">You have proof that AI works in your organization. That's a significant milestone most companies never reach. The challenge now is organizational, not technical: how do you make AI the default instead of the exception? The answer is almost always governance — not to slow things down, but to create the trust that lets things move faster.</div>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-title">Ready to move to Stage 4?</div>
+    <div class="cta-body">Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.</div>
+    <a href="https://radiant.digital/contact" class="cta-btn">Schedule 30 Minutes with Radiant</a>
+    <div class="cta-email">Or email us at hello@radiant.digital</div>
+  </div>
+</div>
+</body>
+</html>

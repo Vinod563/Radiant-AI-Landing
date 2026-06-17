@@ -3,6 +3,9 @@ import {
   getAQ, scoreAssessment, buildFindings, recommendNextStep, sections, scoreBarStyle,
 } from '../data/aiAssessment.js'
 import { scoreCx, cxLevels, recommendedSolution } from '../data/cxAssessment.js'
+import { aiRadiantRead, aiCta, cxWhyThisMatters, cxCta } from '../data/reportEditorial.js'
+
+const ROLE_LABEL = { exec: 'Executive', tech: 'Technical Lead', biz: 'Business Lead', consultant: 'Consultant' }
 
 // jsPDF's built-in Helvetica only covers WinAnsi — swap glyphs it can't render.
 const clean = (s = '') => String(s)
@@ -73,14 +76,24 @@ export function buildReportDoc({ kind, profile, answers }) {
   doc.text('RADIANT', margin, 52)
   doc.setTextColor(...GREEN); doc.text('AI', margin + doc.getTextWidth('RADIANT  '), 52)
   doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(168, 180, 194)
-  doc.text(isAi ? 'AI Adoption Assessment' : 'CX Maturity Assessment', pageW - margin, 52, { align: 'right' })
+  doc.text(isAi ? 'AI Adoption Assessment' : 'CX Maturity Assessment', pageW - margin, 48, { align: 'right' })
+  const reportDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  doc.setFontSize(8.5); doc.setTextColor(150, 162, 176)
+  doc.text(reportDate, pageW - margin, 66, { align: 'right' })
   y = bandH + 44
 
   if (profile && (profile.fullName || profile.companyName)) {
     para(`Prepared for ${[profile.fullName, profile.companyName].filter(Boolean).join('  ·  ')}`,
       { size: 10.5, color: INK, bold: true, lead: 4 })
-    gap(4)
   }
+  const metaBits = [
+    profile?.sector,
+    profile?.orgSize ? `${profile.orgSize} employees` : null,
+    profile?.department,
+    isAi && profile?.role ? `${ROLE_LABEL[profile.role] || profile.role} Track` : null,
+  ].filter(Boolean)
+  if (metaBits.length) para(metaBits.join('  ·  '), { size: 9.5, color: MUTED, lead: 3 })
+  gap(4)
 
   if (isAi) {
     const scored = scoreAssessment(answers, getAQ(profile.role))
@@ -132,6 +145,18 @@ export function buildReportDoc({ kind, profile, answers }) {
     kicker('Your Recommended Next Step')
     subhead(`Priority: ${nextStep.section}`, ACCENT)
     para(nextStep.text, { lead: 7 })
+    rule()
+
+    kicker("Radiant's Read")
+    subhead(`Our perspective on Stage ${scored.stage.index} organizations`, ACCENT)
+    para(aiRadiantRead[scored.stage.index] || aiRadiantRead[5], { lead: 7 })
+    rule()
+
+    const cta = aiCta(scored.stage.index)
+    kicker('Your Next Move')
+    subhead(cta.title)
+    para(cta.body, { lead: 7 })
+    para(`${cta.action}  ·  ${cta.email}`, { size: 10, color: ACCENT, bold: true, lead: 4 })
   } else {
     const scored = scoreCx(answers)
     const lvl = cxLevels[scored.overallKey]
@@ -155,6 +180,16 @@ export function buildReportDoc({ kind, profile, answers }) {
     gap(2)
     para(recommendedSolution.lede, { lead: 7 }); gap(2)
     recommendedSolution.helps.forEach(h => para(`•  ${h}`, { color: INK, indent: 8, lead: 5 }))
+    rule()
+
+    kicker(`Why this matters at the ${lvl.name} level`)
+    para(cxWhyThisMatters(scored.overallKey), { lead: 7 })
+    rule()
+
+    kicker('Your Next Move')
+    subhead(cxCta.title)
+    para(cxCta.body, { lead: 7 })
+    para(`${cxCta.action}  ·  ${cxCta.email}`, { size: 10, color: ACCENT, bold: true, lead: 4 })
   }
 
   // ── Footer on every page ──────────────────────────────────────────────────

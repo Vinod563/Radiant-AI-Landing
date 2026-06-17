@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<title>Preview — Confirmation (PDF delivered)</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700;900&family=Inter:wght@400;500;600;700&display=swap');
+  body { background: #05111F; margin: 0; padding: 48px 16px; display: flex; align-items: flex-start; justify-content: center; min-height: 100vh; font-family: 'Inter', sans-serif; }
+  .wrap { width: 640px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Header bar above the card, matching AssessmentResults header in the "submitted" state -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;">
+    <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#7c8aa0;">AI Adoption Report</span>
+    <div style="display:flex;gap:0px;">
+      <span style="display:inline-flex;align-items:center;gap:4px;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;color:#aab4c2;border:1px solid rgba(255,255,255,0.12);white-space:nowrap;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 15V3M7 10l5 5 5-5M3 19h18"/></svg> PDF
+      </span>
+      <span style="display:inline-flex;align-items:center;gap:4px;border-radius:12px;padding:9px 14px;font-size:13px;font-weight:600;color:#91C46B;background:rgba(145,196,107,0.1);border:1px solid rgba(145,196,107,0.35);white-space:nowrap;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 5h5v5M9 19H4v-5M19 5l-7 7M5 19l7-7"/></svg> View online
+      </span>
+    </div>
+  </div>
+
+  <!-- Confirmation card -->
+  <div style="border-radius:24px;padding:44px 48px;background:rgba(255,255,255,0.025);border:1px solid rgba(255,255,255,0.07);text-align:center;">
+    <div style="width:56px;height:56px;border-radius:50%;margin:0 auto 18px;display:flex;align-items:center;justify-content:center;background:rgba(145,196,107,0.12);border:1px solid rgba(145,196,107,0.4);">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#91C46B" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8.5 12.5l2.5 2.5 5-5"/></svg>
+    </div>
+
+    <h3 style="font-family:'Poppins',sans-serif;font-weight:900;font-size:24px;color:#fff;letter-spacing:-0.01em;margin:0 0 10px;">Your full PDF report is downloading</h3>
+
+    <p style="font-size:13.5px;color:#aab4c2;line-height:1.7;max-width:420px;margin:0 auto 26px;">
+      It should land in your downloads folder now. A copy is also on its way to <span style="color:#fff;font-weight:600;">jordan@acme-co.com</span>.
+    </p>
+
+    <div style="display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;">
+      <div style="background:#91C46B;color:#021018;border-radius:100px;padding:13px 28px;font-family:'Poppins',sans-serif;font-weight:700;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex-shrink:0;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#021018" stroke-width="2.4"><path d="M12 15V3M7 10l5 5 5-5M3 19h18"/></svg>
+        Download PDF again
+      </div>
+      <div style="background:transparent;color:#fff;border:1px solid rgba(255,255,255,0.16);border-radius:100px;padding:13px 24px;font-family:'Poppins',sans-serif;font-weight:600;font-size:13.5px;display:inline-flex;align-items:center;gap:8px;white-space:nowrap;flex-shrink:0;">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M14 5h5v5M9 19H4v-5M19 5l-7 7M5 19l7-7"/></svg>
+        View report online
+      </div>
+    </div>
+
+    <p style="font-size:11px;color:#5f6b7d;margin-top:20px;">"View report online" opens the same findings without leaving the page.</p>
+  </div>
+
+  <p style="text-align:center;font-size:11px;color:#475569;margin-top:18px;line-height:1.6;">
+    Local PDF download fires immediately on submit — it doesn't depend on the email backend.<br/>
+    The backend also receives an email-safe HTML copy as a fallback, for providers (like Web3Forms) that can't attach files.
+  </p>
+
+</div>
+</body>
+</html>

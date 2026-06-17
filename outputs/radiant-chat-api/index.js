@@ -172,7 +172,8 @@ app.post('/api/chat', async (req, res) => {
 // ─── Public: Email the assessment report PDF ─────────────────────────────────
 app.post(REPORT_PATH, reportLimiter, async (req, res) => {
   const { name, email, company, sector, orgSize, department, consent,
-    assessment, headline, pdfBase64, filename, website } = req.body || {}
+    assessment, headline, pdfBase64, pdfFilename, filename, website } = req.body || {}
+  const reportFilename = pdfFilename || filename // frontend sends pdfFilename; keep filename as fallback
 
   // Honeypot — silently accept bot submissions without sending anything
   if (website) return res.status(200).json({ ok: true })
@@ -201,7 +202,7 @@ app.post(REPORT_PATH, reportLimiter, async (req, res) => {
       assessment: (assessment || 'Assessment').toString().slice(0, 60),
       headline: (headline || '').toString().slice(0, 200),
     }
-    await sendReportEmail(lead, pdfBuffer, (filename || 'Radiant-Report.pdf').toString().slice(0, 120))
+    await sendReportEmail(lead, pdfBuffer, (reportFilename || 'Radiant-Report.pdf').toString().slice(0, 120))
     console.log(`[${new Date().toISOString()}] report emailed → ${lead.email} (${lead.assessment})`)
     return res.status(200).json({ ok: true })
   } catch (error) {

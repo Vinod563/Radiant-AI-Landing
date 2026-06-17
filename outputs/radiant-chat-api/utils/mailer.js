@@ -19,11 +19,14 @@ export function isMailConfigured() {
 let transporter = null
 function getTransport() {
   if (transporter) return transporter
+  const secure = process.env.SMTP_SECURE === 'true'
   transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: Number(process.env.SMTP_PORT) || 587,
-    secure: process.env.SMTP_SECURE === 'true',
+    secure,
     auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
+    // Office 365 / Outlook on port 587 needs explicit STARTTLS + TLS 1.2
+    ...(secure ? {} : { requireTLS: true, tls: { ciphers: 'TLSv1.2' } }),
   })
   return transporter
 }
