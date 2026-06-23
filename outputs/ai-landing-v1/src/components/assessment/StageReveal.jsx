@@ -41,7 +41,7 @@ export default function StageReveal({ stage, accent = '#91C46B', total = 5, kick
           ? <Staircase stages={stages} currentIndex={stage.index} accent={accent} />
           : <PipMeter index={stage.index} total={total} accent={accent} />}
 
-        {stage.description && <p className="text-text-secondary text-base lg:text-lg leading-[1.85] max-w-2xl">{stage.description}</p>}
+        {stage.description && <p className="text-text-secondary text-base lg:text-lg leading-[1.85]">{stage.description}</p>}
       </div>
     </motion.div>
   )

@@ -29,20 +29,23 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
     return { x: execX, y: stratY }
   }, [sectionAverages])
 
-  // SVG coordinate space: 0..100 in both axes
-  // Origin (0,0) = bottom-left; we flip Y for SVG
-  const toSvgX = (v) => 12 + v * 76    // 12..88 range
-  const toSvgY = (v) => 88 - v * 76    // 88..12 range (flipped)
+  // Wide 160 x 72 viewBox so the chart fills the full row instead of a centered square.
+  // Plot region: data domain 0..1 maps into these bounds; Y is flipped for SVG.
+  const PX0 = 18, PX1 = 152, PY0 = 56, PY1 = 9
+  const RX = PX1 - PX0
+  const RY = PY0 - PY1
+  const toSvgX = (v) => PX0 + v * RX
+  const toSvgY = (v) => PY0 - v * RY
 
   const dotX = toSvgX(x)
   const dotY = toSvgY(y)
 
-  // Illustrative clusters (x, y in 0..1 domain, r = radius in SVG units)
+  // Illustrative clusters (cx, cy in 0..1 domain; rd = radius in domain units)
   const clusters = [
-    { id: 'early', label: 'Most Organizations', sublabel: 'Stage 1–2', cx: 0.18, cy: 0.22, r: 14, color: '#64748B', opacity: 0.35 },
-    { id: 'progress', label: 'Progressing', sublabel: 'Stage 3', cx: 0.52, cy: 0.50, r: 10, color: '#2DD4BF', opacity: 0.25 },
-    { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 4–5', cx: 0.82, cy: 0.82, r: 10, color: accent, opacity: 0.22 },
-    { id: 'planners', label: 'Planners', sublabel: 'Strategy without execution', cx: 0.15, cy: 0.78, r: 7, color: '#F0974E', opacity: 0.2 },
+    { id: 'early', label: 'Most Organizations', sublabel: 'Stage 1–2', cx: 0.18, cy: 0.20, rd: 0.17, color: '#64748B', opacity: 0.35 },
+    { id: 'progress', label: 'Progressing', sublabel: 'Stage 3', cx: 0.52, cy: 0.50, rd: 0.13, color: '#2DD4BF', opacity: 0.25 },
+    { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 4–5', cx: 0.82, cy: 0.82, rd: 0.13, color: accent, opacity: 0.22 },
+    { id: 'planners', label: 'Planners', sublabel: 'Strategy without execution', cx: 0.15, cy: 0.80, rd: 0.10, color: '#F0974E', opacity: 0.2 },
   ]
 
   return (
@@ -58,48 +61,53 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
       <div className="flex gap-6 items-start">
         {/* SVG Chart */}
         <div className="flex-1 min-w-0">
-          <svg viewBox="0 0 100 100" className="w-full" style={{ maxHeight: 280 }}>
+          <svg viewBox="0 0 160 72" className="w-full" style={{ aspectRatio: '160 / 72' }}>
             {/* Background grid */}
             {[25, 50, 75].map(v => (
               <g key={v}>
-                <line x1="12" y1={toSvgY(v / 100)} x2="88" y2={toSvgY(v / 100)}
-                  stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
-                <line x1={toSvgX(v / 100)} y1="12" x2={toSvgX(v / 100)} y2="88"
-                  stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+                <line x1={PX0} y1={toSvgY(v / 100)} x2={PX1} y2={toSvgY(v / 100)}
+                  stroke="rgba(255,255,255,0.04)" strokeWidth="0.4" />
+                <line x1={toSvgX(v / 100)} y1={PY1} x2={toSvgX(v / 100)} y2={PY0}
+                  stroke="rgba(255,255,255,0.04)" strokeWidth="0.4" />
               </g>
             ))}
 
             {/* Quadrant divider */}
-            <line x1="50" y1="12" x2="50" y2="88" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" strokeDasharray="2,2" />
-            <line x1="12" y1="50" x2="88" y2="50" stroke="rgba(255,255,255,0.08)" strokeWidth="0.5" strokeDasharray="2,2" />
+            <line x1={toSvgX(0.5)} y1={PY1} x2={toSvgX(0.5)} y2={PY0} stroke="rgba(255,255,255,0.08)" strokeWidth="0.4" strokeDasharray="1.6,1.6" />
+            <line x1={PX0} y1={toSvgY(0.5)} x2={PX1} y2={toSvgY(0.5)} stroke="rgba(255,255,255,0.08)" strokeWidth="0.4" strokeDasharray="1.6,1.6" />
 
             {/* Axes */}
-            <line x1="12" y1="88" x2="88" y2="88" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" />
-            <line x1="12" y1="12" x2="12" y2="88" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" />
+            <line x1={PX0} y1={PY0} x2={PX1} y2={PY0} stroke="rgba(255,255,255,0.18)" strokeWidth="0.6" />
+            <line x1={PX0} y1={PY1} x2={PX0} y2={PY0} stroke="rgba(255,255,255,0.18)" strokeWidth="0.6" />
             {/* Arrowheads */}
-            <polygon points="88,87 90,88 88,89" fill="rgba(255,255,255,0.15)" />
-            <polygon points="11,12 12,10 13,12" fill="rgba(255,255,255,0.15)" />
+            <polygon points={`${PX1},${PY0 - 1.3} ${PX1 + 2},${PY0} ${PX1},${PY0 + 1.3}`} fill="rgba(255,255,255,0.18)" />
+            <polygon points={`${PX0 - 1.3},${PY1} ${PX0},${PY1 - 2} ${PX0 + 1.3},${PY1}`} fill="rgba(255,255,255,0.18)" />
 
             {/* Axis labels */}
-            <text x="50" y="96.5" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="3.2" fontFamily="Inter,sans-serif">
+            <text x={toSvgX(0.5)} y={PY0 + 9} textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="600" letterSpacing="0.2">
               Execution Readiness →
             </text>
-            <text x="5.5" y="50" textAnchor="middle" fill="rgba(255,255,255,0.3)" fontSize="3.2" fontFamily="Inter,sans-serif"
-              transform="rotate(-90, 5.5, 50)">
+            <text x={PX0 - 9} y={toSvgY(0.5)} textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="600" letterSpacing="0.2"
+              transform={`rotate(-90, ${PX0 - 9}, ${toSvgY(0.5)})`}>
               Strategic Maturity →
             </text>
 
             {/* Quadrant labels */}
-            <text x="29" y="17" textAnchor="middle" fill="rgba(240,151,78,0.45)" fontSize="2.8" fontFamily="Inter,sans-serif" fontWeight="600">Planners</text>
-            <text x="71" y="17" textAnchor="middle" fill={accent + '80'} fontSize="2.8" fontFamily="Inter,sans-serif" fontWeight="700">AI Leaders</text>
-            <text x="29" y="96" textAnchor="middle" fill="rgba(255,255,255,0.2)" fontSize="2.8" fontFamily="Inter,sans-serif" fontWeight="600">Early Movers</text>
-            <text x="71" y="96" textAnchor="middle" fill="rgba(45,212,191,0.4)" fontSize="2.8" fontFamily="Inter,sans-serif" fontWeight="600">Builders</text>
+            <text x={toSvgX(0.25)} y={PY1 + 4} textAnchor="middle" fill="rgba(240,151,78,0.55)" fontSize="3" fontFamily="Inter,sans-serif" fontWeight="700">Planners</text>
+            <text x={toSvgX(0.75)} y={PY1 + 4} textAnchor="middle" fill={accent + 'AA'} fontSize="3" fontFamily="Inter,sans-serif" fontWeight="800">AI Leaders</text>
+            <text x={toSvgX(0.25)} y={PY0 - 2.5} textAnchor="middle" fill="rgba(255,255,255,0.28)" fontSize="3" fontFamily="Inter,sans-serif" fontWeight="700">Early Movers</text>
+            <text x={toSvgX(0.75)} y={PY0 - 2.5} textAnchor="middle" fill="rgba(45,212,191,0.5)" fontSize="3" fontFamily="Inter,sans-serif" fontWeight="700">Builders</text>
+
+            {/* AI Leaders goal zone highlight */}
+            <rect x={toSvgX(0.6)} y={toSvgY(1.0)} width={toSvgX(1.0) - toSvgX(0.6)} height={toSvgY(0.6) - toSvgY(1.0)}
+              fill={accent} fillOpacity="0.04" rx="1"
+              stroke={accent} strokeOpacity="0.12" strokeWidth="0.4" />
 
             {/* Cluster blobs */}
             {clusters.map(c => (
               <motion.ellipse
                 key={c.id}
-                cx={toSvgX(c.cx)} cy={toSvgY(c.cy)} rx={c.r} ry={c.r * 0.7}
+                cx={toSvgX(c.cx)} cy={toSvgY(c.cy)} rx={c.rd * RX} ry={c.rd * RY}
                 fill={c.color} fillOpacity={c.opacity}
                 initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.7, delay: 0.2 + clusters.findIndex(cl => cl.id === c.id) * 0.1 }}
@@ -107,18 +115,13 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
               />
             ))}
 
-            {/* AI Leaders goal zone highlight */}
-            <rect x={toSvgX(0.6)} y={toSvgY(1.0)} width={toSvgX(1.0) - toSvgX(0.6)} height={toSvgY(0.6) - toSvgY(1.0)}
-              fill={accent} fillOpacity="0.04" rx="1"
-              stroke={accent} strokeOpacity="0.12" strokeWidth="0.5" />
-
             {/* Path from user to leaders zone (dotted) */}
             {(x < 0.75 || y < 0.75) && (
               <motion.line
                 x1={dotX} y1={dotY}
                 x2={toSvgX(0.82)} y2={toSvgY(0.82)}
-                stroke={accent} strokeOpacity="0.25" strokeWidth="0.6"
-                strokeDasharray="2,1.5"
+                stroke={accent} strokeOpacity="0.25" strokeWidth="0.5"
+                strokeDasharray="1.6,1.2"
                 initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
                 transition={{ duration: 1, delay: 0.8 }}
               />
@@ -126,15 +129,15 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
 
             {/* Respondent dot */}
             <motion.circle
-              cx={dotX} cy={dotY} r="3.5"
+              cx={dotX} cy={dotY} r="2.6"
               fill={accent}
               initial={{ scale: 0 }} animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 300, delay: 0.6 }}
-              style={{ filter: `drop-shadow(0 0 4px ${accent}80)`, transformOrigin: `${dotX}px ${dotY}px` }}
+              style={{ filter: `drop-shadow(0 0 3px ${accent}80)`, transformOrigin: `${dotX}px ${dotY}px` }}
             />
             <motion.circle
-              cx={dotX} cy={dotY} r="6"
-              fill="none" stroke={accent} strokeWidth="0.6" strokeOpacity="0.4"
+              cx={dotX} cy={dotY} r="4.6"
+              fill="none" stroke={accent} strokeWidth="0.5" strokeOpacity="0.4"
               initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, delay: 0.7 }}
               style={{ transformOrigin: `${dotX}px ${dotY}px` }}
@@ -142,9 +145,9 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
 
             {/* Dot label */}
             <motion.text
-              x={dotX + (dotX > 60 ? -4 : 5)} y={dotY - 5}
-              textAnchor={dotX > 60 ? 'end' : 'start'}
-              fill="white" fontSize="2.8" fontFamily="Inter,sans-serif" fontWeight="600"
+              x={dotX + (dotX > toSvgX(0.6) ? -6 : 6)} y={dotY - 6}
+              textAnchor={dotX > toSvgX(0.6) ? 'end' : 'start'}
+              fill="white" fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="700"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
             >
               {companyName.length > 18 ? companyName.slice(0, 16) + '…' : companyName}
@@ -153,37 +156,37 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
         </div>
 
         {/* Legend */}
-        <div className="flex-shrink-0 w-36 space-y-3 pt-2 hidden sm:block">
-          <div className="text-[10px] font-display font-bold uppercase tracking-wider text-text-muted mb-3">
+        <div className="flex-shrink-0 w-44 space-y-3.5 pt-2 hidden sm:block">
+          <div className="text-[11px] font-display font-bold uppercase tracking-wider text-text-muted mb-3">
             Market Clusters
           </div>
           {clusters.map(c => (
-            <div key={c.id} className="flex items-start gap-2">
-              <div className="w-2.5 h-2.5 rounded-full mt-0.5 flex-shrink-0"
-                style={{ background: c.color, opacity: 0.7 }} />
+            <div key={c.id} className="flex items-start gap-2.5">
+              <div className="w-3 h-3 rounded-full mt-0.5 flex-shrink-0"
+                style={{ background: c.color, opacity: 0.75 }} />
               <div>
-                <div className="text-white text-[10px] font-semibold leading-tight">{c.label}</div>
-                <div className="text-text-muted text-[9px] leading-snug">{c.sublabel}</div>
+                <div className="text-white text-xs font-semibold leading-tight">{c.label}</div>
+                <div className="text-text-muted text-[11px] leading-snug">{c.sublabel}</div>
               </div>
             </div>
           ))}
 
-          <div className="pt-2 border-t border-white/[0.06]">
-            <div className="flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: accent, boxShadow: `0 0 4px ${accent}80` }} />
-              <div className="text-[10px] font-semibold text-white">Your Org</div>
+          <div className="pt-3 border-t border-white/[0.06]">
+            <div className="flex items-center gap-2.5">
+              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: accent, boxShadow: `0 0 5px ${accent}90` }} />
+              <div className="text-xs font-semibold text-white">Your Org</div>
             </div>
           </div>
 
           {/* Axis scores */}
-          <div className="pt-2 border-t border-white/[0.06] space-y-2">
-            <div className="text-[9px] text-text-muted">
+          <div className="pt-3 border-t border-white/[0.06] space-y-2.5">
+            <div className="text-[11px] text-text-muted">
               <span className="block font-semibold text-text-secondary mb-0.5">Execution Readiness</span>
-              {Math.round(x * 100)}th percentile
+              <span className="text-white font-display font-bold text-sm">{Math.round(x * 100)}th</span> percentile
             </div>
-            <div className="text-[9px] text-text-muted">
+            <div className="text-[11px] text-text-muted">
               <span className="block font-semibold text-text-secondary mb-0.5">Strategic Maturity</span>
-              {Math.round(y * 100)}th percentile
+              <span className="text-white font-display font-bold text-sm">{Math.round(y * 100)}th</span> percentile
             </div>
           </div>
         </div>

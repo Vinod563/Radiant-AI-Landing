@@ -27,7 +27,7 @@ import { dirname, join } from 'path'
 import { handleLLMChat, GEMMA_MODEL } from './handlers/llmHandler.js'
 import { handleStaticChat } from './handlers/staticHandler.js'
 import { requireAuth } from './middleware/auth.js'
-import { sendReportEmail, isMailConfigured } from './utils/mailer.js'
+import { sendReportEmail, sendContactEmail, isMailConfigured } from './utils/mailer.js'
 
 dotenv.config()
 
@@ -207,6 +207,48 @@ app.post(REPORT_PATH, reportLimiter, async (req, res) => {
     return res.status(200).json({ ok: true })
   } catch (error) {
     console.error('Report email failed:', error?.message || error)
+    return res.status(500).json({ error: 'send_failed' })
+  }
+})
+
+// ─── Public: Contact form ─────────────────────────────────────────────────────
+const contactLimiter = rateLimit({
+  windowMs: 60 * 60 * 1000,
+  max: 10,
+  message: { error: 'Too many messages — try again later' },
+  standardHeaders: true,
+  legacyHeaders: false,
+})
+
+app.post('/api/contact', contactLimiter, async (req, res) => {
+  const { name, email, company, message, subject, website, meta } = req.body || {}
+
+  // Honeypot — silently accept bot submissions
+  if (website) return res.status(200).json({ ok: true })
+
+  if (!name || !email || !message) {
+    return res.status(400).json({ error: 'name, email and message are required' })
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email).trim())) {
+    return res.status(400).json({ error: 'A valid email is required' })
+  }
+  if (!isMailConfigured()) {
+    return res.status(503).json({ error: 'email_not_configured' })
+  }
+
+  try {
+    await sendContactEmail({
+      name: String(name).slice(0, 120),
+      email: String(email).trim().slice(0, 160),
+      company: (company || '').toString().slice(0, 160),
+      message: String(message).slice(0, 4000),
+      subject: (subject || '').toString().slice(0, 160),
+      meta: meta && typeof meta === 'object' ? meta : null,
+    })
+    console.log(`[${new Date().toISOString()}] contact email → ${String(email).trim()}`)
+    return res.status(200).json({ ok: true })
+  } catch (error) {
+    console.error('Contact email failed:', error?.message || error)
     return res.status(500).json({ error: 'send_failed' })
   }
 })

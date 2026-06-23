@@ -18,7 +18,7 @@ function isPersonalEmail(email) {
  *
  * Props: accent, title, body, bullets, defaults, onSend, submitLabel
  */
-export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bullets = [], defaults = {}, onSend, submitLabel = 'Email me the full report' }) {
+export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bullets = [], defaults = {}, onSend, submitLabel = 'Email me the full report', bare = false }) {
   const [form, setForm] = useState({
     name: defaults.name || '', email: defaults.email || '', company: defaults.company || '',
     sector: defaults.sector || '', orgSize: defaults.orgSize || '', department: defaults.department || '',
@@ -61,7 +61,8 @@ export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bu
   const Err = ({ k }) => errors[k] ? <p className="text-red-400 text-xs font-medium mt-1.5">{errors[k]}</p> : null
 
   return (
-    <div className="rounded-3xl p-8 lg:p-10" style={{ background: 'rgba(255,255,255,0.025)', border: `1px solid ${accent}26` }}>
+    <div className={bare ? '' : 'rounded-3xl p-8 lg:p-10'}
+      style={bare ? undefined : { background: 'rgba(255,255,255,0.025)', border: `1px solid ${accent}26` }}>
       <span className="kicker mb-4">Get the full report</span>
       <h3 className="font-display font-black text-white text-xl lg:text-2xl tracking-tight mb-2">{title}</h3>
       {body && <p className="text-text-secondary text-sm leading-relaxed max-w-2xl mb-6">{body}</p>}

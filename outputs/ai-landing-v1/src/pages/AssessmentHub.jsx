@@ -257,7 +257,7 @@ function AssessmentCard({ assessment: a, delay }) {
 
       {/* CTA */}
       <div className="px-8 lg:px-10 py-6 mt-auto relative z-10">
-        <Link to={a.route}
+        <Link to={`${a.route}?start=1`}
           className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-display font-bold text-sm transition-all duration-200 no-underline hover:-translate-y-0.5 active:translate-y-0"
           style={{ background: `${a.accent}18`, border: `1px solid ${a.accent}40`, color: a.accent }}>
           Start the {a.key === 'ai' ? 'AI Adoption' : 'CX Maturity'} Assessment

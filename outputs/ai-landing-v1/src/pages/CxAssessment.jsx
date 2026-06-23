@@ -14,8 +14,9 @@ const ACCENT = '#596AE0'
 export default function CxAssessment() {
   const [searchParams] = useSearchParams()
   const isSample = searchParams.get('view') === 'sample'
+  const skipIntro = searchParams.get('start') === '1'
 
-  const [step, setStep] = useState(isSample ? 'results' : 'intro')
+  const [step, setStep] = useState(isSample ? 'results' : skipIntro ? 'profile' : 'intro')
   const [answers, setAnswers] = useState(isSample ? cxSampleAnswers : {})
   const [profile, setProfile] = useState(null)
 

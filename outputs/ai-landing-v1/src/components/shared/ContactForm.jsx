@@ -3,7 +3,9 @@ import { motion } from 'framer-motion'
 import { CheckCircle2, RefreshCw, ArrowRight } from 'lucide-react'
 
 /**
- * Shared contact form with canvas CAPTCHA + web3forms submission.
+ * Shared contact form with canvas CAPTCHA. Submits to the Radiant backend
+ * (`/api/contact`), which emails the team via Outlook/M365 SMTP — the same
+ * provider used for assessment reports.
  *
  * Extracted from Chat.jsx's ContactDetailsCard so the chat contact card AND
  * both assessment flows (AI Adoption / CX Maturity) post to the SAME inbox
@@ -13,13 +15,10 @@ import { CheckCircle2, RefreshCw, ArrowRight } from 'lucide-react'
  *   accent     - accent color (default brand-green)
  *   subjectPrefix - email subject prefix; final subject = `${prefix} from ${name}`
  *   defaults   - { name, email, company, message } prefill
- *   meta       - extra key/values merged into the web3forms payload (e.g. assessment scores)
+ *   meta       - extra key/values included in the email (e.g. assessment scores)
  *   heading    - small uppercase label above fields
  *   onSuccess  - called with the submitted form object after a successful send
  */
-
-// Get your free access key at https://web3forms.com (enter vinod.mourya@radiant.digital)
-const WEB3FORMS_KEY = import.meta.env.VITE_WEB3FORMS_KEY || '3a375f4a-b42f-45e0-a66f-0d787bf9e535'
 
 export default function ContactForm({
   accent = '#91C46B',
@@ -125,22 +124,21 @@ export default function ContactForm({
 
     setSubmitting(true)
     try {
-      const res = await fetch('https://api.web3forms.com/submit', {
+      const apiUrl = import.meta.env.VITE_CHAT_API_URL || ''
+      const res = await fetch(`${apiUrl}/api/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          access_key: WEB3FORMS_KEY,
           subject: `${subjectPrefix} from ${form.name} — Radiant Digital AI`,
-          from_name: form.name,
           name: form.name,
           email: form.email,
           company: form.company || 'Not provided',
           message: form.message,
-          ...(meta || {}),
+          meta: meta || undefined,
         }),
       })
-      const data = await res.json()
-      if (data.success) {
+      const data = await res.json().catch(() => ({}))
+      if (res.ok && data.ok) {
         setSubmitted(true)
         onSuccess?.(form)
       } else {

@@ -14,8 +14,9 @@ const ACCENT = '#91C46B'
 export default function AiAssessment() {
   const [searchParams] = useSearchParams()
   const isSample = searchParams.get('view') === 'sample'
+  const skipIntro = searchParams.get('start') === '1'
 
-  const [step, setStep] = useState(isSample ? 'results' : 'intro')
+  const [step, setStep] = useState(isSample ? 'results' : skipIntro ? 'profile' : 'intro')
   const [profile, setProfile] = useState(isSample ? sampleProfile : null)
   const [answers, setAnswers] = useState(isSample ? sampleAnswers : {})
 

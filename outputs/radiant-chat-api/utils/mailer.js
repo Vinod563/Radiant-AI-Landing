@@ -33,6 +33,12 @@ function getTransport() {
 
 const esc = (s = '') => String(s).replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]))
 
+// Team addresses copied on every send from connect@radiant.digital.
+// Override via MAIL_CC (comma-separated) in .env.
+const TEAM_CC = (process.env.MAIL_CC ||
+  'lam.huynh@radiant.digital, alek.nedelkovski@radiant.digital, vinod.mourya@radiant.digital')
+  .split(',').map(s => s.trim()).filter(Boolean)
+
 function respondentHtml({ name, assessment, headline }) {
   return `
   <div style="font-family:Arial,Helvetica,sans-serif;background:#010f1e;color:#e8eef5;padding:32px;border-radius:16px;max-width:560px;margin:auto">
@@ -83,6 +89,8 @@ export async function sendReportEmail(lead, pdfBuffer, filename) {
   await t.sendMail({
     from: process.env.MAIL_FROM,
     to: lead.email,
+    // BCC (not CC) so the team is copied without exposing their addresses to the lead
+    bcc: TEAM_CC,
     subject: `Your ${lead.assessment} report from Radiant Digital`,
     html: respondentHtml(lead),
     attachments,
@@ -92,9 +100,48 @@ export async function sendReportEmail(lead, pdfBuffer, filename) {
     await t.sendMail({
       from: process.env.MAIL_FROM,
       to: process.env.REPORT_NOTIFY_EMAIL,
+      cc: TEAM_CC,
       subject: `New ${lead.assessment} lead — ${lead.name || lead.email}`,
       html: teamHtml(lead),
       attachments,
     }).catch(err => console.error('Team notification failed:', err?.message || err))
   }
+}
+
+// ─── Contact form ─────────────────────────────────────────────────────────────
+
+function contactHtml({ name, email, company, message, meta }) {
+  const row = (k, v) => `<tr><td style="padding:4px 14px 4px 0;color:#888;font-size:13px;vertical-align:top">${esc(k)}</td><td style="padding:4px 0;font-size:13px"><b>${esc(v || '—')}</b></td></tr>`
+  const metaRows = meta && typeof meta === 'object'
+    ? Object.entries(meta).map(([k, v]) => row(k, String(v))).join('')
+    : ''
+  return `
+  <div style="font-family:Arial,Helvetica,sans-serif;max-width:560px">
+    <h3 style="margin:0 0 14px">New contact form submission</h3>
+    <table style="border-collapse:collapse">
+      ${row('Name', name)}
+      ${row('Email', email)}
+      ${row('Company', company)}
+      ${metaRows}
+    </table>
+    <div style="white-space:pre-wrap;font-size:14px;line-height:1.6;margin-top:16px;border-left:3px solid #91C46B;padding:4px 0 4px 14px;color:#222">${esc(message)}</div>
+  </div>`
+}
+
+/**
+ * Sends a contact-form submission to the team inbox. Sets Reply-To to the
+ * submitter so the team can reply directly.
+ * @param {object} c - { name, email, company, message, subject, meta }
+ */
+export async function sendContactEmail(c) {
+  const t = getTransport()
+  const to = process.env.CONTACT_NOTIFY_EMAIL || process.env.REPORT_NOTIFY_EMAIL || process.env.MAIL_FROM
+  await t.sendMail({
+    from: process.env.MAIL_FROM,
+    to,
+    cc: TEAM_CC,
+    replyTo: c.email ? `${c.name || ''} <${c.email}>`.trim() : undefined,
+    subject: c.subject || `New inquiry from ${c.name || 'website'} — Radiant Digital`,
+    html: contactHtml(c),
+  })
 }

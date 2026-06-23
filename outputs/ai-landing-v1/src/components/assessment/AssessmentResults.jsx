@@ -168,9 +168,38 @@ export default function AssessmentResults({ kind, profile, answers }) {
             result={result}
             accent={ACCENT}
             unlocked={submitted}
-            onUnlock={() => setUnlockOpen(true)}
             emailDelivered={emailDelivered}
             sentTo={sentTo}
+            form={
+              <AssessmentLeadForm
+                accent={ACCENT}
+                title="Unlock your full PDF report"
+                body={
+                  isAi
+                    ? "Enter your details and we'll email you the complete PDF — your strengths and gaps dimension by dimension, Radiant's read on your stage, and your prioritized next step."
+                    : "Enter your details and we'll email you the complete PDF — dimension-level analysis, your recommended solution, and case studies matched to your context."
+                }
+                bullets={
+                  isAi
+                    ? [
+                        'Full findings: your top 3 strengths and top 3 gaps by dimension',
+                        'Radiant\'s strategic read — editorial perspective on your stage',
+                        'One prioritized next step with rationale',
+                        'Competitive positioning vs. AI leaders in your sector',
+                      ]
+                    : [
+                        'Per-dimension breakdown: Vision, Governance, Culture',
+                        'Radiant\'s read at your maturity level',
+                        'Experience AI recommendation tailored to where you are',
+                        'Relevant case studies matched to your context',
+                      ]
+                }
+                defaults={defaults}
+                submitLabel="Unlock & email me the PDF"
+                onSend={sendReport}
+                bare
+              />
+            }
           />
         </div>
       </div>
