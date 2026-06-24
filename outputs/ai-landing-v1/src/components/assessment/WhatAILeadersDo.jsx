@@ -4,139 +4,163 @@ import { Link } from 'react-router-dom'
 
 /**
  * WhatAILeadersDo — stage-specific guidance showing what organizations
- * at the next maturity level do differently.
+ * at the next autonomy stage do differently.
  *
  * Props:
- *   currentIndex  number 1..5
+ *   currentIndex  number 1..6
  *   accent        string hex
  *   chatQuery     string — pre-filled chat query for the CTA
  */
 
 const LEADER_CONTENT = {
   1: {
-    heading: 'What Stage 2 organizations did to move forward',
-    context: 'Organizations that successfully moved out of Stage 1 did one thing consistently: they stopped debating AI in the abstract and committed to three specific use cases — with names, owners, and timelines attached.',
+    heading: 'What Guided Autonomy organizations did to move forward',
+    context: 'Organizations that climbed out of Zero Autonomy did one thing consistently: once their data and processes were clean, they let AI start recommending in real time — with a human approving every action — instead of leaving it stuck at data capture.',
     actions: [
       {
-        title: 'Produced a one-page AI brief — not a strategy deck',
-        body: 'Not a 40-slide strategy deck. A one-page document: three AI outcomes for the next 12 months, who owns each, and how success is measured. Leadership alignment in 90 minutes, not 6 months.',
+        title: 'Deployed real-time assist where decisions actually happen',
+        body: 'Live agent-assist, next-best-action prompts, and in-the-moment alerts that suggest the move while there\'s still time to make it. AI advises; the human still approves. Faster, better-informed decisions without surrendering control.',
       },
       {
-        title: 'Named a single accountable executive',
-        body: 'They didn\'t form a committee. One person — CTO, CDO, or a designated VP — owned the AI agenda with a budget and authority to act. Committees produce reports. Owners produce outcomes.',
+        title: 'Standardized data capture so recommendations could be trusted',
+        body: 'Auto-transcription, structured data capture, and consistent tagging across every interaction. Recommendations are only as good as the inputs — they locked the inputs down first.',
       },
       {
-        title: 'Started one pilot with real data and a real success metric',
-        body: 'Not a proof of concept with synthetic data. A live workflow — customer support, document processing, demand forecasting — with a baseline measurement and a target they could miss.',
+        title: 'Defined explicit approval gates for AI suggestions',
+        body: 'A clear rule for every AI prompt: who reviews it, what they\'re checking, and what "approved" means. That turned ad-hoc acceptance into a repeatable, auditable decision step.',
       },
       {
-        title: 'Ran a 2-hour AI literacy session for the executive team',
-        body: 'Not a vendor demo. A working session: what AI can and can\'t do, where the organization\'s data is already good enough to start, and what the first decision gate looks like.',
+        title: 'Trained frontline teams to work alongside an AI co-pilot',
+        body: 'Not a vendor demo — a working session on when to trust the prompt, when to override it, and how to give feedback that makes the next suggestion better.',
       },
     ],
-    chatQuery: 'Help us build a 90-day AI action plan to move from Stage 1 to Stage 2',
-    statBadge: { value: '67%', label: 'of Stage 1 orgs that formalize ownership reach Stage 2 within 12 months' },
+    chatQuery: 'Help us move from Zero to Guided Autonomy — real-time AI assist with human approval',
+    statBadge: { value: '67%', label: 'of organizations that standardize data capture reach Guided Autonomy within 12 months' },
   },
   2: {
-    heading: 'What Stage 3 organizations did to break through',
-    context: 'The Stage 2 trap is having pilots that work technically but don\'t spread. Stage 3 organizations closed that gap by treating the human adoption problem as seriously as the technical one.',
+    heading: 'What Insight Autonomy organizations did to break through',
+    context: 'The Guided Autonomy ceiling is trust: AI recommends, but a human approves everything. Organizations broke through by letting AI generate intelligence on its own — surfacing insight without being asked — and teaching people to consume it.',
     actions: [
       {
-        title: 'Built a role-differentiated AI training program',
-        body: 'Not a single "AI for everyone" course. Separate tracks: what executives need to decide, what managers need to lead, what frontline staff need to use. Different content, different formats, mandatory not optional.',
+        title: 'Automated reporting so no one runs reports by hand',
+        body: 'Real-time CSAT and root-cause reporting, performance dashboards that update themselves, and trend detection across every interaction. People consume intelligence instead of assembling it.',
       },
       {
-        title: 'Formalized a GenAI policy before the next deployment',
-        body: 'Shadow GenAI use was already happening. They got ahead of it: a two-page acceptable use policy, approved tools list, and a clear process for requesting new tools. Written and enforced before the next use case went live.',
+        title: 'Turned on proactive risk and anomaly flagging',
+        body: 'AI watches continuously and raises churn risk, emerging issues, and outliers before a human would have noticed. The shift is from "pull a report" to "the system tells you."',
       },
       {
-        title: 'Assigned a change management lead to every AI project',
-        body: 'Not an afterthought. A named person responsible for: who needs to change their workflow, what the rollout plan looks like, and how adoption gets measured. Part of project kickoff, not post-launch.',
+        title: 'Built trust in machine-generated insight',
+        body: 'Showed the work behind each insight — the signals, the confidence, the source — so leaders learned to act on AI intelligence instead of re-deriving it themselves.',
       },
       {
-        title: 'Cleaned one critical dataset end-to-end',
-        body: 'Picked the data domain that would unblock the most AI use cases, ran a 60-day quality sprint, and documented what was clean enough to use. That inventory became the foundation for the next three pilots.',
+        title: 'Picked low-risk decisions to let AI act end to end',
+        body: 'A handful of high-volume, low-risk calls where AI executes and humans audit after the fact. The measured results became the business case for delegating more.',
       },
     ],
-    chatQuery: 'Help us scale our AI pilots beyond the technical team into the broader organization',
-    statBadge: { value: '3×', label: 'faster time to enterprise deployment when change management is built in from day one' },
+    chatQuery: 'Help us reach Insight Autonomy — AI that surfaces intelligence without being prompted',
+    statBadge: { value: '3×', label: 'faster issue detection when AI surfaces insight proactively instead of on request' },
   },
   3: {
-    heading: 'What Stage 4 organizations did to govern at scale',
-    context: 'Moving from Adopt to Govern is about infrastructure — not technology infrastructure, but the organizational infrastructure that lets AI scale without creating compounding risk. Stage 4 organizations built that infrastructure before they needed it.',
+    heading: 'What Operational Autonomy organizations did to connect insight to action',
+    context: 'At Insight Autonomy AI generates intelligence, but humans still carry it across the organization by hand. The breakthrough is wiring insight directly into cross-functional workflows — with humans supervising the exceptions, not the routine.',
     actions: [
       {
-        title: 'Published a formal AI governance policy with enforcement teeth',
-        body: 'Not aspirational principles. Documented standards: which AI deployments require ethics review, who approves model changes, what triggers a human override, and what happens when something goes wrong. Board-approved and tied to project gates.',
+        title: 'Auto-synced AI insight into CRM, product, and finance',
+        body: 'Contact-centre and operational intelligence flowed straight into the systems where work happens — CRM records, product roadmaps, revenue models — without a human re-keying it.',
       },
       {
-        title: 'Built an AI portfolio management process',
-        body: 'Stopped treating each AI initiative as a standalone project. Created a portfolio view: all active use cases, their ROI metrics, their data dependencies, and their governance status. One owner. Reviewed monthly with executives.',
+        title: 'Designed human checkpoints for exceptions only',
+        body: 'Defined which actions run automatically and which pause for a supervisor. People spend their attention on the edge cases that matter, not the routine that doesn\'t.',
       },
       {
-        title: 'Established pre/post ROI measurement as standard practice',
-        body: 'Every AI investment — before it was approved — had a baseline measurement and a defined success metric. After deployment, the same team measured the outcome. That data funded the next round of investment.',
+        title: 'Stood up cross-team KPI dashboards driven by AI',
+        body: 'Shared, real-time scorecards fed by AI so sales, service, product, and finance argued from the same numbers — and acted on them automatically.',
       },
       {
-        title: 'Stood up an internal AI Center of Excellence',
-        body: 'A small team (4–8 people) whose job was to make every other team\'s AI projects faster: shared tooling, reusable components, deployment standards, and a playbook for moving from pilot to production.',
+        title: 'Built a governance layer to keep speed and oversight in balance',
+        body: 'Clear standards for what triggers a human override, who owns each automated workflow, and how exceptions get reviewed — so automation never outran accountability.',
       },
     ],
-    chatQuery: 'Help us build the governance infrastructure to scale AI across our enterprise',
-    statBadge: { value: '40%', label: 'reduction in deployment time for organizations with a formal AI Center of Excellence' },
+    chatQuery: 'Help us reach Operational Autonomy — AI insight driving cross-functional workflows',
+    statBadge: { value: '40%', label: 'reduction in decision-to-action time when insight feeds workflows automatically' },
   },
   4: {
-    heading: 'What Stage 5 organizations do to compound the advantage',
-    context: 'The difference between Stage 4 and Stage 5 is mindset, not technology. Stage 5 organizations stopped treating AI as a separate initiative and integrated it into how the organization operates, decides, and learns.',
+    heading: 'What Proactive Autonomy organizations do to get ahead of the need',
+    context: 'Operational Autonomy reacts well. Proactive Autonomy anticipates — AI predicts outcomes and prescribes action before humans identify the need, while people move up to strategy and governance.',
     actions: [
       {
-        title: 'Embedded AI KPIs in the executive performance scorecard',
-        body: 'AI outcome metrics — not just deployment counts, but revenue attribution, cost reduction, and experience improvements — were tied to executive compensation. That changed the conversation from "AI projects" to "how we run the business."',
+        title: 'Let predictions trigger action automatically',
+        body: 'Predicted churn launches proactive outreach; a forecasted volume spike adjusts staffing; a detected upsell moment surfaces the offer — all before a human flags it. AI manages the execution triggers.',
       },
       {
-        title: 'Built a continuous learning loop from every deployment',
-        body: 'Every production AI system had a feedback mechanism: model performance monitoring, drift detection, user feedback collection, and a retraining protocol. Outcomes from each use case informed the next investment decision.',
+        title: 'Shifted people from execution to strategy and governance',
+        body: 'With AI handling prediction and triggering, leaders spend their time on guardrails, priorities, and the calls that genuinely need judgment — not running the machine.',
       },
       {
-        title: 'Created a factory model for AI deployment',
-        body: 'Standardized the path from pilot to production. Any use case that passed the business value threshold followed the same intake, build, review, deploy, and measure sequence. Speed to value dropped from 18 months to under 90 days.',
+        title: 'Built the governance to trust prediction with action',
+        body: 'Confidence thresholds, override paths, and audit trails that make it safe for AI to act on a forecast. The advantage compounds only when governance is mature enough to allow it.',
       },
       {
-        title: 'Started publishing their AI maturity journey externally',
-        body: 'Thought leadership, public case studies, and board-level reporting on AI outcomes. This created recruiting advantage, enterprise credibility, and a feedback loop that further sharpened their internal capability.',
+        title: 'Closed the loop so predictions get sharper over time',
+        body: 'Every predicted-vs-actual outcome fed back into the models, so accuracy improved with each cycle and the organization\'s lead widened.',
       },
     ],
-    chatQuery: 'Help us build a factory model for enterprise AI deployment at Stage 5 maturity',
-    statBadge: { value: '2.4×', label: 'higher AI-attributed revenue growth for Stage 5 organizations vs. Stage 3 peers' },
+    chatQuery: 'Help us reach Proactive Autonomy — AI that anticipates and prescribes before we ask',
+    statBadge: { value: '2.4×', label: 'higher returns for organizations acting on prediction vs. reacting to events' },
   },
   5: {
-    heading: 'You\'re in the AI Leaders tier',
-    context: 'At Stage 5, the playbook shifts from building capability to compounding it. The organizations that sustain the advantage are the ones that treat AI as an operating system, not a project portfolio.',
+    heading: 'What Full Autonomy organizations do to self-govern at scale',
+    context: 'The last step is from prediction to self-governance: AI executes end to end, learns from outcomes, and improves without manual retraining — while humans define guardrails and approve only high-risk exceptions.',
     actions: [
       {
-        title: 'Pursue agentic AI as the next capability frontier',
-        body: 'Move beyond models that respond to humans to systems that initiate multi-step actions across tools, data, and workflows. The organizations deploying agentic AI today are building a 24-month lead over peers still operating reactive AI.',
+        title: 'Let AI resolve issues end to end across systems',
+        body: 'Autonomous workflows that span CRM, billing, and ticketing — resolving the whole issue, not a step of it — with humans involved only when risk crosses a defined threshold.',
       },
       {
-        title: 'Build proprietary AI assets that competitors can\'t replicate',
-        body: 'Fine-tuned models trained on your proprietary data, knowledge graphs built from your institutional knowledge, and evaluation frameworks calibrated to your specific outcomes. Generic models are table stakes. Proprietary AI is moat.',
+        title: 'Deployed self-improving models that adapt on their own',
+        body: 'QA and decision models that learn from new patterns and retrain themselves, so performance improves continuously without a manual rebuild cycle.',
       },
       {
-        title: 'Export your AI capability as a product or partnership',
-        body: 'Organizations at this stage are monetizing their AI infrastructure: through platform licensing, joint ventures with partners, or AI-powered service offerings. The capability becomes a revenue line, not just a cost reduction.',
+        title: 'Narrowed human approval to high-risk exceptions only',
+        body: 'Guardrails define what the system may do unattended and what must stop for sign-off. Humans govern the boundaries instead of operating inside them.',
       },
       {
-        title: 'Invest in AI governance as a competitive differentiator',
-        body: 'Public reporting on AI ethics, external audits, and regulatory leadership. In markets where trust is a purchase driver — healthcare, financial services, government — governance transparency is a direct source of competitive advantage.',
+        title: 'Made governance the core human job',
+        body: 'Autonomous scheduling, real-time workforce rebalancing, and self-running operations mean leadership\'s highest-leverage work becomes setting strategy and keeping an autonomous system accountable.',
       },
     ],
-    chatQuery: 'Help us identify the next frontier for our Stage 5 AI capability',
-    statBadge: { value: 'Top 8%', label: 'of organizations globally have reached Stage 5 AI maturity' },
+    chatQuery: 'Help us reach Full Autonomy — self-governing AI with humans on guardrails',
+    statBadge: { value: 'Top 8%', label: 'of organizations operate AI as a self-governing system at Full Autonomy' },
+  },
+  6: {
+    heading: 'You\'re at Full Autonomy — the self-governing tier',
+    context: 'At Full Autonomy the playbook shifts from building capability to governing it. The organizations that sustain the lead treat AI as a self-improving operating system and put their human effort into guardrails, trust, and strategy.',
+    actions: [
+      {
+        title: 'Build proprietary AI assets competitors can\'t replicate',
+        body: 'Models fine-tuned on your data, knowledge graphs from your institutional memory, and learning loops that compound over time. Generic models are table stakes; proprietary, self-improving AI is the moat.',
+      },
+      {
+        title: 'Make governance a visible competitive differentiator',
+        body: 'External audits, transparent guardrails, and clear accountability for autonomous decisions. In trust-driven markets — healthcare, financial services, government — that governance is itself a reason to buy.',
+      },
+      {
+        title: 'Orchestrate agents across the whole enterprise',
+        body: 'Coordinate fleets of autonomous agents across functions and systems, with a control plane that monitors, constrains, and improves them as one estate rather than many point solutions.',
+      },
+      {
+        title: 'Keep humans firmly on the guardrails',
+        body: 'Continuous evaluation, drift detection, and high-risk exception review so a system that runs itself stays aligned, safe, and accountable as it learns.',
+      },
+    ],
+    chatQuery: 'Help us govern and extend our Full Autonomy AI capability',
+    statBadge: { value: 'Top 8%', label: 'of organizations globally have reached Full Autonomy' },
   },
 }
 
 export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B' }) {
-  const content = LEADER_CONTENT[currentIndex] || LEADER_CONTENT[5]
+  const content = LEADER_CONTENT[currentIndex] || LEADER_CONTENT[6]
 
   return (
     <div className="mag-card p-8 lg:p-10">
@@ -146,7 +170,7 @@ export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B' }
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold"
           style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}30` }}>
           <Zap size={10} />
-          Stage {Math.min(currentIndex + 1, 5)} Playbook
+          Stage {Math.min(currentIndex + 1, 6)} Playbook
         </div>
       </div>
 

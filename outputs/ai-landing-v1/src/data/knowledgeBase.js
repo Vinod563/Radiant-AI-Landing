@@ -609,7 +609,7 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'Find out exactly where you stand',
-        body: 'We have two free, self-serve diagnostics. The AI Adoption Assessment is a role-adaptive diagnostic across strategy, data, people, and adoption — you get an instant stage diagnosis, per-dimension scores, specific findings, and a recommended next step. The CX Maturity Assessment evaluates your customer experience across vision, governance, and culture. No signup. Results in minutes.',
+        body: 'We have two free, self-serve diagnostics. The AI Adoption Assessment is a role-adaptive diagnostic across strategy, data, people, and adoption — it places you on our 6-stage Enterprise AI Autonomy model (Zero → Guided → Insight → Operational → Proactive → Full), with per-dimension scores, specific findings, and a recommended next step. The CX Maturity Assessment evaluates your customer experience across vision, governance, and culture. No signup. Results in minutes.',
         accent: '#91C46B',
       },
       {

@@ -204,11 +204,11 @@ function buildAiEmailHtml(profile, result) {
     sectionRow({
       kicker: "Radiant's Read", title: 'What This Means for You',
       innerHtml: `<div style="background:#f0f7ea;border:1px solid #cfe6b8;border-radius:10px;padding:16px 18px;">
-        <div style="font-family:${FONT};font-size:13px;color:#33422a;line-height:1.7;">${radiantRead[stage.index] || radiantRead[5]}</div>
+        <div style="font-family:${FONT};font-size:13px;color:#33422a;line-height:1.7;">${radiantRead[stage.index] || radiantRead[6]}</div>
       </div>`,
     }),
     ctaRow({
-      title: `Ready to move to Stage ${Math.min(stage.index + 1, 5)}?`,
+      title: `Ready to move to Stage ${Math.min(stage.index + 1, 6)}?`,
       body: 'Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.',
       ctaLabel: 'Schedule 30 Minutes with Radiant',
       ctaHref: 'https://radiant.digital/contact',

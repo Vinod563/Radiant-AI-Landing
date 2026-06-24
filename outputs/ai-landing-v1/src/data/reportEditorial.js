@@ -4,19 +4,20 @@
  * and the emailed PDF (generateReportPdf.js), so their wording can never drift.
  */
 
-// AI — "Radiant's Read", keyed by stage index (1–5)
+// AI — "Radiant's Read", keyed by autonomy stage index (1–6)
 export const aiRadiantRead = {
-  1: "You're at a critical inflection point. The organizations that move fastest from Stage 1 don't do it with better technology — they do it by getting one executive to own a specific outcome and making that outcome visible. The biggest risk right now isn't falling further behind; it's creating AI initiatives that look like progress but aren't measured against anything that matters.",
-  2: "The pattern we see at Stage 2 is almost always the same: the technology team is excited, the rest of the organization is skeptical, and leadership is waiting for proof. The proof doesn't come from better demos — it comes from a production use case with a before-and-after measurement. One case study becomes the business case for everything that follows.",
-  3: "You have proof that AI works in your organization. That's a significant milestone most companies never reach. The challenge now is organizational, not technical: how do you make AI the default instead of the exception? The answer is almost always governance — not to slow things down, but to create the trust that lets things move faster.",
-  4: "You're in the governance-as-competitive-advantage phase. The organizations that do this well don't just reduce risk — they reduce time to deployment, because every use case follows a known path. The next unlock is treating your AI portfolio the way a private equity firm treats investments: with rigorous tracking, active reallocation, and a clear theory of compounding returns.",
-  5: "At Stage 5, the conversation shifts from 'how do we implement AI' to 'how does AI change our business model.' The organizations building durable advantage at this stage are the ones investing in proprietary models, feedback loops that get smarter over time, and AI capabilities that are genuinely hard for competitors to replicate.",
+  1: "At Zero Autonomy, AI is helping people work but isn't making any decisions — and that's the right place to start. The organizations that climb fastest from here don't rush to automate; they get the foundations right first. Clean, structured data and standardized processes are what make every later stage of autonomy possible. The biggest risk now is delegating decisions before the inputs underneath them are trustworthy.",
+  2: "Guided Autonomy is where most enterprises live: AI recommends in real time, but a human still approves every action. The value is already real — faster, better-informed decisions — but the ceiling is trust. The pattern we see is leaders waiting for proof before letting AI act on its own. That proof comes from picking a few low-risk, high-volume decisions and measuring what happens when AI handles them end to end.",
+  3: "At Insight Autonomy, AI stops waiting to be asked — it surfaces trends, risks, and anomalies on its own, and your people consume that intelligence instead of building reports. That's a milestone most organizations never reach. The challenge now is no longer generating insight; it's connecting it to action. The unlock is wiring AI-generated intelligence directly into the workflows where decisions actually get made.",
+  4: "Operational Autonomy is the governance-as-advantage phase. AI insight now drives cross-functional workflows automatically, and humans supervise the exceptions rather than the routine. The organizations that do this well don't just move faster — they design the checkpoints that keep speed and oversight in balance. The next unlock is shifting from reacting to events to anticipating them before they happen.",
+  5: "At Proactive Autonomy, AI predicts and prescribes before your team sees the need, and people move up to strategy and governance. This is where the advantage compounds — but only for organizations whose governance is mature enough to trust prediction with action. The work here is building the guardrails and feedback loops that let AI initiate, not just recommend, with confidence.",
+  6: "Full Autonomy is a self-governing system: AI executes multi-step work, learns from outcomes, and improves without manual retraining, while humans define guardrails and approve high-risk exceptions. The conversation shifts from 'how do we deploy AI' to 'how do we govern a system that runs itself.' Durable advantage at this stage comes from proprietary models, learning loops competitors can't replicate, and governance rigorous enough to keep an autonomous system accountable.",
 }
 
 // AI — CTA copy (next stage CTA)
 export function aiCta(stageIndex) {
   return {
-    title: `Ready to move to Stage ${Math.min(stageIndex + 1, 5)}?`,
+    title: `Ready to move to Stage ${Math.min(stageIndex + 1, 6)}?`,
     body: 'Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.',
     action: 'Schedule 30 minutes with Radiant',
     email: 'hello@radiant.digital',

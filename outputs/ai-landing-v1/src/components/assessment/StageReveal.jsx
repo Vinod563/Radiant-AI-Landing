@@ -78,7 +78,7 @@ function Staircase({ stages, currentIndex, accent }) {
           {stages.map((s, i) => {
             const isPast = s.index < currentIndex
             const isCurrent = s.index === currentIndex
-            const barH = 74 + i * 26 // 74, 100, 126, 152, 178 — clear, even steps up
+            const barH = 70 + i * 24 // 70, 94, 118, 142, 166, 190 — clear, even steps up (6 stages)
 
             return (
               <motion.div key={s.key || s.index}

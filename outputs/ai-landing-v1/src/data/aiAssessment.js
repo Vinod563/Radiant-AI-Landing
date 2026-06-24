@@ -400,34 +400,48 @@ export function getAQ(role) {
 
 // ── Scoring (spec §7) ───────────────────────────────────────────────────────
 
+// Six-stage Enterprise AI Autonomy model (leadership framework). Autonomy — who
+// holds decision authority — is the measure of maturity. Bands map the overall
+// 1–5 response average onto the six stages.
 const STAGES = [
-  { max: 1.6, key: 'assess', name: 'Assess', index: 1 },
-  { max: 2.6, key: 'train', name: 'Train', index: 2 },
-  { max: 3.6, key: 'adopt', name: 'Adopt', index: 3 },
-  { max: 4.6, key: 'govern', name: 'Govern', index: 4 },
-  { max: Infinity, key: 'scale', name: 'Scale', index: 5 },
+  { max: 1.67, key: 'zero', name: 'Zero Autonomy', index: 1 },
+  { max: 2.33, key: 'guided', name: 'Guided Autonomy', index: 2 },
+  { max: 3.00, key: 'insight', name: 'Insight Autonomy', index: 3 },
+  { max: 3.67, key: 'operational', name: 'Operational Autonomy', index: 4 },
+  { max: 4.33, key: 'proactive', name: 'Proactive Autonomy', index: 5 },
+  { max: Infinity, key: 'full', name: 'Full Autonomy', index: 6 },
 ]
 
 export const stages = {
-  assess: {
-    name: 'Assess', index: 1, tagline: 'No formal strategy. Leadership aware but not aligned.',
-    description: "You're at the starting point. Leadership knows AI matters but nobody has agreed on what it should actually do. No written strategy, no budget line, no clear owner. The work here is simple but not easy: get the right people aligned on three specific things AI should accomplish in the next 12 months.",
+  zero: {
+    name: 'Zero Autonomy', index: 1, humanRole: 'Operator',
+    tagline: 'AI assists. Humans decide and act on everything.',
+    description: "AI captures, structures, and digitizes the work, but every decision still sits with people. Tools help operators record, standardize, and clean up data — nothing is delegated to AI. The work here is to get the foundations right: clean inputs, standardized processes, and the data quality that everything above this stage depends on.",
   },
-  train: {
-    name: 'Train', index: 2, tagline: 'Pilots running. AI literacy gaps are the ceiling.',
-    description: "You have pilots. You have people who are genuinely excited. What you don't have is a workforce that knows what to do with AI when it shows up in their work. The technical team is building. Everyone else is watching. The gap between them is what keeps organizations stuck here longer than expected.",
+  guided: {
+    name: 'Guided Autonomy', index: 2, humanRole: 'Guide',
+    tagline: 'AI recommends in real time. Humans approve every action.',
+    description: "AI works as an intelligent co-pilot — prompting, suggesting, and alerting in real time — but every action still needs explicit human approval before it executes. The value is already real: faster, better-informed decisions. The ceiling is trust. Moving up means letting AI act, not just advise, in the cases where it has earned it.",
   },
-  adopt: {
-    name: 'Adopt', index: 3, tagline: 'AI is live. Scaling to the enterprise is the stall point.',
-    description: "AI is working in parts of your organization. The evidence is real. The problem is it hasn't spread. A few teams use it well; most don't touch it. Getting from here to broad deployment is less about technology and more about the organization: how decisions get made, how tools roll out, and who is accountable when something goes wrong.",
+  insight: {
+    name: 'Insight Autonomy', index: 3, humanRole: 'Monitor',
+    tagline: 'AI generates intelligence on its own. Humans consume and act.',
+    description: "AI no longer waits to be asked. It proactively surfaces insights, trends, and anomalies across functions, and people consume that intelligence rather than running reports themselves. The shift here is cultural: leaders learn to trust and act on machine-generated insight. The stall point is connecting that insight to action across the organization.",
   },
-  govern: {
-    name: 'Govern', index: 4, tagline: 'Broadly deployed. Governance now sets the pace.',
-    description: "AI is broadly deployed and the value is measurable. The risk now is that deployment outpaces your ability to manage it. Governance at this stage is not about slowing down, it's about making sure the next rollout doesn't create a problem nobody saw coming.",
+  operational: {
+    name: 'Operational Autonomy', index: 4, humanRole: 'Supervisor',
+    tagline: 'AI insight drives workflows. Humans oversee the exceptions.',
+    description: "AI-generated insight now flows directly into cross-functional decisions and workflows, with humans supervising at key checkpoints. Intelligence feeds CRM, product, and finance systems automatically; people manage the exceptions rather than the routine. The risk is automation outpacing oversight — so the work is designing the checkpoints that keep speed and control in balance.",
   },
-  scale: {
-    name: 'Scale', index: 5, tagline: 'AI-first. Compounding the advantage.',
-    description: "You've done the hard work. The foundation is real. The goal now is to stop treating AI as a project and start treating it as how the organization operates. That shift — from AI initiative to how we work — is where the lasting advantage lives.",
+  proactive: {
+    name: 'Proactive Autonomy', index: 5, humanRole: 'Strategist',
+    tagline: 'AI anticipates and prescribes before humans see the need.',
+    description: "AI shifts from reactive to predictive — identifying opportunities, risks, and the right interventions ahead of human awareness, and prescribing action enterprise-wide. People move up to strategy and governance while AI manages the execution triggers. The advantage compounds here, but only for organizations whose governance is mature enough to trust prediction with action.",
+  },
+  full: {
+    name: 'Full Autonomy', index: 6, humanRole: 'Orchestrator',
+    tagline: 'AI executes, learns, and self-improves. Humans govern.',
+    description: "AI operates as a self-governing system — executing multi-step workflows end to end, learning from outcomes, and improving without manual retraining. Humans define the guardrails, approve high-risk exceptions, and shape strategic direction. This isn't the end of human involvement; it's the highest-leverage version of it. The work is governance, not operation.",
   },
 }
 

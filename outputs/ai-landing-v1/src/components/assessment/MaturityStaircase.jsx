@@ -1,22 +1,23 @@
 import { motion } from 'framer-motion'
 
 /**
- * MaturityStaircase — ascending 5-step staircase visualization.
- * Shows all 5 named AI Adoption stages. The respondent's current stage
+ * MaturityStaircase — ascending 6-step staircase visualization.
+ * Shows all 6 Enterprise AI Autonomy stages. The respondent's current stage
  * is highlighted in brand-green. Previous stages are faint green.
  * Future stages are muted/dark.
  *
  * Props:
- *   currentIndex  number 1..5 — the respondent's stage
+ *   currentIndex  number 1..6 — the respondent's stage
  *   accent        string — accent color (default brand-green)
  */
 
 export const STAGES = [
-  { index: 1, key: 'assess', name: 'Assess', tagline: 'No strategy yet' },
-  { index: 2, key: 'train', name: 'Train', tagline: 'Pilots & literacy gaps' },
-  { index: 3, key: 'adopt', name: 'Adopt', tagline: 'AI live, not scaled' },
-  { index: 4, key: 'govern', name: 'Govern', tagline: 'Broadly deployed' },
-  { index: 5, key: 'scale', name: 'Scale', tagline: 'AI-first advantage' },
+  { index: 1, key: 'zero', name: 'Zero', tagline: 'AI assists, humans act' },
+  { index: 2, key: 'guided', name: 'Guided', tagline: 'AI recommends, humans approve' },
+  { index: 3, key: 'insight', name: 'Insight', tagline: 'AI informs unprompted' },
+  { index: 4, key: 'operational', name: 'Operational', tagline: 'AI acts, humans supervise' },
+  { index: 5, key: 'proactive', name: 'Proactive', tagline: 'AI predicts, humans steer' },
+  { index: 6, key: 'full', name: 'Full', tagline: 'AI self-governs, humans guide' },
 ]
 
 export default function MaturityStaircase({ currentIndex = 1, accent = '#91C46B' }) {
@@ -26,7 +27,7 @@ export default function MaturityStaircase({ currentIndex = 1, accent = '#91C46B'
         <span className="kicker">Where You Are in the Journey</span>
         <div className="text-right">
           <span className="font-display font-black text-sm" style={{ color: accent }}>
-            Stage {currentIndex} of 5
+            Stage {currentIndex} of 6
           </span>
         </div>
       </div>
@@ -39,8 +40,8 @@ export default function MaturityStaircase({ currentIndex = 1, accent = '#91C46B'
             const isPast = s.index < currentIndex
             const isCurrent = s.index === currentIndex
             const isFuture = s.index > currentIndex
-            // Height: each step is taller — 20% per step
-            const heightPct = 30 + s.index * 14
+            // Height: each step is taller — scaled so 6 steps fit 0–100%
+            const heightPct = 24 + s.index * 12
 
             return (
               <motion.div
@@ -170,9 +171,9 @@ export default function MaturityStaircase({ currentIndex = 1, accent = '#91C46B'
 
       {/* Context note */}
       <p className="text-text-muted text-xs text-center mt-4 leading-relaxed">
-        {currentIndex < 5
+        {currentIndex < 6
           ? `Most organizations take 12–18 months to move from Stage ${currentIndex} to Stage ${currentIndex + 1}.`
-          : 'You\'re at the top of the maturity curve. The focus now is compounding the advantage.'}
+          : 'You\'re at the top of the autonomy curve — a self-governing system. The focus now is governance and compounding the advantage.'}
       </p>
     </div>
   )

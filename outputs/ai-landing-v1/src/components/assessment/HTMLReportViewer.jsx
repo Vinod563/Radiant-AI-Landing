@@ -237,7 +237,7 @@ export function buildAiReportHtml(profile, result) {
     { key: 'Adoption', label: 'Adoption & Value' },
   ]
 
-  const pips = Array.from({ length: 5 }, (_, i) =>
+  const pips = Array.from({ length: 6 }, (_, i) =>
     `<div class="pip ${i < stage.index ? 'pip-filled' : 'pip-empty'}"></div>`).join('')
 
   // Header meta pills — built from whatever profile data exists, empties dropped
@@ -250,7 +250,7 @@ export function buildAiReportHtml(profile, result) {
     profile?.orgSize ? `${profile.orgSize} employees` : null,
     profile?.department,
     roleLabel ? `${roleLabel} Track` : null,
-    `Stage ${stage.index} of 5`,
+    `Stage ${stage.index} of 6`,
     now,
   ].filter(Boolean)
   const metaChipsHtml = metaChips.map(c => `<span class="meta-chip">${c}</span>`).join('')
@@ -373,13 +373,13 @@ export function buildAiReportHtml(profile, result) {
     <div class="section-title">What This Means for You</div>
     <div class="radiant-read">
       <div class="radiant-read-label">Our perspective on Stage ${stage.index} organizations</div>
-      <div class="radiant-read-text">${radiantRead[stage.index] || radiantRead[5]}</div>
+      <div class="radiant-read-text">${radiantRead[stage.index] || radiantRead[6]}</div>
     </div>
   </div>
 
   <!-- CTA -->
   <div class="cta-block">
-    <div class="cta-title">Ready to move to Stage ${Math.min(stage.index + 1, 5)}?</div>
+    <div class="cta-title">Ready to move to Stage ${Math.min(stage.index + 1, 6)}?</div>
     <div class="cta-body">Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.</div>
     <a href="https://radiant.digital/contact" class="cta-btn">Schedule 30 Minutes with Radiant</a>
     <div class="cta-email">Or email us at hello@radiant.digital</div>

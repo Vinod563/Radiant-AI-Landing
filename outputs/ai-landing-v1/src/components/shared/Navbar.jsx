@@ -11,7 +11,7 @@ const ASSESSMENTS = [
     label: 'AI Adoption Assessment',
     desc: 'Find your stage across strategy, data, people & adoption.',
     time: '10–15 min',
-    tags: ['Role-adaptive', '5 stages', '12–16 questions'],
+    tags: ['Role-adaptive', '6 stages', '12–16 questions'],
     cta: 'Start assessment',
   },
   {

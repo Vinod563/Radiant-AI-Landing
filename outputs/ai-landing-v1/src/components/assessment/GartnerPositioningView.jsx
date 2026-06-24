@@ -43,8 +43,8 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
   // Illustrative clusters (cx, cy in 0..1 domain; rd = radius in domain units)
   const clusters = [
     { id: 'early', label: 'Most Organizations', sublabel: 'Stage 1–2', cx: 0.18, cy: 0.20, rd: 0.17, color: '#64748B', opacity: 0.35 },
-    { id: 'progress', label: 'Progressing', sublabel: 'Stage 3', cx: 0.52, cy: 0.50, rd: 0.13, color: '#2DD4BF', opacity: 0.25 },
-    { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 4–5', cx: 0.82, cy: 0.82, rd: 0.13, color: accent, opacity: 0.22 },
+    { id: 'progress', label: 'Progressing', sublabel: 'Stage 3–4', cx: 0.52, cy: 0.50, rd: 0.13, color: '#2DD4BF', opacity: 0.25 },
+    { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 5–6', cx: 0.82, cy: 0.82, rd: 0.13, color: accent, opacity: 0.22 },
     { id: 'planners', label: 'Planners', sublabel: 'Strategy without execution', cx: 0.15, cy: 0.80, rd: 0.10, color: '#F0974E', opacity: 0.2 },
   ]
 

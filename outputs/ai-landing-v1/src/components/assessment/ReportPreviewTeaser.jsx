@@ -34,7 +34,7 @@ export default function ReportPreviewTeaser({
 
   const defaultPreview = isAi
     ? [
-        'Your stage on the 5-stage maturity scale',
+        'Your stage on the 6-stage AI autonomy scale',
         'Headline scores across 4 dimensions',
         'Where you sit vs. AI leaders (snapshot)',
       ]

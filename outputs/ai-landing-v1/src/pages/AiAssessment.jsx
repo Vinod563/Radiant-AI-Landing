@@ -64,7 +64,7 @@ export default function AiAssessment() {
               <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-text-muted mb-9">
                 <span className="flex items-center gap-1.5"><Clock size={14} /> 10–15 minutes</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 size={14} /> Role-adaptive</span>
-                <span className="flex items-center gap-1.5"><CheckCircle2 size={14} /> 5-stage framework</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 size={14} /> 6-stage framework</span>
               </div>
               <div className="flex justify-center">
                 <button onClick={() => setStep('profile')} className="btn-primary !px-10 !py-4 text-base">

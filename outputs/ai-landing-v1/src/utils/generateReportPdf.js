@@ -149,7 +149,7 @@ export function buildReportDoc({ kind, profile, answers }) {
 
     kicker("Radiant's Read")
     subhead(`Our perspective on Stage ${scored.stage.index} organizations`, ACCENT)
-    para(aiRadiantRead[scored.stage.index] || aiRadiantRead[5], { lead: 7 })
+    para(aiRadiantRead[scored.stage.index] || aiRadiantRead[6], { lead: 7 })
     rule()
 
     const cta = aiCta(scored.stage.index)

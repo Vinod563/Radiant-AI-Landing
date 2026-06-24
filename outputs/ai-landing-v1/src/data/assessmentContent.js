@@ -34,7 +34,7 @@ export const assessments = [
     title: 'How AI-ready is your organization?',
     desc: 'A role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage, per-dimension scores, specific findings, and a recommended next step.',
     duration: '10–15 min',
-    meta: ['Role-adaptive', '5 stages', 'Instant report'],
+    meta: ['Role-adaptive', '6 stages', 'Instant report'],
     chatQuery: 'How AI-ready is my organization?',
   },
   {

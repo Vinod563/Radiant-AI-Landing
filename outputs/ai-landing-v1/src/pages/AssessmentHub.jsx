@@ -19,7 +19,7 @@ const ASSESSMENTS = [
     subtitle: 'For executives, technical leaders, and business leads navigating enterprise AI transformation.',
     desc: 'A role-adaptive diagnostic across the four dimensions that determine whether AI delivers value or stays in pilot mode.',
     duration: '10–15 min',
-    meta: ['Role-adaptive', '5 stages', '12–16 questions'],
+    meta: ['Role-adaptive', '6 stages', '12–16 questions'],
     dimensions: [
       { icon: Target, label: 'Strategy & Leadership', desc: 'Written strategy, executive accountability, investment alignment' },
       { icon: BarChart3, label: 'Data & Technology', desc: 'Data readiness, cloud infrastructure, GenAI governance' },
@@ -27,14 +27,14 @@ const ASSESSMENTS = [
       { icon: TrendingUp, label: 'Adoption & Value', desc: 'Production use cases, ROI measurement, scaling capability' },
     ],
     youGet: [
-      'Your stage across 5 named maturity levels (Assess → Train → Adopt → Govern → Scale)',
+      'Your stage across 6 AI autonomy levels (Zero → Guided → Insight → Operational → Proactive → Full)',
       'Scores across all four dimensions with gap analysis',
       'A positioning view showing where your org sits vs. AI leaders',
       'Stage-specific guidance on what leaders do differently',
       "A gated full report with findings, recommended next steps, and Radiant's read",
     ],
     forWho: ['C-Suite / VP / Director', 'CTO / Data / Engineering leads', 'Ops / Finance / HR / Sales leads', 'External Advisors & Consultants'],
-    sampleStage: { index: 3, name: 'Adopt', color: '#91C46B' },
+    sampleStage: { index: 3, name: 'Insight Autonomy', color: '#91C46B' },
   },
   {
     key: 'cx',
