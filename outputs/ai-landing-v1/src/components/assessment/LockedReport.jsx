@@ -113,17 +113,17 @@ function PdfPreview({ kind, result, accent }) {
       ]
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#ffffff', minHeight: '100%' }}>
+    <div className="h-full flex flex-col" style={{ background: '#0a1d33', minHeight: '100%' }}>
       <div className="max-w-5xl mx-auto w-full px-8 lg:px-12 py-7 lg:py-9 flex-1 flex flex-col">
         {/* header */}
-        <div className="flex items-center justify-between pb-3 mb-6" style={{ borderBottom: '1px solid #e8eaed' }}>
+        <div className="flex items-center justify-between pb-3 mb-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.10)' }}>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded" style={{ background: '#0f2942' }} />
-            <span className="font-display font-black text-[13px] tracking-tight" style={{ color: '#0f2942' }}>
-              RADIANT <span style={{ color: '#5a8a32' }}>AI</span>
+            <div className="w-5 h-5 rounded" style={{ background: '#91C46B' }} />
+            <span className="font-display font-black text-[13px] tracking-tight" style={{ color: '#ffffff' }}>
+              RADIANT <span style={{ color: '#91C46B' }}>AI</span>
             </span>
           </div>
-          <span className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: '#9aa3ad' }}>
+          <span className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: 'rgba(255,255,255,0.40)' }}>
             {isAi ? 'AI Adoption Report' : 'CX Maturity Report'} · What's inside
           </span>
         </div>
@@ -132,20 +132,20 @@ function PdfPreview({ kind, result, accent }) {
         <div className="flex-1 flex flex-col justify-between gap-7">
           {sections.map((s, i) => (
             <div key={s.tag} className="flex gap-4">
-              <div className="font-display font-black text-2xl flex-shrink-0 w-7" style={{ color: '#e3e7eb' }}>{i + 1}</div>
+              <div className="font-display font-black text-2xl flex-shrink-0 w-7" style={{ color: 'rgba(255,255,255,0.16)' }}>{i + 1}</div>
               <div className="flex-1 min-w-0">
-                <span className="text-[9px] font-bold uppercase tracking-[0.16em]" style={{ color: '#5a8a32' }}>{s.tag}</span>
-                <h3 className="font-display font-black tracking-tight mt-0.5 mb-2.5" style={{ color: '#0f2942', fontSize: '1.15rem' }}>{s.heading}</h3>
+                <span className="text-[9px] font-bold uppercase tracking-[0.16em]" style={{ color: '#91C46B' }}>{s.tag}</span>
+                <h3 className="font-display font-black tracking-tight mt-0.5 mb-2.5" style={{ color: '#ffffff', fontSize: '1.15rem' }}>{s.heading}</h3>
                 <div className="space-y-2 mb-3">
                   {s.lines.map((w, j) => (
-                    <div key={j} className="h-2 rounded-full" style={{ width: `${w * 100}%`, background: '#eef0f2' }} />
+                    <div key={j} className="h-2 rounded-full" style={{ width: `${w * 100}%`, background: 'rgba(255,255,255,0.08)' }} />
                   ))}
                 </div>
                 {s.chips.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
                     {s.chips.map(c => (
                       <span key={c} className="text-[10px] font-semibold px-2 py-1 rounded-md"
-                        style={{ background: '#f1f5ee', color: '#5a8a32', border: '1px solid #e2ebd9' }}>{c}</span>
+                        style={{ background: 'rgba(145,196,107,0.10)', color: '#91C46B', border: '1px solid rgba(145,196,107,0.22)' }}>{c}</span>
                     ))}
                   </div>
                 )}
