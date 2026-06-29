@@ -22,6 +22,8 @@ export default function Index() {
       <SectionNav />
       <Hero />
       <Divider />
+      <AssessmentEntry />
+      <Divider />
       <WhatIsRadiantAI />
       <Divider />
       <Solutions />
@@ -37,8 +39,6 @@ export default function Index() {
       <Platform />
       <Divider />
       <Infrastructure />
-      <Divider />
-      <AssessmentEntry />
       {/* CTA section hidden for now — re-enable by uncommenting */}
       {/* <Divider />
       <CTA /> */}

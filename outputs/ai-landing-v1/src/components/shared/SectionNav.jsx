@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const sections = [
   { id: 'hero',           label: 'Hero' },
+  { id: 'assessment',     label: 'Assessment' },
   { id: 'differentiator', label: 'Why Radiant' },
   { id: 'solutions',      label: 'Solutions' },
   { id: 'ai-fabric',      label: 'AI Fabric' },

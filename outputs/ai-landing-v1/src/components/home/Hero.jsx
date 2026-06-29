@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Sparkles, Search } from 'lucide-react'
+import { ArrowRight, Sparkles, Search, Brain, Target } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { heroMetrics as metricsData, brand } from '../../data/siteContent.js'
 
@@ -107,6 +107,42 @@ export default function Hero() {
               >
                 {brand.description}
               </motion.p>
+
+              {/* Assessment chips with hover descriptions */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.45 }}
+                className="flex flex-wrap items-center justify-center gap-3 mb-6"
+              >
+                {[
+                  { label: 'Find Your AI Readiness Gaps', to: '/assessment/ai', accent: '#91C46B', icon: Brain,
+                    hover: 'Get your readiness score, uncover hidden gaps, and receive a practical roadmap to move forward.' },
+                  { label: 'Find Your CX Maturity', to: '/assessment/cx', accent: '#596AE0', icon: Target,
+                    hover: 'Discover your CX maturity level, uncover opportunities for improvement, and receive a roadmap for delivering better customer experiences.' },
+                ].map(c => {
+                  const Icon = c.icon
+                  return (
+                    <button key={c.to} onClick={() => navigate(c.to)}
+                      className="group/chip relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-display font-semibold text-white transition-all duration-200 hover:-translate-y-0.5 cursor-pointer"
+                      style={{ background: `${c.accent}14`, border: `1px solid ${c.accent}40` }}
+                      onMouseEnter={e => { e.currentTarget.style.background = `${c.accent}24`; e.currentTarget.style.borderColor = `${c.accent}66` }}
+                      onMouseLeave={e => { e.currentTarget.style.background = `${c.accent}14`; e.currentTarget.style.borderColor = `${c.accent}40` }}
+                    >
+                      <Icon size={15} style={{ color: c.accent }} />
+                      {c.label}
+                      <ArrowRight size={13} style={{ color: c.accent }} className="group-hover/chip:translate-x-0.5 transition-transform" />
+                      {/* hover tooltip */}
+                      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-64 px-3.5 py-2.5 rounded-xl text-xs font-body font-normal leading-relaxed text-white/85 text-center opacity-0 translate-y-1 group-hover/chip:opacity-100 group-hover/chip:translate-y-0 transition-all duration-200 z-20"
+                        style={{ background: 'rgba(5,18,34,0.97)', border: `1px solid ${c.accent}40`, boxShadow: '0 16px 40px rgba(0,0,0,0.5)' }}>
+                        {c.hover}
+                        <span className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0"
+                          style={{ borderLeft: '6px solid transparent', borderRight: '6px solid transparent', borderTop: '6px solid rgba(5,18,34,0.97)' }} />
+                      </span>
+                    </button>
+                  )
+                })}
+              </motion.div>
 
               {/* Conversational input */}
               <motion.div
