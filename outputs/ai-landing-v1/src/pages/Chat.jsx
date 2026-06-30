@@ -130,7 +130,6 @@ export default function Chat() {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef(null)
-  const lastUserRef = useRef(null)
   const mainRef = useRef(null)
   const inputRef = useRef(null)
   const autoSubmitted = useRef(false)
@@ -153,26 +152,18 @@ export default function Chat() {
     const isNewQuestion = userCount > prevUserCount.current
     prevUserCount.current = userCount
     if (!isNewQuestion) return
-    // Pin the question's top just under the header. The reply + tail spacer render
-    // slightly later, so the container can't scroll all the way on the first try —
-    // we re-pin a couple of times as layout settles. scrollTo targets <main> when it's
-    // the scroller; otherwise scrollIntoView targets whichever element scrolls.
-    const pin = (behavior) => {
-      const el = lastUserRef.current
-      if (!el) return
-      const cont = mainRef.current
-      if (cont && cont.scrollHeight > cont.clientHeight + 4) {
-        const delta = el.getBoundingClientRect().top - cont.getBoundingClientRect().top
-        cont.scrollTo({ top: cont.scrollTop + delta - 12, behavior })
-      } else {
-        el.scrollIntoView({ behavior, block: 'start' })
-      }
-    }
-    const raf = requestAnimationFrame(() => requestAnimationFrame(() => pin('smooth')))
-    const t1 = setTimeout(() => pin('auto'), 400)
-    const t2 = setTimeout(() => pin('auto'), 900)
-    return () => { cancelAnimationFrame(raf); clearTimeout(t1); clearTimeout(t2) }
-  }, [messages, isTyping])
+    // Pin the latest question to the top of the scroll area. scrollIntoView targets
+    // whichever element actually scrolls and honours the wrapper's scroll-mt for the
+    // header offset. The reply + tail spacer render slightly later, so we re-pin a few
+    // times as layout settles. pin() always uses the live ref (newest question), so we
+    // intentionally DON'T cancel these on re-render — cancelling here is what previously
+    // killed the scroll when `isTyping` flipped right after the question was added.
+    const pin = (behavior) =>
+      document.getElementById('chat-last-question')?.scrollIntoView({ behavior, block: 'start' })
+    requestAnimationFrame(() => requestAnimationFrame(() => pin('smooth')))
+    setTimeout(() => pin('auto'), 400)
+    setTimeout(() => pin('auto'), 900)
+  }, [messages])
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -203,7 +194,7 @@ export default function Chat() {
     const measure = () => {
       const cont = mainRef.current
       const endEl = messagesEndRef.current
-      const userEl = lastUserRef.current
+      const userEl = document.getElementById('chat-last-question')
       if (!cont || !endEl) return
       const userTop = userEl ? userEl.offsetTop : 0
       const exchangeH = endEl.offsetTop - userTop // last question top → end of content
@@ -710,11 +701,11 @@ export default function Chat() {
             {(() => { const lastUserIndex = messages.map(m => m.role).lastIndexOf('user'); return messages.map((msg, i) => (
               <motion.div
                 key={i}
-                ref={i === lastUserIndex ? lastUserRef : null}
+                id={i === lastUserIndex ? 'chat-last-question' : undefined}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className={`py-8 scroll-mt-24 ${i === 0 ? 'pt-12' : ''}`}
+                className={`py-8 scroll-mt-6 ${i === 0 ? 'pt-12' : ''}`}
               >
                 {msg.role === 'user' ? (
                   <UserBubble content={msg.content} />
