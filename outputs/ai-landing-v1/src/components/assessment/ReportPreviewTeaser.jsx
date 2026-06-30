@@ -2,14 +2,14 @@ import { motion } from 'framer-motion'
 import { Lock, FileText, Sparkles, CheckCircle2, Plus } from 'lucide-react'
 
 /**
- * ReportPreviewTeaser — sits directly above the lead-capture gate.
+ * ReportPreviewTeaser: sits directly above the lead-capture gate.
  *
  * Purpose: make the gated report look (and read) like it contains
  * substantially more value than the free preview above it, so the
  * lead form feels like a fair trade rather than a paywall.
  *
  * Two parts:
- *   1. A visual "thumbnail" mockup of the full report — a shrunken,
+ *   1. A visual "thumbnail" mockup of the full report, a shrunken,
  *      partially-blurred document preview with a lock badge. This is
  *      illustrative chrome (not a live render) so it works identically
  *      for every visitor regardless of their actual score.
@@ -19,9 +19,9 @@ import { Lock, FileText, Sparkles, CheckCircle2, Plus } from 'lucide-react'
  * Props:
  *   kind          'ai' | 'cx'
  *   accent        hex color string
- *   stageLabel    e.g. "Stage 3 — Adopt" or "Developing"
- *   previewItems  string[] — what's already visible above (optional, has defaults)
- *   fullItems     string[] — what unlocks in the full report (optional, has defaults)
+ *   stageLabel    e.g. "Stage 3, Adopt" or "Developing"
+ *   previewItems  string[]: what's already visible above (optional, has defaults)
+ *   fullItems     string[]: what unlocks in the full report (optional, has defaults)
  */
 export default function ReportPreviewTeaser({
   kind = 'ai',
@@ -47,7 +47,7 @@ export default function ReportPreviewTeaser({
     ? [
         'Full write-up of your top 3 strengths and top 3 gaps, dimension by dimension',
         "Radiant's editorial read on exactly what your stage means and what tends to go wrong next",
-        'One prioritized next step with the reasoning behind it — not a generic checklist',
+        'One prioritized next step with the reasoning behind it, not a generic checklist',
         'Competitive positioning detail vs. AI leaders in your specific sector',
         'Saved as a PDF you can share with your leadership team',
       ]
@@ -96,7 +96,7 @@ export default function ReportPreviewTeaser({
           </h3>
           <p className="text-text-secondary text-sm leading-relaxed mb-6 max-w-xl">
             Everything you've seen on this page is the headline version. The full report goes
-            dimension-by-dimension with Radiant's actual analysis of your answers — most readers
+            dimension-by-dimension with Radiant's actual analysis of your answers, most readers
             tell us the free preview is maybe a fifth of the detail.
           </p>
 
@@ -141,7 +141,7 @@ export default function ReportPreviewTeaser({
 }
 
 // ── Thumbnail mockup ─────────────────────────────────────────────────────────
-// A static illustrative preview of the report document — not a live render —
+// A static illustrative preview of the report document, not a live render,
 // used purely as a visual cue that a longer, more detailed document exists.
 function ReportThumbnail({ accent, stageLabel, isAi }) {
   return (

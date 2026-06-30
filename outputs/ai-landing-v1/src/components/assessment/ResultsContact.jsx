@@ -26,7 +26,7 @@ export default function ResultsContact({
   return (
     <div className="mag-card p-8 lg:p-10 no-print">
       <div className="grid md:grid-cols-2 gap-10 lg:gap-14">
-        {/* Left — context + details */}
+        {/* Left: context + details */}
         <div>
           <span className="kicker mb-4">{kicker}</span>
           <h3 className="font-display font-black text-white text-xl lg:text-2xl tracking-tight mb-3">{title}</h3>
@@ -63,7 +63,7 @@ export default function ResultsContact({
           </div>
         </div>
 
-        {/* Right — form */}
+        {/* Right: form */}
         <div>
           <ContactForm accent={accent} subjectPrefix={subjectPrefix} meta={meta} defaults={defaults}
             submitLabel={submitLabel} onSuccess={onSuccess} />

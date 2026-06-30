@@ -16,7 +16,7 @@ export default function AssessmentEntry() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div ref={ref} className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-          {/* Left — copy + maturity scale */}
+          {/* Left: copy + maturity scale */}
           <motion.div
             initial={{ opacity: 0, y: 32 }} animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}>
@@ -47,10 +47,9 @@ export default function AssessmentEntry() {
                 </div>
               ))}
             </div>
-            <p className="text-text-muted text-xs mt-6">{entryContent.note}</p>
           </motion.div>
 
-          {/* Right — two assessment cards */}
+          {/* Right: two assessment cards */}
           <motion.div
             initial={{ opacity: 0, y: 24 }} animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.7, delay: 0.15 }}

@@ -88,7 +88,7 @@ export default function SocialProof() {
           <div className="absolute right-0 top-0 bottom-0 w-20 z-10 pointer-events-none"
             style={{ background: 'linear-gradient(to left, var(--color-brand-secondary, #051A30), transparent)' }} />
 
-          {/* Marquee track — duplicated for seamless loop */}
+          {/* Marquee track, duplicated for seamless loop */}
           <div className="flex w-max marquee-track hover:[animation-play-state:paused]">
             {[...clientLogos, ...clientLogos].map((logo, i) => (
               <div

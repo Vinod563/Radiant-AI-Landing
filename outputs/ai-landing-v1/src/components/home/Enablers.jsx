@@ -59,7 +59,7 @@ export default function Enablers() {
 
   return (
     <section id="ai-fabric" className="py-32 lg:py-40 relative overflow-hidden">
-      {/* Video background — same source as Hero, different overlay for distinct look */}
+      {/* Video background, same source as Hero, different overlay for distinct look */}
       <div className="absolute inset-0 z-0">
         <video
           autoPlay loop muted playsInline
@@ -69,7 +69,7 @@ export default function Enablers() {
         >
           <source src="/hero-bg.mp4" type="video/mp4" />
         </video>
-        {/* Tinted overlay — warmer/green tone to differentiate from Hero's cooler look */}
+        {/* Tinted overlay, warmer/green tone to differentiate from Hero's cooler look */}
         <div className="absolute inset-0" style={{ background: 'linear-gradient(160deg, rgba(1,15,30,0.6) 0%, rgba(10,40,20,0.55) 40%, rgba(1,15,30,0.65) 70%, rgba(5,20,35,0.6) 100%)' }} />
         {/* Subtle noise texture */}
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 256 256\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'n\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.9\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23n)\' opacity=\'0.5\'/%3E%3C/svg%3E")' }} />

@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 
 /**
- * Maturity reveal panel — name, tagline, description, and a progression visual.
+ * Maturity reveal panel: name, tagline, description, and a progression visual.
  *
  * Used by both assessments:
  *   AI: pass `stages` (the 5 named stages) → renders an ascending staircase
@@ -14,9 +14,11 @@ import { motion } from 'framer-motion'
  *   total   number of pips for the pip-meter fallback (default 5)
  *   kicker  label above the heading (default "Your AI Maturity")
  *   prefix  heading prefix; defaults to `Stage {index}`. Pass "" for none.
- *   stages  optional [{ index, name, tagline }] — when present, render the staircase
+ *   stages  optional [{ index, name, tagline }]: when present, render the staircase
+ *   noun    word used in the staircase footnote/aria ("Stage" for AI, "Level" for CX)
+ *   note    optional override for the staircase footnote text
  */
-export default function StageReveal({ stage, accent = '#91C46B', total = 5, kicker = 'Your AI Maturity', prefix, stages }) {
+export default function StageReveal({ stage, accent = '#91C46B', total = 5, kicker = 'Your AI Maturity', prefix, stages, noun = 'Stage', note }) {
   const head = prefix === undefined ? `Stage ${stage.index}` : prefix
   const useStaircase = Array.isArray(stages) && stages.length > 0
 
@@ -38,7 +40,7 @@ export default function StageReveal({ stage, accent = '#91C46B', total = 5, kick
         {stage.tagline && <p className="text-text-secondary font-semibold mb-6">{stage.tagline}</p>}
 
         {useStaircase
-          ? <Staircase stages={stages} currentIndex={stage.index} accent={accent} />
+          ? <Staircase stages={stages} currentIndex={stage.index} accent={accent} noun={noun} note={note} />
           : <PipMeter index={stage.index} total={total} accent={accent} />}
 
         {stage.description && <p className="text-text-secondary text-base lg:text-lg leading-[1.85]">{stage.description}</p>}
@@ -61,16 +63,16 @@ function PipMeter({ index, total, accent }) {
   )
 }
 
-/* ── Ascending staircase (AI) — bars grow taller left → right ─────────────── */
-function Staircase({ stages, currentIndex, accent }) {
+/* ── Ascending staircase (AI): bars grow taller left → right ─────────────── */
+function Staircase({ stages, currentIndex, accent, noun = 'Stage', note }) {
   const total = stages.length
-  const note = currentIndex < total
-    ? `Most organizations take 12–18 months to move from Stage ${currentIndex} to Stage ${currentIndex + 1}.`
-    : "You're at the top of the maturity curve — the focus now is compounding the advantage."
+  const footnote = note ?? (currentIndex < total
+    ? `Most organizations take 12–18 months to move from ${noun} ${currentIndex} to ${noun} ${currentIndex + 1}.`
+    : "You're at the top of the maturity curve, the focus now is compounding the advantage.")
 
   return (
-    <div className="mb-7" role="img" aria-label={`Stage ${currentIndex} of ${total}`}>
-      {/* Desktop / tablet: ascending bars — explicit increasing pixel heights so
+    <div className="mb-7" role="img" aria-label={`${noun} ${currentIndex} of ${total}`}>
+      {/* Desktop / tablet: ascending bars, explicit increasing pixel heights so
           every step is visibly taller than the one before it. The "You are here"
           marker is absolutely positioned so it never compresses the current bar. */}
       <div className="hidden sm:block">
@@ -78,7 +80,8 @@ function Staircase({ stages, currentIndex, accent }) {
           {stages.map((s, i) => {
             const isPast = s.index < currentIndex
             const isCurrent = s.index === currentIndex
-            const barH = 70 + i * 24 // 70, 94, 118, 142, 166, 190 — clear, even steps up (6 stages)
+            // Even steps from 70 → 190 regardless of count (6 stages → 24px/step, 3 levels → 60px/step)
+            const barH = 70 + i * (total > 1 ? (190 - 70) / (total - 1) : 0)
 
             return (
               <motion.div key={s.key || s.index}
@@ -131,7 +134,7 @@ function Staircase({ stages, currentIndex, accent }) {
           })}
         </div>
 
-        {/* Taglines row — separate from the bars so they don't affect bar heights */}
+        {/* Taglines row: separate from the bars so they don't affect bar heights */}
         <div className="flex gap-2.5 mt-2">
           {stages.map((s) => {
             const isCurrent = s.index === currentIndex
@@ -183,7 +186,7 @@ function Staircase({ stages, currentIndex, accent }) {
         })}
       </div>
 
-      <p className="text-text-muted text-xs mt-4 leading-relaxed">{note}</p>
+      <p className="text-text-muted text-xs mt-4 leading-relaxed">{footnote}</p>
     </div>
   )
 }

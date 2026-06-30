@@ -1,6 +1,6 @@
 /**
  * A single assessment question rendered inline in the chat (no card box).
- * Answer by clicking an option — or by typing the number / answer text in the
+ * Answer by clicking an option, or by typing the number / answer text in the
  * chat input (handled in Chat.jsx). Once answered it goes inert and shows the pick.
  *
  * Props:

@@ -34,7 +34,7 @@ export default function ProfileForm({ onSubmit, showRole = true, heading, subtex
   const set = (k, v) => setProfile(p => ({ ...p, [k]: v }))
 
   const validate = () => {
-    // Only the role is required (when shown). Every other field is optional —
+    // Only the role is required (when shown). Every other field is optional,
     // we just sanity-check format when a value is actually provided.
     const e = {}
     if (showRole && !profile.role) e.role = 'Select your role.'
@@ -49,7 +49,7 @@ export default function ProfileForm({ onSubmit, showRole = true, heading, subtex
 
   const submit = (ev) => {
     ev.preventDefault()
-    if (profile.website) return // honeypot tripped — silently block
+    if (profile.website) return // honeypot tripped, silently block
     if (validate()) onSubmit(profile)
   }
 
@@ -64,7 +64,7 @@ export default function ProfileForm({ onSubmit, showRole = true, heading, subtex
         {heading || 'First, a little context'}
       </h2>
       <p className="text-text-secondary text-sm leading-relaxed mb-8 max-w-lg">
-        {subtext || "Your role tailors the questions you'll see. Everything stays confidential — this is a diagnostic, not a sales pitch."}
+        {subtext || "Your role tailors the questions you'll see. Everything stays confidential: this is a diagnostic, not a sales pitch."}
       </p>
 
       {/* Role selection */}
@@ -97,7 +97,7 @@ export default function ProfileForm({ onSubmit, showRole = true, heading, subtex
 
       <div className="flex items-center justify-between mb-3">
         <label className="text-text-muted text-[11px] font-display font-semibold uppercase tracking-widest">Your details</label>
-        <span className="text-text-muted text-[11px]">Optional — add now or later</span>
+        <span className="text-text-muted text-[11px]">Optional: add now or later</span>
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
@@ -129,7 +129,7 @@ export default function ProfileForm({ onSubmit, showRole = true, heading, subtex
         </div>
       </div>
 
-      {/* Honeypot — visually hidden */}
+      {/* Honeypot: visually hidden */}
       <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true"
         value={profile.website} onChange={e => set('website', e.target.value)}
         style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }} />

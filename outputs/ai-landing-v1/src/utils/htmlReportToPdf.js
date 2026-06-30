@@ -37,7 +37,7 @@ export async function generateReportPdfFromHtml({ kind, profile, result }) {
   try {
     // Let webfonts + layout settle so the capture isn't blank/unstyled
     if (idoc.fonts && idoc.fonts.ready) await idoc.fonts.ready
-  } catch { /* fonts API unavailable — fall through */ }
+  } catch { /* fonts API unavailable, fall through */ }
   await new Promise(r => setTimeout(r, 350))
 
   const target = idoc.querySelector('.report') || idoc.body

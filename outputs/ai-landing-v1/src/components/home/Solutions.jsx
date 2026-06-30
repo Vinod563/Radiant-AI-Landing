@@ -4,7 +4,7 @@ import { ArrowRight, BarChart3, Layers, Code2, ShieldAlert, Rocket, FileText, Ac
 import { Link } from 'react-router-dom'
 import { solutions as solutionsData } from '../../data/siteContent.js'
 
-/* Component-only visual overrides — merged onto siteContent data */
+/* Component-only visual overrides, merged onto siteContent data */
 const visualOverrides = {
   '01': { bg: '#032d14', gradient: 'linear-gradient(180deg, #010F1E 0%, #021a0c 15%, #032d14 35%, #065c22 55%, #39d353 75%, #065c22 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #021a0c 0%, #043d18 50%, #0a6b2a 100%)', href: '#', icon: BarChart3, cta: 'Explore ICX AI' },
   '02': { bg: '#2d1200', gradient: 'linear-gradient(180deg, #010F1E 0%, #0f0800 15%, #2d1200 35%, #6b2d00 55%, #f0974e 75%, #6b2d00 90%, #010F1E 100%)', screenshotGradient: 'linear-gradient(145deg, #1a0a00 0%, #3d1e00 50%, #7a3800 100%)', href: '#', icon: Layers, cta: 'See the Demo' },
@@ -19,7 +19,7 @@ const visualOverrides = {
 const solutions = solutionsData.map(s => ({ ...s, ...visualOverrides[s.num] }))
 
 /* ─────────────────────────────────────────────
-   Floating Screenshot — real image or generated mockup
+   Floating Screenshot: real image or generated mockup
    ───────────────────────────────────────────── */
 function FloatingScreenshot({ solution, isHovered }) {
   const Icon = solution.icon
@@ -32,7 +32,7 @@ function FloatingScreenshot({ solution, isHovered }) {
       animate={{ y: isHovered ? -16 : 0 }}
       transition={{ type: 'spring', stiffness: 120, damping: 18 }}
     >
-      {/* Ground shadow — elliptical glow beneath */}
+      {/* Ground shadow: elliptical glow beneath */}
       <motion.div
         className="absolute -bottom-8 left-[6%] right-[6%] h-20 rounded-[50%] z-0"
         style={{
@@ -76,7 +76,7 @@ function FloatingScreenshot({ solution, isHovered }) {
               className="absolute inset-0 w-full h-full object-cover object-center transition-opacity duration-700 ease-in-out"
               style={{ opacity: isHovered ? 0 : 1 }}
             />
-            {/* Dark mode (on hover) — CSS filter simulated */}
+            {/* Dark mode (on hover), CSS filter simulated */}
             <img
               src={solution.screenshot}
               alt={`${solution.title} dark mode`}

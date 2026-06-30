@@ -1,5 +1,5 @@
 /**
- * CX Maturity Assessment — data + scoring engine.
+ * CX Maturity Assessment: data + scoring engine.
  *
  * Pure logic, no React. Content verbatim from radiant-cx-maturity-assessment.md.
  * 3 dimensions × 3 questions, each scored 1–3. Per-dimension + overall level.
@@ -113,7 +113,7 @@ export const cxLevels = {
     description: 'You have strong governance and measurement practices. A clear, unified CX vision actively drives leadership decisions and is connected to measurable business outcomes. Customer empathy is core to your identity, with organization-wide empowerment and strong cross-functional teamwork.',
     blurb: {
       vision: 'A clear, unified CX vision actively drives leadership decisions and is connected to measurable business outcomes.',
-      governance: 'You have strong governance and measurement practices. CX roles are clear, data is collected, and metrics often guide decisions — your strongest area.',
+      governance: 'You have strong governance and measurement practices. CX roles are clear, data is collected, and metrics often guide decisions, your strongest area.',
       culture: 'Customer empathy is core to your identity, with organization-wide empowerment and strong cross-functional teamwork.',
     },
   },
@@ -157,7 +157,7 @@ export function scoreCx(answers) {
 
 export const recommendedSolution = {
   name: 'Experience AI',
-  lede: 'To help you progress to the next maturity level, Radiant recommends Experience AI — our qualitative + quantitative insight engine.',
+  lede: 'To help you progress to the next maturity level, Radiant recommends Experience AI, our qualitative + quantitative insight engine.',
   helps: [
     'Reveal the root causes driving customer behavior',
     'Turn interviews, surveys, and public data into structured CX insights',

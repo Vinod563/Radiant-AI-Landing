@@ -1,5 +1,5 @@
 /**
- * AI Adoption Assessment — data + scoring engine.
+ * AI Adoption Assessment: data + scoring engine.
  *
  * Pure logic, no React. Content is verbatim from the product spec
  * (radiant-ai-assessment-spec.md). Role-adaptive: getAQ(role) selects the
@@ -52,7 +52,7 @@ export const sectionMeta = Object.fromEntries(sections.map(s => [s.key, s]))
 const opt = (...labels) => labels.map((label, i) => ({ score: i + 1, label }))
 
 export const questionBank = [
-  // Section 1 — Strategy & Leadership
+  // Section 1: Strategy & Leadership
   {
     id: 'Q1', section: 'Strategy', title: 'AI Strategy', roles: ['all'],
     context: 'This is where most organizations discover their first gap. A written strategy is different from a stated priority.',
@@ -137,7 +137,7 @@ export const questionBank = [
       'A governed AI portfolio process with value tracking, risk scoring, and regular leadership review.',
     ),
   },
-  // Section 2 — Data & Technology
+  // Section 2: Data & Technology
   {
     id: 'Q8', section: 'Data', title: 'Data Readiness', roles: ['all'],
     context: "The bottleneck is rarely compute. It's almost always data.",
@@ -222,7 +222,7 @@ export const questionBank = [
       'Fully self-service data and AI insights with governed access, embedded in everyday workflows.',
     ),
   },
-  // Section 3 — People & Governance
+  // Section 3: People & Governance
   {
     id: 'Q15', section: 'People', title: 'AI Literacy', roles: ['all'],
     context: 'This is where Stage 2 organizations consistently get stuck. The builders are building. No one else knows what to do with it.',
@@ -319,7 +319,7 @@ export const questionBank = [
       'Deep skills across ML engineering, MLOps, and data science with a clear plan for remaining gaps.',
     ),
   },
-  // Section 4 — Adoption & Value
+  // Section 4: Adoption & Value
   {
     id: 'Q23', section: 'Adoption', title: 'Production Use Cases', roles: ['all'],
     context: 'Pilots are evidence of interest. Production use cases are evidence of capability.',
@@ -400,8 +400,8 @@ export function getAQ(role) {
 
 // ── Scoring (spec §7) ───────────────────────────────────────────────────────
 
-// Six-stage Enterprise AI Autonomy model (leadership framework). Autonomy — who
-// holds decision authority — is the measure of maturity. Bands map the overall
+// Six-stage Enterprise AI Autonomy model (leadership framework). Autonomy, who
+// holds decision authority, is the measure of maturity. Bands map the overall
 // 1–5 response average onto the six stages.
 const STAGES = [
   { max: 1.67, key: 'zero', name: 'Zero Autonomy', index: 1 },
@@ -416,12 +416,12 @@ export const stages = {
   zero: {
     name: 'Zero Autonomy', index: 1, humanRole: 'Operator',
     tagline: 'AI assists. Humans decide and act on everything.',
-    description: "AI captures, structures, and digitizes the work, but every decision still sits with people. Tools help operators record, standardize, and clean up data — nothing is delegated to AI. The work here is to get the foundations right: clean inputs, standardized processes, and the data quality that everything above this stage depends on.",
+    description: "AI captures, structures, and digitizes the work, but every decision still sits with people. Tools help operators record, standardize, and clean up data, nothing is delegated to AI. The work here is to get the foundations right: clean inputs, standardized processes, and the data quality that everything above this stage depends on.",
   },
   guided: {
     name: 'Guided Autonomy', index: 2, humanRole: 'Guide',
     tagline: 'AI recommends in real time. Humans approve every action.',
-    description: "AI works as an intelligent co-pilot — prompting, suggesting, and alerting in real time — but every action still needs explicit human approval before it executes. The value is already real: faster, better-informed decisions. The ceiling is trust. Moving up means letting AI act, not just advise, in the cases where it has earned it.",
+    description: "AI works as an intelligent co-pilot, prompting, suggesting, and alerting in real time, but every action still needs explicit human approval before it executes. The value is already real: faster, better-informed decisions. The ceiling is trust. Moving up means letting AI act, not just advise, in the cases where it has earned it.",
   },
   insight: {
     name: 'Insight Autonomy', index: 3, humanRole: 'Monitor',
@@ -431,17 +431,17 @@ export const stages = {
   operational: {
     name: 'Operational Autonomy', index: 4, humanRole: 'Supervisor',
     tagline: 'AI insight drives workflows. Humans oversee the exceptions.',
-    description: "AI-generated insight now flows directly into cross-functional decisions and workflows, with humans supervising at key checkpoints. Intelligence feeds CRM, product, and finance systems automatically; people manage the exceptions rather than the routine. The risk is automation outpacing oversight — so the work is designing the checkpoints that keep speed and control in balance.",
+    description: "AI-generated insight now flows directly into cross-functional decisions and workflows, with humans supervising at key checkpoints. Intelligence feeds CRM, product, and finance systems automatically; people manage the exceptions rather than the routine. The risk is automation outpacing oversight, so the work is designing the checkpoints that keep speed and control in balance.",
   },
   proactive: {
     name: 'Proactive Autonomy', index: 5, humanRole: 'Strategist',
     tagline: 'AI anticipates and prescribes before humans see the need.',
-    description: "AI shifts from reactive to predictive — identifying opportunities, risks, and the right interventions ahead of human awareness, and prescribing action enterprise-wide. People move up to strategy and governance while AI manages the execution triggers. The advantage compounds here, but only for organizations whose governance is mature enough to trust prediction with action.",
+    description: "AI shifts from reactive to predictive: identifying opportunities, risks, and the right interventions ahead of human awareness, and prescribing action enterprise-wide. People move up to strategy and governance while AI manages the execution triggers. The advantage compounds here, but only for organizations whose governance is mature enough to trust prediction with action.",
   },
   full: {
     name: 'Full Autonomy', index: 6, humanRole: 'Orchestrator',
     tagline: 'AI executes, learns, and self-improves. Humans govern.',
-    description: "AI operates as a self-governing system — executing multi-step workflows end to end, learning from outcomes, and improving without manual retraining. Humans define the guardrails, approve high-risk exceptions, and shape strategic direction. This isn't the end of human involvement; it's the highest-leverage version of it. The work is governance, not operation.",
+    description: "AI operates as a self-governing system: executing multi-step workflows end to end, learning from outcomes, and improving without manual retraining. Humans define the guardrails, approve high-risk exceptions, and shape strategic direction. This isn't the end of human involvement; it's the highest-leverage version of it. The work is governance, not operation.",
   },
 }
 

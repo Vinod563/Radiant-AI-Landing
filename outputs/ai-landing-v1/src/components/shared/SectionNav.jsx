@@ -99,7 +99,7 @@ export default function SectionNav() {
                   aria-label={`Go to ${s.label}`}
                   aria-current={isActive ? 'true' : undefined}
                 >
-                  {/* Label — slides in */}
+                  {/* Label, slides in */}
                   <AnimatePresence mode="popLayout">
                     {showLabel && (
                       <motion.span

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ArrowRight, ArrowLeft, Info } from 'lucide-react'
 
@@ -16,6 +16,10 @@ import { ArrowRight, ArrowLeft, Info } from 'lucide-react'
 export default function QuestionRunner({ questions, answers, onAnswer, onComplete, onBackToStart, scaleHint }) {
   const [index, setIndex] = useState(0)
   const [error, setError] = useState(false)
+
+  // Scroll to top whenever the question changes so the new question is in view
+  // (on short viewports the next question would otherwise load below the fold).
+  useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }, [index])
 
   const q = questions[index]
   const total = questions.length
@@ -76,6 +80,8 @@ export default function QuestionRunner({ questions, answers, onAnswer, onComplet
             </div>
           )}
 
+          {scaleHint && <p className="text-text-muted text-[11px] mb-4 font-medium">{scaleHint}</p>}
+
           {/* Options */}
           <div role="radiogroup" aria-label={q.question}
             className={`space-y-3 rounded-2xl ${error ? 'ring-1 ring-red-400/60 p-1' : ''}`}>
@@ -100,7 +106,6 @@ export default function QuestionRunner({ questions, answers, onAnswer, onComplet
             })}
           </div>
 
-          {scaleHint && <p className="text-text-muted text-[11px] mt-3 text-center">{scaleHint}</p>}
           {error && <p className="text-red-400 text-xs font-medium mt-3">Please select an answer to continue.</p>}
         </motion.div>
       </AnimatePresence>

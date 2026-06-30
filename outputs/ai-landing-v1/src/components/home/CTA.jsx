@@ -23,7 +23,7 @@ export default function CTA() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8 relative z-10">
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
 
-          {/* Left — Copy */}
+          {/* Left: Copy */}
           <motion.div ref={ref}
             initial={{ opacity: 0, y: 32 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -67,7 +67,7 @@ export default function CTA() {
             </div>
           </motion.div>
 
-          {/* Right — CTA Card */}
+          {/* Right: CTA Card */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -95,11 +95,11 @@ export default function CTA() {
                   Not sure where to start?
                 </h3>
                 <p className="text-text-secondary text-base leading-relaxed mb-8 max-w-sm mx-auto">
-                  Take a free maturity assessment to see exactly where you stand — your stage, your biggest gaps,
+                  Take a free maturity assessment to see exactly where you stand: your stage, your biggest gaps,
                   and the next move. Or reach out to our team directly.
                 </p>
 
-                {/* Primary CTA — free assessment */}
+                {/* Primary CTA: free assessment */}
                 <Link
                   to="/assessment"
                   className="btn-primary text-base !px-10 !py-5 shadow-[0_0_60px_rgba(145,196,107,0.25)] w-full sm:w-auto justify-center"
@@ -107,7 +107,7 @@ export default function CTA() {
                   Take the free assessment <ArrowRight size={17} />
                 </Link>
 
-                {/* Secondary CTA — opens chat contact form */}
+                {/* Secondary CTA: opens chat contact form */}
                 <div className="mt-4">
                   <Link
                     to="/chat?q=I%27d%20rather%20talk%20to%20a%20real%20person."

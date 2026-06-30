@@ -214,7 +214,7 @@ function AssessmentCard({ assessment: a, delay }) {
                 <DIcon size={13} className="mt-0.5 flex-shrink-0" style={{ color: a.accent, opacity: 0.7 }} />
                 <div>
                   <span className="text-white text-xs font-semibold">{d.label}</span>
-                  <span className="text-text-muted text-xs"> — {d.desc}</span>
+                  <span className="text-text-muted text-xs">, {d.desc}</span>
                 </div>
               </div>
             )

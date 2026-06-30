@@ -8,13 +8,13 @@
  *
  * Why this exists separately from HTMLReportViewer.jsx:
  *   The in-app report uses flexbox/grid, CSS custom properties, and a
- *   Google Fonts @import — all of which Outlook, Gmail's clipped CSS
+ *   Google Fonts @import, all of which Outlook, Gmail's clipped CSS
  *   sanitizer, and most other email renderers either ignore or break on.
  *   Email-safe HTML needs: <table> layout instead of flex/grid, inline
  *   style="" on every element (no <style> blocks relied upon for layout),
- *   and web-safe fonts only (Arial/Helvetica — no @import, no Poppins/Inter).
+ *   and web-safe fonts only (Arial/Helvetica: no @import, no Poppins/Inter).
  *
- * This is intentionally simpler than the in-app report. It's a fallback —
+ * This is intentionally simpler than the in-app report. It's a fallback:
  * PDF attachment is still the preferred delivery path (see
  * utils/generateReportPdf.js). This only gets used when the email backend
  * can't carry the PDF as an attachment and the full content needs to be
@@ -31,7 +31,7 @@ const MUTED = '#94a3b8'
 const HAIR = '#e2e8f0'
 const DARK = '#010F1E'
 
-// table-based "bar" — two adjacent <td> cells, one colored, one gray.
+// table-based "bar": two adjacent <td> cells, one colored, one gray.
 function bar(pct, color) {
   const filled = Math.max(0, Math.min(100, Math.round(pct)))
   const rest = 100 - filled
@@ -172,15 +172,15 @@ function buildAiEmailHtml(profile, result) {
 
   const radiantRead = {
     1: "You're at a critical inflection point. The organizations that move fastest from Stage 1 get one executive to own a specific outcome and make it visible.",
-    2: 'The technology team is excited, the rest of the organization is skeptical, and leadership is waiting for proof — one production use case with a before-and-after measurement becomes the business case for everything that follows.',
+    2: 'The technology team is excited, the rest of the organization is skeptical, and leadership is waiting for proof: one production use case with a before-and-after measurement becomes the business case for everything that follows.',
     3: 'You have proof that AI works in your organization. The challenge now is organizational, not technical: making AI the default instead of the exception through governance that builds trust rather than slowing things down.',
-    4: "You're in the governance-as-competitive-advantage phase. The next unlock is treating your AI portfolio like a private equity firm treats investments — rigorous tracking, active reallocation, a clear theory of compounding returns.",
-    5: "At Stage 5, the conversation shifts from 'how do we implement AI' to 'how does AI change our business model' — proprietary models, feedback loops, and capabilities that are hard for competitors to replicate.",
+    4: "You're in the governance-as-competitive-advantage phase. The next unlock is treating your AI portfolio like a private equity firm treats investments: rigorous tracking, active reallocation, a clear theory of compounding returns.",
+    5: "At Stage 5, the conversation shifts from 'how do we implement AI' to 'how does AI change our business model': proprietary models, feedback loops, and capabilities that are hard for competitors to replicate.",
   }
 
   const body = [
     headerRow({
-      eyebrow: 'AI Adoption Report — Full Version',
+      eyebrow: 'AI Adoption Report, Full Version',
       headline: `Stage ${stage.index} &mdash; ${stage.name}`,
       metaLine: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     }),
@@ -216,7 +216,7 @@ function buildAiEmailHtml(profile, result) {
     footerRow(),
   ].join('')
 
-  return wrapDocument({ title: `AI Adoption Report — ${profile?.fullName || 'Assessment'}`, bodyHtml: body })
+  return wrapDocument({ title: `AI Adoption Report, ${profile?.fullName || 'Assessment'}`, bodyHtml: body })
 }
 
 // ── CX report ────────────────────────────────────────────────────────────────
@@ -242,11 +242,11 @@ function buildCxEmailHtml(profile, result) {
     ? 'The biggest unlock at this stage is making customer insight a repeatable process rather than a one-time project.'
     : overallKey === 'Developing'
       ? 'You have the foundation. The gap to Advanced is closing the loop between customer data and strategic decisions.'
-      : 'At Advanced maturity, the focus shifts from building CX capability to compounding it — continuous, real-time customer intelligence.'
+      : 'At Advanced maturity, the focus shifts from building CX capability to compounding it: continuous, real-time customer intelligence.'
 
   const body = [
     headerRow({
-      eyebrow: 'CX Maturity Report — Full Version',
+      eyebrow: 'CX Maturity Report, Full Version',
       headline: overallLevel,
       metaLine: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     }),
@@ -272,7 +272,7 @@ function buildCxEmailHtml(profile, result) {
     footerRow(),
   ].join('')
 
-  return wrapDocument({ title: `CX Maturity Report — ${profile?.fullName || 'Assessment'}`, bodyHtml: body })
+  return wrapDocument({ title: `CX Maturity Report, ${profile?.fullName || 'Assessment'}`, bodyHtml: body })
 }
 
 // ── Public entry point ──────────────────────────────────────────────────────

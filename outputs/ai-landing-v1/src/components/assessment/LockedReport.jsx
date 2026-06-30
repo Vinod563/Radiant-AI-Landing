@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion'
-import { Lock, CheckCircle2, Mail, FileText } from 'lucide-react'
+import { CheckCircle2, Mail } from 'lucide-react'
 
 /**
- * LockedReport — the gated full report.
+ * LockedReport: the gated full report.
  *
  * Locked state: shows a generic preview of the PDF report (sharp at the top,
  * blurred + faded toward the bottom), with the lead-capture form embedded
- * directly over the faded area — no modal. After submission `unlocked` flips
+ * directly over the faded area, no modal. After submission `unlocked` flips
  * true and a short "we've emailed it" confirmation replaces everything.
  *
  * Props: kind, result, accent, unlocked, form, emailDelivered, sentTo
@@ -15,7 +15,7 @@ export default function LockedReport({ kind, result, accent = '#91C46B', unlocke
   const isAi = kind === 'ai'
 
   if (unlocked) {
-    // Report is intentionally NOT shown here — it's delivered by email only.
+    // Report is intentionally NOT shown here: it's delivered by email only.
     return (
       <motion.div
         initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
@@ -26,15 +26,15 @@ export default function LockedReport({ kind, result, accent = '#91C46B', unlocke
           {emailDelivered ? <CheckCircle2 size={26} style={{ color: accent }} /> : <Mail size={26} style={{ color: accent }} />}
         </div>
         <h3 className="font-display font-black text-white text-xl lg:text-2xl tracking-tight mb-2">
-          {emailDelivered ? 'Your report is on its way' : 'Thanks — we have your details'}
+          {emailDelivered ? 'Your report is on its way' : 'Thanks, we have your details'}
         </h3>
         <p className="text-text-secondary text-sm leading-relaxed max-w-md mx-auto">
           {emailDelivered
-            ? <>We've emailed your full report{sentTo ? <> to <span className="text-white font-semibold">{sentTo}</span></> : ''}. Check your inbox in the next few minutes — and your spam folder, just in case.</>
+            ? <>We've emailed your full report{sentTo ? <> to <span className="text-white font-semibold">{sentTo}</span></> : ''}. Check your inbox in the next few minutes, and your spam folder, just in case.</>
             : <>We've recorded your details{sentTo ? <> for <span className="text-white font-semibold">{sentTo}</span></> : ''} and our team will make sure your full report reaches you shortly.</>}
         </p>
         <p className="text-text-muted text-xs leading-relaxed max-w-md mx-auto mt-3">
-          Have a question about your results? Just reply to that email — it comes straight to our team.
+          Have a question about your results? Just reply to that email, it comes straight to our team.
         </p>
       </motion.div>
     )
@@ -43,40 +43,23 @@ export default function LockedReport({ kind, result, accent = '#91C46B', unlocke
   return (
     <motion.div
       initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-      className="relative"
+      className="relative rounded-2xl overflow-hidden"
     >
-      {/* Full-bleed PDF preview as the background — breaks out to the viewport width */}
-      <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-screen overflow-hidden select-none pointer-events-none" aria-hidden="true">
+      {/* PDF preview as the background, clipped to the card's rounded corners */}
+      <div className="absolute inset-0 overflow-hidden select-none pointer-events-none" aria-hidden="true">
         <PdfPreview kind={kind} result={result} accent={accent} />
         {/* subtle blur on the whole sheet */}
         <div className="absolute inset-0" style={{ backdropFilter: 'blur(2px)', WebkitBackdropFilter: 'blur(2px)' }} />
-        {/* translucent overlay — clearer at top & bottom, ~75-80% behind the form so the report stays visible */}
+        {/* translucent overlay: clearer at top & bottom, ~75-80% behind the form so the report stays visible */}
         <div className="absolute inset-0"
           style={{ background: 'linear-gradient(180deg, rgba(1,15,30,0.04) 0%, rgba(1,15,30,0.28) 16%, rgba(1,15,30,0.78) 28%, rgba(1,15,30,0.92) 40%, rgba(1,15,30,0.92) 100%)' }} />
       </div>
 
-      {/* "preview" chip, top-right over the clear band */}
-      <div className="relative z-10 flex justify-end pt-4">
-        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-display font-bold uppercase tracking-wider"
-          style={{ background: 'rgba(1,15,30,0.7)', border: '1px solid rgba(255,255,255,0.14)', color: 'rgba(255,255,255,0.7)' }}>
-          <FileText size={11} /> Report preview
-        </span>
-      </div>
-
       {/* Clear band that lets the top of the PDF page show through */}
-      <div className="h-56 sm:h-72" aria-hidden="true" />
+      <div className="h-28 sm:h-36" aria-hidden="true" />
 
-      {/* Lead form written directly over the overlay — no box */}
-      <div className="relative z-10">
-        <div className="flex items-center gap-2.5 mb-5">
-          <div className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0"
-            style={{ background: `${accent}1f`, border: `1px solid ${accent}40` }}>
-            <Lock size={16} style={{ color: accent }} />
-          </div>
-          <span className="text-xs font-display font-semibold uppercase tracking-wider" style={{ color: accent }}>
-            {isAi ? 'AI Maturity Report' : 'CX Maturity Report'} · 6 pages
-          </span>
-        </div>
+      {/* Lead form written over the overlay, padded off the card edges */}
+      <div className="relative z-10 px-6 sm:px-8 lg:px-10">
         {form}
       </div>
 
@@ -87,7 +70,7 @@ export default function LockedReport({ kind, result, accent = '#91C46B', unlocke
 }
 
 /**
- * PdfPreview — a generic, on-brand mock of the first page of the emailed PDF.
+ * PdfPreview: a generic, on-brand mock of the first page of the emailed PDF.
  * Intentionally light ("paper") so it reads unmistakably as a document.
  */
 function PdfPreview({ kind, result, accent }) {
@@ -96,7 +79,7 @@ function PdfPreview({ kind, result, accent }) {
   // The three extra sections that the PDF unlocks (generic copy for the teaser).
   const sections = isAi
     ? [
-        { tag: 'What we see', heading: 'Findings — your strengths & gaps by dimension',
+        { tag: 'What we see', heading: 'Findings: your strengths & gaps by dimension',
           lines: [0.96, 0.9, 0.82, 0.7], chips: ['Strategy & Leadership', 'Data & Technology', 'Adoption & Value'] },
         { tag: 'Recommended next step', heading: 'Your single highest-leverage move',
           lines: [0.94, 0.86, 0.74], chips: ['Prioritized', 'With rationale'] },

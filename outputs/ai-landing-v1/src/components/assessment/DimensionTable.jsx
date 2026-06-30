@@ -2,7 +2,7 @@ import { motion } from 'framer-motion'
 
 /**
  * CX results dimension table. The per-dimension write-ups are part of the full
- * report (PDF) — pass `compact` to show only the table.
+ * report (PDF), pass `compact` to show only the table.
  * Props: dimensions [{ key, label, level, color, blurb, avg }], compact
  */
 export default function DimensionTable({ dimensions, compact = false }) {

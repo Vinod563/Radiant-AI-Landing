@@ -2,32 +2,55 @@ import { motion } from 'framer-motion'
 import { useMemo } from 'react'
 
 /**
- * GartnerPositioningView — 2D scatter positioning chart.
+ * GartnerPositioningView: 2D positioning chart, aligned to the 6-stage model.
  *
  * Axes:
  *   X  "Execution Readiness"  = avg(Data score, Adoption score) / 5
  *   Y  "Strategic Maturity"   = avg(Strategy score, People score) / 5
  *
- * Quadrant labels:
- *   TL  Planners     (high strategy, low execution)
- *   TR  AI Leaders   (high strategy, high execution)  ← goal
- *   BL  Early Movers (low strategy, low execution)    ← most orgs
- *   BR  Builders     (low strategy, high execution)
+ * The dot's diagonal position (x+y)/2 equals overall/5, the same overall average
+ * that determines the 6-stage band, so the dot always lands in the stage cluster
+ * that matches the respondent's computed stage.
  *
- * Cluster clouds show illustrative distribution of where other orgs typically land.
- * Respondent dot is placed at their actual computed position.
+ * Stage clusters (on the maturity diagonal):
+ *   Stage 1-2  Early Movers / Most Organizations  (low-left)
+ *   Stage 3-4  Progressing                        (center)
+ *   Stage 5-6  AI Leaders                          (top-right)  ← goal
+ *
+ * Quadrant labels are tilt archetypes (strategy-heavy vs execution-heavy corners),
+ * read alongside the stage progression, not a competing taxonomy.
  *
  * Props:
  *   sectionAverages  { Strategy, Data, People, Adoption }  all 0..5
+ *   stageIndex       1..6 (the respondent's computed stage; falls back to position)
  *   companyName      string (optional)
  *   accent           string hex
  */
-export default function GartnerPositioningView({ sectionAverages = {}, companyName = 'Your Organization', accent = '#91C46B' }) {
+export default function GartnerPositioningView({ sectionAverages = {}, stageIndex, companyName = 'Your Organization', accent = '#91C46B' }) {
   const { x, y } = useMemo(() => {
     const execX = ((sectionAverages.Data || 0) + (sectionAverages.Adoption || 0)) / 2 / 5
     const stratY = ((sectionAverages.Strategy || 0) + (sectionAverages.People || 0)) / 2 / 5
     return { x: execX, y: stratY }
   }, [sectionAverages])
+
+  // Stage band (1-2 / 3-4 / 5-6). Use the computed stage when provided; otherwise
+  // fall back to the dot's diagonal position so the two never disagree.
+  const sIdx = stageIndex ?? (((x + y) / 2 < 0.466) ? 2 : ((x + y) / 2 < 0.734) ? 4 : 6)
+  const group = sIdx <= 2 ? 'early' : sIdx <= 4 ? 'progress' : 'leaders'
+
+  // Interpretation: one stage-band sentence + one tilt sentence (strategy vs
+  // execution balance). Single string, so the branches can never double up.
+  const bandText = group === 'early'
+    ? "You're in the Early Movers group (Stage 1–2), where most organizations begin. The priority is a written AI strategy and clean data foundations before scaling execution."
+    : group === 'progress'
+      ? "You're in the Progressing group (Stage 3–4), ahead of the market average. The move toward AI Leadership now depends on governance maturity and scaling what works into production."
+      : "You're in or near the AI Leaders group (Stage 5–6). The focus shifts to compounding the advantage: governance systems, portfolio ROI, and organizational learning loops."
+  const tilt = y - x > 0.15
+    ? ' Your strategy is ahead of your execution: turn planning into deployed, production use cases.'
+    : x - y > 0.15
+      ? ' Your execution is ahead of your strategy: add governance and a scalable framework so you build the right things.'
+      : ' Strategy and execution are well balanced.'
+  const meansText = bandText + tilt
 
   // Wide 160 x 72 viewBox so the chart fills the full row instead of a centered square.
   // Plot region: data domain 0..1 maps into these bounds; Y is flipped for SVG.
@@ -40,13 +63,15 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
   const dotX = toSvgX(x)
   const dotY = toSvgY(y)
 
-  // Illustrative clusters (cx, cy in 0..1 domain; rd = radius in domain units)
+  // Stage-band clusters along the maturity diagonal (cx, cy in 0..1 domain).
+  // Centers sit at the midpoint of each stage band's overall-score range, so the
+  // dot (whose diagonal position = overall/5) lands inside its own stage cloud.
+  // The respondent's own band is emphasized.
   const clusters = [
-    { id: 'early', label: 'Most Organizations', sublabel: 'Stage 1–2', cx: 0.18, cy: 0.20, rd: 0.17, color: '#64748B', opacity: 0.35 },
-    { id: 'progress', label: 'Progressing', sublabel: 'Stage 3–4', cx: 0.52, cy: 0.50, rd: 0.13, color: '#2DD4BF', opacity: 0.25 },
-    { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 5–6', cx: 0.82, cy: 0.82, rd: 0.13, color: accent, opacity: 0.22 },
-    { id: 'planners', label: 'Planners', sublabel: 'Strategy without execution', cx: 0.15, cy: 0.80, rd: 0.10, color: '#F0974E', opacity: 0.2 },
-  ]
+    { id: 'early', label: 'Early Movers', sublabel: 'Stage 1–2', cx: 0.30, cy: 0.30, rd: 0.16, color: '#64748B' },
+    { id: 'progress', label: 'Progressing', sublabel: 'Stage 3–4', cx: 0.58, cy: 0.58, rd: 0.15, color: '#2DD4BF' },
+    { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 5–6', cx: 0.84, cy: 0.84, rd: 0.14, color: accent },
+  ].map(c => ({ ...c, active: c.id === group, opacity: c.id === group ? 0.4 : 0.18 }))
 
   return (
     <div className="mag-card p-8 lg:p-10">
@@ -72,10 +97,6 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
               </g>
             ))}
 
-            {/* Quadrant divider */}
-            <line x1={toSvgX(0.5)} y1={PY1} x2={toSvgX(0.5)} y2={PY0} stroke="rgba(255,255,255,0.08)" strokeWidth="0.4" strokeDasharray="1.6,1.6" />
-            <line x1={PX0} y1={toSvgY(0.5)} x2={PX1} y2={toSvgY(0.5)} stroke="rgba(255,255,255,0.08)" strokeWidth="0.4" strokeDasharray="1.6,1.6" />
-
             {/* Axes */}
             <line x1={PX0} y1={PY0} x2={PX1} y2={PY0} stroke="rgba(255,255,255,0.18)" strokeWidth="0.6" />
             <line x1={PX0} y1={PY1} x2={PX0} y2={PY0} stroke="rgba(255,255,255,0.18)" strokeWidth="0.6" />
@@ -92,34 +113,34 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
               Strategic Maturity →
             </text>
 
-            {/* Quadrant labels */}
-            <text x={toSvgX(0.25)} y={PY1 + 4} textAnchor="middle" fill="rgba(240,151,78,0.55)" fontSize="3" fontFamily="Inter,sans-serif" fontWeight="700">Planners</text>
-            <text x={toSvgX(0.75)} y={PY1 + 4} textAnchor="middle" fill={accent + 'AA'} fontSize="3" fontFamily="Inter,sans-serif" fontWeight="800">AI Leaders</text>
-            <text x={toSvgX(0.25)} y={PY0 - 2.5} textAnchor="middle" fill="rgba(255,255,255,0.28)" fontSize="3" fontFamily="Inter,sans-serif" fontWeight="700">Early Movers</text>
-            <text x={toSvgX(0.75)} y={PY0 - 2.5} textAnchor="middle" fill="rgba(45,212,191,0.5)" fontSize="3" fontFamily="Inter,sans-serif" fontWeight="700">Builders</text>
-
-            {/* AI Leaders goal zone highlight */}
-            <rect x={toSvgX(0.6)} y={toSvgY(1.0)} width={toSvgX(1.0) - toSvgX(0.6)} height={toSvgY(0.6) - toSvgY(1.0)}
-              fill={accent} fillOpacity="0.04" rx="1"
-              stroke={accent} strokeOpacity="0.12" strokeWidth="0.4" />
-
-            {/* Cluster blobs */}
+            {/* Stage-band blobs along the maturity diagonal, each labeled with its
+                stage. The respondent's own band is outlined and brightened. */}
             {clusters.map(c => (
-              <motion.ellipse
-                key={c.id}
-                cx={toSvgX(c.cx)} cy={toSvgY(c.cy)} rx={c.rd * RX} ry={c.rd * RY}
-                fill={c.color} fillOpacity={c.opacity}
-                initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.7, delay: 0.2 + clusters.findIndex(cl => cl.id === c.id) * 0.1 }}
-                style={{ transformOrigin: `${toSvgX(c.cx)}px ${toSvgY(c.cy)}px` }}
-              />
+              <g key={c.id}>
+                <motion.ellipse
+                  cx={toSvgX(c.cx)} cy={toSvgY(c.cy)} rx={c.rd * RX} ry={c.rd * RY}
+                  fill={c.color} fillOpacity={c.opacity}
+                  stroke={c.active ? c.color : 'none'} strokeOpacity={c.active ? 0.6 : 0} strokeWidth={c.active ? 0.5 : 0}
+                  initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
+                  transition={{ duration: 0.7, delay: 0.2 + clusters.findIndex(cl => cl.id === c.id) * 0.1 }}
+                  style={{ transformOrigin: `${toSvgX(c.cx)}px ${toSvgY(c.cy)}px` }}
+                />
+                <motion.text
+                  x={toSvgX(c.cx)} y={toSvgY(c.cy) - c.rd * RY - 1.6} textAnchor="middle"
+                  fill={c.active ? '#fff' : 'rgba(255,255,255,0.4)'} fontSize="3" fontFamily="Inter,sans-serif"
+                  fontWeight={c.active ? '800' : '700'}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 + clusters.findIndex(cl => cl.id === c.id) * 0.1 }}
+                >
+                  {c.label}
+                </motion.text>
+              </g>
             ))}
 
-            {/* Path from user to leaders zone (dotted) */}
-            {(x < 0.75 || y < 0.75) && (
+            {/* Path from user to the AI Leaders band (dotted), unless already there */}
+            {group !== 'leaders' && (
               <motion.line
                 x1={dotX} y1={dotY}
-                x2={toSvgX(0.82)} y2={toSvgY(0.82)}
+                x2={toSvgX(0.84)} y2={toSvgY(0.84)}
                 stroke={accent} strokeOpacity="0.25" strokeWidth="0.5"
                 strokeDasharray="1.6,1.2"
                 initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
@@ -143,10 +164,13 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
               style={{ transformOrigin: `${dotX}px ${dotY}px` }}
             />
 
-            {/* Dot label */}
+            {/* Dot label: below the dot (above if too near the bottom axis), clamped
+                inside the plot. Stage labels sit above the bubbles, so placing this
+                below keeps the two from colliding. */}
             <motion.text
-              x={dotX + (dotX > toSvgX(0.6) ? -6 : 6)} y={dotY - 6}
-              textAnchor={dotX > toSvgX(0.6) ? 'end' : 'start'}
+              x={Math.min(Math.max(dotX, PX0 + 16), PX1 - 16)}
+              y={dotY > PY0 - 8 ? dotY - 5 : dotY + 7}
+              textAnchor="middle"
               fill="white" fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="700"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
             >
@@ -158,14 +182,16 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
         {/* Legend */}
         <div className="flex-shrink-0 w-44 space-y-3.5 pt-2 hidden sm:block">
           <div className="text-[11px] font-display font-bold uppercase tracking-wider text-text-muted mb-3">
-            Market Clusters
+            Maturity Stages
           </div>
           {clusters.map(c => (
-            <div key={c.id} className="flex items-start gap-2.5">
+            <div key={c.id} className="flex items-start gap-2.5" style={{ opacity: c.active ? 1 : 0.5 }}>
               <div className="w-3 h-3 rounded-full mt-0.5 flex-shrink-0"
-                style={{ background: c.color, opacity: 0.75 }} />
+                style={{ background: c.color, opacity: 0.85, boxShadow: c.active ? `0 0 5px ${c.color}90` : 'none' }} />
               <div>
-                <div className="text-white text-xs font-semibold leading-tight">{c.label}</div>
+                <div className="text-white text-xs font-semibold leading-tight">
+                  {c.label}{c.active && <span className="ml-1.5 text-[10px] font-bold" style={{ color: accent }}>· you</span>}
+                </div>
                 <div className="text-text-muted text-[11px] leading-snug">{c.sublabel}</div>
               </div>
             </div>
@@ -178,15 +204,15 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
             </div>
           </div>
 
-          {/* Axis scores */}
+          {/* Axis scores (normalized 0-100, not population percentiles) */}
           <div className="pt-3 border-t border-white/[0.06] space-y-2.5">
             <div className="text-[11px] text-text-muted">
               <span className="block font-semibold text-text-secondary mb-0.5">Execution Readiness</span>
-              <span className="text-white font-display font-bold text-sm">{Math.round(x * 100)}th</span> percentile
+              <span className="text-white font-display font-bold text-sm">{Math.round(x * 100)}</span> / 100
             </div>
             <div className="text-[11px] text-text-muted">
               <span className="block font-semibold text-text-secondary mb-0.5">Strategic Maturity</span>
-              <span className="text-white font-display font-bold text-sm">{Math.round(y * 100)}th</span> percentile
+              <span className="text-white font-display font-bold text-sm">{Math.round(y * 100)}</span> / 100
             </div>
           </div>
         </div>
@@ -196,12 +222,7 @@ export default function GartnerPositioningView({ sectionAverages = {}, companyNa
       <div className="mt-4 p-3 rounded-xl text-xs text-text-muted leading-relaxed"
         style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
         <span className="font-semibold text-text-secondary">What this means: </span>
-        {x < 0.4 && y < 0.4 && 'Your org is in the Early Movers cluster — where most organizations start. The path forward is to build a written strategy first, then execute against it.'}
-        {x >= 0.4 && y < 0.4 && 'You have strong execution capabilities but are under-invested in strategy and governance. Risk: building the right things without a scalable framework.'}
-        {x < 0.4 && y >= 0.4 && 'Strategy and governance are ahead of execution. The bottleneck is turning planning into deployed value — prioritize production use cases.'}
-        {x >= 0.4 && y >= 0.4 && x < 0.7 && 'You\'re in the Progressing cluster — above average on both dimensions. The move to AI Leader status requires governance maturity and scaling discipline.'}
-        {x >= 0.7 && y >= 0.7 && `You're in or near the AI Leaders cluster. At this position, the focus is compounding the advantage — governance systems, portfolio ROI, and organizational learning loops.`}
-        {x >= 0.4 && x < 0.7 && y >= 0.7 && 'Strong strategy with growing execution. You\'re ahead of most peers — the gap to close is scaling what\'s working into enterprise production.'}
+        {meansText}
       </div>
     </div>
   )

@@ -4,7 +4,7 @@ import { CheckCircle2, RefreshCw, ArrowRight } from 'lucide-react'
 
 /**
  * Shared contact form with canvas CAPTCHA. Submits to the Radiant backend
- * (`/api/contact`), which emails the team via Outlook/M365 SMTP — the same
+ * (`/api/contact`), which emails the team via Outlook/M365 SMTP, the same
  * provider used for assessment reports.
  *
  * Extracted from Chat.jsx's ContactDetailsCard so the chat contact card AND
@@ -129,7 +129,7 @@ export default function ContactForm({
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          subject: `${subjectPrefix} from ${form.name} — Radiant Digital AI`,
+          subject: `${subjectPrefix} from ${form.name}, Radiant Digital AI`,
           name: form.name,
           email: form.email,
           company: form.company || 'Not provided',
@@ -151,7 +151,7 @@ export default function ContactForm({
     }
   }
 
-  // Static class — Tailwind JIT cannot generate arbitrary values from a runtime string.
+  // Static class: Tailwind JIT cannot generate arbitrary values from a runtime string.
   const focusBorder = 'focus:border-white/30'
 
   if (submitted) {

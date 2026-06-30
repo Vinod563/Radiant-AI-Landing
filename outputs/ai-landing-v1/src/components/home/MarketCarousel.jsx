@@ -143,7 +143,7 @@ export default function MarketCarousel() {
         }
       `}</style>
 
-      {/* Navigation arrows — bottom */}
+      {/* Navigation arrows, bottom */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
@@ -188,7 +188,7 @@ function MarketCard({ market }) {
       style={{ scrollSnapAlign: 'start' }}
     >
       <div className="flip-inner">
-        {/* FRONT — Title, Icon, Cutout Image */}
+        {/* FRONT: Title, Icon, Cutout Image */}
         <div className="flip-front">
           <div
             className="w-full h-full flex flex-col"
@@ -255,7 +255,7 @@ function MarketCard({ market }) {
           </div>
         </div>
 
-        {/* BACK — Metrics-driven with description & clients */}
+        {/* BACK: Metrics-driven with description & clients */}
         <div
           className="flip-back"
           style={{

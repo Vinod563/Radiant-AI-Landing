@@ -1,7 +1,7 @@
 /**
  * Single source of truth for all site content.
  * Both homepage components and the chat knowledgeBase import from here.
- * Update content ONCE here — it propagates everywhere automatically.
+ * Update content ONCE here, it propagates everywhere automatically.
  */
 
 // ─── BRAND ───────────────────────────────────────
@@ -169,7 +169,7 @@ export const solutions = [
     accent: '#596AE0',
     screenshot: '/screenshots/anomaly-detection-v2.png',
     tagline: 'AI-powered anomaly detection that protects revenue and operations at scale.',
-    desc: 'Detects anomalies across any data stream — billing, logistics, authentication, devices — groups them into actionable patterns, and guides teams to resolve issues before they escalate.',
+    desc: 'Detects anomalies across any data stream, billing, logistics, authentication, devices, groups them into actionable patterns, and guides teams to resolve issues before they escalate.',
     proofStat: '98% detection accuracy',
     tags: ['Billing', 'Logistics', 'Authentication', 'Device Telemetry', 'Shipping', 'Fraud Detection', 'Revenue Protection'],
     platformComponents: ['Predictive Analytics and Time Series', 'Radiant Knowledge Hub', 'Agentic AI and Multi-Agent Orchestration', 'Semantic Data Graph'],

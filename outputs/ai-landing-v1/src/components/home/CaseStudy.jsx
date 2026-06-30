@@ -50,7 +50,7 @@ export default function CaseStudy() {
 
         {/* Row 1: Client info + Quote + Metrics */}
         <div className="grid md:grid-cols-2 gap-10 lg:gap-16 mb-16">
-          {/* Left — client + quote */}
+          {/* Left: client + quote */}
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
@@ -99,7 +99,7 @@ export default function CaseStudy() {
             </div>
           </motion.div>
 
-          {/* Right — metrics */}
+          {/* Right: metrics */}
           <motion.div
             initial={{ opacity: 0, x: 24 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}

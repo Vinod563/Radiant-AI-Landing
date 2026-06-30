@@ -39,7 +39,7 @@ export default function Index() {
       <Platform />
       <Divider />
       <Infrastructure />
-      {/* CTA section hidden for now — re-enable by uncommenting */}
+      {/* CTA section hidden for now, re-enable by uncommenting */}
       {/* <Divider />
       <CTA /> */}
       <Footer variant="home" />

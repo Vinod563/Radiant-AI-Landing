@@ -2,6 +2,45 @@
 
 ---
 
+### 2026-06-24 - Assessment Megamenu, Lead-Gate Redesign, 6-Stage Model, Email CC, Nav & Hero Updates
+**Action:** Multiple UX, content, and backend changes across the `ai-landing-v1` app and `radiant-chat-api`.
+
+**Assessment megamenu (Navbar) — later removed:**
+- Split into LEFT (title/desc/links) + RIGHT (stacked tiles); rebalanced widths; polished tiles (time pill, hover lift, kicker badge).
+- Cleaned copy: badge "Free Assessments" → "Assessments", removed "Ask us" link and per-tile "Start assessment".
+- Hub "Start" buttons now deep-link with `?start=1` to skip the intro/description step (AiAssessment.jsx, CxAssessment.jsx, AssessmentHub.jsx).
+
+**Results page:**
+- Stage description now full-width (StageReveal.jsx — removed `max-w-2xl`).
+- Competitive Positioning chart reworked to a wide rectangle, larger fonts, fixed overlapping axis labels (GartnerPositioningView.jsx).
+
+**Lead-capture gate (LockedReport.jsx):**
+- Replaced blur+button+modal with a full-bleed PDF-preview background + inline lead form (no box); form bare via new `bare` prop on AssessmentLeadForm.jsx.
+- Preview shows the 3 gated sections; switched preview to dark mode; overlay tuned (clear top/bottom reveal bands, ~70%→90% opacity per iterations).
+
+**6-Stage Enterprise AI Autonomy model (replaces 5-stage Assess→Train→Adopt→Govern→Scale):**
+- New stages: Zero / Guided / Insight / Operational / Proactive / Full Autonomy (with human roles), per leadership doc AI_Autonomy_Maturity_Model_Sirini.docx.
+- Updated scoring bands + stage copy (aiAssessment.js), staircase (MaturityStaircase.jsx, StageReveal.jsx), Radiant's Read (reportEditorial.js), playbooks (WhatAILeadersDo.jsx), PDF/HTML/email reports (generateReportPdf.js, emailSafeReport.js, HTMLReportViewer.jsx), chat KB (knowledgeBase.js), and all "5 stages / of 5" labels (Navbar, AssessmentHub, AiAssessment, ReportPreviewTeaser, assessmentContent, GartnerPositioningView).
+
+**Navbar:**
+- Header CTA "Connect with Us" → "Assess AI Readiness" → `/assessment/ai`.
+- Removed the Assessments megamenu/dropdown (desktop + mobile) and its dead state/imports.
+- "Contact" nav item now links to `/chat?q=Connect with our team` (opens the connect form).
+
+**Hero (Hero.jsx):**
+- Added 2 chips above the chat input with hover tooltips: "Find Your AI Readiness Gaps" → `/assessment/ai`, "Find Your CX Maturity" → `/assessment/cx`.
+
+**Homepage (Index.jsx):**
+- Moved the Free Assessment section (AssessmentEntry) directly below the hero; added "Assessment" to SectionNav order.
+
+**Backend (radiant-chat-api):**
+- All mail from `connect@radiant.digital` now copies the team — BCC on the lead-facing report, CC on internal notifications/contact (utils/mailer.js, `TEAM_CC` / `MAIL_CC`): lam.huynh@, alek.nedelkovski@, vinod.mourya@radiant.digital.
+- Diagnosed SMTP `535 5.7.139` as M365 auth (not code); updated `SMTP_PASS` to a new app password — verified `AUTH OK`.
+
+**Status:** ✅ SUCCESS (all `ai-landing-v1` builds pass; SMTP auth verified)
+
+---
+
 ### 2026-03-10 - Reference Websites Reorganized + Onixnet Pages Fetched
 **Action:** Reorganized reference-websites into devblock/ and onixnet/ subfolders; fetched 12 Onixnet pages; updated all root MD files
 

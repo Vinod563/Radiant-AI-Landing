@@ -1,7 +1,7 @@
 import { CheckCircle2, AlertTriangle, Minus } from 'lucide-react'
 
 /**
- * Findings panel — strengths (green) and gaps (amber), or a fallback note.
+ * Findings panel: strengths (green) and gaps (amber), or a fallback note.
  * Props: findings { strengths:[{section,title,body}], gaps:[...], fallback:{title,body}|null }
  */
 export default function FindingsPanel({ findings }) {

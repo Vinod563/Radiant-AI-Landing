@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useCallback, useId } from 'react'
+import { useState, useRef, useEffect, useLayoutEffect, useCallback, useId } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import {
@@ -55,7 +55,7 @@ import AssessmentResults from '../components/assessment/AssessmentResults'
 import { getAQ, sectionMeta, roles } from '../data/aiAssessment.js'
 import { cxSections } from '../data/cxAssessment.js'
 
-// Queries whose answer is known up front — resolved locally with no LLM wait.
+// Queries whose answer is known up front, resolved locally with no LLM wait.
 const INSTANT_TRIGGERS = new Set([
   "i'd rather talk to a real person.",
   "i'd rather talk to a real person",
@@ -130,22 +130,48 @@ export default function Chat() {
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
   const messagesEndRef = useRef(null)
+  const lastUserRef = useRef(null)
   const mainRef = useRef(null)
   const inputRef = useRef(null)
   const autoSubmitted = useRef(false)
   const submitTimeoutRef = useRef(null)
   const assessRef = useRef({ kind: null, profile: null, questions: [], answers: {} })
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
+  // When a NEW question is asked, pin that question to the top of the scroll area
+  // (just below the sticky header) so the result's TOP is shown first, the user
+  // scrolls down to read the rest. We do NOT auto-scroll to the bottom.
+  // Triggered by an increase in the user-message count, so it fires even when the
+  // assistant reply lands in the same update (instant knowledge-base answers).
+  const prevUserCount = useRef(0)
   useEffect(() => {
-    if (messages.length > 0) {
-      scrollToBottom()
-    } else {
+    if (messages.length === 0) {
       mainRef.current?.scrollTo({ top: 0 })
+      prevUserCount.current = 0
+      return
     }
+    const userCount = messages.reduce((n, m) => n + (m.role === 'user' ? 1 : 0), 0)
+    const isNewQuestion = userCount > prevUserCount.current
+    prevUserCount.current = userCount
+    if (!isNewQuestion) return
+    // Pin the question's top just under the header. The reply + tail spacer render
+    // slightly later, so the container can't scroll all the way on the first try —
+    // we re-pin a couple of times as layout settles. scrollTo targets <main> when it's
+    // the scroller; otherwise scrollIntoView targets whichever element scrolls.
+    const pin = (behavior) => {
+      const el = lastUserRef.current
+      if (!el) return
+      const cont = mainRef.current
+      if (cont && cont.scrollHeight > cont.clientHeight + 4) {
+        const delta = el.getBoundingClientRect().top - cont.getBoundingClientRect().top
+        cont.scrollTo({ top: cont.scrollTop + delta - 12, behavior })
+      } else {
+        el.scrollIntoView({ behavior, block: 'start' })
+      }
+    }
+    const raf = requestAnimationFrame(() => requestAnimationFrame(() => pin('smooth')))
+    const t1 = setTimeout(() => pin('auto'), 400)
+    const t2 = setTimeout(() => pin('auto'), 900)
+    return () => { cancelAnimationFrame(raf); clearTimeout(t1); clearTimeout(t2) }
   }, [messages, isTyping])
 
   useEffect(() => {
@@ -154,6 +180,39 @@ export default function Chat() {
       if (submitTimeoutRef.current) clearTimeout(submitTimeoutRef.current)
     }
   }, [])
+
+  // When the chat opens (suggestion grid → first message), the <main> scroller
+  // still holds whatever scroll position the grid was left at. Reset it to the
+  // top so the conversation always starts from the first question.
+  const prevHasMessages = useRef(false)
+  useEffect(() => {
+    const has = messages.length > 0
+    if (has && !prevHasMessages.current) {
+      mainRef.current?.scrollTo({ top: 0 })
+    }
+    prevHasMessages.current = has
+  }, [messages.length])
+
+  // Tail spacer height. We need just enough slack below the conversation for the
+  // newest question to scroll to the top, no more. Once the last exchange already
+  // fills (or overflows) the viewport, the spacer collapses to 0 so there's no
+  // dead space to scroll into past the answer.
+  const [tailHeight, setTailHeight] = useState(0)
+  useLayoutEffect(() => {
+    if (messages.length === 0) { setTailHeight(0); return }
+    const measure = () => {
+      const cont = mainRef.current
+      const endEl = messagesEndRef.current
+      const userEl = lastUserRef.current
+      if (!cont || !endEl) return
+      const userTop = userEl ? userEl.offsetTop : 0
+      const exchangeH = endEl.offsetTop - userTop // last question top → end of content
+      setTailHeight(Math.max(0, cont.clientHeight - exchangeH))
+    }
+    measure()
+    window.addEventListener('resize', measure)
+    return () => window.removeEventListener('resize', measure)
+  }, [messages, isTyping])
 
   // Auto-submit query from URL param (e.g., /chat?q=Show+me+case+studies)
   useEffect(() => {
@@ -198,7 +257,7 @@ export default function Chat() {
 
     // ── Instant answers ────────────────────────────────────────────────────
     // For known intents (contact form, assessment options) we already know the
-    // exact card to show — skip the LLM round-trip and render it immediately.
+    // exact card to show, skip the LLM round-trip and render it immediately.
     const instant = getInstantAnswer(q)
     if (instant) {
       setMessages((prev) => [...prev, {
@@ -263,8 +322,8 @@ export default function Chat() {
       {
         role: 'assistant', id: `assess-profile-${kind}`, followUp: [],
         message: kind === 'cx'
-          ? "Let's measure your CX maturity. First, a little context — share a few details below and we'll begin."
-          : "Let's find out how AI-ready you are. First, a little context — share a few details below and I'll tailor your questions to your role.",
+          ? "Let's measure your CX maturity. First, a little context, share a few details below and we'll begin."
+          : "Let's find out how AI-ready you are. First, a little context, share a few details below and I'll tailor your questions to your role.",
         cards: [{ type: 'assessment-profile', kind }],
       },
     ])
@@ -282,8 +341,8 @@ export default function Chat() {
         {
           role: 'assistant', id: `assess-intro-${kind}`, cards: [], followUp: [],
           message: kind === 'cx'
-            ? "Thanks. Here are 9 quick questions across three dimensions — answer each as it best fits your organization today."
-            : `Thanks. Based on your role, here are ${questions.length} questions across four dimensions — answer each as it best fits your organization today.`,
+            ? "Thanks. Here are 9 quick questions across three dimensions: answer each as it best fits your organization today."
+            : `Thanks. Based on your role, here are ${questions.length} questions across four dimensions: answer each as it best fits your organization today.`,
         },
         assessmentQuestionMessage(kind, questions, 0),
       ]
@@ -306,7 +365,7 @@ export default function Chat() {
       } else {
         next.push({
           role: 'assistant', id: `assess-report-${kind}`, followUp: [],
-          message: "Here's your report — your stage, your scores, and where to focus next.",
+          message: "Here's your report: your stage, your scores, and where to focus next.",
           cards: [{ type: 'assessment-report', kind, profile: st.profile, answers: { ...st.answers } }],
         })
       }
@@ -325,7 +384,7 @@ export default function Chat() {
 
   return (
     <div className="h-[100dvh] bg-[#010F1E] flex flex-col relative overflow-hidden">
-      {/* Full-page gradient background — layered radial gradients covering entire viewport */}
+      {/* Full-page gradient background, layered radial gradients covering entire viewport */}
       <div className="fixed inset-0 pointer-events-none z-0"
         style={{
           background: [
@@ -374,7 +433,7 @@ export default function Chat() {
       </header>
 
       {/* Messages area */}
-      <main ref={mainRef} className="flex-1 overflow-y-auto flex flex-col">
+      <main ref={mainRef} className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 w-full flex-1 flex flex-col">
           <AnimatePresence mode="popLayout">
             {!hasMessages && (
@@ -415,7 +474,7 @@ export default function Chat() {
                     transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
                   />
 
-                  {/* Rotating conic ring — more vivid */}
+                  {/* Rotating conic ring, more vivid */}
                   <motion.div
                     className="absolute rounded-full"
                     style={{
@@ -523,7 +582,7 @@ export default function Chat() {
                   Tell us what you're working on. We'll tell you what we've already built for it.
                 </motion.p>
 
-                {/* Suggestion cards — 9 cards: 4+4+1 layout */}
+                {/* Suggestion cards, 9 cards: 4+4+1 layout */}
                 <div className="max-w-4xl mx-auto relative z-10">
                   {/* Mobile: compact pill layout / Desktop: card grid */}
                   {/* Mobile pills */}
@@ -605,7 +664,7 @@ export default function Chat() {
                     })}
                   </div>
 
-                  {/* Card 9 — "Talk to a real person" — desktop only (already in mobile pills above) */}
+                  {/* Card 9, "Talk to a real person", desktop only (already in mobile pills above) */}
                   <div className="hidden sm:flex justify-center mt-4">
                     <motion.button
                       initial={{ opacity: 0, y: 20 }}
@@ -648,13 +707,14 @@ export default function Chat() {
               </motion.div>
             )}
 
-            {messages.map((msg, i) => (
+            {(() => { const lastUserIndex = messages.map(m => m.role).lastIndexOf('user'); return messages.map((msg, i) => (
               <motion.div
                 key={i}
+                ref={i === lastUserIndex ? lastUserRef : null}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
-                className={`py-8 ${i === 0 ? 'pt-12' : ''}`}
+                className={`py-8 scroll-mt-24 ${i === 0 ? 'pt-12' : ''}`}
               >
                 {msg.role === 'user' ? (
                   <UserBubble content={msg.content} />
@@ -663,7 +723,7 @@ export default function Chat() {
                     onAssessment={startAssessment} onAssessmentProfile={submitAssessmentProfile} onAssessmentAnswer={answerAssessment} />
                 )}
               </motion.div>
-            ))}
+            )) })()}
           </AnimatePresence>
 
           <AnimatePresence>
@@ -745,7 +805,8 @@ export default function Chat() {
             )}
           </AnimatePresence>
 
-          <div ref={messagesEndRef} className={hasMessages ? 'h-44' : 'h-4'} />
+          {/* Tail sized just enough to pin the newest question to the top, no extra */}
+          <div ref={messagesEndRef} style={{ minHeight: hasMessages ? tailHeight : 16 }} />
         </div>
       </main>
 
@@ -805,7 +866,7 @@ function UserBubble({ content }) {
 }
 
 /* ═══════════════════════════════════════════════
-   THINKING INDICATOR — Shown while Gemma 4 is
+   THINKING INDICATOR, Shown while Gemma 4 is
    generating. Rotating status messages + skeleton
    card placeholders so the user isn't staring at
    a blank screen during the 5–10s thinking phase.
@@ -819,7 +880,7 @@ const THINKING_STEPS = [
   'Crafting a tailored response…',
   'Selecting the right cards…',
   'Arranging the layout…',
-  'Almost there — polishing the details…',
+  'Almost there, polishing the details…',
   'Finalising your answer…',
 ]
 
@@ -990,7 +1051,9 @@ function CardRenderer({ card, index, onSubmit, onAssessment, onAssessmentProfile
         <AssessmentQuestionCard card={card} onAnswer={(qi, score, label) => onAssessmentAnswer(card.kind, qi, score, label)} />
       )}
       {card.type === 'assessment-report' && (
-        <AssessmentResults kind={card.kind} profile={card.profile} answers={card.answers} />
+        <div className="w-full min-w-0 overflow-x-hidden">
+          <AssessmentResults kind={card.kind} profile={card.profile} answers={card.answers} />
+        </div>
       )}
       {card.type === 'list' && <ListCard card={card} onItemClick={onSubmit} />}
       {card.type === 'case-study-grid' && <CaseStudyGridCard card={card} onItemClick={onSubmit} />}
@@ -1012,7 +1075,7 @@ function CardRenderer({ card, index, onSubmit, onAssessment, onAssessmentProfile
 }
 
 /* ═══════════════════════════════════════════════
-   HERO CARD — Matches Hero.jsx with gradient bg,
+   HERO CARD, Matches Hero.jsx with gradient bg,
    rainbow accent line, large editorial type
    ═══════════════════════════════════════════════ */
 function HeroCard({ card }) {
@@ -1052,7 +1115,7 @@ function HeroCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   METRICS CARD — Matches SocialProof.jsx stats strip
+   METRICS CARD, Matches SocialProof.jsx stats strip
    with pull-stat gradient text, icons, editorial bg
    ═══════════════════════════════════════════════ */
 function MetricsCard({ card }) {
@@ -1094,7 +1157,7 @@ function MetricsCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   PCE DIAGRAM CARD — Inline SVG of the Precision
+   PCE DIAGRAM CARD, Inline SVG of the Precision
    Context Engine pipeline for chat responses
    ═══════════════════════════════════════════════ */
 function PCEDiagramCard() {
@@ -1220,7 +1283,7 @@ function PCEDiagramCard() {
 }
 
 /* ═══════════════════════════════════════════════
-   SCREENSHOT CARD — Solution screenshot with
+   SCREENSHOT CARD, Solution screenshot with
    light/dark mode hover effect
    ═══════════════════════════════════════════════ */
 function ScreenshotCard({ card }) {
@@ -1259,7 +1322,7 @@ function ScreenshotCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   TEXT CARD — Editorial pull-quote style with
+   TEXT CARD, Editorial pull-quote style with
    accent bar, large body text
    ═══════════════════════════════════════════════ */
 function TextCard({ card }) {
@@ -1286,7 +1349,7 @@ function TextCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   GRID CARD — Matches WhyRadiant.jsx with icon boxes,
+   GRID CARD, Matches WhyRadiant.jsx with icon boxes,
    hover glow, bottom accent line
    ═══════════════════════════════════════════════ */
 function AssessmentProfileCard({ card, onSubmit }) {
@@ -1295,19 +1358,19 @@ function AssessmentProfileCard({ card, onSubmit }) {
       <div className="flex items-center gap-3 rounded-xl px-5 py-4"
         style={{ background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.07)' }}>
         <CheckCircle2 size={18} className="text-brand-green flex-shrink-0" />
-        <span className="text-text-secondary text-sm">Details received — your assessment is underway.</span>
+        <span className="text-text-secondary text-sm">Details received, your assessment is underway.</span>
       </div>
     )
   }
-  // No card box — the custom dropdowns need to overflow freely. Left-aligned in chat.
+  // No card box, the custom dropdowns need to overflow freely. Left-aligned in chat.
   return (
     <ProfileForm
       wrapperClass="max-w-2xl"
       showRole={card.kind === 'ai'}
       heading="First, a little context"
       subtext={card.kind === 'ai'
-        ? "Your role tailors the questions you'll see. Everything stays confidential — this is a diagnostic, not a sales pitch."
-        : 'A few details so we can tailor your results. Everything stays confidential — this is a diagnostic, not a sales pitch.'}
+        ? "Your role tailors the questions you'll see. Everything stays confidential, this is a diagnostic, not a sales pitch."
+        : 'A few details so we can tailor your results. Everything stays confidential, this is a diagnostic, not a sales pitch.'}
       onSubmit={(p) => onSubmit(card.kind, p)}
     />
   )
@@ -1391,11 +1454,11 @@ function GridCard({ card, onSubmit, onAssessment }) {
 }
 
 /* ═══════════════════════════════════════════════
-   LIST CARD — Matches Services section with
+   LIST CARD, Matches Services section with
    accent dots, metric badges, hover lift
    ═══════════════════════════════════════════════ */
 /* ═══════════════════════════════════════════════
-   CASE STUDY GRID — Magazine-style vertical cards
+   CASE STUDY GRID, Magazine-style vertical cards
    with thumbnails for AI case studies
    ═══════════════════════════════════════════════ */
 function CaseStudyGridCard({ card, onItemClick }) {
@@ -1526,7 +1589,7 @@ function ListCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   CASE STUDY CARD — Matches CaseStudy.jsx with
+   CASE STUDY CARD, Matches CaseStudy.jsx with
    client badge, editorial metrics, colorful orb
    background, pull quote, rainbow stripe
    ═══════════════════════════════════════════════ */
@@ -1573,7 +1636,7 @@ function CaseStudyCard({ card }) {
         </h3>
         <p className="text-text-secondary text-sm sm:text-base mb-8 sm:mb-10 max-w-2xl leading-relaxed">{card.subtitle}</p>
 
-        {/* Metrics — large editorial tiles like CaseStudy */}
+        {/* Metrics, large editorial tiles like CaseStudy */}
         <div className={`grid gap-3 sm:gap-4 mb-8 sm:mb-10 ${card.metrics.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`}>
           {card.metrics.map((m, i) => {
             const metricColors = ['grad-text', 'text-brand-green', 'grad-text', 'text-brand-orange']
@@ -1596,7 +1659,7 @@ function CaseStudyCard({ card }) {
             <p className="text-white/85 text-base lg:text-lg italic font-light leading-relaxed">
               &ldquo;{card.quote}&rdquo;
             </p>
-            <span className="text-text-muted text-xs mt-3 block">— {card.quoteAuthor || 'Operations Director, Fortune 500 Telecom'}</span>
+            <span className="text-text-muted text-xs mt-3 block">{card.quoteAuthor || 'Operations Director, Fortune 500 Telecom'}</span>
           </div>
         )}
       </div>
@@ -1605,7 +1668,7 @@ function CaseStudyCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   PARTNERS CARD — Matches SocialProof logo style
+   PARTNERS CARD, Matches SocialProof logo style
    with marquee-like grid and trust badges
    ═══════════════════════════════════════════════ */
 function PartnersCard({ card }) {
@@ -1645,11 +1708,11 @@ function PartnersCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   CTA CARD — Matches CTA.jsx with maturity scale
+   CTA CARD, Matches CTA.jsx with maturity scale
    bars, benefits grid, primary action button
    ═══════════════════════════════════════════════ */
 /* ═══════════════════════════════════════════════
-   MAIN MENU CARD — Shows all topic cards inline
+   MAIN MENU CARD, Shows all topic cards inline
    in the chat, matching the welcome screen style
    ═══════════════════════════════════════════════ */
 function MainMenuCard({ card, onSubmit }) {
@@ -1735,7 +1798,7 @@ function ContactDetailsCard({ card }) {
         <p className="text-text-secondary text-sm mb-8 max-w-lg leading-relaxed">{card.body}</p>
 
         <div className="grid md:grid-cols-2 gap-10">
-          {/* Left — Contact details */}
+          {/* Left, Contact details */}
           <div>
             {/* Contact items */}
             <div className="space-y-4 mb-8">
@@ -1795,7 +1858,7 @@ function ContactDetailsCard({ card }) {
             )}
           </div>
 
-          {/* Right — Contact form (shared component) */}
+          {/* Right, Contact form (shared component) */}
           <div>
             <ContactForm subjectPrefix="New inquiry" />
           </div>
@@ -1826,7 +1889,7 @@ function CTACard({ card, onSubmit, onAssessment }) {
             {card.subtitle}
           </p>
         )}
-        {/* Closing actions — the three next steps a user can take. */}
+        {/* Closing actions, the three next steps a user can take. */}
         <div className="grid sm:grid-cols-3 gap-3 max-w-2xl mx-auto">
           <button type="button" onClick={() => onSubmit?.("I'd rather talk to a real person.")}
             className="group rounded-2xl p-5 text-center transition-all duration-300 hover:-translate-y-1"
@@ -1867,7 +1930,7 @@ function CTACard({ card, onSubmit, onAssessment }) {
 }
 
 /* ═══════════════════════════════════════════════
-   SOLUTIONS CARD — Matches Solutions.jsx with
+   SOLUTIONS CARD, Matches Solutions.jsx with
    full-bleed gradient, editorial numbers, screenshots
    ═══════════════════════════════════════════════ */
 function SolutionsCard({ card }) {
@@ -2010,7 +2073,7 @@ function SolutionMockup({ s }) {
 }
 
 /* ═══════════════════════════════════════════════
-   PLATFORMS CARD — Matches Platform.jsx with
+   PLATFORMS CARD, Matches Platform.jsx with
    colorful gradient banners, wave SVGs, hex badges
    ═══════════════════════════════════════════════ */
 function PlatformsCard({ card }) {
@@ -2083,7 +2146,7 @@ function PlatformsCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   INDUSTRIES CARD — Matches MarketCarousel.jsx
+   INDUSTRIES CARD, Matches MarketCarousel.jsx
    flip cards with gradient, icon, cutout image
    ═══════════════════════════════════════════════ */
 function IndustriesCard({ card }) {
@@ -2207,7 +2270,7 @@ function IndustriesCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   SERVICE-GRID CARD — Dynamic grid of service/
+   SERVICE-GRID CARD, Dynamic grid of service/
    solution cards with icon, title, metric, desc.
    Gemma 4 populates this when intent = solutions.
    ═══════════════════════════════════════════════ */
@@ -2278,7 +2341,7 @@ function ServiceGridCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   COMPARISON-TABLE CARD — Side-by-side table for
+   COMPARISON-TABLE CARD, Side-by-side table for
    comparing approaches, services, or options.
    Gemma 4 populates this when intent = comparison.
    ═══════════════════════════════════════════════ */
@@ -2328,7 +2391,7 @@ function ComparisonTableCard({ card }) {
                 {/* Feature label */}
                 <td className="px-6 py-4 text-text-muted font-medium text-xs">{row[0]}</td>
 
-                {/* Radiant column — highlighted */}
+                {/* Radiant column, highlighted */}
                 <td className="px-6 py-4">
                   <span className="text-white font-semibold text-xs flex items-center gap-1.5">
                     <span className="w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: accent }} />
@@ -2336,7 +2399,7 @@ function ComparisonTableCard({ card }) {
                   </span>
                 </td>
 
-                {/* Traditional column — muted */}
+                {/* Traditional column, muted */}
                 <td className="px-6 py-4 text-text-muted text-xs">{row[2]}</td>
               </motion.tr>
             ))}
@@ -2348,7 +2411,7 @@ function ComparisonTableCard({ card }) {
 }
 
 /* ═══════════════════════════════════════════════
-   AMCHART CARD — Data visualization using
+   AMCHART CARD, Data visualization using
    AmCharts 5. Supports bar, line, pie, donut.
    Gemma 4 selects this when data is best shown
    as a chart rather than a metrics or table card.

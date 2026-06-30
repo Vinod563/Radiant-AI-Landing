@@ -19,7 +19,7 @@ export default function ScoreBars({ sectionAverages }) {
               <div className="flex items-center justify-between mb-2">
                 <span className="text-white font-display font-semibold text-sm">{s.label}</span>
                 <span className="text-xs font-semibold" style={{ color }}>
-                  {score ? score.toFixed(1) : '—'} · {label}
+                  {score ? score.toFixed(1) : '-'} · {label}
                 </span>
               </div>
               <div className="h-2.5 rounded-full bg-white/[0.06] overflow-hidden">

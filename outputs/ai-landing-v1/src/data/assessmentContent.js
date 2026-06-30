@@ -8,12 +8,14 @@
 import { Brain, Sparkles, BarChart3, Target, TrendingUp, Shield } from 'lucide-react'
 
 // Five maturity levels (used as the homepage scale + AI stage-meter framing)
+// 6-stage Enterprise AI Autonomy model (matches the AI Adoption Assessment).
 export const readinessLevels = [
-  { label: 'Reactive', desc: 'Manual processes, siloed data', color: '#F05030' },
-  { label: 'Emerging', desc: 'Basic analytics, some automation', color: '#F0974E' },
-  { label: 'Defined', desc: 'Unified data, journey mapping', color: '#596AE0' },
-  { label: 'Optimized', desc: 'AI-driven, proactive CX', color: '#91C46B' },
-  { label: 'Leading', desc: 'Agentic AI, outcome-linked', color: '#00c87d' },
+  { label: 'Zero', desc: 'AI assists, humans act', color: '#F05030' },
+  { label: 'Guided', desc: 'AI recommends, humans approve', color: '#F0974E' },
+  { label: 'Insight', desc: 'AI informs unprompted', color: '#E8B84B' },
+  { label: 'Operational', desc: 'AI acts, humans supervise', color: '#A9C24E' },
+  { label: 'Proactive', desc: 'AI predicts, humans steer', color: '#6FB46A' },
+  { label: 'Full', desc: 'AI self-governs', color: '#00c87d' },
 ]
 
 export const readinessBenefits = [
@@ -23,7 +25,7 @@ export const readinessBenefits = [
   { icon: Shield, text: 'Receive your score in minutes' },
 ]
 
-// The two assessments — single source for hub cards, homepage buttons, chat options.
+// The two assessments: single source for hub cards, homepage buttons, chat options.
 export const assessments = [
   {
     key: 'ai',
@@ -54,6 +56,6 @@ export const assessments = [
 export const entryContent = {
   eyebrow: 'Free Assessment',
   headline: 'Where does your enterprise stand?',
-  subtext: 'Two short diagnostics — AI adoption and CX maturity. No signup. A prioritized read on where you are, where the gaps are, and which moves produce the fastest results.',
+  subtext: 'Two short diagnostics: AI adoption and CX maturity. No signup. A prioritized read on where you are, where the gaps are, and which moves produce the fastest results.',
   note: 'Free · No signup required · Results in minutes',
 }

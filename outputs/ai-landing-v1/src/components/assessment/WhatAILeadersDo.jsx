@@ -3,19 +3,19 @@ import { ArrowRight, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 /**
- * WhatAILeadersDo — stage-specific guidance showing what organizations
+ * WhatAILeadersDo: stage-specific guidance showing what organizations
  * at the next autonomy stage do differently.
  *
  * Props:
  *   currentIndex  number 1..6
  *   accent        string hex
- *   chatQuery     string — pre-filled chat query for the CTA
+ *   chatQuery     string: pre-filled chat query for the CTA
  */
 
 const LEADER_CONTENT = {
   1: {
     heading: 'What Guided Autonomy organizations did to move forward',
-    context: 'Organizations that climbed out of Zero Autonomy did one thing consistently: once their data and processes were clean, they let AI start recommending in real time — with a human approving every action — instead of leaving it stuck at data capture.',
+    context: 'Organizations that climbed out of Zero Autonomy did one thing consistently: once their data and processes were clean, they let AI start recommending in real time, with a human approving every action, instead of leaving it stuck at data capture.',
     actions: [
       {
         title: 'Deployed real-time assist where decisions actually happen',
@@ -23,7 +23,7 @@ const LEADER_CONTENT = {
       },
       {
         title: 'Standardized data capture so recommendations could be trusted',
-        body: 'Auto-transcription, structured data capture, and consistent tagging across every interaction. Recommendations are only as good as the inputs — they locked the inputs down first.',
+        body: 'Auto-transcription, structured data capture, and consistent tagging across every interaction. Recommendations are only as good as the inputs, so they locked the inputs down first.',
       },
       {
         title: 'Defined explicit approval gates for AI suggestions',
@@ -31,15 +31,15 @@ const LEADER_CONTENT = {
       },
       {
         title: 'Trained frontline teams to work alongside an AI co-pilot',
-        body: 'Not a vendor demo — a working session on when to trust the prompt, when to override it, and how to give feedback that makes the next suggestion better.',
+        body: 'Not a vendor demo, but a working session on when to trust the prompt, when to override it, and how to give feedback that makes the next suggestion better.',
       },
     ],
-    chatQuery: 'Help us move from Zero to Guided Autonomy — real-time AI assist with human approval',
+    chatQuery: 'Help us move from Zero to Guided Autonomy: real-time AI assist with human approval',
     statBadge: { value: '67%', label: 'of organizations that standardize data capture reach Guided Autonomy within 12 months' },
   },
   2: {
     heading: 'What Insight Autonomy organizations did to break through',
-    context: 'The Guided Autonomy ceiling is trust: AI recommends, but a human approves everything. Organizations broke through by letting AI generate intelligence on its own — surfacing insight without being asked — and teaching people to consume it.',
+    context: 'The Guided Autonomy ceiling is trust: AI recommends, but a human approves everything. Organizations broke through by letting AI generate intelligence on its own, surfacing insight without being asked, and teaching people to consume it.',
     actions: [
       {
         title: 'Automated reporting so no one runs reports by hand',
@@ -51,23 +51,23 @@ const LEADER_CONTENT = {
       },
       {
         title: 'Built trust in machine-generated insight',
-        body: 'Showed the work behind each insight — the signals, the confidence, the source — so leaders learned to act on AI intelligence instead of re-deriving it themselves.',
+        body: 'Showed the work behind each insight, the signals, the confidence, the source, so leaders learned to act on AI intelligence instead of re-deriving it themselves.',
       },
       {
         title: 'Picked low-risk decisions to let AI act end to end',
         body: 'A handful of high-volume, low-risk calls where AI executes and humans audit after the fact. The measured results became the business case for delegating more.',
       },
     ],
-    chatQuery: 'Help us reach Insight Autonomy — AI that surfaces intelligence without being prompted',
+    chatQuery: 'Help us reach Insight Autonomy: AI that surfaces intelligence without being prompted',
     statBadge: { value: '3×', label: 'faster issue detection when AI surfaces insight proactively instead of on request' },
   },
   3: {
     heading: 'What Operational Autonomy organizations did to connect insight to action',
-    context: 'At Insight Autonomy AI generates intelligence, but humans still carry it across the organization by hand. The breakthrough is wiring insight directly into cross-functional workflows — with humans supervising the exceptions, not the routine.',
+    context: 'At Insight Autonomy AI generates intelligence, but humans still carry it across the organization by hand. The breakthrough is wiring insight directly into cross-functional workflows, with humans supervising the exceptions, not the routine.',
     actions: [
       {
         title: 'Auto-synced AI insight into CRM, product, and finance',
-        body: 'Contact-centre and operational intelligence flowed straight into the systems where work happens — CRM records, product roadmaps, revenue models — without a human re-keying it.',
+        body: 'Contact-centre and operational intelligence flowed straight into the systems where work happens, CRM records, product roadmaps, revenue models, without a human re-keying it.',
       },
       {
         title: 'Designed human checkpoints for exceptions only',
@@ -75,27 +75,27 @@ const LEADER_CONTENT = {
       },
       {
         title: 'Stood up cross-team KPI dashboards driven by AI',
-        body: 'Shared, real-time scorecards fed by AI so sales, service, product, and finance argued from the same numbers — and acted on them automatically.',
+        body: 'Shared, real-time scorecards fed by AI so sales, service, product, and finance argued from the same numbers, and acted on them automatically.',
       },
       {
         title: 'Built a governance layer to keep speed and oversight in balance',
-        body: 'Clear standards for what triggers a human override, who owns each automated workflow, and how exceptions get reviewed — so automation never outran accountability.',
+        body: 'Clear standards for what triggers a human override, who owns each automated workflow, and how exceptions get reviewed, so automation never outran accountability.',
       },
     ],
-    chatQuery: 'Help us reach Operational Autonomy — AI insight driving cross-functional workflows',
+    chatQuery: 'Help us reach Operational Autonomy: AI insight driving cross-functional workflows',
     statBadge: { value: '40%', label: 'reduction in decision-to-action time when insight feeds workflows automatically' },
   },
   4: {
     heading: 'What Proactive Autonomy organizations do to get ahead of the need',
-    context: 'Operational Autonomy reacts well. Proactive Autonomy anticipates — AI predicts outcomes and prescribes action before humans identify the need, while people move up to strategy and governance.',
+    context: 'Operational Autonomy reacts well. Proactive Autonomy anticipates: AI predicts outcomes and prescribes action before humans identify the need, while people move up to strategy and governance.',
     actions: [
       {
         title: 'Let predictions trigger action automatically',
-        body: 'Predicted churn launches proactive outreach; a forecasted volume spike adjusts staffing; a detected upsell moment surfaces the offer — all before a human flags it. AI manages the execution triggers.',
+        body: 'Predicted churn launches proactive outreach; a forecasted volume spike adjusts staffing; a detected upsell moment surfaces the offer, all before a human flags it. AI manages the execution triggers.',
       },
       {
         title: 'Shifted people from execution to strategy and governance',
-        body: 'With AI handling prediction and triggering, leaders spend their time on guardrails, priorities, and the calls that genuinely need judgment — not running the machine.',
+        body: 'With AI handling prediction and triggering, leaders spend their time on guardrails, priorities, and the calls that genuinely need judgment, not running the machine.',
       },
       {
         title: 'Built the governance to trust prediction with action',
@@ -106,16 +106,16 @@ const LEADER_CONTENT = {
         body: 'Every predicted-vs-actual outcome fed back into the models, so accuracy improved with each cycle and the organization\'s lead widened.',
       },
     ],
-    chatQuery: 'Help us reach Proactive Autonomy — AI that anticipates and prescribes before we ask',
+    chatQuery: 'Help us reach Proactive Autonomy: AI that anticipates and prescribes before we ask',
     statBadge: { value: '2.4×', label: 'higher returns for organizations acting on prediction vs. reacting to events' },
   },
   5: {
     heading: 'What Full Autonomy organizations do to self-govern at scale',
-    context: 'The last step is from prediction to self-governance: AI executes end to end, learns from outcomes, and improves without manual retraining — while humans define guardrails and approve only high-risk exceptions.',
+    context: 'The last step is from prediction to self-governance: AI executes end to end, learns from outcomes, and improves without manual retraining, while humans define guardrails and approve only high-risk exceptions.',
     actions: [
       {
         title: 'Let AI resolve issues end to end across systems',
-        body: 'Autonomous workflows that span CRM, billing, and ticketing — resolving the whole issue, not a step of it — with humans involved only when risk crosses a defined threshold.',
+        body: 'Autonomous workflows that span CRM, billing, and ticketing, resolving the whole issue, not a step of it, with humans involved only when risk crosses a defined threshold.',
       },
       {
         title: 'Deployed self-improving models that adapt on their own',
@@ -130,11 +130,11 @@ const LEADER_CONTENT = {
         body: 'Autonomous scheduling, real-time workforce rebalancing, and self-running operations mean leadership\'s highest-leverage work becomes setting strategy and keeping an autonomous system accountable.',
       },
     ],
-    chatQuery: 'Help us reach Full Autonomy — self-governing AI with humans on guardrails',
+    chatQuery: 'Help us reach Full Autonomy: self-governing AI with humans on guardrails',
     statBadge: { value: 'Top 8%', label: 'of organizations operate AI as a self-governing system at Full Autonomy' },
   },
   6: {
-    heading: 'You\'re at Full Autonomy — the self-governing tier',
+    heading: 'You\'re at Full Autonomy: the self-governing tier',
     context: 'At Full Autonomy the playbook shifts from building capability to governing it. The organizations that sustain the lead treat AI as a self-improving operating system and put their human effort into guardrails, trust, and strategy.',
     actions: [
       {
@@ -143,7 +143,7 @@ const LEADER_CONTENT = {
       },
       {
         title: 'Make governance a visible competitive differentiator',
-        body: 'External audits, transparent guardrails, and clear accountability for autonomous decisions. In trust-driven markets — healthcare, financial services, government — that governance is itself a reason to buy.',
+        body: 'External audits, transparent guardrails, and clear accountability for autonomous decisions. In trust-driven markets, healthcare, financial services, government, that governance is itself a reason to buy.',
       },
       {
         title: 'Orchestrate agents across the whole enterprise',
@@ -215,6 +215,7 @@ export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B' }
       <div className="mt-8 pt-6 border-t border-white/[0.06]">
         <Link
           to={`/chat?q=${encodeURIComponent(content.chatQuery)}`}
+          target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 font-display font-bold text-sm no-underline transition-all duration-200 hover:-translate-y-0.5 px-5 py-3 rounded-xl"
           style={{ background: `${accent}15`, border: `1px solid ${accent}35`, color: accent }}
         >

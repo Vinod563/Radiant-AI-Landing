@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion'
 
 /**
- * MaturityStaircase — ascending 6-step staircase visualization.
+ * MaturityStaircase: ascending 6-step staircase visualization.
  * Shows all 6 Enterprise AI Autonomy stages. The respondent's current stage
  * is highlighted in brand-green. Previous stages are faint green.
  * Future stages are muted/dark.
  *
  * Props:
- *   currentIndex  number 1..6 — the respondent's stage
- *   accent        string — accent color (default brand-green)
+ *   currentIndex  number 1..6: the respondent's stage
+ *   accent        string: accent color (default brand-green)
  */
 
 export const STAGES = [
@@ -40,7 +40,7 @@ export default function MaturityStaircase({ currentIndex = 1, accent = '#91C46B'
             const isPast = s.index < currentIndex
             const isCurrent = s.index === currentIndex
             const isFuture = s.index > currentIndex
-            // Height: each step is taller — scaled so 6 steps fit 0–100%
+            // Height: each step is taller, scaled so 6 steps fit 0–100%
             const heightPct = 24 + s.index * 12
 
             return (
@@ -156,7 +156,7 @@ export default function MaturityStaircase({ currentIndex = 1, accent = '#91C46B'
           })}
         </div>
 
-        {/* Stage counter dots — decorative */}
+        {/* Stage counter dots: decorative */}
         <div className="flex justify-center gap-1.5 mt-5">
           {STAGES.map(s => (
             <div key={s.key} className="rounded-full transition-all duration-300"
@@ -173,7 +173,7 @@ export default function MaturityStaircase({ currentIndex = 1, accent = '#91C46B'
       <p className="text-text-muted text-xs text-center mt-4 leading-relaxed">
         {currentIndex < 6
           ? `Most organizations take 12–18 months to move from Stage ${currentIndex} to Stage ${currentIndex + 1}.`
-          : 'You\'re at the top of the autonomy curve — a self-governing system. The focus now is governance and compounding the advantage.'}
+          : 'You\'re at the top of the autonomy curve: a self-governing system. The focus now is governance and compounding the advantage.'}
       </p>
     </div>
   )

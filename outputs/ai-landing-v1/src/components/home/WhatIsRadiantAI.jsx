@@ -63,7 +63,7 @@ export default function WhatIsRadiantAI() {
             className="relative rounded-2xl p-6 lg:p-8 pt-10 lg:pt-12"
             style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(145,196,107,0.15)' }}
           >
-            {/* Section label — centered on top border */}
+            {/* Section label, centered on top border */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
               <span className="px-4 sm:px-6 py-2 text-[9px] sm:text-[11px] font-bold tracking-[0.12em] sm:tracking-[0.2em] uppercase rounded-full whitespace-nowrap"
                 style={{
@@ -132,7 +132,7 @@ export default function WhatIsRadiantAI() {
             </div>
           </div>
 
-          {/* SECTION 2: Forward Deployment — FULL WIDTH */}
+          {/* SECTION 2: Forward Deployment, FULL WIDTH */}
           </div>{/* close max-w-5xl temporarily */}
           </div>{/* close max-w-7xl temporarily */}
 
@@ -150,7 +150,7 @@ export default function WhatIsRadiantAI() {
             <div className="absolute bottom-0 left-0 right-0 h-px"
               style={{ background: 'linear-gradient(90deg, transparent 5%, rgba(145,196,107,0.15) 30%, rgba(145,196,107,0.25) 50%, rgba(145,196,107,0.15) 70%, transparent 95%)' }} />
 
-            {/* Section label — centered on the top border */}
+            {/* Section label, centered on the top border */}
             <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20">
               <span className="px-4 sm:px-6 py-2 text-[9px] sm:text-[11px] font-bold tracking-[0.12em] sm:tracking-[0.2em] uppercase rounded-full whitespace-nowrap"
                 style={{
@@ -166,7 +166,7 @@ export default function WhatIsRadiantAI() {
 
             <div className="max-w-7xl mx-auto px-6 lg:px-8 pt-10 pb-16 lg:pt-12 lg:pb-20">
 
-              {/* Two cards side by side — illustration + title + bullets combined */}
+              {/* Two cards side by side: illustration + title + bullets combined */}
               <div className="grid md:grid-cols-2 gap-6 lg:gap-8 max-w-5xl mx-auto">
 
                 {/* ── Card 1: Delivery Team ── */}

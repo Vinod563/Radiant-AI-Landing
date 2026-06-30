@@ -7,7 +7,7 @@ import { aiRadiantRead, aiCta, cxWhyThisMatters, cxCta } from '../data/reportEdi
 
 const ROLE_LABEL = { exec: 'Executive', tech: 'Technical Lead', biz: 'Business Lead', consultant: 'Consultant' }
 
-// jsPDF's built-in Helvetica only covers WinAnsi — swap glyphs it can't render.
+// jsPDF's built-in Helvetica only covers WinAnsi, swap glyphs it can't render.
 const clean = (s = '') => String(s)
   .replace(/→/g, '->')          // →
   .replace(/←/g, '<-')          // ←
@@ -128,14 +128,14 @@ export function buildReportDoc({ kind, profile, answers }) {
       if (findings.strengths.length) {
         para('STRENGTHS', { size: 9, color: GREEN, bold: true, lead: 3 }); gap(2)
         findings.strengths.forEach(f => {
-          subhead(`${f.section} — ${f.title}`)
+          subhead(`${f.section}: ${f.title}`)
           para(f.body, { indent: 2 }); gap(2)
         })
       }
       if (findings.gaps.length) {
         gap(6); para('GAPS TO CLOSE', { size: 9, color: AMBER, bold: true, lead: 3 }); gap(2)
         findings.gaps.forEach(f => {
-          subhead(`${f.section} — ${f.title}`)
+          subhead(`${f.section}: ${f.title}`)
           para(f.body, { indent: 2 }); gap(2)
         })
       }
@@ -170,7 +170,7 @@ export function buildReportDoc({ kind, profile, answers }) {
 
     kicker('Dimension Scores')
     scored.dimensions.forEach(d => {
-      subhead(`${d.label} — ${d.level}`)
+      subhead(`${d.label}: ${d.level}`)
       para(d.blurb, { indent: 2 }); gap(4)
     })
     rule()
