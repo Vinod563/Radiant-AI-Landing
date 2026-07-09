@@ -1,11 +1,12 @@
 import { jsPDF } from 'jspdf'
 import {
-  getAQ, scoreAssessment, buildFindings, recommendNextStep, sections, scoreBarStyle,
+  getAQ, scoreAssessment, buildFindings, sections, scoreBarStyle,
 } from '../data/aiAssessment.js'
 import { scoreCx, cxLevels, recommendedSolution } from '../data/cxAssessment.js'
-import { aiRadiantRead, aiCta, cxWhyThisMatters, cxCta } from '../data/reportEditorial.js'
+import { aiRadiantRead, suggestedNextSteps, cxWhyThisMatters, cxCta, positioningRead } from '../data/reportEditorial.js'
+import { LEADER_CONTENT } from '../components/assessment/WhatAILeadersDo.jsx'
 
-const ROLE_LABEL = { exec: 'Executive', tech: 'Technical Lead', biz: 'Business Lead', consultant: 'Consultant' }
+const ROLE_LABEL = { exec: 'Executive', tech: 'Technology Leader', biz: 'Business Lead', consultant: 'AI Practitioner' }
 
 // jsPDF's built-in Helvetica only covers WinAnsi, swap glyphs it can't render.
 const clean = (s = '') => String(s)
@@ -13,6 +14,7 @@ const clean = (s = '') => String(s)
   .replace(/←/g, '<-')          // ←
   .replace(/[‘’‛]/g, "'")
   .replace(/[“”]/g, '"')
+  .replace(/[–—]/g, '-')        // en/em dash -> hyphen
   .replace(/…/g, '...')         // …
   .replace(/ /g, ' ')           // nbsp
 
@@ -76,7 +78,7 @@ export function buildReportDoc({ kind, profile, answers }) {
   doc.text('RADIANT', margin, 52)
   doc.setTextColor(...GREEN); doc.text('AI', margin + doc.getTextWidth('RADIANT  '), 52)
   doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5); doc.setTextColor(168, 180, 194)
-  doc.text(isAi ? 'AI Adoption Assessment' : 'CX Maturity Assessment', pageW - margin, 48, { align: 'right' })
+  doc.text(isAi ? 'AI Maturity Assessment' : 'CX Maturity Assessment', pageW - margin, 48, { align: 'right' })
   const reportDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
   doc.setFontSize(8.5); doc.setTextColor(150, 162, 176)
   doc.text(reportDate, pageW - margin, 66, { align: 'right' })
@@ -98,7 +100,11 @@ export function buildReportDoc({ kind, profile, answers }) {
   if (isAi) {
     const scored = scoreAssessment(answers, getAQ(profile.role))
     const findings = buildFindings(scored.sectionAverages)
-    const nextStep = recommendNextStep(scored.sectionAverages)
+    const suggested = suggestedNextSteps({
+      role: profile.role,
+      stageIndex: scored.stage.index,
+      sectionAverages: scored.sectionAverages,
+    })
 
     kicker('Your AI Maturity')
     heading(`Stage ${scored.stage.index}: ${scored.stage.name}`)
@@ -118,6 +124,23 @@ export function buildReportDoc({ kind, profile, answers }) {
       doc.text(`${v ? v.toFixed(1) : '--'} / 5   ·   ${lbl}`, pageW - margin, y, { align: 'right' })
       y += 22
     })
+    rule()
+
+    const pos = positioningRead({ sectionAverages: scored.sectionAverages, stageIndex: scored.stage.index })
+    kicker('Competitive Positioning')
+    para('Where your organization sits relative to AI leaders and the broader market.', { size: 10, color: MUTED, lead: 5 })
+    gap(2)
+    ;[['Execution Readiness', pos.execPct], ['Strategic Maturity', pos.stratPct]].forEach(([label, val]) => {
+      ensure(20)
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10.5); doc.setTextColor(...INK)
+      doc.text(clean(label), margin, y)
+      doc.setFont('helvetica', 'normal'); doc.setTextColor(...MUTED)
+      doc.text(`${val} / 100`, pageW - margin, y, { align: 'right' })
+      y += 20
+    })
+    gap(4)
+    subhead(`${pos.groupLabel}  ·  ${pos.stageRange}`, ACCENT)
+    para(pos.meansText, { lead: 7 })
     rule()
 
     kicker('What We See')
@@ -142,9 +165,20 @@ export function buildReportDoc({ kind, profile, answers }) {
     }
     rule()
 
-    kicker('Your Recommended Next Step')
-    subhead(`Priority: ${nextStep.section}`, ACCENT)
-    para(nextStep.text, { lead: 7 })
+    kicker('Suggested Next Steps')
+    subhead('Your path: Assess -> Train -> Adopt -> Scale -> Sustain', ACCENT)
+    para(suggested.intro, { lead: 7 }); gap(2)
+    suggested.steps.forEach((s, i) => {
+      subhead(`${i + 1}. ${s.title}`)
+      para(`${s.priority}  ·  Phase: ${s.phase}`, { size: 9, color: ACCENT, bold: true, lead: 3 })
+      para(s.detail, { indent: 2, lead: 6 })
+      para(`Radiant service: ${s.service}`, { size: 9.5, color: MUTED, lead: 4 }); gap(3)
+    })
+    rule()
+
+    kicker('Recommended Services')
+    para('Matched to your current maturity band:', { size: 10, color: MUTED, lead: 4 }); gap(1)
+    suggested.services.forEach(sv => para(`•  ${sv}`, { color: INK, indent: 8, lead: 5 }))
     rule()
 
     kicker("Radiant's Read")
@@ -152,11 +186,24 @@ export function buildReportDoc({ kind, profile, answers }) {
     para(aiRadiantRead[scored.stage.index] || aiRadiantRead[6], { lead: 7 })
     rule()
 
-    const cta = aiCta(scored.stage.index)
+    const leaders = LEADER_CONTENT[scored.stage.index] || LEADER_CONTENT[6]
+    kicker('What AI Leaders Do')
+    subhead(leaders.heading, ACCENT)
+    para(leaders.context, { lead: 7 })
+    if (leaders.statBadge) {
+      para(`${leaders.statBadge.value}   ${leaders.statBadge.label}`, { size: 10, color: GREEN, bold: true, lead: 5 })
+      gap(2)
+    }
+    leaders.actions.forEach((a, i) => {
+      subhead(`${i + 1}. ${a.title}`)
+      para(a.body, { indent: 2 }); gap(2)
+    })
+    rule()
+
     kicker('Your Next Move')
-    subhead(cta.title)
-    para(cta.body, { lead: 7 })
-    para(`${cta.action}  ·  ${cta.email}`, { size: 10, color: ACCENT, bold: true, lead: 4 })
+    subhead(`Ready to move from ${suggested.currentPhase} to your next stage?`)
+    para('Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.', { lead: 7 })
+    para(`Schedule with Radiant  ·  ${suggested.email}`, { size: 10, color: ACCENT, bold: true, lead: 4 })
   } else {
     const scored = scoreCx(answers)
     const lvl = cxLevels[scored.overallKey]

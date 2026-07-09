@@ -309,7 +309,7 @@ export default function Chat() {
   const startAssessment = (kind) => {
     assessRef.current = { kind, profile: null, questions: [], answers: {}, active: null }
     setMessages((prev) => [...prev,
-      { role: 'user', content: kind === 'cx' ? 'Take the CX Maturity Assessment' : 'Take the AI Adoption Assessment' },
+      { role: 'user', content: kind === 'cx' ? 'Take the CX Maturity Assessment' : 'Take the AI Maturity Assessment' },
       {
         role: 'assistant', id: `assess-profile-${kind}`, followUp: [],
         message: kind === 'cx'

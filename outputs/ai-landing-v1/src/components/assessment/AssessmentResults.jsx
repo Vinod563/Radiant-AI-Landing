@@ -11,6 +11,7 @@ import AssessmentLeadForm from './AssessmentLeadForm'
 import LockedReport from './LockedReport'
 import { buildEmailSafeReportHtml } from '../../utils/emailSafeReport.js'
 import { getAQ, scoreAssessment, buildFindings, recommendNextStep } from '../../data/aiAssessment.js'
+import { suggestedNextSteps } from '../../data/reportEditorial.js'
 import { scoreCx, cxLevels } from '../../data/cxAssessment.js'
 
 // CX maturity levels as a staircase (same visual as the AI stage staircase)
@@ -19,7 +20,7 @@ const CX_STAGES = Object.values(cxLevels)
   .sort((a, b) => a.index - b.index)
 
 /**
- * AssessmentResults: shared results component for both AI Adoption and CX Maturity.
+ * AssessmentResults: shared results component for both AI Maturity and CX Maturity.
  *
  * FREE preview (visible to all):
  *   AI:  StageReveal (with inline stage staircase) → ScoreBars → GartnerPositioningView → WhatAILeadersDo → teaser → gate
@@ -56,6 +57,11 @@ export default function AssessmentResults({ kind, profile, answers }) {
         ...scored,
         findings: buildFindings(scored.sectionAverages),
         nextStep: recommendNextStep(scored.sectionAverages),
+        suggested: suggestedNextSteps({
+          role: profile.role,
+          stageIndex: scored.stage.index,
+          sectionAverages: scored.sectionAverages,
+        }),
       }
     }
     const scored = scoreCx(answers)
@@ -66,7 +72,7 @@ export default function AssessmentResults({ kind, profile, answers }) {
     }
   }, [isAi, profile, answers])
 
-  const assessment = isAi ? 'AI Adoption' : 'CX Maturity'
+  const assessment = isAi ? 'AI Maturity' : 'CX Maturity'
   const headline = isAi
     ? `Your result: Stage ${result.stage.index}, ${result.stage.name}.`
     : `Your result: ${result.overallLevel}.`
@@ -125,7 +131,7 @@ export default function AssessmentResults({ kind, profile, answers }) {
         {/* Header */}
         <div className="flex items-center justify-between no-print">
           <span className="text-text-muted text-xs font-display font-semibold uppercase tracking-widest">
-            {isAi ? 'AI Adoption Report' : 'CX Maturity Report'}
+            {isAi ? 'AI Maturity Assessment' : 'CX Maturity Report'}
           </span>
           {!submitted && (
             <button

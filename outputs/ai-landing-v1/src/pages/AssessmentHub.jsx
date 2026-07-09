@@ -14,7 +14,7 @@ const ASSESSMENTS = [
     accent: '#91C46B',
     secondaryAccent: '#C7DD75',
     icon: Brain,
-    eyebrow: 'AI Adoption Assessment',
+    eyebrow: 'AI Maturity Assessment',
     title: 'How AI-ready is your organization?',
     subtitle: 'For executives, technical leaders, and business leads navigating enterprise AI transformation.',
     desc: 'A role-adaptive diagnostic across the four dimensions that determine whether AI delivers value or stays in pilot mode.',
@@ -33,7 +33,7 @@ const ASSESSMENTS = [
       'Stage-specific guidance on what leaders do differently',
       "A gated full report with findings, recommended next steps, and Radiant's read",
     ],
-    forWho: ['C-Suite / VP / Director', 'CTO / Data / Engineering leads', 'Ops / Finance / HR / Sales leads', 'External Advisors & Consultants'],
+    forWho: ['C-Suite / VP / Director', 'CTO / Data / Engineering leads', 'Ops / Finance / HR / Sales leads', 'AI Practitioners & External Advisors'],
     sampleStage: { index: 3, name: 'Insight Autonomy', color: '#91C46B' },
   },
   {
@@ -112,7 +112,7 @@ export default function AssessmentHub() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="mt-6 inline-flex items-center gap-3 px-4 py-2.5 rounded-full text-xs text-text-muted"
               style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <span style={{ color: '#91C46B' }}>● AI Adoption</span>
+              <span style={{ color: '#91C46B' }}>● AI Maturity</span>
               <span className="text-white/20">|</span>
               <span style={{ color: '#596AE0' }}>● CX Maturity</span>
               <span className="text-white/20">|</span>
@@ -133,7 +133,7 @@ export default function AssessmentHub() {
             className="mt-12 text-center">
             <p className="text-text-muted text-sm">
               Not sure which to take?{' '}
-              <Link to="/chat?q=Which assessment should I take - AI Adoption or CX Maturity?"
+              <Link to="/chat?q=Which assessment should I take - AI Maturity or CX Maturity?"
                 className="text-brand-green hover:underline font-medium no-underline">
                 Ask us →
               </Link>
@@ -260,7 +260,7 @@ function AssessmentCard({ assessment: a, delay }) {
         <Link to={`${a.route}?start=1`}
           className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-display font-bold text-sm transition-all duration-200 no-underline hover:-translate-y-0.5 active:translate-y-0"
           style={{ background: `${a.accent}18`, border: `1px solid ${a.accent}40`, color: a.accent }}>
-          Start the {a.key === 'ai' ? 'AI Adoption' : 'CX Maturity'} Assessment
+          Start the {a.key === 'ai' ? 'AI Maturity' : 'CX Maturity'} Assessment
           <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
         </Link>
       </div>

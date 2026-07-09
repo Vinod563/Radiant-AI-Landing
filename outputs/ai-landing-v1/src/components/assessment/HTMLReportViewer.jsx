@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { X, Download, FileText } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { generateReportPdfFromHtml } from '../../utils/htmlReportToPdf.js'
-import { aiRadiantRead, cxWhyThisMatters } from '../../data/reportEditorial.js'
+import { aiRadiantRead, cxWhyThisMatters, suggestedNextSteps } from '../../data/reportEditorial.js'
 
 /**
  * HTMLReportViewer: renders the full branded HTML report in a full-screen modal.
@@ -85,7 +85,7 @@ export default function HTMLReportViewer({ open, onClose, kind, profile, result,
               style={{ background: '#010F1E', borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
               <div className="flex items-center gap-3">
                 <span className="font-display font-bold text-white text-sm">
-                  {kind === 'ai' ? 'AI Adoption Report' : 'CX Maturity Report'}
+                  {kind === 'ai' ? 'AI Maturity Assessment' : 'CX Maturity Report'}
                 </span>
                 {sentTo && (
                   <span className="text-[10px] font-medium px-2 py-0.5 rounded-full"
@@ -213,7 +213,10 @@ function radiantBranding() {
 export function buildAiReportHtml(profile, result) {
   if (!result?.stage) return '<html><body>Report data unavailable.</body></html>'
 
-  const { stage, sectionAverages = {}, findings = {}, nextStep } = result
+  const { stage, sectionAverages = {}, findings = {} } = result
+  const suggested = result.suggested || suggestedNextSteps({
+    role: profile?.role, stageIndex: stage.index, sectionAverages,
+  })
   const now = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
 
   const scoreBarColor = (score) => {
@@ -242,7 +245,7 @@ export function buildAiReportHtml(profile, result) {
 
   // Header meta pills, built from whatever profile data exists, empties dropped
   // so we never render blank chips. Always carries at least role track + stage.
-  const roleLabel = { exec: 'Executive', tech: 'Technical Lead', biz: 'Business Lead', consultant: 'Consultant' }[profile?.role]
+  const roleLabel = { exec: 'Executive', tech: 'Technology Leader', biz: 'Business Lead', consultant: 'AI Practitioner' }[profile?.role]
   const metaChips = [
     profile?.fullName,
     profile?.companyName,
@@ -292,11 +295,16 @@ export function buildAiReportHtml(profile, result) {
       </div>`
   }).join('')
 
-  const nextStepHtml = nextStep ? `
-    <div class="next-step-block">
-      <div class="next-step-section">Priority action: ${nextStep.section}</div>
-      <div class="next-step-text">${nextStep.text}</div>
-    </div>` : ''
+  const stepsHtml = suggested.steps.map((s, i) => `
+    <div class="next-step-block" style="margin-top:14px;">
+      <div class="next-step-section">${s.priority} · Phase: ${s.phase}</div>
+      <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;color:#fff;margin-bottom:6px;">${i + 1}. ${s.title}</div>
+      <div class="next-step-text">${s.detail}</div>
+      <div style="font-size:12px;font-weight:700;color:#91C46B;margin-top:10px;">Radiant service: ${s.service}</div>
+    </div>`).join('')
+
+  const servicesHtml = suggested.services.map(sv =>
+    `<span style="display:inline-block;font-size:12px;color:#33422a;background:#f0f7ea;border:1px solid #cfe6b8;border-radius:100px;padding:5px 13px;margin:0 8px 8px 0;">${sv}</span>`).join('')
 
   const findingsSection = (strengthsHtml || gapsHtml) ? `
     <div class="section">
@@ -316,7 +324,7 @@ export function buildAiReportHtml(profile, result) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AI Adoption Report, ${profile?.fullName || 'Assessment'}</title>
+  <title>AI Maturity Assessment, ${profile?.fullName || 'Assessment'}</title>
   ${radiantBranding()}
 </head>
 <body>
@@ -328,7 +336,7 @@ export function buildAiReportHtml(profile, result) {
       <div class="report-date">${now}</div>
     </div>
     <div class="header-headline">
-      AI Adoption Report<br/>
+      AI Maturity Assessment<br/>
       <span class="accent">Stage ${stage.index}: ${stage.name}</span>
     </div>
     <div class="header-meta">
@@ -358,14 +366,15 @@ export function buildAiReportHtml(profile, result) {
   <!-- Findings -->
   ${findingsSection}
 
-  <!-- Next Step -->
-  ${nextStep ? `
+  <!-- Suggested Next Steps -->
   <div class="section">
-    <span class="kicker">Recommended Next Step</span>
-    <div class="section-title">Where to Focus First</div>
-    <div class="section-body" style="margin-top:8px">The lowest-scoring dimension points to the highest-leverage action. Fixing this first removes the constraint that's limiting everything else.</div>
-    ${nextStepHtml}
-  </div>` : ''}
+    <span class="kicker">Suggested Next Steps</span>
+    <div class="section-title">Your Path: Assess &rarr; Train &rarr; Adopt &rarr; Scale &rarr; Sustain</div>
+    <div class="section-body" style="margin-top:8px">${suggested.intro}</div>
+    ${stepsHtml}
+    <div class="section-body" style="margin-top:24px;font-weight:700;color:#0f172a;">Recommended services for your maturity band</div>
+    <div style="margin-top:12px;">${servicesHtml}</div>
+  </div>
 
   <!-- Radiant's Read -->
   <div class="section section-alt">
@@ -379,7 +388,7 @@ export function buildAiReportHtml(profile, result) {
 
   <!-- CTA -->
   <div class="cta-block">
-    <div class="cta-title">Ready to move to Stage ${Math.min(stage.index + 1, 6)}?</div>
+    <div class="cta-title">Ready to move from ${suggested.currentPhase} to your next stage?</div>
     <div class="cta-body">Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.</div>
     <a href="https://radiant.digital/contact" target="_blank" rel="noopener noreferrer" class="cta-btn">Schedule 30 Minutes with Radiant</a>
     <div class="cta-email">Or email us at hello@radiant.digital</div>

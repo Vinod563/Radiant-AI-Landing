@@ -8,7 +8,7 @@
 import { Brain, Sparkles, BarChart3, Target, TrendingUp, Shield } from 'lucide-react'
 
 // Five maturity levels (used as the homepage scale + AI stage-meter framing)
-// 6-stage Enterprise AI Autonomy model (matches the AI Adoption Assessment).
+// 6-stage Enterprise AI Autonomy model (matches the AI Maturity Assessment).
 export const readinessLevels = [
   { label: 'Zero', desc: 'AI assists, humans act', color: '#F05030' },
   { label: 'Guided', desc: 'AI recommends, humans approve', color: '#F0974E' },
@@ -32,7 +32,7 @@ export const assessments = [
     icon: Brain,
     accent: '#91C46B',
     route: '/assessment/ai',
-    eyebrow: 'AI Adoption Assessment',
+    eyebrow: 'AI Maturity Assessment',
     title: 'How AI-ready is your organization?',
     desc: 'A role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage, per-dimension scores, specific findings, and a recommended next step.',
     duration: '10–15 min',

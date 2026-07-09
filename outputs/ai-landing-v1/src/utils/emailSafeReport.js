@@ -24,6 +24,9 @@
  *   buildEmailSafeReportHtml({ kind, profile, result }) -> string
  */
 
+import { positioningRead, suggestedNextSteps } from '../data/reportEditorial.js'
+import { LEADER_CONTENT } from '../components/assessment/WhatAILeadersDo.jsx'
+
 const FONT = "Arial, Helvetica, sans-serif"
 const INK = '#0f172a'
 const BODY = '#475569'
@@ -132,9 +135,12 @@ function footerRow() {
 // ── AI report ────────────────────────────────────────────────────────────────
 
 function buildAiEmailHtml(profile, result) {
-  if (!result?.stage) return wrapDocument({ title: 'AI Adoption Report', bodyHtml: '<tr><td style="padding:32px;">Report data unavailable.</td></tr>' })
+  if (!result?.stage) return wrapDocument({ title: 'AI Maturity Assessment', bodyHtml: '<tr><td style="padding:32px;">Report data unavailable.</td></tr>' })
 
-  const { stage, sectionAverages = {}, findings = {}, nextStep } = result
+  const { stage, sectionAverages = {}, findings = {} } = result
+  const suggested = result.suggested || suggestedNextSteps({
+    role: profile?.role, stageIndex: stage.index, sectionAverages,
+  })
   const sections = [
     { key: 'Strategy', label: 'Strategy & Leadership' },
     { key: 'Data', label: 'Data & Technology' },
@@ -180,7 +186,7 @@ function buildAiEmailHtml(profile, result) {
 
   const body = [
     headerRow({
-      eyebrow: 'AI Adoption Report, Full Version',
+      eyebrow: 'AI Maturity Assessment, Full Version',
       headline: `Stage ${stage.index} &mdash; ${stage.name}`,
       metaLine: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     }),
@@ -190,25 +196,70 @@ function buildAiEmailHtml(profile, result) {
       innerHtml: `${pipStrip(stage.index, 5, '#91C46B')}<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;">${stage.description || ''}</div>`,
     }),
     sectionRow({ kicker: 'Scores by Dimension', title: 'How You Scored', innerHtml: scoreRows, alt: true }),
+    (() => {
+      const pos = positioningRead({ sectionAverages, stageIndex: stage.index })
+      return sectionRow({
+        kicker: 'Competitive Positioning', title: 'Where You Stand vs. the Market',
+        innerHtml: `
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-bottom:12px;">
+            <tr>
+              <td style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};padding:6px 0;">Execution Readiness</td>
+              <td align="right" style="font-family:${FONT};font-size:13px;font-weight:bold;color:#5a8a32;padding:6px 0;">${pos.execPct} / 100</td>
+            </tr>
+            <tr>
+              <td style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};padding:6px 0;border-top:1px solid ${HAIR};">Strategic Maturity</td>
+              <td align="right" style="font-family:${FONT};font-size:13px;font-weight:bold;color:#5a8a32;padding:6px 0;border-top:1px solid ${HAIR};">${pos.stratPct} / 100</td>
+            </tr>
+          </table>
+          <div style="font-family:${FONT};font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:0.5px;color:#5a8a32;margin-bottom:6px;">${pos.groupLabel} &middot; ${pos.stageRange}</div>
+          <div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;">${pos.meansText}</div>`,
+      })
+    })(),
     (strengths || gaps) ? sectionRow({
       kicker: 'What We See', title: 'Your Strengths &amp; Gaps',
       innerHtml: `${strengths}${gaps}`,
     }) : '',
-    nextStep ? sectionRow({
-      kicker: 'Recommended Next Step', title: 'Where to Focus First', alt: true,
-      innerHtml: `<div style="background:${DARK};border-radius:10px;padding:18px 20px;border-left:3px solid #91C46B;">
-        <div style="font-family:${FONT};font-size:10px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:#91C46B;margin-bottom:6px;">Priority &mdash; ${nextStep.section}</div>
-        <div style="font-family:${FONT};font-size:13px;color:#cfd8e3;line-height:1.7;">${nextStep.text}</div>
-      </div>`,
-    }) : '',
+    (() => {
+      const stepsHtml = suggested.steps.map((s, i) => `
+        <div style="background:${DARK};border-radius:10px;padding:16px 18px;border-left:3px solid #91C46B;margin-bottom:10px;">
+          <div style="font-family:${FONT};font-size:10px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:#91C46B;margin-bottom:5px;">${s.priority} &middot; ${s.phase}</div>
+          <div style="font-family:${FONT};font-weight:bold;font-size:13px;color:#ffffff;margin-bottom:4px;">${i + 1}. ${s.title}</div>
+          <div style="font-family:${FONT};font-size:12px;color:#cfd8e3;line-height:1.7;margin-bottom:6px;">${s.detail}</div>
+          <div style="font-family:${FONT};font-size:11px;color:#8fb573;font-weight:bold;">Radiant service: ${s.service}</div>
+        </div>`).join('')
+      const svc = suggested.services.map(sv =>
+        `<span style="display:inline-block;font-family:${FONT};font-size:11px;color:#33422a;background:#f0f7ea;border:1px solid #cfe6b8;border-radius:100px;padding:4px 11px;margin:0 6px 6px 0;">${sv}</span>`).join('')
+      return sectionRow({
+        kicker: 'Suggested Next Steps', title: 'Your Path: Assess &rarr; Train &rarr; Adopt &rarr; Scale &rarr; Sustain', alt: true,
+        innerHtml: `<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:14px;">${suggested.intro}</div>
+          ${stepsHtml}
+          <div style="font-family:${FONT};font-size:11px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:${MUTED};margin:16px 0 8px;">Recommended services</div>
+          <div>${svc}</div>`,
+      })
+    })(),
     sectionRow({
       kicker: "Radiant's Read", title: 'What This Means for You',
       innerHtml: `<div style="background:#f0f7ea;border:1px solid #cfe6b8;border-radius:10px;padding:16px 18px;">
         <div style="font-family:${FONT};font-size:13px;color:#33422a;line-height:1.7;">${radiantRead[stage.index] || radiantRead[6]}</div>
       </div>`,
     }),
+    (() => {
+      const leaders = LEADER_CONTENT[stage.index] || LEADER_CONTENT[6]
+      const acts = leaders.actions.map((a, i) => `
+        <div style="margin-bottom:12px;">
+          <div style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};margin-bottom:2px;">${i + 1}. ${a.title}</div>
+          <div style="font-family:${FONT};font-size:12px;color:${BODY};line-height:1.6;">${a.body}</div>
+        </div>`).join('')
+      return sectionRow({
+        kicker: 'What AI Leaders Do', title: leaders.heading, alt: true,
+        innerHtml: `
+          <div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:12px;">${leaders.context}</div>
+          ${leaders.statBadge ? `<div style="font-family:${FONT};font-size:12px;color:#5a8a32;font-weight:bold;margin-bottom:14px;"><span style="font-size:15px;">${leaders.statBadge.value}</span> &mdash; ${leaders.statBadge.label}</div>` : ''}
+          ${acts}`,
+      })
+    })(),
     ctaRow({
-      title: `Ready to move to Stage ${Math.min(stage.index + 1, 6)}?`,
+      title: `Ready to move from ${suggested.currentPhase} to your next stage?`,
       body: 'Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.',
       ctaLabel: 'Schedule 30 Minutes with Radiant',
       ctaHref: 'https://radiant.digital/contact',
@@ -216,7 +267,7 @@ function buildAiEmailHtml(profile, result) {
     footerRow(),
   ].join('')
 
-  return wrapDocument({ title: `AI Adoption Report, ${profile?.fullName || 'Assessment'}`, bodyHtml: body })
+  return wrapDocument({ title: `AI Maturity Assessment, ${profile?.fullName || 'Assessment'}`, bodyHtml: body })
 }
 
 // ── CX report ────────────────────────────────────────────────────────────────

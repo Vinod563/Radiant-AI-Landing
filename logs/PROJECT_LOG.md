@@ -535,3 +535,46 @@
 - screenshots/mobile/homepage_mobile_20260303.png
 
 **Status:** ✅ SUCCESS
+
+---
+
+### 2026-07-08 - Leadership Feedback: Role/Terminology Rename + Dynamic Suggested Next Steps
+**Action:** Applied leadership feedback (items 12–21) to the `ai-landing-v1` AI assessment + report.
+
+**Role renames (display labels only, internal keys unchanged — no scoring/routing breakage):**
+- `Consultant` → `AI Practitioner` (+ `Consultant Track` → `AI Practitioner Track`).
+- `Technical Lead` → `Technology Leader` (+ `Technical Track` → `Technology Track`).
+- Files: data/aiAssessment.js, utils/generateReportPdf.js, components/assessment/HTMLReportViewer.jsx, pages/AssessmentHub.jsx.
+
+**Report + assessment rename (items 14, 15 — "Adoption" out of the title, consistency):**
+- Report `AI Adoption Report` → `AI Maturity Assessment` (8 spots).
+- Whole assessment brand `AI Adoption Assessment`/`AI Adoption` → `AI Maturity` for consistency (PDF header, hub eyebrows, chat prompts, knowledgeBase, ContactForm comment).
+- Navbar CTA `Assess AI Readiness` → `Assess AI Maturity`.
+- Preserved: the `Adoption & Value` maturity dimension and lowercase "adoption" prose (only titles/labels changed).
+
+**Dynamic Suggested Next Steps (items 16–19):**
+- New `suggestedNextSteps({role, stageIndex, sectionAverages})` in data/reportEditorial.js.
+- Personalized per role + autonomy stage + weakest dimension; each step tagged to Radiant's model (Assess → Train → Adopt → Scale → Sustain) with a matched service; recommended services gated by maturity band.
+- Replaced the old static "Recommended Next Step" + generic CTA across all three renderers (PDF, email-safe HTML, in-app HTMLReportViewer) + AssessmentResults.
+
+**Verification:** `npm run build` passes; engine confirmed dynamic across all 4 personas (distinct steps/phases/services each). Staged on branch `ai-test-integration` — NOT merged. Pending: leadership review (item 20) + market-leader pilot (item 21).
+
+**Status:** ✅ SUCCESS
+
+---
+
+### 2026-07-09 - Homepage Hero: Persona/Maturity "Choose Your Path"
+**Action:** Reworked the standalone AI site homepage hero per leadership review (Lam/Shankar) to guide visitors by AI maturity instead of pushing everyone to the assessment.
+
+**Why:** Old hero + subhead targeted mature/expert buyers and pushed the Context Engine and the assessment together (they conflict). Target audience shifted to less-mature buyers (federal gov, credit unions, SMBs). Needed a maturity-based path built into the hero, not a modal.
+
+**Changes (outputs/ai-landing-v1):**
+- New `src/components/home/PersonaPaths.jsx` — data-driven 2-card path selector. Path A "Getting started" → routes to /assessment/ai. Path B "Scaling / hard problems (hallucinations, token cost, data integration)" → smooth-scrolls to the Context Engine section (#differentiator), skipping the assessment block. Reuses the AssessmentEntry card/motion/token recipe.
+- `src/components/home/Hero.jsx` — replaced the two assessment chips with `<PersonaPaths />`; dropped now-unused ArrowRight/Brain/Target imports. Headline + chat input + metric strip unchanged.
+- `src/data/siteContent.js` — generalized `brand.description` subhead ("every stage", emphasize "deploy"). Provisional copy.
+
+**Verification:** `npm run build` clean; Playwright — 8/8 checks pass (both cards render, old chip gone, subhead generalized, Path A routes to /assessment/ai, Path B scrolls to #differentiator, no horizontal overflow @375px). Desktop + mobile screenshots reviewed.
+
+**Handoffs:** All hero/card copy is PROVISIONAL — Deena reconciles final wording; Path B's hard-problem framing is net-new and needs sign-off. Two-vs-three paths kept switchable. Staged on branch `ai-test-integration`, NOT merged — mockup for Lam's review.
+
+**Status:** ✅ SUCCESS

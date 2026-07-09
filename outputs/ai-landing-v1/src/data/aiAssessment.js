@@ -1,5 +1,5 @@
 /**
- * AI Adoption Assessment: data + scoring engine.
+ * AI Maturity Assessment: data + scoring engine.
  *
  * Pure logic, no React. Content is verbatim from the product spec
  * (radiant-ai-assessment-spec.md). Role-adaptive: getAQ(role) selects the
@@ -11,9 +11,9 @@
 
 export const roles = [
   { key: 'exec', name: 'Executive', desc: 'C-Suite, VP, Director', track: 'Executive Track' },
-  { key: 'tech', name: 'Technical Lead', desc: 'CTO, Data, Engineering', track: 'Technical Track' },
+  { key: 'tech', name: 'Technology Leader', desc: 'CTO, Data, Engineering', track: 'Technology Track' },
   { key: 'biz', name: 'Business Lead', desc: 'Ops, Finance, HR, Sales', track: 'Business Track' },
-  { key: 'consultant', name: 'Consultant', desc: 'Advisor, External', track: 'Consultant Track' },
+  { key: 'consultant', name: 'AI Practitioner', desc: 'Advisor, External', track: 'AI Practitioner Track' },
 ]
 
 export const sectors = [

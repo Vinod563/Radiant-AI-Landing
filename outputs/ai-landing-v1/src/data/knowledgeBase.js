@@ -609,7 +609,7 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'Find out exactly where you stand',
-        body: 'We have two free, self-serve diagnostics. The AI Adoption Assessment is a role-adaptive diagnostic across strategy, data, people, and adoption: it places you on our 6-stage Enterprise AI Autonomy model (Zero → Guided → Insight → Operational → Proactive → Full), with per-dimension scores, specific findings, and a recommended next step. The CX Maturity Assessment evaluates your customer experience across vision, governance, and culture. No signup. Results in minutes.',
+        body: 'We have two free, self-serve diagnostics. The AI Maturity Assessment is a role-adaptive diagnostic across strategy, data, people, and adoption: it places you on our 6-stage Enterprise AI Autonomy model (Zero → Guided → Insight → Operational → Proactive → Full), with per-dimension scores, specific findings, and a recommended next step. The CX Maturity Assessment evaluates your customer experience across vision, governance, and culture. No signup. Results in minutes.',
         accent: '#91C46B',
       },
       {
@@ -619,7 +619,7 @@ const knowledgeBase = [
         columns: 2,
         clickable: true,
         items: [
-          { icon: 'Brain', title: 'AI Adoption Assessment', accent: '#91C46B', desc: 'Role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage and a prioritized roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
+          { icon: 'Brain', title: 'AI Maturity Assessment', accent: '#91C46B', desc: 'Role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage and a prioritized roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
           { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Evaluate CX across vision, governance, and culture. Get your maturity level and a recommended solution.', link: '/assessment/cx', cta: 'Start · 3–5 min' },
         ],
       },
@@ -650,7 +650,7 @@ const knowledgeBase = [
         clickable: true,
         items: [
           { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Vision, governance, and culture: your maturity level and a tailored next step.', link: '/assessment/cx', cta: 'Start · 3–5 min' },
-          { icon: 'Brain', title: 'AI Adoption Assessment', accent: '#91C46B', desc: 'Prefer to benchmark AI readiness? Role-adaptive diagnostic with a stage and roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
+          { icon: 'Brain', title: 'AI Maturity Assessment', accent: '#91C46B', desc: 'Prefer to benchmark AI readiness? Role-adaptive diagnostic with a stage and roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
         ],
       },
     ],

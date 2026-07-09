@@ -107,7 +107,7 @@ function PdfPreview({ kind, result, accent }) {
             </span>
           </div>
           <span className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: 'rgba(255,255,255,0.40)' }}>
-            {isAi ? 'AI Adoption Report' : 'CX Maturity Report'} · What's inside
+            {isAi ? 'AI Maturity Assessment' : 'CX Maturity Report'} · What's inside
           </span>
         </div>
 

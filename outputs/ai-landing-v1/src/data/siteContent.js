@@ -9,8 +9,9 @@ export const brand = {
   name: 'Radiant Digital',
   platformName: 'Radiant Digital AI Platform',
   tagline: 'Enterprise Transformation. Supercharged with AI.',
+  // NOTE: provisional copy — final wording owned by the content team.
   description:
-    'We believe AI only delivers when it truly understands your business. That conviction is why precision context guides every AI deployment across every practice, every solution, every engagement, and every team. It is that same conviction, and our own transformation, that allows us to help enterprises deploy AI grounded in the right context and built to produce outcomes that endure.',
+    'Wherever you are on the AI journey, just exploring or scaling fast, Radiant helps you deploy AI that truly understands your business. We meet you at your stage and turn it into deployments that produce outcomes that endure.',
   differentiator:
     'Every AI firm brings models. Only Radiant Digital grounds them with the Precision Context Engine.',
   differentiatorBody:

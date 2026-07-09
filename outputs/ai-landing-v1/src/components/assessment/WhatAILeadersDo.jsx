@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
  *   chatQuery     string: pre-filled chat query for the CTA
  */
 
-const LEADER_CONTENT = {
+export const LEADER_CONTENT = {
   1: {
     heading: 'What Guided Autonomy organizations did to move forward',
     context: 'Organizations that climbed out of Zero Autonomy did one thing consistently: once their data and processes were clean, they let AI start recommending in real time, with a human approving every action, instead of leaving it stuck at data capture.',

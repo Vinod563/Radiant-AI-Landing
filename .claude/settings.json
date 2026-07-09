@@ -28,7 +28,9 @@
       "Bash(for file:*)",
       "Bash(do echo:*)",
       "Read(//Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/src/components/home/**)",
-      "Bash(sips -g pixelWidth -g pixelHeight -g hasAlpha \"/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/public/cio-100-awards.png\")"
+      "Bash(sips -g pixelWidth -g pixelHeight -g hasAlpha \"/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/public/cio-100-awards.png\")",
+      "Bash(playwright --version)",
+      "Bash(npm ls *)"
     ],
     "additionalDirectories": [
       "/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/src/components/icx",

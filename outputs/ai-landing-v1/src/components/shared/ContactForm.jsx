@@ -8,7 +8,7 @@ import { CheckCircle2, RefreshCw, ArrowRight } from 'lucide-react'
  * provider used for assessment reports.
  *
  * Extracted from Chat.jsx's ContactDetailsCard so the chat contact card AND
- * both assessment flows (AI Adoption / CX Maturity) post to the SAME inbox
+ * both assessment flows (AI Maturity / CX Maturity) post to the SAME inbox
  * without duplicating ~250 lines. Reuse, do not duplicate.
  *
  * Props:
