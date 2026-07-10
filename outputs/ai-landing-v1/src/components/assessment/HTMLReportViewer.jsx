@@ -245,7 +245,7 @@ export function buildAiReportHtml(profile, result) {
 
   // Header meta pills, built from whatever profile data exists, empties dropped
   // so we never render blank chips. Always carries at least role track + stage.
-  const roleLabel = { exec: 'Executive', tech: 'Technology Leader', biz: 'Business Lead', consultant: 'AI Practitioner' }[profile?.role]
+  const roleLabel = { exec: 'Executive', tech: 'Technology Leader', biz: 'Business Leader', consultant: 'AI Practitioner' }[profile?.role]
   const metaChips = [
     profile?.fullName,
     profile?.companyName,

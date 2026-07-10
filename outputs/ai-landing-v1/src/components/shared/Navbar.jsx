@@ -20,6 +20,7 @@ export default function Navbar() {
   const CONNECT_CHAT = '/chat?q=Connect%20with%20our%20team'
 
   const links = [
+    { label: 'Assessment', href: '#assessment' },
     { label: 'Solutions', href: '#solutions' },
     { label: 'Proof', href: '#proof' },
     { label: 'Industries', href: '#industries' },

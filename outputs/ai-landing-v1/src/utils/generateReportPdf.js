@@ -6,7 +6,7 @@ import { scoreCx, cxLevels, recommendedSolution } from '../data/cxAssessment.js'
 import { aiRadiantRead, suggestedNextSteps, cxWhyThisMatters, cxCta, positioningRead } from '../data/reportEditorial.js'
 import { LEADER_CONTENT } from '../components/assessment/WhatAILeadersDo.jsx'
 
-const ROLE_LABEL = { exec: 'Executive', tech: 'Technology Leader', biz: 'Business Lead', consultant: 'AI Practitioner' }
+const ROLE_LABEL = { exec: 'Executive', tech: 'Technology Leader', biz: 'Business Leader', consultant: 'AI Practitioner' }
 
 // jsPDF's built-in Helvetica only covers WinAnsi, swap glyphs it can't render.
 const clean = (s = '') => String(s)

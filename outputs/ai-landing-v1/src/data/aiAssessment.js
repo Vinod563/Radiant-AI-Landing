@@ -12,7 +12,7 @@
 export const roles = [
   { key: 'exec', name: 'Executive', desc: 'C-Suite, VP, Director', track: 'Executive Track' },
   { key: 'tech', name: 'Technology Leader', desc: 'CTO, Data, Engineering', track: 'Technology Track' },
-  { key: 'biz', name: 'Business Lead', desc: 'Ops, Finance, HR, Sales', track: 'Business Track' },
+  { key: 'biz', name: 'Business Leader', desc: 'Ops, Finance, HR, Sales', track: 'Business Track' },
   { key: 'consultant', name: 'AI Practitioner', desc: 'Advisor, External', track: 'AI Practitioner Track' },
 ]
 
