@@ -54,7 +54,7 @@ export const LEADER_CONTENT = {
         body: 'Showed the work behind each insight, the signals, the confidence, the source, so leaders learned to act on AI intelligence instead of re-deriving it themselves.',
       },
       {
-        title: 'Picked low-risk decisions to let AI act end to end',
+        title: 'Picked low-risk decisions to let AI act start to finish',
         body: 'A handful of high-volume, low-risk calls where AI executes and humans audit after the fact. The measured results became the business case for delegating more.',
       },
     ],
@@ -111,10 +111,10 @@ export const LEADER_CONTENT = {
   },
   5: {
     heading: 'What Full Autonomy organizations do to self-govern at scale',
-    context: 'The last step is from prediction to self-governance: AI executes end to end, learns from outcomes, and improves without manual retraining, while humans define guardrails and approve only high-risk exceptions.',
+    context: 'The last step is from prediction to self-governance: AI executes start to finish, learns from outcomes, and improves without manual retraining, while humans define guardrails and approve only high-risk exceptions.',
     actions: [
       {
-        title: 'Let AI resolve issues end to end across systems',
+        title: 'Let AI resolve issues start to finish across systems',
         body: 'Autonomous workflows that span CRM, billing, and ticketing, resolving the whole issue, not a step of it, with humans involved only when risk crosses a defined threshold.',
       },
       {
@@ -127,7 +127,7 @@ export const LEADER_CONTENT = {
       },
       {
         title: 'Made governance the core human job',
-        body: 'Autonomous scheduling, real-time workforce rebalancing, and self-running operations mean leadership\'s highest-leverage work becomes setting strategy and keeping an autonomous system accountable.',
+        body: 'Autonomous scheduling, real-time workforce rebalancing, and self-running operations mean leadership\'s highest-impact work becomes setting strategy and keeping an autonomous system accountable.',
       },
     ],
     chatQuery: 'Help us reach Full Autonomy: self-governing AI with humans on guardrails',

@@ -81,15 +81,15 @@ function PdfPreview({ kind, result, accent }) {
     ? [
         { tag: 'What we see', heading: 'Findings: your strengths & gaps by dimension',
           lines: [0.96, 0.9, 0.82, 0.7], chips: ['Strategy & Leadership', 'Data & Technology', 'Adoption & Value'] },
-        { tag: 'Recommended next step', heading: 'Your single highest-leverage move',
+        { tag: 'Recommended next step', heading: 'Your single highest-impact move',
           lines: [0.94, 0.86, 0.74], chips: ['Prioritized', 'With rationale'] },
-        { tag: "Radiant's read", heading: 'Our perspective on organizations at your stage',
+        { tag: "Radiant Digital's read", heading: 'Our perspective on organizations at your stage',
           lines: [0.97, 0.92, 0.84, 0.66], chips: [] },
       ]
     : [
         { tag: 'Recommended solution', heading: 'Experience AI matched to your maturity',
           lines: [0.95, 0.88, 0.78], chips: ['Tailored', 'Outcome-led'] },
-        { tag: "Radiant's read", heading: 'Why this matters at your maturity level',
+        { tag: "Radiant Digital's read", heading: 'Why this matters at your maturity level',
           lines: [0.96, 0.9, 0.8, 0.68], chips: [] },
         { tag: 'Case studies', heading: 'Relevant proof matched to your context',
           lines: [0.92, 0.84, 0.72], chips: ['By sector', 'By outcome'] },

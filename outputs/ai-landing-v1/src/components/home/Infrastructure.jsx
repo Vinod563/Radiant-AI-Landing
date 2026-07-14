@@ -25,7 +25,7 @@ export default function Infrastructure() {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <span className="hr-label">Powered by world-class infrastructure</span>
+          <span className="hr-label">Powered by the infrastructure you already trust</span>
         </motion.div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">

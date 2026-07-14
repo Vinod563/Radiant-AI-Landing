@@ -22,7 +22,7 @@ export const sectors = [
 ]
 
 export const orgSizes = [
-  'Under 500', '500–2,000', '2,000–10,000', '10,000–50,000', '50,000+',
+  'Under 500', '500-2,000', '2,000-10,000', '10,000-50,000', '50,000+',
 ]
 
 export const departments = [
@@ -109,8 +109,8 @@ export const questionBank = [
       'No roadmap. Decisions are made case by case.',
       "There's an informal list of ideas without owners or timelines.",
       'A high-level roadmap exists but lacks budget or accountable owners.',
-      'A detailed 18–24 month roadmap with owners and funding is in place.',
-      'A rolling 3–5 year roadmap, reviewed quarterly, tied to business planning cycles.',
+      'A detailed 18-24 month roadmap with owners and funding is in place.',
+      'A rolling 3-5 year roadmap, reviewed quarterly, tied to business planning cycles.',
     ),
   },
   {
@@ -217,7 +217,7 @@ export const questionBank = [
     options: opt(
       'No. Business teams rely entirely on IT or data teams for any data or AI output.',
       'Some teams have basic reporting but AI-generated insights require IT involvement.',
-      'Self-service reporting exists but AI-powered insights are still centralized and slow to access.',
+      'Self-service reporting exists but AI-driven insights are still centralized and slow to access.',
       'Most business teams can access data and AI insights independently for common decisions.',
       'Fully self-service data and AI insights with governed access, embedded in everyday workflows.',
     ),
@@ -244,7 +244,7 @@ export const questionBank = [
       'General IT policy loosely covers AI as a footnote.',
       'A draft AI governance policy is in development.',
       'An approved AI governance policy has been communicated to leaders.',
-      'A comprehensive governance framework is in place with enforcement mechanisms and board-level oversight.',
+      'A full governance framework is in place with enforcement mechanisms and board-level oversight.',
     ),
   },
   {
@@ -273,7 +273,7 @@ export const questionBank = [
   },
   {
     id: 'Q19', section: 'People', title: 'Regulatory Compliance', roles: ['exec', 'biz', 'consultant'],
-    context: 'The regulatory environment shifted materially in 2025–26. Most organizations are behind on mapping their exposure.',
+    context: 'The regulatory environment shifted materially in 2025-26. Most organizations are behind on mapping their exposure.',
     question: 'Is your organization actively tracking and managing AI regulatory compliance, including the EU AI Act, NIST AI RMF, and sector-specific rules?',
     options: opt(
       'No tracking. No awareness of applicable AI regulations.',
@@ -326,9 +326,9 @@ export const questionBank = [
     question: 'How many AI use cases does your organization have actively running in production today?',
     options: opt(
       'None. No AI in production.',
-      '1–2 pilots being explored or in very limited testing.',
-      '3–10 use cases in active production.',
-      '11–50 production use cases across multiple functions.',
+      '1-2 pilots being explored or in very limited testing.',
+      '3-10 use cases in active production.',
+      '11-50 production use cases across multiple functions.',
       '50+ use cases with portfolio governance, scaling playbooks, and active ROI tracking.',
     ),
   },
@@ -441,7 +441,7 @@ export const stages = {
   full: {
     name: 'Full Autonomy', index: 6, humanRole: 'Orchestrator',
     tagline: 'AI executes, learns, and self-improves. Humans govern.',
-    description: "AI operates as a self-governing system: executing multi-step workflows end to end, learning from outcomes, and improving without manual retraining. Humans define the guardrails, approve high-risk exceptions, and shape strategic direction. This isn't the end of human involvement; it's the highest-leverage version of it. The work is governance, not operation.",
+    description: "AI operates as a self-governing system: executing multi-step workflows start to finish, learning from outcomes, and improving without manual retraining. Humans define the guardrails, approve high-risk exceptions, and shape strategic direction. This isn't the end of human involvement; it's the highest-impact version of it. The work is governance, not operation.",
   },
 }
 
@@ -553,7 +553,7 @@ function key2label(key) {
 
 export const sampleProfile = {
   role: 'exec', fullName: 'Jordan Avery', workEmail: 'javery@meridian-financial.com',
-  companyName: 'Meridian Financial', sector: 'Financial Services', orgSize: '10,000–50,000',
+  companyName: 'Meridian Financial', sector: 'Financial Services', orgSize: '10,000-50,000',
   department: 'Enterprise / Cross-functional',
 }
 

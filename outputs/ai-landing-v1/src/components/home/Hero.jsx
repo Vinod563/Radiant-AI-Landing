@@ -54,7 +54,7 @@ export default function Hero() {
               <Sparkles size={16} className="text-brand-green" />
             </div>
             <span className="text-white/70 text-sm font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
-              What enterprise transformation are you trying to supercharge?
+              Describe the problem you're trying to solve with AI.
             </span>
             <div className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:bg-brand-green/15"
               style={{ background: 'rgba(255,255,255,0.05)' }}>
@@ -146,7 +146,7 @@ export default function Hero() {
                     <Sparkles size={18} className="text-brand-green" />
                   </div>
                   <span className="text-white/70 text-base font-body flex-1 text-left group-hover:text-white/55 transition-colors relative z-10">
-                    What enterprise transformation are you trying to supercharge?
+                    Describe the problem you're trying to solve with AI.
                   </span>
                   <div className="w-9 h-9 rounded-lg flex items-center justify-center flex-shrink-0 relative z-10 transition-all duration-300 group-hover:bg-brand-green/15"
                     style={{ background: 'rgba(255,255,255,0.05)' }}>

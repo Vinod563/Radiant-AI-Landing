@@ -187,7 +187,7 @@ function buildAiEmailHtml(profile, result) {
   const body = [
     headerRow({
       eyebrow: 'AI Maturity Assessment, Full Version',
-      headline: `Stage ${stage.index} &mdash; ${stage.name}`,
+      headline: `Stage ${stage.index}: ${stage.name}`,
       metaLine: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     }),
     sectionRow({
@@ -225,7 +225,7 @@ function buildAiEmailHtml(profile, result) {
           <div style="font-family:${FONT};font-size:10px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:#91C46B;margin-bottom:5px;">${s.priority} &middot; ${s.phase}</div>
           <div style="font-family:${FONT};font-weight:bold;font-size:13px;color:#ffffff;margin-bottom:4px;">${i + 1}. ${s.title}</div>
           <div style="font-family:${FONT};font-size:12px;color:#cfd8e3;line-height:1.7;margin-bottom:6px;">${s.detail}</div>
-          <div style="font-family:${FONT};font-size:11px;color:#8fb573;font-weight:bold;">Radiant service: ${s.service}</div>
+          <div style="font-family:${FONT};font-size:11px;color:#8fb573;font-weight:bold;">Radiant Digital service: ${s.service}</div>
         </div>`).join('')
       const svc = suggested.services.map(sv =>
         `<span style="display:inline-block;font-family:${FONT};font-size:11px;color:#33422a;background:#f0f7ea;border:1px solid #cfe6b8;border-radius:100px;padding:4px 11px;margin:0 6px 6px 0;">${sv}</span>`).join('')
@@ -238,7 +238,7 @@ function buildAiEmailHtml(profile, result) {
       })
     })(),
     sectionRow({
-      kicker: "Radiant's Read", title: 'What This Means for You',
+      kicker: "Radiant Digital's Read", title: 'What This Means for You',
       innerHtml: `<div style="background:#f0f7ea;border:1px solid #cfe6b8;border-radius:10px;padding:16px 18px;">
         <div style="font-family:${FONT};font-size:13px;color:#33422a;line-height:1.7;">${radiantRead[stage.index] || radiantRead[6]}</div>
       </div>`,
@@ -254,14 +254,14 @@ function buildAiEmailHtml(profile, result) {
         kicker: 'What AI Leaders Do', title: leaders.heading, alt: true,
         innerHtml: `
           <div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:12px;">${leaders.context}</div>
-          ${leaders.statBadge ? `<div style="font-family:${FONT};font-size:12px;color:#5a8a32;font-weight:bold;margin-bottom:14px;"><span style="font-size:15px;">${leaders.statBadge.value}</span> &mdash; ${leaders.statBadge.label}</div>` : ''}
+          ${leaders.statBadge ? `<div style="font-family:${FONT};font-size:12px;color:#5a8a32;font-weight:bold;margin-bottom:14px;"><span style="font-size:15px;">${leaders.statBadge.value}</span>, ${leaders.statBadge.label}</div>` : ''}
           ${acts}`,
       })
     })(),
     ctaRow({
       title: `Ready to move from ${suggested.currentPhase} to your next stage?`,
-      body: 'Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.',
-      ctaLabel: 'Schedule 30 Minutes with Radiant',
+      body: 'Radiant Digital has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.',
+      ctaLabel: 'Schedule 30 Minutes with Radiant Digital',
       ctaHref: 'https://radiant.digital/contact',
     }),
     footerRow(),
@@ -307,8 +307,8 @@ function buildCxEmailHtml(profile, result) {
     }),
     sectionRow({ kicker: 'Dimension Breakdown', title: 'How You Scored Across Three Dimensions', innerHtml: dimRows, alt: true }),
     sectionRow({
-      kicker: 'Recommended Solution', title: 'Experience AI by Radiant',
-      innerHtml: `<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:14px;">To help you progress to the next maturity level, Radiant recommends Experience AI &mdash; our qualitative + quantitative insight engine.</div>
+      kicker: 'Recommended Solution', title: 'Experience AI by Radiant Digital',
+      innerHtml: `<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:14px;">To help you progress to the next maturity level, Radiant Digital recommends Experience AI, our qualitative + quantitative insight engine.</div>
       <div style="background:#f0f7ea;border:1px solid #cfe6b8;border-radius:10px;padding:16px 18px;">
         <div style="font-family:${FONT};font-size:10px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:#5c8a39;margin-bottom:6px;">Why this matters at the ${overallLevel} level</div>
         <div style="font-family:${FONT};font-size:13px;color:#33422a;line-height:1.7;">${radiantRead}</div>
@@ -316,7 +316,7 @@ function buildCxEmailHtml(profile, result) {
     }),
     ctaRow({
       title: "Let's build your CX roadmap.",
-      body: "Radiant's CX practice has helped enterprises across financial services, healthcare, and technology improve CSAT by 20%+ within 90 days.",
+      body: "Radiant Digital's CX practice has helped enterprises across financial services, healthcare, and technology improve CSAT by 20%+ within 90 days.",
       ctaLabel: 'Schedule a CX Strategy Session',
       ctaHref: 'https://radiant.digital/contact',
     }),

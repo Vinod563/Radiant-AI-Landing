@@ -3,16 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion'
 
 const sections = [
   { id: 'hero',           label: 'Hero' },
-  { id: 'assessment',     label: 'Assessment' },
-  { id: 'differentiator', label: 'Why Radiant' },
-  { id: 'solutions',      label: 'Solutions' },
+  { id: 'solutions',      label: 'Problems We Solve' },
+  { id: 'differentiator', label: 'Why Radiant Digital' },
   { id: 'ai-fabric',      label: 'AI Fabric' },
-  { id: 'proof',          label: 'Case Study' },
+  { id: 'proof',          label: 'Results' },
   { id: 'social-proof',   label: 'Customers' },
   { id: 'industries',     label: 'Industries' },
+  { id: 'assessment',     label: 'Free Assessment' },
   { id: 'platform',       label: 'Platform' },
   { id: 'infrastructure', label: 'Infrastructure' },
-  { id: 'contact',        label: 'Contact' },
 ]
 
 export default function SectionNav() {

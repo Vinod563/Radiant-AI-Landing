@@ -300,7 +300,7 @@ export function buildAiReportHtml(profile, result) {
       <div class="next-step-section">${s.priority} · Phase: ${s.phase}</div>
       <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:15px;color:#fff;margin-bottom:6px;">${i + 1}. ${s.title}</div>
       <div class="next-step-text">${s.detail}</div>
-      <div style="font-size:12px;font-weight:700;color:#91C46B;margin-top:10px;">Radiant service: ${s.service}</div>
+      <div style="font-size:12px;font-weight:700;color:#91C46B;margin-top:10px;">Radiant Digital service: ${s.service}</div>
     </div>`).join('')
 
   const servicesHtml = suggested.services.map(sv =>
@@ -378,7 +378,7 @@ export function buildAiReportHtml(profile, result) {
 
   <!-- Radiant's Read -->
   <div class="section section-alt">
-    <span class="kicker">Radiant's Read</span>
+    <span class="kicker">Radiant Digital's Read</span>
     <div class="section-title">What This Means for You</div>
     <div class="radiant-read">
       <div class="radiant-read-label">Our perspective on Stage ${stage.index} organizations</div>
@@ -389,8 +389,8 @@ export function buildAiReportHtml(profile, result) {
   <!-- CTA -->
   <div class="cta-block">
     <div class="cta-title">Ready to move from ${suggested.currentPhase} to your next stage?</div>
-    <div class="cta-body">Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.</div>
-    <a href="https://radiant.digital/contact" target="_blank" rel="noopener noreferrer" class="cta-btn">Schedule 30 Minutes with Radiant</a>
+    <div class="cta-body">Radiant Digital has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.</div>
+    <a href="https://radiant.digital/contact" target="_blank" rel="noopener noreferrer" class="cta-btn">Schedule 30 Minutes with Radiant Digital</a>
     <div class="cta-email">Or email us at hello@radiant.digital</div>
   </div>
 </div>
@@ -474,8 +474,8 @@ export function buildCxReportHtml(profile, result) {
 
   <div class="section">
     <span class="kicker">Recommended Solution</span>
-    <div class="section-title">Experience AI by Radiant</div>
-    <div class="section-body" style="margin-top:12px">To help you progress to the next maturity level, Radiant recommends Experience AI, our qualitative + quantitative insight engine. It helps you reveal root causes driving customer behavior, turn interviews, surveys, and public data into structured CX insights, build early journey maps and opportunity areas, and establish repeatable insight-to-action workflows.</div>
+    <div class="section-title">Experience AI by Radiant Digital</div>
+    <div class="section-body" style="margin-top:12px">To help you progress to the next maturity level, Radiant Digital recommends Experience AI, our qualitative + quantitative insight engine. It helps you reveal root causes driving customer behavior, turn interviews, surveys, and public data into structured CX insights, build early journey maps and opportunity areas, and establish repeatable insight-to-action workflows.</div>
     <div class="radiant-read" style="margin-top:20px">
       <div class="radiant-read-label">Why this matters at the ${overallLevel} level</div>
       <div class="radiant-read-text">${cxWhyThisMatters(overallKey)}</div>
@@ -484,7 +484,7 @@ export function buildCxReportHtml(profile, result) {
 
   <div class="cta-block">
     <div class="cta-title">Let's build your CX roadmap.</div>
-    <div class="cta-body">Radiant's CX practice has helped enterprises across financial services, healthcare, and technology improve CSAT by 20%+ within 90 days. We'd like to show you what that looks like for your organization.</div>
+    <div class="cta-body">Radiant Digital's CX practice has helped enterprises across financial services, healthcare, and technology improve CSAT by 20%+ within 90 days. We'd like to show you what that looks like for your organization.</div>
     <a href="https://radiant.digital/contact" target="_blank" rel="noopener noreferrer" class="cta-btn">Schedule a CX Strategy Session</a>
     <div class="cta-email">hello@radiant.digital</div>
   </div>

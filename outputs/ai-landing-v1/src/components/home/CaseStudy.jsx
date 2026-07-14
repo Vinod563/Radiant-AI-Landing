@@ -85,7 +85,7 @@ export default function CaseStudy() {
             <div className="mb-8">
               <h3 className="text-white/70 text-xs font-display font-semibold uppercase tracking-widest mb-3">What Radiant Digital Did</h3>
               <p className="text-text-secondary text-base leading-relaxed">
-                Radiant Digital deployed its Design-to-Code Accelerator to deliver over 50 fully functional, responsive screens in under three weeks. The solution provided end-to-end network visualization from edge to core, actionable performance dashboards, and proactive data quality monitoring across regions, markets, and sites. AI-powered development reduced manual effort and cut redundant tasks, shifting the client from reactive troubleshooting to proactive network intelligence.
+                Radiant Digital deployed its Design-to-Code Accelerator to deliver over 50 fully functional, responsive screens in under three weeks. The solution provided network visualization from edge to core, actionable performance dashboards, and proactive data quality monitoring across regions, markets, and sites. AI-driven development reduced manual effort and cut redundant tasks, shifting the client from reactive troubleshooting to proactive network intelligence.
               </p>
             </div>
 

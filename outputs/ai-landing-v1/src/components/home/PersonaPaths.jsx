@@ -8,34 +8,35 @@ import { useNavigate } from 'react-router-dom'
  * pushing everyone to the assessment: beginners take the assessment; mature
  * users skip it and jump to the Context Engine / solutions narrative.
  *
- * Data-driven — add a third entry to `paths` (and it flows to 3 columns) if
+ * Data-driven: add a third entry to `paths` (and it flows to 3 columns) if
  * leadership later wants a mid-journey path.
  *
- * NOTE: card copy is PROVISIONAL. Final wording is owned by the content team;
- * the hallucinations / token-cost / data-integration framing is net-new.
+ * Copy is final, supplied by the content team (radiant-ai-landing-copy-spec).
+ * Construction rule: eyebrow promises, headline diagnoses. Buyers self-select
+ * by symptom, never by a maturity grade.
  */
 const paths = [
   {
-    key: 'starting',
-    eyebrow: 'Just getting started',
-    label: 'New to AI, or still finding your footing',
-    blurb: 'Get your AI maturity score and a practical, budget-aware roadmap for your first deployments.',
-    cta: 'Take the assessment',
+    key: 'plan',
+    eyebrow: 'Plan with confidence',
+    label: 'The pressure is real. The roadmap is not.',
+    blurb: 'A short diagnostic across strategy, data, people, and adoption. You get your stage, your gaps, and the sequence that produces results fastest.',
+    cta: 'See where you stand',
     icon: Compass,
     accent: '#91C46B',        // brand-green
     action: 'route',
     target: '/assessment/ai',
   },
   {
-    key: 'scaling',
-    eyebrow: 'Scaling or hitting hard problems',
-    label: 'Already deploying, tackling the hard parts',
-    blurb: 'Hallucinations, token cost, data integration? See how our Context Engine grounds AI in your business.',
-    cta: 'See how we solve them',
+    key: 'deploy',
+    eyebrow: 'Deploy with discipline',
+    label: 'Proof of concept is easy. Production is not.',
+    blurb: 'Accuracy, cost, and integration are where AI projects die. See how precision context and forward deployment get you past them.',
+    cta: 'See the approach',
     icon: Rocket,
     accent: '#596AE0',        // brand-purple
     action: 'scroll',
-    target: 'differentiator', // Context Engine section — scrolls past the assessment
+    target: 'differentiator', // How We Work / Context Engine section
   },
 ]
 

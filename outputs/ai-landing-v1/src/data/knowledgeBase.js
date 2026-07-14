@@ -139,7 +139,7 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'How It Works',
-        body: 'Turns screen-level behavioral data into actionable journey maps using AI-powered pattern recognition and business rule mapping. Powered by Context-Aware AI, Radiant Knowledge Hub, and Semantic Data Graph.',
+        body: 'Turns screen-level behavioral data into actionable journey maps using AI-driven pattern recognition and business rule mapping. Powered by Context-Aware AI, Radiant Knowledge Hub, and Semantic Data Graph.',
         accent: '#F0974E',
       },
       {
@@ -330,7 +330,7 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'How It Works',
-        body: 'Powered by Radiant AIOps, Autonomous Stack, Predictive Analytics and Time Series, and Context-Aware AI. Provides end-to-end observability across infrastructure, network, and application layers. AI-driven root cause analysis identifies issues in seconds. Autonomous remediation executes runbooks automatically. Predictive optimization prevents incidents before they occur.',
+        body: 'Powered by Radiant AIOps, Autonomous Stack, Predictive Analytics and Time Series, and Context-Aware AI. Provides observability across infrastructure, network, and application layers. AI-driven root cause analysis identifies issues in seconds. Autonomous remediation executes runbooks automatically. Predictive optimization prevents incidents before they occur.',
         accent: '#2DD4BF',
       },
       {
@@ -367,15 +367,15 @@ const knowledgeBase = [
       {
         type: 'case-study-grid',
         title: 'More AI Case Studies with Proof',
-        subtitle: 'Every engagement below is AI-powered with measurable outcomes.',
+        subtitle: 'Every engagement below is AI-driven with measurable outcomes.',
         items: [
           { name: 'Scaling Telecom Service Capacity 5x', metric: '10x Processing Speed', detail: 'AI and RPA-driven platform for a Fortune 15 telecom: 18% MTTR reduction, 22% fewer missed SLAs, 5x service capacity.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
-          { name: 'AI-Powered Virtual Assistant for Guest Support', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park: 35% guest engagement boost, 30% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: '/images/customer-support.jpg' },
+          { name: 'AI-Driven Virtual Assistant for Guest Support', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park: 35% guest engagement boost, 30% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: '/images/customer-support.jpg' },
           { name: 'AI-Accelerated Digital Platform Modernization', metric: '35% Faster', detail: 'AI-driven reverse engineering for a global web tech company: 30% cost reduction, test coverage from 30% to 70%.', industry: 'Web Services', accent: '#91C46B', image: '/images/team-collaboration.jpg' },
-          { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 4 weeks to 6 days: 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
+          { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-driven accelerators cut dev cycles from 4 weeks to 6 days: 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
           { name: 'AI-Driven Outage Response & Integration', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack for Fortune 15 telecom: 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
-          { name: 'AI-Powered Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
-          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with E2E Observability and self-healing systems: 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
+          { name: 'AI-Driven Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with Full-Stack Observability and self-healing systems: 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
         ],
         accent: '#596AE0',
       },
@@ -464,7 +464,7 @@ const knowledgeBase = [
     cards: [
       {
         type: 'partners',
-        title: 'World-Class Infrastructure',
+        title: 'Infrastructure You Already Trust',
         items: [
           { name: 'AWS', role: 'Cloud Infrastructure' },
           { name: 'Google Cloud', role: 'AI & ML Platform' },
@@ -619,8 +619,8 @@ const knowledgeBase = [
         columns: 2,
         clickable: true,
         items: [
-          { icon: 'Brain', title: 'AI Maturity Assessment', accent: '#91C46B', desc: 'Role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage and a prioritized roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
-          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Evaluate CX across vision, governance, and culture. Get your maturity level and a recommended solution.', link: '/assessment/cx', cta: 'Start · 3–5 min' },
+          { icon: 'Brain', title: 'AI Maturity Assessment', accent: '#91C46B', desc: 'Role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage and a prioritized roadmap.', link: '/assessment/ai', cta: 'Start · 10-15 min' },
+          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Evaluate CX across vision, governance, and culture. Get your maturity level and a recommended solution.', link: '/assessment/cx', cta: 'Start · 3-5 min' },
         ],
       },
     ],
@@ -639,7 +639,7 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'Measure your CX maturity',
-        body: 'The CX Maturity Assessment evaluates your organization across three dimensions: Vision & Strategy, Governance & Metrics, and Organizational Culture. You get a personalized maturity level, a breakdown by dimension, and a recommended solution to reach the next level. Takes 3–5 minutes, no signup.',
+        body: 'The CX Maturity Assessment evaluates your organization across three dimensions: Vision & Strategy, Governance & Metrics, and Organizational Culture. You get a personalized maturity level, a breakdown by dimension, and a recommended solution to reach the next level. Takes 3-5 minutes, no signup.',
         accent: '#596AE0',
       },
       {
@@ -649,8 +649,8 @@ const knowledgeBase = [
         columns: 2,
         clickable: true,
         items: [
-          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Vision, governance, and culture: your maturity level and a tailored next step.', link: '/assessment/cx', cta: 'Start · 3–5 min' },
-          { icon: 'Brain', title: 'AI Maturity Assessment', accent: '#91C46B', desc: 'Prefer to benchmark AI readiness? Role-adaptive diagnostic with a stage and roadmap.', link: '/assessment/ai', cta: 'Start · 10–15 min' },
+          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Vision, governance, and culture: your maturity level and a tailored next step.', link: '/assessment/cx', cta: 'Start · 3-5 min' },
+          { icon: 'Brain', title: 'AI Maturity Assessment', accent: '#91C46B', desc: 'Prefer to benchmark AI readiness? Role-adaptive diagnostic with a stage and roadmap.', link: '/assessment/ai', cta: 'Start · 10-15 min' },
         ],
       },
     ],
@@ -667,7 +667,7 @@ const knowledgeBase = [
     cards: [
       {
         type: 'text',
-        title: 'AI-Powered Transformation: Proof Across Industries',
+        title: 'AI-Driven Transformation: Proof Across Industries',
         body: 'Radiant Digital has delivered AI-driven transformation engagements across telecom, hospitality, web services, IoT, and enterprise operations. Here are our AI case studies with measurable outcomes.',
         accent: '#91C46B',
       },
@@ -677,13 +677,13 @@ const knowledgeBase = [
         subtitle: 'Every engagement powered by AI, automation, or intelligent systems.',
         items: [
           { name: 'Scaling Telecom Service Capacity 5x', metric: '10x Processing Speed', detail: 'AI and RPA-driven platform for a Fortune 15 telecom: 18% MTTR reduction, 22% fewer missed SLAs, 5x service capacity.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
-          { name: 'AI-Powered Virtual Assistant', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park: 35% guest engagement boost, 30% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: '/images/customer-support.jpg' },
+          { name: 'AI-Driven Virtual Assistant', metric: '50% Efficiency', detail: 'RAG-based AI assistant for a global theme park: 35% guest engagement boost, 30% faster dev cycles.', industry: 'Hospitality', accent: '#F0974E', image: '/images/customer-support.jpg' },
           { name: 'AI-Accelerated Platform Modernization', metric: '35% Faster', detail: 'AI-driven reverse engineering for a global web tech company: 30% cost reduction, test coverage from 30% to 70%.', industry: 'Web Services', accent: '#91C46B', image: '/images/team-collaboration.jpg' },
-          { name: 'Industrial IoT with AI Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 4 weeks to 6 days: 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
+          { name: 'Industrial IoT with AI Delivery', metric: '60% Faster Launch', detail: 'AI-driven accelerators cut dev cycles from 4 weeks to 6 days: 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
           { name: 'AI-Driven Outage Response', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack for Fortune 15 telecom: 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
-          { name: 'AI-Powered Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'AI-Driven Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
           { name: 'Revenue Assurance & Billing Intelligence', metric: '5% Leakage Recovered', detail: '98% billing accuracy with AI FinOps for a leading telecom company.', industry: 'Telecom', accent: '#91C46B', image: '/images/analytics-dashboard.jpg' },
-          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with E2E Observability and self-healing systems: 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
+          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with Full-Stack Observability and self-healing systems: 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
         ],
         accent: '#91C46B',
       },
@@ -713,7 +713,7 @@ const knowledgeBase = [
         items: [
           { name: 'Scaling Telecom Service Capacity 5x', metric: '5x Capacity', detail: 'AI and RPA-driven platform: 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
           { name: 'AI-Driven Outage Response & Integration', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack: 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
-          { name: 'AI-Powered Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'AI-Driven Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
           { name: 'Optimizing Application Development', metric: '50% Faster Releases', detail: 'Agile methodologies, CI/CD pipelines, and automated testing for a leading telecom provider.', industry: 'Telecom', accent: '#596AE0', image: '/images/team-collaboration.jpg' },
         ],
         accent: '#596AE0',
@@ -761,10 +761,10 @@ const knowledgeBase = [
         title: 'State Government Engagements',
         subtitle: 'Better outcomes on constrained budgets.',
         items: [
-          { name: 'Florida DCF Accountability Audit', metric: '30% Improved', detail: 'Comprehensive system audit: process gap identification, modernization roadmap, 25% cost savings.', industry: 'State Gov', accent: '#91C46B', image: '/images/corporate-building.jpg' },
+          { name: 'Florida DCF Accountability Audit', metric: '30% Improved', detail: 'Full system audit: process gap identification, modernization roadmap, 25% cost savings.', industry: 'State Gov', accent: '#91C46B', image: '/images/corporate-building.jpg' },
           { name: 'Florida DEO Reemployment Modernization', metric: '70% Faster', detail: 'Streamlined benefits processing, reduced wait times: 30% cost savings, +25% citizen CSAT.', industry: 'State Gov', accent: '#91C46B', image: '/images/team-collaboration.jpg' },
           { name: 'FLHSMV Test Data Management', metric: '50% Faster', detail: 'Optimized testing efficiency and data quality across critical transportation systems.', industry: 'State Gov', accent: '#91C46B', image: '/images/analytics-dashboard.jpg' },
-          { name: 'Florida DOT Disaster Recovery', metric: '99.9% RTO', detail: 'Comprehensive DR plan for state-wide HCI server infrastructure: 4hr RTO achieved.', industry: 'State Gov', accent: '#91C46B', image: '/images/server-room.jpg' },
+          { name: 'Florida DOT Disaster Recovery', metric: '99.9% RTO', detail: 'Full DR plan for state-wide HCI server infrastructure: 4hr RTO achieved.', industry: 'State Gov', accent: '#91C46B', image: '/images/server-room.jpg' },
         ],
         accent: '#91C46B',
       },
@@ -790,7 +790,7 @@ const knowledgeBase = [
           { name: 'Brighter Bites: Healthy Food Access', metric: '3x Reach', detail: 'Digital platform for healthy food distribution: volunteer coordination, 50% less admin work.', industry: 'Healthcare', accent: '#e05990', image: '/images/customer-support.jpg' },
           { name: 'Quit4Health: Smarter Way to Quit', metric: '2.5x Quit Rate', detail: 'Behavioral science and personalized AI coaching: 85% daily engagement, 40K+ users enrolled.', industry: 'Healthcare', accent: '#e05990', image: '/images/iot-technology.jpg' },
           { name: 'QuitBuddy: Social Support for Quitting', metric: '70% Retention', detail: 'Peer motivation platform with AI-driven nudges: 2x better outcomes, 15K+ buddy pairs.', industry: 'Healthcare', accent: '#e05990', image: '/images/team-collaboration.jpg' },
-          { name: 'mySmartSkin: Skin Cancer Monitoring', metric: '3x Detection', detail: 'Mobile health platform for survivors: AI-powered risk assessments, 90% adherence rate.', industry: 'Healthcare', accent: '#e05990', image: '/images/analytics-dashboard.jpg' },
+          { name: 'mySmartSkin: Skin Cancer Monitoring', metric: '3x Detection', detail: 'Mobile health platform for survivors: AI-driven risk assessments, 90% adherence rate.', industry: 'Healthcare', accent: '#e05990', image: '/images/analytics-dashboard.jpg' },
           { name: 'MY Health: Young Adult Health', metric: '75% Engaged', detail: 'Digital wellness platform: personalized health tracking, insurance navigation, preventive care.', industry: 'Healthcare', accent: '#e05990', image: '/images/corporate-building.jpg' },
           { name: 'Pocket Ark: PPE Training', metric: '95% Completion', detail: 'Mobile training platform: interactive modules, AI recommendations, 60% faster training.', industry: 'Healthcare', accent: '#e05990', image: '/images/server-room.jpg' },
         ],
@@ -816,7 +816,7 @@ const knowledgeBase = [
         items: [
           { name: 'Transforming Oil Field Solutions with Halliburton', metric: '60% Uplift', detail: 'Digital asset integration and AR solutions: real-time equipment data, improved operational safety.', industry: 'Oil & Gas', accent: '#F0974E', image: '/images/oil-gas.jpg' },
           { name: 'Halliburton AR Oil Field Tool', metric: '45% Faster', detail: 'AR application for field technicians: real-time diagnostics, guided maintenance, 60% error reduction.', industry: 'Oil & Gas', accent: '#F0974E', image: '/images/iot-technology.jpg' },
-          { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-powered accelerators cut dev cycles from 4 weeks to 6 days: 45% cost reduction.', industry: 'IoT', accent: '#2DD4BF', image: '/images/server-room.jpg' },
+          { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-driven accelerators cut dev cycles from 4 weeks to 6 days: 45% cost reduction.', industry: 'IoT', accent: '#2DD4BF', image: '/images/server-room.jpg' },
         ],
         accent: '#F0974E',
       },
@@ -838,7 +838,7 @@ const knowledgeBase = [
         title: 'Financial Services Engagements',
         subtitle: 'With audit trails from day one.',
         items: [
-          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with E2E Observability and self-healing systems: 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
+          { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with Full-Stack Observability and self-healing systems: 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
           { name: 'Navy Federal Credit Union Modernization', metric: '40% Faster', detail: 'Legacy application modernization: improved member experience, enhanced security posture.', industry: 'Financial Services', accent: '#F0974E', image: '/images/analytics-dashboard.jpg' },
         ],
         accent: '#F0974E',
@@ -853,7 +853,7 @@ const knowledgeBase = [
       {
         type: 'case-study',
         title: 'Touchless Operations for Financial Services',
-        subtitle: 'A leading financial services enterprise faced unsustainable operational costs driven by manual incident management, fragmented monitoring, and growing alert fatigue across its IT stack. With enterprise downtime costing over $300K per hour, the client needed to shift its operating model. Radiant Digital deployed its Touchless Operations solution combining E2E Observability with an Autonomous Stack spanning infrastructure, network, agents, applications, and data layers. Self-healing systems and predictive optimization automated remediation workflows, shifting operations from reactive firefighting to autonomous management.',
+        subtitle: 'A leading financial services enterprise faced unsustainable operational costs driven by manual incident management, fragmented monitoring, and growing alert fatigue across its IT stack. With enterprise downtime costing over $300K per hour, the client needed to shift its operating model. Radiant Digital deployed its Touchless Operations solution combining Full-Stack Observability with an Autonomous Stack spanning infrastructure, network, agents, applications, and data layers. Self-healing systems and predictive optimization automated remediation workflows, shifting operations from reactive firefighting to autonomous management.',
         client: 'Leading Financial Services Enterprise',
         clientDetail: 'Financial Services',
         metrics: [
@@ -882,7 +882,7 @@ const knowledgeBase = [
       {
         type: 'case-study',
         title: 'Scaling Telecom Service Capacity 5x with Intelligent Automation',
-        subtitle: 'A Fortune 15 telecom company needed a robust platform combining infrastructure, security, governance, and advanced AI/ML capabilities to manage network provisioning, engineering, service delivery, and assurance operations. Radiant Digital developed an AI and RPA-driven platform through iterative product development, AI/ML integration, and RPA training.',
+        subtitle: 'A Fortune 15 telecom company needed a reliable platform combining infrastructure, security, governance, and advanced AI/ML capabilities to manage network provisioning, engineering, service delivery, and assurance operations. Radiant Digital developed an AI and RPA-driven platform through iterative product development, AI/ML integration, and RPA training.',
         client: 'Fortune 15 Telecom Company',
         clientDetail: 'Telecommunications',
         metrics: [
@@ -902,13 +902,13 @@ const knowledgeBase = [
   },
   {
     id: 'cs-hospitality-ai',
-    keywords: ['guest support', 'hospitality', 'virtual assistant', 'ai-powered assistant', 'improving guest support in hospitality', 'rag', 'retrieval augmented generation', 'theme park'],
+    keywords: ['guest support', 'hospitality', 'virtual assistant', 'ai-driven assistant', 'improving guest support in hospitality', 'rag', 'retrieval augmented generation', 'theme park'],
     question: 'Tell me about the Improving Guest Support case study',
     cards: [
       {
         type: 'case-study',
-        title: 'Improving Guest Support in Hospitality with an AI-Powered Virtual Assistant',
-        subtitle: 'A global theme park and resort organization partnered with Radiant Digital to enhance its digital ecosystem and guest experience. Radiant implemented UX/UI design services extending the client\'s Global Design System and built an AI Virtual Assistant prototype using RAG-based architecture with OpenAI LLM to streamline guest support.',
+        title: 'Improving Guest Support in Hospitality with an AI-Driven Virtual Assistant',
+        subtitle: 'A global theme park and resort organization partnered with Radiant Digital to enhance its digital ecosystem and guest experience. Radiant Digital implemented UX/UI design services extending the client\'s Global Design System and built an AI Virtual Assistant prototype using RAG-based architecture with OpenAI LLM to streamline guest support.',
         client: 'Global Theme Park & Resort',
         clientDetail: 'Hospitality',
         metrics: [
@@ -960,7 +960,7 @@ const knowledgeBase = [
       {
         type: 'case-study',
         title: 'Advancing Industrial IoT with AI-Accelerated Product Delivery',
-        subtitle: 'A leading Industrial IoT provider\'s location intelligence platform faced legacy code bottlenecks and insufficient SMEs. Radiant Digital\'s Solutions Lab modernized the platform through AI-powered accelerators with containerized deployment, automating user story grooming, development, testing, and deployment via CI/CD pipelines and AI Ops.',
+        subtitle: 'A leading Industrial IoT provider\'s location intelligence platform faced legacy code bottlenecks and insufficient SMEs. Radiant Digital\'s Solutions Lab modernized the platform through AI-driven accelerators with containerized deployment, automating user story grooming, development, testing, and deployment via CI/CD pipelines and AI Ops.',
         client: 'Leading Industrial IoT Provider',
         clientDetail: 'Industrial IoT',
         metrics: [
@@ -1012,7 +1012,7 @@ const knowledgeBase = [
       {
         type: 'case-study',
         title: 'Accountability System Audit for Florida DCF',
-        subtitle: 'Radiant Digital conducted a comprehensive system audit for the Florida Department of Children and Families, identifying process gaps, recommending modernization pathways, and delivering a roadmap for improved accountability and compliance.',
+        subtitle: 'Radiant Digital conducted a full system audit for the Florida Department of Children and Families, identifying process gaps, recommending modernization pathways, and delivering a roadmap for improved accountability and compliance.',
         client: 'Florida DCF',
         clientDetail: 'State Government',
         metrics: [
@@ -1194,7 +1194,7 @@ const knowledgeBase = [
       {
         type: 'case-study',
         title: 'QuitBuddy: Because Quitting Is Easier with Friends',
-        subtitle: 'Radiant Digital created QuitBuddy, a social support platform for smoking cessation that pairs users with accountability partners. The app leverages peer motivation, progress sharing, and AI-driven nudges to improve long-term quit success rates.',
+        subtitle: 'Radiant Digital created QuitBuddy, a social support platform for smoking cessation that pairs users with accountability partners. The app uses peer motivation, progress sharing, and AI-driven nudges to improve long-term quit success rates.',
         client: 'Public Health Initiative',
         clientDetail: 'Healthcare / Digital Health',
         metrics: [
@@ -1214,7 +1214,7 @@ const knowledgeBase = [
       {
         type: 'case-study',
         title: 'mySmartSkin: Helping Skin Cancer Survivors Stay One Step Ahead',
-        subtitle: 'Radiant Digital built mySmartSkin, a mobile health platform for skin cancer survivors to monitor skin changes, track dermatology appointments, and receive AI-powered risk assessments. The app empowers survivors with proactive health management tools.',
+        subtitle: 'Radiant Digital built mySmartSkin, a mobile health platform for skin cancer survivors to monitor skin changes, track dermatology appointments, and receive AI-driven risk assessments. The app empowers survivors with proactive health management tools.',
         client: 'Research Institution',
         clientDetail: 'Healthcare / Oncology',
         metrics: [
@@ -1288,12 +1288,12 @@ const knowledgeBase = [
   },
   {
     id: 'cs-network-intelligence',
-    keywords: ['network intelligence', 'enabling network', 'ai-powered development', 'telecom network', 'cio 100', 'cio award', 'award winner', 'cio 100 award'],
+    keywords: ['network intelligence', 'enabling network', 'ai-driven development', 'telecom network', 'cio 100', 'cio award', 'award winner', 'cio 100 award'],
     question: 'Tell me about the Enabling Network Intelligence case study',
     cards: [
       {
         type: 'case-study',
-        title: 'Enabling Network Intelligence in Telecom through AI-Powered Development',
+        title: 'Enabling Network Intelligence in Telecom through AI-Driven Development',
         subtitle: 'A Fortune 15 telecom company needed to convert complex network data into actionable visualizations and enhance planning efficiency. Radiant Digital delivered 50+ responsive screens in under three weeks using its Design-to-Code Accelerator, with 132 unique UX screens, 10 user flows, and 100+ custom components, earning an IDG CIO 100 Award in 2024.',
         client: 'Fortune 15 Telecom Company',
         clientDetail: 'Telecommunications',
@@ -1334,7 +1334,7 @@ const knowledgeBase = [
       {
         type: 'case-study',
         title: 'Florida DOT Disaster Recovery Plan for HCI Servers',
-        subtitle: 'Radiant Digital developed a comprehensive disaster recovery plan for the Florida Department of Transportation\'s state-wide HCI server infrastructure, ensuring business continuity and resilience for critical transportation systems.',
+        subtitle: 'Radiant Digital developed a full disaster recovery plan for the Florida Department of Transportation\'s state-wide HCI server infrastructure, ensuring business continuity and resilience for critical transportation systems.',
         client: 'Florida DOT',
         clientDetail: 'State Government / Transportation',
         metrics: [
@@ -1514,7 +1514,7 @@ const knowledgeBase = [
             icon: 'BarChart3',
             title: 'CDO / VP of Data and Analytics',
             accent: '#91C46B',
-            desc: 'Data-driven intelligence, billing anomaly detection, and AI-powered analytics.',
+            desc: 'Data-driven intelligence, billing anomaly detection, and AI-driven analytics.',
             query: "I'm a CDO / VP of Data and Analytics",
           },
           {
@@ -1571,7 +1571,7 @@ const knowledgeBase = [
             screenshot: '/screenshots/automarc.png',
             desc: 'Extracts, classifies, and processes content to reduce manual effort and improve accuracy, turning document-heavy operations into automated, governed workflows.',
             tags: ['Documents', 'Automation', 'Technical Writing'],
-            details: ['AI-powered content extraction and classification', 'Automated document processing workflows', 'Technical writing acceleration and consistency', 'Reduced manual effort with improved accuracy'],
+            details: ['AI-driven content extraction and classification', 'Automated document processing workflows', 'Technical writing acceleration and consistency', 'Reduced manual effort with improved accuracy'],
           },
         ],
       },
@@ -1701,7 +1701,7 @@ const knowledgeBase = [
             screenshot: '/screenshots/automarc.png',
             desc: 'Extracts, classifies, and processes content to reduce manual effort and improve accuracy, turning document-heavy operations into automated, governed workflows.',
             tags: ['Documents', 'Automation', 'Technical Writing'],
-            details: ['AI-powered content extraction and classification', 'Automated document processing workflows', 'Technical writing acceleration and consistency', 'Reduced manual effort with improved accuracy'],
+            details: ['AI-driven content extraction and classification', 'Automated document processing workflows', 'Technical writing acceleration and consistency', 'Reduced manual effort with improved accuracy'],
           },
           {
             num: '02',

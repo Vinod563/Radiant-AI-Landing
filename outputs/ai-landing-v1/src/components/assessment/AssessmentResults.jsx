@@ -152,7 +152,7 @@ export default function AssessmentResults({ kind, profile, answers }) {
           ? <StageReveal stage={result.stage} accent={ACCENT} stages={AI_STAGES} />
           : <StageReveal stage={result.reveal} accent={ACCENT} stages={CX_STAGES} kicker="Your CX Maturity Level" prefix="" noun="Level"
               note={result.reveal.index < CX_STAGES.length
-                ? `Most organizations take 6–12 months to move from Level ${result.reveal.index} to Level ${result.reveal.index + 1}.`
+                ? `Most organizations take 6-12 months to move from Level ${result.reveal.index} to Level ${result.reveal.index + 1}.`
                 : "You're at the top of the CX maturity curve: the focus now is sustaining and compounding the advantage."} />}
 
         {/* Card 2: score breakdown */}
@@ -191,20 +191,20 @@ export default function AssessmentResults({ kind, profile, answers }) {
                 title="Unlock your full PDF report"
                 body={
                   isAi
-                    ? "Enter your details and we'll email you the complete PDF: your strengths and gaps dimension by dimension, Radiant's read on your stage, and your prioritized next step."
+                    ? "Enter your details and we'll email you the complete PDF: your strengths and gaps dimension by dimension, Radiant Digital's read on your stage, and your prioritized next step."
                     : "Enter your details and we'll email you the complete PDF: dimension-level analysis, your recommended solution, and case studies matched to your context."
                 }
                 bullets={
                   isAi
                     ? [
                         'Full findings: your top 3 strengths and top 3 gaps by dimension',
-                        'Radiant\'s strategic read, editorial perspective on your stage',
+                        'Radiant Digital\'s strategic read, editorial perspective on your stage',
                         'One prioritized next step with rationale',
                         'Competitive positioning vs. AI leaders in your sector',
                       ]
                     : [
                         'Per-dimension breakdown: Vision, Governance, Culture',
-                        'Radiant\'s read at your maturity level',
+                        'Radiant Digital\'s read at your maturity level',
                         'Experience AI recommendation tailored to where you are',
                         'Relevant case studies matched to your context',
                       ]
@@ -246,21 +246,21 @@ export default function AssessmentResults({ kind, profile, answers }) {
                 title="Get your full assessment report"
                 body={
                   isAi
-                    ? "We'll email you a complete read of your AI maturity: your specific strengths, gap analysis, Radiant's strategic perspective, and the highest-leverage action to take next."
+                    ? "We'll email you a complete read of your AI maturity: your specific strengths, gap analysis, Radiant Digital's strategic perspective, and the highest-impact action to take next."
                     : "We'll email you a complete read of your CX maturity: dimension-level analysis, recommended solution, and case studies matched to your context."
                 }
                 bullets={
                   isAi
                     ? [
                         'Full findings: your top 3 strengths and top 3 gaps by dimension',
-                        'Radiant\'s strategic read, editorial perspective on your stage',
+                        'Radiant Digital\'s strategic read, editorial perspective on your stage',
                         'One prioritized next step with rationale',
                         'Competitive positioning vs. AI leaders in your sector',
                         'Delivered to your inbox as a PDF',
                       ]
                     : [
                         'Per-dimension breakdown: Vision, Governance, Culture',
-                        'Radiant\'s read at your maturity level',
+                        'Radiant Digital\'s read at your maturity level',
                         'Experience AI recommendation tailored to where you are',
                         'Relevant case studies matched to your context',
                         'Delivered to your inbox as a PDF',

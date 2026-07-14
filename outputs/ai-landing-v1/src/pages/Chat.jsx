@@ -819,7 +819,7 @@ export default function Chat() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
-              placeholder="What enterprise transformation are you trying to supercharge?"
+              placeholder="Describe the problem you're trying to solve with AI."
               className="flex-1 bg-transparent text-white text-[15px] placeholder:text-white/50 outline-none font-body"
             />
             <button

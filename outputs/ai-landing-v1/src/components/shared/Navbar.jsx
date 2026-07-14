@@ -20,11 +20,10 @@ export default function Navbar() {
   const CONNECT_CHAT = '/chat?q=Connect%20with%20our%20team'
 
   const links = [
-    { label: 'Assessment', href: '#assessment' },
-    { label: 'Solutions', href: '#solutions' },
-    { label: 'Proof', href: '#proof' },
+    { label: 'Problems We Solve', href: '#solutions' },
+    { label: 'Results', href: '#proof' },
     { label: 'Industries', href: '#industries' },
-    { label: 'Platform', href: '#platform' },
+    { label: 'How We Work', href: '#differentiator' },
     { label: 'Contact', to: CONNECT_CHAT },
   ]
 
@@ -58,7 +57,7 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             <Link to="/assessment/ai"
               className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">
-              Assess AI Maturity <ArrowRight size={13} />
+              Assess Your AI Readiness <ArrowRight size={13} />
             </Link>
           </div>
 
@@ -88,7 +87,7 @@ export default function Navbar() {
             <Link to="/assessment/ai"
               onClick={() => setMobileOpen(false)}
               className="btn-primary w-fit mt-3 !py-3 !px-6">
-              Assess AI Maturity
+              Assess Your AI Readiness
             </Link>
           </div>
         )}

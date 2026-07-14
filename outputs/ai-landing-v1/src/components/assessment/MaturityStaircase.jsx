@@ -172,7 +172,7 @@ export default function MaturityStaircase({ currentIndex = 1, accent = '#91C46B'
       {/* Context note */}
       <p className="text-text-muted text-xs text-center mt-4 leading-relaxed">
         {currentIndex < 6
-          ? `Most organizations take 12–18 months to move from Stage ${currentIndex} to Stage ${currentIndex + 1}.`
+          ? `Most organizations take 12-18 months to move from Stage ${currentIndex} to Stage ${currentIndex + 1}.`
           : 'You\'re at the top of the autonomy curve: a self-governing system. The focus now is governance and compounding the advantage.'}
       </p>
     </div>

@@ -4,7 +4,7 @@ import SectionNav from '../components/shared/SectionNav.jsx'
 import Hero from '../components/home/Hero.jsx'
 import WhatIsRadiantAI from '../components/home/WhatIsRadiantAI.jsx'
 import Platform from '../components/home/Platform.jsx'
-import Solutions from '../components/home/Solutions.jsx'
+import ProblemsWeSolve from '../components/home/ProblemsWeSolve.jsx'
 import Infrastructure from '../components/home/Infrastructure.jsx'
 import Enablers from '../components/home/Enablers.jsx'
 import CaseStudy from '../components/home/CaseStudy.jsx'
@@ -21,25 +21,31 @@ export default function Index() {
       <Navbar />
       <SectionNav />
       <Hero />
+      {/* 2. Problems We Solve */}
       <Divider />
-      <AssessmentEntry />
+      <ProblemsWeSolve />
+      {/* 3. Why Radiant Digital: Context Engine + Forward Deployment + AI Fabric */}
       <Divider />
       <WhatIsRadiantAI />
       <Divider />
-      <Solutions />
-      <Divider />
       <Enablers />
+      {/* 4. Results: case study + proof stats */}
       <Divider />
       <CaseStudy />
       <Divider />
       <SocialProof />
+      {/* 5. Industries */}
       <Divider />
       <MarketCarousel />
+      {/* 6. Free Assessment (moved down from position 2) */}
+      <Divider />
+      <AssessmentEntry />
+      {/* 7. Platform */}
       <Divider />
       <Platform />
       <Divider />
       <Infrastructure />
-      {/* CTA section hidden for now, re-enable by uncommenting */}
+      {/* 8. Contact routes to /chat (CTA section remains disabled) */}
       {/* <Divider />
       <CTA /> */}
       <Footer variant="home" />

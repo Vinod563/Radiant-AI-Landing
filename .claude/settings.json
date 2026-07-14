@@ -30,7 +30,8 @@
       "Read(//Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/src/components/home/**)",
       "Bash(sips -g pixelWidth -g pixelHeight -g hasAlpha \"/Users/vinodkumarmourya/Documents/GitHub/files webflow/outputs/ai-landing-v1/public/cio-100-awards.png\")",
       "Bash(playwright --version)",
-      "Bash(npm ls *)"
+      "Bash(npm ls *)",
+      "Bash(python3 \"/private/tmp/claude-502/-Users-vinodkumarmourya-Documents-GitHub-files-webflow/936d9ad6-8f8e-450a-8411-6e694c388918/scratchpad/cleanup.py\")"
     ],
     "additionalDirectories": [
       "/Users/vinodkumarmourya/Downloads/files webflow/outputs/ai-landing/src/components/icx",

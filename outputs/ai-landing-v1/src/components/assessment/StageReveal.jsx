@@ -67,7 +67,7 @@ function PipMeter({ index, total, accent }) {
 function Staircase({ stages, currentIndex, accent, noun = 'Stage', note }) {
   const total = stages.length
   const footnote = note ?? (currentIndex < total
-    ? `Most organizations take 12–18 months to move from ${noun} ${currentIndex} to ${noun} ${currentIndex + 1}.`
+    ? `Most organizations take 12-18 months to move from ${noun} ${currentIndex} to ${noun} ${currentIndex + 1}.`
     : "You're at the top of the maturity curve, the focus now is compounding the advantage.")
 
   return (

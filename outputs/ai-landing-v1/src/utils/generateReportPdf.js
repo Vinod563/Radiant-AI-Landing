@@ -172,7 +172,7 @@ export function buildReportDoc({ kind, profile, answers }) {
       subhead(`${i + 1}. ${s.title}`)
       para(`${s.priority}  ·  Phase: ${s.phase}`, { size: 9, color: ACCENT, bold: true, lead: 3 })
       para(s.detail, { indent: 2, lead: 6 })
-      para(`Radiant service: ${s.service}`, { size: 9.5, color: MUTED, lead: 4 }); gap(3)
+      para(`Radiant Digital service: ${s.service}`, { size: 9.5, color: MUTED, lead: 4 }); gap(3)
     })
     rule()
 
@@ -181,7 +181,7 @@ export function buildReportDoc({ kind, profile, answers }) {
     suggested.services.forEach(sv => para(`•  ${sv}`, { color: INK, indent: 8, lead: 5 }))
     rule()
 
-    kicker("Radiant's Read")
+    kicker("Radiant Digital's Read")
     subhead(`Our perspective on Stage ${scored.stage.index} organizations`, ACCENT)
     para(aiRadiantRead[scored.stage.index] || aiRadiantRead[6], { lead: 7 })
     rule()
@@ -202,8 +202,8 @@ export function buildReportDoc({ kind, profile, answers }) {
 
     kicker('Your Next Move')
     subhead(`Ready to move from ${suggested.currentPhase} to your next stage?`)
-    para('Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.', { lead: 7 })
-    para(`Schedule with Radiant  ·  ${suggested.email}`, { size: 10, color: ACCENT, bold: true, lead: 4 })
+    para('Radiant Digital has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.', { lead: 7 })
+    para(`Schedule with Radiant Digital  ·  ${suggested.email}`, { size: 10, color: ACCENT, bold: true, lead: 4 })
   } else {
     const scored = scoreCx(answers)
     const lvl = cxLevels[scored.overallKey]

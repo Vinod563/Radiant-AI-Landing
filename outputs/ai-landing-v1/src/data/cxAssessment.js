@@ -157,7 +157,7 @@ export function scoreCx(answers) {
 
 export const recommendedSolution = {
   name: 'Experience AI',
-  lede: 'To help you progress to the next maturity level, Radiant recommends Experience AI, our qualitative + quantitative insight engine.',
+  lede: 'To help you progress to the next maturity level, Radiant Digital recommends Experience AI, our qualitative + quantitative insight engine.',
   helps: [
     'Reveal the root causes driving customer behavior',
     'Turn interviews, surveys, and public data into structured CX insights',

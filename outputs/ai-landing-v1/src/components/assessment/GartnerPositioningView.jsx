@@ -41,10 +41,10 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
   // Interpretation: one stage-band sentence + one tilt sentence (strategy vs
   // execution balance). Single string, so the branches can never double up.
   const bandText = group === 'early'
-    ? "You're in the Early Movers group (Stage 1–2), where most organizations begin. The priority is a written AI strategy and clean data foundations before scaling execution."
+    ? "You're in the Early Movers group (Stage 1-2), where most organizations begin. The priority is a written AI strategy and clean data foundations before scaling execution."
     : group === 'progress'
-      ? "You're in the Progressing group (Stage 3–4), ahead of the market average. The move toward AI Leadership now depends on governance maturity and scaling what works into production."
-      : "You're in or near the AI Leaders group (Stage 5–6). The focus shifts to compounding the advantage: governance systems, portfolio ROI, and organizational learning loops."
+      ? "You're in the Progressing group (Stage 3-4), ahead of the market average. The move toward AI Leadership now depends on governance maturity and scaling what works into production."
+      : "You're in or near the AI Leaders group (Stage 5-6). The focus shifts to compounding the advantage: governance systems, portfolio ROI, and organizational learning loops."
   const tilt = y - x > 0.15
     ? ' Your strategy is ahead of your execution: turn planning into deployed, production use cases.'
     : x - y > 0.15
@@ -68,9 +68,9 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
   // dot (whose diagonal position = overall/5) lands inside its own stage cloud.
   // The respondent's own band is emphasized.
   const clusters = [
-    { id: 'early', label: 'Early Movers', sublabel: 'Stage 1–2', cx: 0.30, cy: 0.30, rd: 0.16, color: '#64748B' },
-    { id: 'progress', label: 'Progressing', sublabel: 'Stage 3–4', cx: 0.58, cy: 0.58, rd: 0.15, color: '#2DD4BF' },
-    { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 5–6', cx: 0.84, cy: 0.84, rd: 0.14, color: accent },
+    { id: 'early', label: 'Early Movers', sublabel: 'Stage 1-2', cx: 0.30, cy: 0.30, rd: 0.16, color: '#64748B' },
+    { id: 'progress', label: 'Progressing', sublabel: 'Stage 3-4', cx: 0.58, cy: 0.58, rd: 0.15, color: '#2DD4BF' },
+    { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 5-6', cx: 0.84, cy: 0.84, rd: 0.14, color: accent },
   ].map(c => ({ ...c, active: c.id === group, opacity: c.id === group ? 0.4 : 0.18 }))
 
   return (

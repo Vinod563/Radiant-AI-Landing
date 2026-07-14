@@ -46,14 +46,14 @@ export default function ReportPreviewTeaser({
   const defaultFull = isAi
     ? [
         'Full write-up of your top 3 strengths and top 3 gaps, dimension by dimension',
-        "Radiant's editorial read on exactly what your stage means and what tends to go wrong next",
+        "Radiant Digital's editorial read on exactly what your stage means and what tends to go wrong next",
         'One prioritized next step with the reasoning behind it, not a generic checklist',
         'Competitive positioning detail vs. AI leaders in your specific sector',
         'Saved as a PDF you can share with your leadership team',
       ]
     : [
         'Per-dimension breakdown across Vision, Governance, and Culture',
-        "Radiant's read on what your maturity level means in practice",
+        "Radiant Digital's read on what your maturity level means in practice",
         'A solution recommendation matched to where you are today',
         'Relevant case studies from organizations at your stage',
         'Saved as a PDF you can share with your leadership team',
@@ -96,7 +96,7 @@ export default function ReportPreviewTeaser({
           </h3>
           <p className="text-text-secondary text-sm leading-relaxed mb-6 max-w-xl">
             Everything you've seen on this page is the headline version. The full report goes
-            dimension-by-dimension with Radiant's actual analysis of your answers, most readers
+            dimension-by-dimension with Radiant Digital's actual analysis of your answers, most readers
             tell us the free preview is maybe a fifth of the detail.
           </p>
 

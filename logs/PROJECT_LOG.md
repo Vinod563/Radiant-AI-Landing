@@ -578,3 +578,19 @@
 **Handoffs:** All hero/card copy is PROVISIONAL — Deena reconciles final wording; Path B's hard-problem framing is net-new and needs sign-off. Two-vs-three paths kept switchable. Staged on branch `ai-test-integration`, NOT merged — mockup for Lam's review.
 
 **Status:** ✅ SUCCESS
+
+---
+
+### 2026-07-14 - Landing Page Copy & Structure Overhaul (radiant-ai-landing-copy-spec)
+**Action:** Implemented Lam's approved landing-page spec on the standalone AI site (outputs/ai-landing-v1), repositioning around the mid-market buyer (self-select by symptom, not maturity grade).
+
+**Phase 1 - Nav + order:** Navbar → Problems We Solve · Results · Industries · How We Work · Contact + CTA "Assess Your AI Readiness" (dropped standalone Assessment + Platform). SectionNav relabeled/reordered. Index.jsx reordered per §7; Free Assessment block moved from position 2 to after Industries; AI Fabric now adjacent to the Context Engine. Contact keeps routing to /chat.
+**Phase 2 - Hero:** approved subhead ("hard-won playbook…"); two journey cards (PLAN WITH CONFIDENCE / DEPLOY WITH DISCIPLINE, eyebrow-promises/headline-diagnoses); prompt placeholder → "Describe the problem you're trying to solve with AI." (Hero + Chat).
+**Phase 3 - Problems We Solve accordion:** new ProblemsWeSolve.jsx replaces Solutions.jsx (deleted). Two-pane symptom-led tablist (role=tablist/tab/tabpanel, arrow-key roving, deep-link #slug via replaceState, keyed opacity cross-fade with reserved 16:10 slot = no layout shift); mobile = inline vertical accordion. solutions[] reordered to spec order with problemStatement + slug added to all 8; reused FloatingScreenshot + visualOverrides.
+**Phase 4 - Sitewide voice sweep:** 0 em/en dashes in copy; AI-powered→AI-driven; leverage/comprehensive/robust/end-to-end/world-class rewritten; standalone "Radiant"→"Radiant Digital" (compounds preserved); infra band → "Powered by the infrastructure you already trust."
+
+**Verification:** npm run build clean; grep gates 0; Playwright 18/18 (nav labels, hero copy+cards+placeholder, accordion default/click/keyboard/deep-link, page order, mobile no-overflow); desktop + mobile screenshots reviewed.
+
+**Open items flagged (no unapproved copy invented):** trusted band mid-market rewrite (§9.1); exact solution tags[]; assistant stage-inference routing (backend); CX hero secondary link retention.
+
+**Status:** ✅ SUCCESS — staged on branch ai-test-integration, NOT merged. Mockup for Lam's review.
