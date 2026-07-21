@@ -24,9 +24,7 @@ export default function Index() {
       {/* 2. Problems We Solve */}
       <Divider />
       <ProblemsWeSolve />
-      {/* 3. Why Radiant Digital: Context Engine + Forward Deployment + AI Fabric */}
-      <Divider />
-      <WhatIsRadiantAI />
+      {/* 3. AI Fabric */}
       <Divider />
       <Enablers />
       {/* 4. Results: case study + proof stats */}
@@ -37,7 +35,10 @@ export default function Index() {
       {/* 5. Industries */}
       <Divider />
       <MarketCarousel />
-      {/* 6. Free Assessment (moved down from position 2) */}
+      {/* 6. Why Radiant Digital (moved below Industries) */}
+      <Divider />
+      <WhatIsRadiantAI />
+      {/* 7. Free Assessment (moved down from position 2) */}
       <Divider />
       <AssessmentEntry />
       {/* 7. Platform */}

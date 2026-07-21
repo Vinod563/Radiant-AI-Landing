@@ -319,6 +319,68 @@ export function buildAiReportHtml(profile, result) {
   // Radiant's read, stage-specific editorial commentary (shared source)
   const radiantRead = aiRadiantRead
 
+  // ── Conclusion (dynamic synthesis from the scored result) ───────────────────
+  const who = profile?.companyName
+    || (profile?.fullName ? `${profile.fullName}'s organization` : 'Your organization')
+  const band = stage.index <= 2 ? 'the Early Movers group'
+    : stage.index <= 4 ? 'the Progressing group'
+    : 'the AI Leaders band'
+  const ranked = sections
+    .map(s => ({ ...s, v: sectionAverages[s.key] || 0 }))
+    .sort((a, b) => b.v - a.v)
+  const top = ranked[0]
+  const low = ranked[ranked.length - 1]
+
+  const concP1 = `${who} sits at Stage ${stage.index} of 6, ${stage.name}, placing it in ${band}.${stage.description ? ' ' + stage.description : ''}`
+  const concP2 = (top?.v && low?.v)
+    ? `The strongest dimension is ${top.label} (${top.v.toFixed(1)} of 5), while ${low.label} (${low.v.toFixed(1)}) is the one most likely to gate further progress. That is the lever to work next, and it is where organizations at this stage most often stall on the way to the next.`
+    : `The priority now is the dimension most likely to gate further progress, which is where organizations at this stage most often stall.`
+  const stepTitles = (suggested.steps || [])
+    .map((s, i) => `${i + 1}) ${s.title.charAt(0).toLowerCase() + s.title.slice(1)}`)
+    .join(', ')
+  const concP3 = stepTitles
+    ? `The recommended sequence follows directly: ${stepTitles}. Executed in order along Radiant Digital's Assess &rarr; Train &rarr; Adopt &rarr; Scale &rarr; Sustain model, these moves convert today's position into durable, compounding advantage.`
+    : `Radiant Digital's Assess &rarr; Train &rarr; Adopt &rarr; Scale &rarr; Sustain model maps the path from here to your next stage.`
+  const concP4 = `The advantage compounds only for organizations whose governance is mature enough to trust AI with action. A focused next step, and a short conversation with the team below, is enough to map exactly where to start.`
+
+  const conclusionSection = `
+    <div class="section">
+      <span class="kicker">Conclusion</span>
+      <div class="section-title">Where You Stand, and What's Next</div>
+      <div class="section-body" style="margin-top:10px">${concP1}</div>
+      <div class="section-body" style="margin-top:12px">${concP2}</div>
+      <div class="section-body" style="margin-top:12px">${concP3}</div>
+      <div class="section-body" style="margin-top:12px">${concP4}</div>
+    </div>`
+
+  // ── Get in Touch (two Radiant AI leaders; photos are placeholders) ──────────
+  const people = [
+    {
+      initials: 'PK', name: 'Prafull Khare',
+      title: 'Executive Director | Global Head of AI Strategy, Solution Engineering, &amp; New Technology Enablement',
+      org: 'Radiant Digital', email: 'prafull.khare@radiant.digital',
+    },
+    {
+      initials: 'SC', name: 'Srinivas Chamarthi',
+      title: 'SVP &amp; Business Head',
+      org: 'Radiant Digital', email: 'srinivas.chamarthi@radiant.digital',
+    },
+  ]
+  const peopleHtml = people.map(p => `
+    <div style="flex:1;min-width:240px;border:1px solid #e2e8f0;border-radius:16px;padding:24px;text-align:center;background:#fff;">
+      <div style="width:84px;height:84px;border-radius:100px;margin:0 auto 16px;background:linear-gradient(135deg,#dfe8f2,#cdd9e8);border:2px dashed #a9bace;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#5b7391;font-family:'Poppins',sans-serif;font-weight:700;font-size:22px;line-height:1;">${p.initials}<span style="font-size:7px;font-weight:600;letter-spacing:0.5px;color:#8ea3ba;margin-top:3px;">PHOTO TO ADD</span></div>
+      <div style="font-family:'Poppins',sans-serif;font-weight:700;font-size:16px;color:#0f172a;">${p.name}</div>
+      <div style="font-size:12px;color:#475569;line-height:1.5;margin:8px 0 12px;">${p.title}<br/>${p.org}</div>
+      <a href="mailto:${p.email}" style="font-size:13px;color:#557f2b;font-weight:700;text-decoration:none;">${p.email}</a>
+    </div>`).join('')
+  const getInTouchSection = `
+    <div class="section section-alt">
+      <span class="kicker">Get in Touch</span>
+      <div class="section-title">Speak With the Team Behind This Assessment</div>
+      <div class="section-body" style="margin-top:8px">Reach out to Radiant Digital's AI leadership to map exactly where to start and what the next stage looks like for your organization.</div>
+      <div style="display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;">${peopleHtml}</div>
+    </div>`
+
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -385,6 +447,12 @@ export function buildAiReportHtml(profile, result) {
       <div class="radiant-read-text">${radiantRead[stage.index] || radiantRead[6]}</div>
     </div>
   </div>
+
+  <!-- Conclusion -->
+  ${conclusionSection}
+
+  <!-- Get in Touch -->
+  ${getInTouchSection}
 
   <!-- CTA -->
   <div class="cta-block">

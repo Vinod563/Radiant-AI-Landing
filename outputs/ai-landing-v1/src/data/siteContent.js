@@ -10,7 +10,7 @@ export const brand = {
   platformName: 'Radiant Digital AI Platform',
   tagline: 'Enterprise Transformation. Supercharged with AI.',
   description:
-    'Radiant Digital has the hard-won playbook that turns enterprise AI potential into outcomes. From your first use case to the realities of deployment at scale, we bring the context, the solutions, and the delivery model that get you to production faster and better than going it alone. You inherit the lessons instead of funding them.',
+    'Radiant Digital has the hard-won playbook that turns enterprise AI potential into outcomes. From your first use case to the realities of deployment at scale, we bring the context, the solutions, and the delivery model that get you to production faster and better than going it alone.\nYou inherit the lessons instead of funding them.',
   differentiator:
     'Every AI firm brings models. Only Radiant Digital grounds them with the Precision Context Engine.',
   differentiatorBody:
@@ -103,7 +103,7 @@ export const solutions = [
   {
     num: '01', title: 'ICX AI',
     slug: 'churn',
-    problemStatement: 'Friction stays invisible until it shows up as churn.',
+    problemStatement: 'Customer friction stays invisible until it becomes churn.',
     label: 'Digital Strategy and Experience',
     accent: '#91C46B',
     screenshot: '/screenshots/enterprise-icx.png',
@@ -122,7 +122,7 @@ export const solutions = [
   {
     num: '07', title: 'Automarc AI',
     slug: 'review',
-    problemStatement: 'Manual review is slow, and the misses are expensive.',
+    problemStatement: 'Manual document review is slow, and misses cost you.',
     label: 'Organizational Transformation',
     accent: '#a855f7',
     screenshot: '/screenshots/automarc.png',
@@ -159,7 +159,7 @@ export const solutions = [
   {
     num: '08', title: 'Touchless IT Operations',
     slug: 'incidents',
-    problemStatement: 'Repeat incidents burn hours and degrade service.',
+    problemStatement: 'Repeat IT incidents burn hours and degrade service.',
     label: 'Analytics, Data Science and AI',
     accent: '#2DD4BF',
     screenshot: '/screenshots/touchless-ops-v2.png',
@@ -178,7 +178,7 @@ export const solutions = [
   {
     num: '04', title: 'AI-First Legacy Modernization',
     slug: 'legacy',
-    problemStatement: 'Technical debt builds while system performance degrades.',
+    problemStatement: 'Legacy debt builds while system performance degrades.',
     label: 'Product Development and Integration',
     accent: '#00a86b',
     screenshot: '/screenshots/legacy-modernization.png',
@@ -197,7 +197,7 @@ export const solutions = [
   {
     num: '03', title: 'Design-to-code',
     slug: 'handoff',
-    problemStatement: 'Handoff rework burns weeks your roadmap never budgeted.',
+    problemStatement: 'Design-to-dev handoff rework burns weeks of roadmap.',
     label: 'Product Development and Integration',
     accent: '#00c87d',
     screenshot: '/screenshots/design-to-code.png',
@@ -215,7 +215,7 @@ export const solutions = [
   {
     num: '02', title: 'Customer Journey Intelligence',
     slug: 'journey',
-    problemStatement: 'Analytics tells you what happened. Never why.',
+    problemStatement: "Experience analytics don't tell you the why.",
     label: 'Digital Strategy and Experience',
     accent: '#F0974E',
     screenshot: '/screenshots/cx-workbench.png',
@@ -233,7 +233,7 @@ export const solutions = [
   {
     num: '06', title: 'Product Launch Risk Intelligence',
     slug: 'launch',
-    problemStatement: 'Go/no-go is a judgment call with no data behind it.',
+    problemStatement: 'Product launches run on gut, not data.',
     label: 'Analytics, Data Science and AI',
     accent: '#F05030',
     screenshot: '/screenshots/launch-risk-v2.png',

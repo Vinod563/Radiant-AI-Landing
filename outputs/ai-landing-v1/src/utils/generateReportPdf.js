@@ -5,6 +5,7 @@ import {
 import { scoreCx, cxLevels, recommendedSolution } from '../data/cxAssessment.js'
 import { aiRadiantRead, suggestedNextSteps, cxWhyThisMatters, cxCta, positioningRead } from '../data/reportEditorial.js'
 import { LEADER_CONTENT } from '../components/assessment/WhatAILeadersDo.jsx'
+import { buildAiExecutiveReportDoc } from './aiExecutiveReport.js'
 
 const ROLE_LABEL = { exec: 'Executive', tech: 'Technology Leader', biz: 'Business Leader', consultant: 'AI Practitioner' }
 
@@ -23,6 +24,9 @@ const clean = (s = '') => String(s)
  * @returns {{ doc: import('jspdf').jsPDF, filename: string }}
  */
 export function buildReportDoc({ kind, profile, answers }) {
+  // AI reports use the full, personalized Executive Edition builder.
+  if (kind === 'ai') return buildAiExecutiveReportDoc({ profile, answers })
+
   const isAi = kind === 'ai'
   const ACCENT = isAi ? [145, 196, 107] : [89, 106, 224]
   const GREEN = [145, 196, 107]
@@ -204,6 +208,62 @@ export function buildReportDoc({ kind, profile, answers }) {
     subhead(`Ready to move from ${suggested.currentPhase} to your next stage?`)
     para('Radiant Digital has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.', { lead: 7 })
     para(`Schedule with Radiant Digital  ·  ${suggested.email}`, { size: 10, color: ACCENT, bold: true, lead: 4 })
+    rule()
+
+    // ── Conclusion (dynamic synthesis) ────────────────────────────────────────
+    const who = profile?.companyName
+      || (profile?.fullName ? `${profile.fullName}'s organization` : 'Your organization')
+    const bandName = scored.stage.index <= 2 ? 'the Early Movers group'
+      : scored.stage.index <= 4 ? 'the Progressing group' : 'the AI Leaders band'
+    const rankC = sections
+      .map(s => ({ label: s.label, v: scored.sectionAverages[s.key] || 0 }))
+      .sort((a, b) => b.v - a.v)
+    const topC = rankC[0]
+    const lowC = rankC[rankC.length - 1]
+    const stepList = (suggested.steps || [])
+      .map((s, i) => `${i + 1}) ${s.title.charAt(0).toLowerCase() + s.title.slice(1)}`)
+      .join(', ')
+
+    kicker('Conclusion')
+    subhead("Where you stand, and what's next", ACCENT)
+    para(`${who} sits at Stage ${scored.stage.index} of 6, ${scored.stage.name}, placing it in ${bandName}. Execution Readiness scores ${pos.execPct} of 100 and Strategic Maturity ${pos.stratPct} of 100.`, { lead: 7 })
+    if (topC.v && lowC.v) {
+      para(`The strongest dimension is ${topC.label} (${topC.v.toFixed(1)} of 5), while ${lowC.label} (${lowC.v.toFixed(1)}) is the one most likely to gate further progress, and where organizations at this stage most often stall on the way to the next.`, { lead: 7 })
+    }
+    if (stepList) {
+      para(`The recommended sequence follows directly: ${stepList}. Executed in order along Radiant Digital's Assess -> Train -> Adopt -> Scale -> Sustain model, these moves convert today's position into durable, compounding advantage.`, { lead: 7 })
+    }
+    para('The advantage compounds only for organizations whose governance is mature enough to trust AI with action. A focused next step, and a short conversation with the team below, is enough to map exactly where to start.', { lead: 7 })
+    rule()
+
+    // ── Get in Touch (two Radiant AI leaders; photos are placeholders) ─────────
+    kicker('Get in Touch')
+    subhead('Speak with the team behind this assessment')
+    para("Reach out to Radiant Digital's AI leadership to map exactly where to start and what the next stage looks like for your organization.", { lead: 7 })
+    gap(6)
+    const people = [
+      { initials: 'PK', name: 'Prafull Khare', title: 'Executive Director | Global Head of AI Strategy, Solution Engineering, & New Technology Enablement', org: 'Radiant Digital', email: 'prafull.khare@radiant.digital' },
+      { initials: 'SC', name: 'Srinivas Chamarthi', title: 'SVP & Business Head', org: 'Radiant Digital', email: 'srinivas.chamarthi@radiant.digital' },
+    ]
+    people.forEach(p => {
+      const titleLines = doc.splitTextToSize(clean(`${p.title}  ·  ${p.org}`), maxW - 44)
+      const rowH = 26 + titleLines.length * 12
+      ensure(rowH + 8)
+      const cx = margin + 16, cy = y + 10, r = 16
+      doc.setFillColor(223, 232, 242); doc.circle(cx, cy, r, 'F')
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.setTextColor(91, 115, 145)
+      doc.text(p.initials, cx, cy + 3.5, { align: 'center' })
+      const tx = margin + 44
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(...INK)
+      doc.text(clean(p.name), tx, y + 6)
+      doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(...BODY)
+      let ty = y + 20
+      titleLines.forEach(l => { doc.text(l, tx, ty); ty += 12 })
+      doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); doc.setTextColor(...ACCENT)
+      doc.text(clean(p.email), tx, ty)
+      y = Math.max(ty + 8, y + rowH) + 8
+    })
+    para('Placeholder headshots shown. Replace the PK and SC initials with the supplied photos before external distribution.', { size: 8.5, color: MUTED, lead: 4 })
   } else {
     const scored = scoreCx(answers)
     const lvl = cxLevels[scored.overallKey]

@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Radiant AI Adoption Assessment — Executive Edition</title>
+<style>
+  :root{
+    --navy:#0f3a5a;        /* cover / deep headings */
+    --blue:#2160c4;        /* section headers (expanded edition) */
+    --added:#2f6ad0;       /* new / added copy shown in blue */
+    --olive:#6f8f3f;       /* kickers */
+    --green:#91c46b;       /* brand accent */
+    --amber:#f0974e;
+    --ink:#17202f;
+    --body:#4a5568;
+    --muted:#8390a0;
+    --hair:#e4e8ee;
+    --tint:#eef4fb;        /* light blue card */
+    --gtint:#f2f7ec;       /* light green card */
+    --page:210mm;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  body{
+    font-family:-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    color:var(--body); font-size:10.5pt; line-height:1.5;
+  }
+  .page{
+    width:210mm; height:297mm; padding:20mm 22mm 16mm; position:relative;
+    page-break-after:always; overflow:hidden; background:#fff;
+  }
+  .page:last-child{page-break-after:auto}
+
+  /* running header */
+  .rh{display:flex; align-items:center; gap:14px; padding-bottom:9px;
+      border-bottom:1px solid var(--hair); margin-bottom:26px}
+  .rh .logo{display:flex; align-items:center; font-weight:800; font-size:15pt; letter-spacing:-.3px; color:var(--navy)}
+  .rh .logo .mk{color:var(--green); margin-right:2px; font-size:15pt}
+  .rh .sect{font-size:8pt; letter-spacing:2px; color:var(--muted); font-weight:600}
+
+  /* footer */
+  .ft{position:absolute; left:22mm; right:22mm; bottom:12mm;
+      border-top:1px solid var(--hair); padding-top:8px;
+      display:flex; justify-content:space-between; font-size:7.5pt; color:var(--muted)}
+
+  .kicker{font-size:8.5pt; letter-spacing:2px; font-weight:700; color:var(--olive); text-transform:uppercase; margin-bottom:10px}
+  .kicker.blue{color:var(--added)}
+  h1{font-size:34pt; color:var(--navy); font-weight:800; letter-spacing:-.5px; line-height:1.05}
+  h2{font-size:22pt; color:var(--blue); font-weight:800; letter-spacing:-.3px; line-height:1.12}
+  h3{font-size:12.5pt; color:var(--blue); font-weight:700; margin-bottom:4px}
+  h3.ink{color:var(--ink)}
+  p{margin-bottom:11px}
+  p.lead{font-size:12pt; color:var(--body)}
+  .added{color:var(--added)}
+  .mut{color:var(--muted)}
+  .sub{font-size:10pt; color:var(--body)}
+  .small{font-size:8.5pt}
+  .em{font-style:italic}
+
+  /* cards & callouts */
+  .callout{background:var(--gtint); border-left:4px solid var(--green);
+           padding:16px 20px; border-radius:0 6px 6px 0; margin:14px 0}
+  .callout.blue{background:var(--tint); border-left-color:var(--added)}
+  .callout .lbl{font-size:8pt; letter-spacing:1.5px; font-weight:700; color:var(--olive); text-transform:uppercase; margin-bottom:6px}
+  .callout.blue .lbl{color:var(--added)}
+
+  .numrow{display:flex; gap:14px; background:var(--tint); border-radius:8px; padding:14px 18px; margin-bottom:12px}
+  .numrow .n{flex:0 0 26px; height:26px; border-radius:50%; background:var(--blue); color:#fff;
+             font-weight:700; font-size:11pt; display:flex; align-items:center; justify-content:center}
+  .numrow.g .n{background:var(--green)}
+  .numrow .n.hollow{background:transparent; border:2px solid var(--blue); color:var(--blue)}
+
+  table{width:100%; border-collapse:collapse; margin:8px 0 4px}
+  th{font-size:8pt; letter-spacing:1px; text-transform:uppercase; color:var(--blue); text-align:left;
+     padding:8px 10px; border-bottom:2px solid var(--blue); font-weight:700}
+  td{padding:11px 10px; border-bottom:1px solid var(--hair); font-size:9.5pt; vertical-align:top; color:var(--added)}
+  td.ink{color:var(--body)}
+
+  .rule{height:1px; background:var(--hair); margin:18px 0}
+
+  /* TOC */
+  .toc-row{display:flex; align-items:baseline; padding:11px 0; border-bottom:1px solid var(--hair)}
+  .toc-row .idx{flex:0 0 34px; color:var(--blue); font-weight:700; font-size:10pt}
+  .toc-row .ttl{flex:1; color:var(--blue); font-size:11pt}
+  .toc-row .pg{color:var(--muted); font-size:10pt}
+  .toc-row.new .ttl,.toc-row.new .idx{color:var(--added); font-weight:700}
+
+  /* scorecard */
+  .score{margin-bottom:16px}
+  .score .top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px}
+  .score .top .lab{font-weight:700; color:var(--ink); font-size:11pt}
+  .score .top .val{color:var(--muted); font-size:10pt; font-weight:600}
+  .bar{height:12px; background:#eef1f4; border-radius:3px; overflow:hidden}
+  .bar > span{display:block; height:100%; background:var(--green); border-radius:3px}
+
+  /* stat cards */
+  .stats{display:flex; gap:14px; margin:14px 0}
+  .stat{flex:1; border:1px solid var(--hair); border-radius:8px; padding:16px 18px}
+  .stat .k{font-size:8pt; letter-spacing:1.2px; color:var(--olive); font-weight:700; text-transform:uppercase; margin-bottom:8px}
+  .stat .v{font-size:20pt; font-weight:800; color:var(--navy)}
+  .stat .d{font-size:8.5pt; color:var(--muted); margin-top:4px}
+
+  .three{display:flex; gap:14px; margin:16px 0}
+  .three .c{flex:1; background:#f7f9fc; border-radius:8px; padding:16px}
+  .three .c .k{font-size:8pt; letter-spacing:1.2px; color:var(--muted); font-weight:700; text-transform:uppercase; margin-bottom:8px}
+  .three .c .v{font-size:14pt; font-weight:800; color:var(--navy); line-height:1.15}
+  .three .c .d{font-size:8.5pt; color:var(--muted); margin-top:6px}
+
+  /* maturity ladder */
+  .ladder{display:flex; align-items:flex-end; gap:14px; height:250px; margin:34px 0 8px}
+  .rung{flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; position:relative}
+  .rung .box{width:100%; border:1.5px solid var(--hair); border-radius:6px; display:flex;
+             flex-direction:column; align-items:center; justify-content:center; color:var(--navy)}
+  .rung .box .num{font-size:15pt; font-weight:800}
+  .rung .box .nm{font-size:8.5pt; font-weight:700; margin-top:2px}
+  .rung.here .box{background:var(--green); border-color:var(--green); color:#22350f}
+  .rung .sub{font-size:6.8pt; color:var(--muted); text-align:center; margin-top:7px; line-height:1.25}
+  .rung .here-tag{position:absolute; top:-30px; font-size:7.5pt; letter-spacing:1px; color:var(--olive);
+                  font-weight:700; text-align:center; width:120%}
+  .rung .here-tag .arw{display:block; font-size:12pt; line-height:1}
+
+  /* positioning chart */
+  .quad{position:relative; height:340px; border-left:1.5px solid var(--hair); border-bottom:1.5px solid var(--hair); margin:18px 8px 8px}
+  .ell{position:absolute; border-radius:50%; display:flex; align-items:center; justify-content:center;
+       font-size:9pt; font-weight:700; color:#3a4658}
+  .ell.e1{width:38%; height:26%; left:2%; bottom:4%; background:#e9ecf1}
+  .ell.e2{width:36%; height:24%; left:28%; bottom:34%; background:#dbeaf0}
+  .ell.e3{width:34%; height:22%; right:4%; bottom:52%; background:#e4f0d6; color:#4a5f2c}
+  .diag{position:absolute; left:0; bottom:0; width:100%; height:100%;
+        background:linear-gradient(to top left, transparent 49.6%, #c9d3df 49.6%, #c9d3df 50.4%, transparent 50.4%)}
+  .dot{position:absolute; right:14%; bottom:64%; width:18px; height:18px; border-radius:50%;
+       background:var(--green); border:3px solid #5f8a2e; z-index:3}
+  .dot .tag{position:absolute; bottom:24px; left:50%; transform:translateX(-40%); white-space:nowrap;
+            font-size:9pt; font-weight:700; color:var(--navy)}
+  .axl-y{position:absolute; left:-6px; top:40%; transform:rotate(-90deg); transform-origin:left;
+         font-size:8pt; color:var(--muted)}
+  .axl-x{text-align:center; font-size:8pt; color:var(--muted); margin-top:4px}
+  .exhibit{text-align:center; font-size:8.5pt; letter-spacing:1px; font-weight:700; color:var(--blue); margin-top:12px}
+  .caption{text-align:center; font-size:8.5pt; color:var(--muted); font-style:italic; margin-top:4px}
+
+  /* CTA dark panel */
+  .cta{background:#0b2740; border-radius:10px; padding:26px 28px; color:#fff; margin:14px 0}
+  .cta .k{font-size:8.5pt; letter-spacing:1.5px; color:var(--green); font-weight:700; text-transform:uppercase; margin-bottom:10px}
+  .cta .big{font-size:17pt; font-weight:800; margin-bottom:4px}
+  .cta .u{font-size:9.5pt; color:#9fb2c4}
+  .cta .btn{display:inline-block; margin-top:16px; background:var(--green); color:#22350f;
+            font-weight:700; font-size:9pt; letter-spacing:1px; padding:9px 18px; border-radius:5px}
+
+  /* people */
+  .people{display:flex; gap:22px; margin:20px 0}
+  .person{flex:1; border:1px solid var(--hair); border-radius:10px; padding:22px; text-align:center}
+  .avatar{width:96px; height:96px; border-radius:50%; margin:0 auto 16px;
+          background:linear-gradient(135deg,#dfe8f2,#cdd9e8); border:2px dashed #a9bace;
+          display:flex; flex-direction:column; align-items:center; justify-content:center;
+          color:#5b7391; font-weight:800; font-size:24pt; letter-spacing:1px}
+  .avatar .ph{font-size:7pt; font-weight:600; letter-spacing:.5px; color:#8ea3ba; margin-top:2px}
+  .person .nm{font-size:13pt; font-weight:800; color:var(--navy)}
+  .person .rl{font-size:9pt; color:var(--body); margin:8px 0 12px; line-height:1.4}
+  .person .em{font-size:9.5pt; color:var(--blue); font-weight:600; font-style:normal}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ PAGE 1 — COVER ══════════════ -->
+<section class="page">
+  <div class="rh" style="border:none;justify-content:space-between;margin-bottom:60px">
+    <div class="logo"><span class="mk">◤</span>RADIANT</div>
+    <div class="sect">CONFIDENTIAL, EXECUTIVE BRIEFING</div>
+  </div>
+
+  <div class="kicker">An Executive Briefing on Enterprise AI Maturity</div>
+  <h1>AI Adoption<br>Assessment</h1>
+  <p class="lead" style="margin-top:18px;max-width:70%">A structured diagnostic of your organization's AI maturity, execution readiness, and the fastest path to compounding advantage.</p>
+
+  <div class="rule" style="margin:34px 0 24px"></div>
+
+  <h3 class="ink" style="font-size:14pt">Prepared for Vinod</h3>
+  <p class="mut" style="font-size:9.5pt;margin-bottom:4px">Financial Services&nbsp;&nbsp;·&nbsp;&nbsp;Under 500 employees&nbsp;&nbsp;·&nbsp;&nbsp;Enterprise / Cross-functional&nbsp;&nbsp;·&nbsp;&nbsp;Executive Track</p>
+  <p class="mut" style="font-size:9.5pt">July 1, 2026</p>
+
+  <div class="kicker" style="margin-top:40px">Your stage: 5 of 6, and you are doing well</div>
+
+  <div class="ladder">
+    <div class="rung"><div class="box" style="height:34%"><div class="num">1</div><div class="nm">Zero</div></div><div class="sub">AI assists, humans act</div></div>
+    <div class="rung"><div class="box" style="height:48%"><div class="num">2</div><div class="nm">Guided</div></div><div class="sub">AI recommends, humans approve</div></div>
+    <div class="rung"><div class="box" style="height:60%"><div class="num">3</div><div class="nm">Insight</div></div><div class="sub">AI infers unprompted</div></div>
+    <div class="rung"><div class="box" style="height:74%"><div class="num">4</div><div class="nm">Operational</div></div><div class="sub">AI acts, humans supervise</div></div>
+    <div class="rung here"><div class="here-tag">YOU ARE HERE<span class="arw">↓</span></div><div class="box" style="height:88%"><div class="num">5</div><div class="nm">Proactive</div></div><div class="sub">AI predicts, humans steer</div></div>
+    <div class="rung"><div class="box" style="height:100%"><div class="num">6</div><div class="nm">Full</div></div><div class="sub">AI self-governs, humans guide</div></div>
+  </div>
+
+  <div class="callout" style="margin-top:30px">
+    <div class="lbl">Original Finding</div>
+    <h3 class="ink" style="margin-bottom:8px">AI anticipates and prescribes before humans see the need.</h3>
+    <p style="margin:0">AI shifts from reactive to predictive: identifying opportunities, risks, and the right interventions ahead of human awareness, and prescribing action enterprise wide. People move up to strategy and governance while AI manages the execution triggers. The advantage compounds here, but only for organizations whose governance is mature enough to trust prediction with action.</p>
+  </div>
+</section>
+
+<!-- ══════════════ PAGE 2 — CONTENTS ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">CONTENTS</div></div>
+
+  <h2 style="color:var(--navy)">Contents</h2>
+  <p class="added" style="margin-top:10px">Added for this executive edition. New material is shown in blue throughout. Every entry below links to its page.</p>
+
+  <div style="margin-top:20px">
+    <div class="toc-row"><div class="idx">01</div><div class="ttl">Executive Summary &amp; Recommendations</div><div class="pg">3</div></div>
+    <div class="toc-row"><div class="idx">02</div><div class="ttl">About This Assessment</div><div class="pg">4</div></div>
+    <div class="toc-row"><div class="idx">03</div><div class="ttl">Scores by Dimension</div><div class="pg">4</div></div>
+    <div class="toc-row"><div class="idx">04</div><div class="ttl">Competitive Positioning</div><div class="pg">5</div></div>
+    <div class="toc-row"><div class="idx">05</div><div class="ttl">What We See</div><div class="pg">6</div></div>
+    <div class="toc-row"><div class="idx">06</div><div class="ttl">Your Recommended Next Step</div><div class="pg">7</div></div>
+    <div class="toc-row"><div class="idx">07</div><div class="ttl">Radiant's Read</div><div class="pg">7</div></div>
+    <div class="toc-row"><div class="idx">08</div><div class="ttl">What AI Leaders Do</div><div class="pg">8</div></div>
+    <div class="toc-row"><div class="idx">09</div><div class="ttl">Your Next Move</div><div class="pg">9</div></div>
+    <div class="toc-row"><div class="idx">10</div><div class="ttl">Assessment Methodology</div><div class="pg">9</div></div>
+    <div class="toc-row new"><div class="idx">11</div><div class="ttl">Conclusion</div><div class="pg">11</div></div>
+    <div class="toc-row new"><div class="idx">12</div><div class="ttl">Get in Touch</div><div class="pg">12</div></div>
+  </div>
+
+  <div class="callout blue" style="margin-top:26px">
+    <div class="lbl">Editorial Note, Added</div>
+    <p style="margin:0;color:var(--added)">Every sentence carried over from the original one page assessment appears in the standard body color. Everything added for this expanded executive edition, including the narrative, exhibits, methodology, and this table of contents, appears in blue, so you can see exactly what changed at a glance.</p>
+  </div>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 2</span></div>
+</section>
+
+<!-- ══════════════ PAGE 3 — EXECUTIVE SUMMARY ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">EXECUTIVE SUMMARY</div></div>
+
+  <div class="kicker blue">01 · Added Section</div>
+  <h2>Executive Summary &amp; Recommendations</h2>
+
+  <div class="callout" style="margin-top:16px">
+    <div class="lbl">Bottom Line</div>
+    <p style="margin:0">Vinod's organization scores as Stage 5, Proactive Autonomy, placing it in or near the AI Leaders band (Execution Readiness 87/100, Strategic Maturity 83/100). AI is live, executive backed, and generating tracked value. The single highest leverage next step is a 60 day data readiness audit, because Data &amp; Technology and People &amp; Governance are the two dimensions most likely to gate further progress toward Stage 6, Full Autonomy.</p>
+  </div>
+
+  <h3 class="ink" style="color:var(--navy);margin:22px 0 12px">Key takeaways</h3>
+
+  <div class="numrow"><div class="n">1</div><div><h3>Strong, balanced foundation</h3><p style="margin:0;color:var(--added)">All four dimensions score "Strong" (4.0 to 4.7 of 5), with no weak spot dragging down the profile.</p></div></div>
+  <div class="numrow"><div class="n">2</div><div><h3>Adoption is ahead of infrastructure</h3><p style="margin:0;color:var(--added)">Adoption &amp; Value (4.7) outpaces Data &amp; Technology and People &amp; Governance (4.0 each), the classic Stage 5 pattern of usage outrunning the plumbing that will need to support autonomy at scale.</p></div></div>
+  <div class="numrow"><div class="n">3</div><div><h3>Governance, not more AI, unlocks Stage 6</h3><p style="margin:0;color:var(--added)">The path to Full Autonomy runs through guardrails, monitoring, and explainability, especially given the Financial Services setting, not through deploying more models.</p></div></div>
+
+  <h3 class="ink" style="color:var(--navy);margin:20px 0 6px">Recommended sequence</h3>
+  <table>
+    <thead><tr><th style="width:10%">Step</th><th style="width:44%">Action</th><th>Why now</th></tr></thead>
+    <tbody>
+      <tr><td class="ink">1</td><td class="ink">60 day data readiness audit</td><td class="ink">Radiant's stated priority. Unblocks every subsequent deployment.</td></tr>
+      <tr><td class="ink">2</td><td class="ink">Formalize monitoring &amp; explainability guardrails</td><td class="ink">Prerequisite for trusting prediction with action at Stage 6.</td></tr>
+      <tr><td class="ink">3</td><td class="ink">Scale autonomous workflows with narrowed human approval</td><td class="ink">Converts current strong adoption into Full Autonomy.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 3</span></div>
+</section>
+
+<!-- ══════════════ PAGE 4 — ABOUT + SCORES ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">ABOUT THIS ASSESSMENT</div></div>
+
+  <div class="kicker blue">02 · Added Section</div>
+  <h2>About This Assessment</h2>
+  <p class="added" style="margin-top:12px">This briefing expands Radiant Digital's AI Adoption Assessment for Vinod into a full executive review format. The underlying findings, scores, and recommendation are unchanged from the original one page assessment. What's new is the presentation: this table of contents, supporting exhibits matched to the web experience, a methodology section, and the executive summary you just read.</p>
+
+  <div class="three">
+    <div class="c"><div class="k">Scope</div><div class="v">Enterprise / Cross-functional</div><div class="d">Financial Services, under 500 employees</div></div>
+    <div class="c"><div class="k">Track</div><div class="v">Executive Track</div><div class="d">Leadership level readout &amp; roadmap</div></div>
+    <div class="c"><div class="k">Prepared</div><div class="v">July 1, 2026</div><div class="d">Radiant Digital, AI Adoption Assessment</div></div>
+  </div>
+
+  <p class="added em small">Editorial note: the methodology descriptions and timeline breakdown in this edition are drafted to match the structure of large firm diagnostic reports. They should be reviewed and confirmed against Radiant Digital's actual internal methodology before external distribution.</p>
+
+  <div class="kicker" style="margin-top:20px">Scores by Dimension</div>
+  <h2 style="color:var(--navy)">A well rounded, above average profile</h2>
+
+  <div style="margin-top:24px">
+    <div class="score"><div class="top"><span class="lab">Strategy &amp; Leadership</span><span class="val">4.3 · Strong</span></div><div class="bar"><span style="width:86%"></span></div></div>
+    <div class="score"><div class="top"><span class="lab">Data &amp; Technology</span><span class="val">4.0 · Strong</span></div><div class="bar"><span style="width:80%"></span></div></div>
+    <div class="score"><div class="top"><span class="lab">People &amp; Governance</span><span class="val">4.0 · Strong</span></div><div class="bar"><span style="width:80%"></span></div></div>
+    <div class="score"><div class="top"><span class="lab">Adoption &amp; Value</span><span class="val">4.7 · Strong</span></div><div class="bar"><span style="width:94%"></span></div></div>
+  </div>
+
+  <div class="exhibit" style="margin-top:26px;text-align:left">EXHIBIT 2, DIMENSION SCORECARD</div>
+  <p class="caption" style="text-align:left">Bar style matches the web assessment tool. All four dimensions score in the Strong band.</p>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 4</span></div>
+</section>
+
+<!-- ══════════════ PAGE 5 — COMPETITIVE POSITIONING ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">COMPETITIVE POSITIONING</div></div>
+
+  <p class="added">Reading the shape: the profile is balanced rather than spiky, which is itself informative. Adoption &amp; Value leads at 4.7, confirming AI is live and delivering measured results. Data &amp; Technology and People &amp; Governance are the two dimensions tied for the lowest score at 4.0, not weaknesses in absolute terms, but the two levers most likely to gate further gains, which lines up with Radiant's data readiness recommendation later in this report.</p>
+
+  <div class="kicker" style="margin-top:16px">Competitive Positioning</div>
+  <h2 style="color:var(--navy)">Where you sit relative to AI Leaders</h2>
+  <p style="margin-top:10px">Where your organization sits relative to AI leaders and the broader market.</p>
+
+  <div class="quad">
+    <div class="diag"></div>
+    <div class="ell e1">Early Movers</div>
+    <div class="ell e2">Progressing</div>
+    <div class="ell e3">AI Leaders</div>
+    <div class="dot"><span class="tag">Your Org</span></div>
+    <div class="axl-y">Strategic Maturity&nbsp;→</div>
+  </div>
+  <div class="axl-x">Execution Readiness&nbsp;→</div>
+
+  <div class="exhibit">EXHIBIT 3, EXECUTION READINESS VERSUS STRATEGIC MATURITY</div>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 5</span></div>
+</section>
+
+<!-- ══════════════ PAGE 6 — WHAT WE SEE ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">WHAT WE SEE</div></div>
+
+  <p class="caption" style="text-align:center;margin-bottom:14px">Matches the positioning chart in the web assessment tool.</p>
+
+  <div class="stats">
+    <div class="stat"><div class="k">Execution Readiness</div><div class="v">87 / 100</div></div>
+    <div class="stat"><div class="k">Strategic Maturity</div><div class="v">83 / 100</div></div>
+  </div>
+
+  <div class="callout">
+    <div class="lbl">AI Leaders · Stage 5-6</div>
+    <p style="margin:0">You're in or near the AI Leaders group (Stage 5-6). The focus shifts to compounding the advantage: governance systems, portfolio ROI, and organizational learning loops. Strategy and execution are well balanced.</p>
+  </div>
+
+  <div class="kicker" style="margin-top:20px">What We See</div>
+  <h2 style="color:var(--navy)">Strengths</h2>
+
+  <h3 class="ink" style="color:var(--navy);margin-top:16px">Adoption &amp; Value: AI is live and generating measurable value</h3>
+  <p>Production deployments are running and impact is being tracked. That's evidence of real execution capability, not just ambition.</p>
+
+  <h3 class="ink" style="color:var(--navy)">Strategy &amp; Leadership: Executive alignment is real</h3>
+  <p>Leadership has committed to AI and the direction is clear. That's the starting condition for everything else, and a lot of organizations still don't have it.</p>
+
+  <div class="rule"></div>
+
+  <h3 style="margin-bottom:8px">Considerations to watch</h3>
+  <p class="added">The original assessment is strengths only, which is worth naming directly: a genuinely rigorous, large firm style diagnostic pairs every strength with a corresponding risk. In that spirit, two structural considerations are typical for organizations at Stage 5 and worth deliberately tracking, not because they're confirmed issues here, but because they're where Stage 5 organizations most often stall:</p>
+
+  <div class="numrow"><div class="n hollow">1</div><div><h3>Prediction accuracy without adequate monitoring</h3><p style="margin:0;color:var(--added)">As AI moves from recommending to prescribing, the cost of an unmonitored bad prediction rises. Model drift and edge case monitoring become a governance requirement, not a data science nicety.</p></div></div>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 6</span></div>
+</section>
+
+<!-- ══════════════ PAGE 7 — RECOMMENDED NEXT STEP + RADIANT'S READ ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">RECOMMENDED NEXT STEP</div></div>
+
+  <div class="numrow"><div class="n hollow">2</div><div><h3>Explainability and stakeholder trust</h3><p style="margin:0;color:var(--added)">In Financial Services specifically, AI driven decisions that affect customers or capital typically need to be explainable to regulators, auditors, and the customers themselves, not just accurate.</p></div></div>
+
+  <div class="kicker" style="margin-top:18px">Your Recommended Next Step</div>
+  <h2 style="color:var(--navy)">Priority: Data &amp; Technology</h2>
+  <p style="margin-top:10px">Run a 60 day data readiness audit before the next deployment. Map what you have, what's clean enough to use, and what needs work. The output is a data inventory that makes every future project faster and every AI output more trustworthy.</p>
+
+  <h3 style="margin-top:14px">Illustrative 60 day breakdown</h3>
+  <table>
+    <thead><tr><th style="width:22%">Phase</th><th style="width:18%">Weeks</th><th>Focus</th></tr></thead>
+    <tbody>
+      <tr><td>Discovery</td><td>1 to 2</td><td>Inventory data sources, owners, and current usage across systems</td></tr>
+      <tr><td>Assessment</td><td>3 to 6</td><td>Score each source for cleanliness, access, and AI readiness. Flag gaps.</td></tr>
+      <tr><td>Roadmap</td><td>7 to 8</td><td>Deliver the data inventory, prioritized remediation plan, and go or no go for the next deployment</td></tr>
+    </tbody>
+  </table>
+  <p class="added em small">Added: illustrative phasing of the 60 day audit named in the original recommendation, for planning purposes.</p>
+
+  <div class="kicker" style="margin-top:16px">Radiant's Read</div>
+  <h2 style="color:var(--navy)">Our perspective on Stage 5 organizations</h2>
+  <p style="margin-top:10px">At Proactive Autonomy, AI predicts and prescribes before your team sees the need, and people move up to strategy and governance. This is where the advantage compounds, but only for organizations whose governance is mature enough to trust prediction with action. The work here is building the guardrails and feedback loops that let AI initiate, not just recommend, with confidence.</p>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 7</span></div>
+</section>
+
+<!-- ══════════════ PAGE 8 — WHAT AI LEADERS DO ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">WHAT AI LEADERS DO</div></div>
+
+  <div class="kicker">What AI Leaders Do</div>
+  <h2 style="color:var(--navy)">What Full Autonomy organizations do to self govern at scale</h2>
+  <p style="margin-top:10px">The last step is from prediction to self governance: AI executes end to end, learns from outcomes, and improves without manual retraining, while humans define guardrails and approve only high risk exceptions.</p>
+
+  <div class="callout" style="border-left-color:var(--olive)">
+    <div class="lbl">Benchmark</div>
+    <p style="margin:0;color:var(--navy);font-weight:700">Top 8% of organizations operate AI as a self governing system at Full Autonomy</p>
+  </div>
+
+  <div class="numrow g"><div class="n">1</div><div><h3 class="ink" style="color:var(--navy)">Let AI resolve issues end to end across systems</h3><p style="margin:0">Autonomous workflows that span CRM, billing, and ticketing, resolving the whole issue, not a step of it, with humans involved only when risk crosses a defined threshold.</p></div></div>
+  <div class="numrow g"><div class="n">2</div><div><h3 class="ink" style="color:var(--navy)">Deployed self improving models that adapt on their own</h3><p style="margin:0">QA and decision models that learn from new patterns and retrain themselves, so performance improves continuously without a manual rebuild cycle.</p></div></div>
+  <div class="numrow g"><div class="n">3</div><div><h3 class="ink" style="color:var(--navy)">Narrowed human approval to high risk exceptions only</h3><p style="margin:0">Guardrails define what the system may do unattended and what must stop for sign off. Humans govern the boundaries instead of operating inside them.</p></div></div>
+  <div class="numrow g"><div class="n">4</div><div><h3 class="ink" style="color:var(--navy)">Made governance the core human job</h3><p style="margin:0">Autonomous scheduling, real time workforce rebalancing, and self running operations mean leadership's highest leverage work becomes setting strategy and keeping an autonomous system accountable.</p></div></div>
+
+  <div class="callout blue">
+    <div class="lbl">Added, why this matters in Financial Services</div>
+    <p style="margin:0;color:var(--added);font-weight:600">Autonomous, end to end resolution is more consequential in a regulated industry: every workflow AI is allowed to run unattended is also more your compliance and audit functions need to be able to explain after the fact.</p>
+  </div>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 8</span></div>
+</section>
+
+<!-- ══════════════ PAGE 9 — YOUR NEXT MOVE + METHODOLOGY ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">YOUR NEXT MOVE</div></div>
+
+  <div class="kicker">Your Next Move</div>
+  <h2 style="color:var(--navy)">Ready to move to Stage 6?</h2>
+  <p style="margin-top:10px">Radiant has helped enterprises across 14+ industries move through every stage of AI maturity. A 30 minute conversation is enough to map exactly where to start.</p>
+
+  <div class="cta">
+    <div class="k">Schedule 30 minutes with Radiant</div>
+    <div class="big">hello@radiant.digital</div>
+    <div class="u">radiant.digital</div>
+    <div class="btn">LET'S EMBARK</div>
+  </div>
+
+  <div class="kicker blue" style="margin-top:20px">10 · Added Section</div>
+  <h2>Assessment Methodology</h2>
+  <p class="added" style="margin-top:10px">This assessment scores four dimensions on a 5 point scale, then rolls them up into two composite indices, Execution Readiness and Strategic Maturity, which place the organization on the six stage maturity ladder shown earlier. The description below is drafted to match the structure of large firm methodology sections. Confirm the specifics against Radiant's actual process before distribution.</p>
+
+  <h3 style="margin-top:6px">Scoring dimensions</h3>
+  <table>
+    <thead><tr><th style="width:34%">Dimension</th><th>What it measures</th></tr></thead>
+    <tbody>
+      <tr><td>Strategy &amp; Leadership</td><td>Executive alignment, stated direction, and resourcing behind the AI agenda</td></tr>
+      <tr><td>Data &amp; Technology</td><td>Data readiness, tooling, and infrastructure available to support deployment</td></tr>
+      <tr><td>People &amp; Governance</td><td>Skills, change management, and the guardrails that govern AI decisions</td></tr>
+      <tr><td>Adoption &amp; Value</td><td>Breadth of live deployments and evidence of tracked, measurable impact</td></tr>
+    </tbody>
+  </table>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 9</span></div>
+</section>
+
+<!-- ══════════════ PAGE 10 — METHODOLOGY SCALE ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">METHODOLOGY</div></div>
+
+  <h3 style="margin-bottom:8px">1 to 5 scale</h3>
+  <table>
+    <thead><tr><th style="width:22%">Score</th><th>Interpretation</th></tr></thead>
+    <tbody>
+      <tr><td>1 to 2</td><td>Nascent, informal or absent</td></tr>
+      <tr><td>3</td><td>Developing, present but inconsistent</td></tr>
+      <tr><td>4</td><td>Strong, consistent and reasonably mature</td></tr>
+      <tr><td>5</td><td>Leading, best practice, enterprise wide</td></tr>
+    </tbody>
+  </table>
+
+  <p class="added" style="margin-top:14px">Execution Readiness and Strategic Maturity are derived from Radiant's proprietary weighting model.</p>
+
+  <p class="added em small" style="margin-top:12px">This executive edition was expanded by Claude, at the user's request, from Radiant Digital's original one page assessment for Vinod. Body copy throughout this document is reproduced from that original. Copy in blue, including the table of contents, exhibits, methodology, and executive summary, was added for this edition and should be reviewed and confirmed by Radiant Digital before external distribution. Visual style, colors, and the maturity ladder were matched to Radiant's live web assessment tool, and the logo is generated from Radiant's own vector artwork rather than approximated.</p>
+
+  <div class="cta" style="background:#0b2740;margin-top:24px">
+    <div class="k">Thank You</div>
+    <div class="big">Let's build the next stage together.</div>
+    <div class="u" style="margin-top:6px">hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</div>
+  </div>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 10</span></div>
+</section>
+
+<!-- ══════════════ PAGE 11 — CONCLUSION (NEW) ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">CONCLUSION</div></div>
+
+  <div class="kicker blue">11 · Added Section</div>
+  <h2>Conclusion</h2>
+
+  <div class="callout blue" style="margin-top:16px">
+    <div class="lbl">In One Line</div>
+    <p style="margin:0;color:var(--added)">You are a Stage 5 organization inside the AI Leaders band. The next stage is earned through governance, not more models, and the work starts with a 60 day data readiness audit.</p>
+  </div>
+
+  <p class="added" style="margin-top:18px">Vinod's organization sits at Stage 5 of 6, Proactive Autonomy, placing it in or near the AI Leaders band. Execution Readiness scores 87 of 100 and Strategic Maturity 83 of 100, and all four dimensions land in the Strong band (4.0 to 4.7 of 5). AI is already live, executive backed, and generating tracked value. This is a genuinely strong position: the profile is balanced rather than spiky, with no weak dimension dragging down the whole.</p>
+
+  <p class="added">The one structural tension worth naming is that Adoption &amp; Value (4.7) is running ahead of Data &amp; Technology and People &amp; Governance (4.0 each). That is the classic Stage 5 signature, usage outpacing the infrastructure and governance that must eventually support autonomy at scale. It is not a weakness today, but it is precisely where Stage 5 organizations most often stall on the way to Stage 6.</p>
+
+  <p class="added">Because of that, the path to Full Autonomy runs through governance, not through deploying more AI. As AI shifts from recommending to prescribing, the cost of an unmonitored bad prediction rises, and model drift, edge case monitoring, and explainability become governance requirements rather than data science niceties. In a Financial Services context this matters twice over: decisions that affect customers or capital must be explainable to regulators, auditors, and customers themselves, not merely accurate.</p>
+
+  <p class="added">The recommended sequence follows directly. First, run a 60 day data readiness audit, Radiant's stated priority, to produce a data inventory that unblocks every subsequent deployment. Second, formalize monitoring and explainability guardrails, the prerequisite for trusting prediction with action at Stage 6. Third, scale autonomous workflows with narrowed human approval, converting today's strong adoption into Full Autonomy. Executed in order, these three moves turn a strong Stage 5 position into a durable, compounding advantage, the point at which governance itself becomes the core human job and AI runs the execution beneath it.</p>
+
+  <p class="added">The advantage compounds only for organizations whose governance is mature enough to trust prediction with action. This organization is close. The remaining distance is deliberate, sequenced work, and it is well within reach.</p>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 11</span></div>
+</section>
+
+<!-- ══════════════ PAGE 12 — GET IN TOUCH (NEW) ══════════════ -->
+<section class="page">
+  <div class="rh"><div class="logo"><span class="mk">◤</span>RADIANT</div><div class="sect">GET IN TOUCH</div></div>
+
+  <div class="kicker blue">12 · Added Section</div>
+  <h2>Get in Touch</h2>
+  <p class="added" style="margin-top:10px">Speak directly with the Radiant Digital leaders behind this assessment. They can map exactly where to start and what the next stage looks like for your organization.</p>
+
+  <div class="people">
+    <div class="person">
+      <div class="avatar">PK<div class="ph">PHOTO TO ADD</div></div>
+      <div class="nm">Prafull Khare</div>
+      <div class="rl">Executive Director | Global Head of AI Strategy, Solution Engineering, &amp; New Technology Enablement<br>Radiant Digital</div>
+      <div class="em">prafull.khare@radiant.digital</div>
+    </div>
+    <div class="person">
+      <div class="avatar">SC<div class="ph">PHOTO TO ADD</div></div>
+      <div class="nm">Srinivas Chamarthi</div>
+      <div class="rl">SVP &amp; Business Head<br>Radiant Digital</div>
+      <div class="em">srinivas.chamarthi@radiant.digital</div>
+    </div>
+  </div>
+
+  <div class="cta" style="margin-top:8px">
+    <div class="k">Schedule 30 minutes with Radiant</div>
+    <div class="big">hello@radiant.digital</div>
+    <div class="u">radiant.digital</div>
+    <div class="btn">LET'S EMBARK</div>
+  </div>
+
+  <p class="added em small" style="margin-top:16px">Placeholder headshots shown. Replace the PK and SC circles with the supplied images before distribution.</p>
+
+  <div class="ft"><span>Radiant Digital&nbsp;&nbsp;·&nbsp;&nbsp;hello@radiant.digital&nbsp;&nbsp;·&nbsp;&nbsp;radiant.digital</span><span>Page 12</span></div>
+</section>
+
+</body>
+</html>

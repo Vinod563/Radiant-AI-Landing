@@ -258,6 +258,46 @@ function buildAiEmailHtml(profile, result) {
           ${acts}`,
       })
     })(),
+    (() => {
+      const pos = positioningRead({ sectionAverages, stageIndex: stage.index })
+      const who = profile?.companyName || (profile?.fullName ? `${profile.fullName}'s organization` : 'Your organization')
+      const bandName = stage.index <= 2 ? 'the Early Movers group' : stage.index <= 4 ? 'the Progressing group' : 'the AI Leaders band'
+      const rankC = sections.map(s => ({ label: s.label, v: sectionAverages[s.key] || 0 })).sort((a, b) => b.v - a.v)
+      const topC = rankC[0], lowC = rankC[rankC.length - 1]
+      const stepList = (suggested.steps || []).map((s, i) => `${i + 1}) ${s.title.charAt(0).toLowerCase() + s.title.slice(1)}`).join(', ')
+      const pgraph = (t) => `<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:12px;">${t}</div>`
+      return sectionRow({
+        kicker: 'Conclusion', title: "Where You Stand, and What's Next",
+        innerHtml:
+          pgraph(`${who} sits at Stage ${stage.index} of 6, ${stage.name}, placing it in ${bandName}. Execution Readiness scores ${pos.execPct} of 100 and Strategic Maturity ${pos.stratPct} of 100.`)
+          + (topC.v && lowC.v ? pgraph(`The strongest dimension is ${topC.label} (${topC.v.toFixed(1)} of 5), while ${lowC.label} (${lowC.v.toFixed(1)}) is the one most likely to gate further progress, and where organizations at this stage most often stall on the way to the next.`) : '')
+          + (stepList ? pgraph(`The recommended sequence follows directly: ${stepList}. Executed in order along Radiant Digital's Assess &rarr; Train &rarr; Adopt &rarr; Scale &rarr; Sustain model, these moves convert today's position into durable, compounding advantage.`) : '')
+          + pgraph('The advantage compounds only for organizations whose governance is mature enough to trust AI with action. A focused next step, and a short conversation with the team below, is enough to map exactly where to start.'),
+      })
+    })(),
+    (() => {
+      const people = [
+        { initials: 'PK', name: 'Prafull Khare', title: 'Executive Director | Global Head of AI Strategy, Solution Engineering, &amp; New Technology Enablement', org: 'Radiant Digital', email: 'prafull.khare@radiant.digital' },
+        { initials: 'SC', name: 'Srinivas Chamarthi', title: 'SVP &amp; Business Head', org: 'Radiant Digital', email: 'srinivas.chamarthi@radiant.digital' },
+      ]
+      const cards = people.map(p => `
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-bottom:14px;">
+          <tr>
+            <td width="52" valign="top" style="padding-right:12px;">
+              <div style="width:44px;height:44px;border-radius:100px;background:#dfe8f2;font-family:${FONT};font-weight:bold;font-size:14px;color:#5b7391;line-height:44px;text-align:center;">${p.initials}</div>
+            </td>
+            <td valign="top">
+              <div style="font-family:${FONT};font-weight:bold;font-size:14px;color:${INK};">${p.name}</div>
+              <div style="font-family:${FONT};font-size:12px;color:${BODY};line-height:1.5;margin:2px 0 4px;">${p.title} &middot; ${p.org}</div>
+              <a href="mailto:${p.email}" style="font-family:${FONT};font-size:12px;font-weight:bold;color:#5a8a32;text-decoration:none;">${p.email}</a>
+            </td>
+          </tr>
+        </table>`).join('')
+      return sectionRow({
+        kicker: 'Get in Touch', title: 'Speak With the Team Behind This Assessment', alt: true,
+        innerHtml: `<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:16px;">Reach out to Radiant Digital's AI leadership to map exactly where to start and what the next stage looks like for your organization.</div>${cards}<div style="font-family:${FONT};font-size:11px;color:${MUTED};margin-top:4px;">Placeholder headshots shown. Replace the PK and SC initials with the supplied photos before external distribution.</div>`,
+      })
+    })(),
     ctaRow({
       title: `Ready to move from ${suggested.currentPhase} to your next stage?`,
       body: 'Radiant Digital has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.',

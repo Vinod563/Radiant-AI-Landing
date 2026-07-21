@@ -104,7 +104,7 @@ export default function Hero() {
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
-                className="text-white/70 text-base lg:text-lg leading-relaxed max-w-4xl mx-auto mb-10"
+                className="text-white/70 text-base lg:text-lg leading-relaxed max-w-4xl mx-auto mb-10 whitespace-pre-line"
               >
                 {brand.description}
               </motion.p>

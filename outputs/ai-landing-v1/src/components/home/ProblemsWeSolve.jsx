@@ -91,31 +91,34 @@ function FloatingScreenshot({ solution, isHovered }) {
 }
 
 /* ── Right-pane / inline detail (shared desktop + mobile) ─────────────────────
-   Order: practice label → title → (reduced) screenshot → description → tags →
-   powered by → CTA. The screenshot sits between title and description and is
-   width-constrained so the pane reads cleaner and balances the left rail. */
+   Order: practice label → title → description → tags → powered by → screenshot
+   → CTA. The screenshot sits directly above the CTA as closing visual proof. */
 function SolutionDetail({ s }) {
   const [hovered, setHovered] = useState(false)
   return (
     <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}>
-      <div className="text-[0.6rem] font-display font-medium uppercase tracking-[0.15em] text-text-muted mb-2">
+      <div className="text-[0.62rem] font-display font-semibold uppercase tracking-[0.16em] mb-3"
+        style={{ color: s.accent }}>
         {s.label}
       </div>
-      <h3 className="font-display font-black text-white leading-[1.05] tracking-tight mb-6"
-        style={{ fontSize: 'clamp(1.6rem, 2.6vw, 2.4rem)' }}>
-        {s.title}
-      </h3>
-
-      <div className="aspect-[16/10] w-full max-w-md mb-7">
-        <FloatingScreenshot solution={s} isHovered={hovered} />
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-5">
+        <h3 className="font-display font-black text-white leading-[1.03] tracking-tight"
+          style={{ fontSize: 'clamp(1.9rem, 2.6vw, 2.75rem)' }}>
+          {s.title}
+        </h3>
+        <Link to={`/chat?q=${encodeURIComponent('Tell me about ' + s.title)}`}
+          className="btn-primary group/link flex-shrink-0 whitespace-nowrap sm:mt-1.5">
+          <span>Explore Solution</span>
+          <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
+        </Link>
       </div>
 
-      <p className="text-text-secondary leading-relaxed mb-6 max-w-2xl"
-        style={{ fontSize: 'clamp(0.95rem, 1.1vw, 1.1rem)' }}>
+      <p className="text-text-secondary leading-relaxed mb-7 max-w-2xl"
+        style={{ fontSize: 'clamp(1rem, 1.15vw, 1.15rem)' }}>
         {s.desc}
       </p>
 
-      <div className="flex items-center gap-2.5 mb-6 flex-wrap">
+      <div className="flex items-center gap-2.5 mb-5 flex-wrap">
         {s.tags.map(t => (
           <span key={t}
             className="text-[0.65rem] font-display font-semibold uppercase tracking-wide px-3 py-1.5 rounded-full"
@@ -146,10 +149,10 @@ function SolutionDetail({ s }) {
         </div>
       )}
 
-      <Link to={`/chat?q=${encodeURIComponent('Tell me about ' + s.title)}`} className="btn-primary group/link">
-        <span>Explore Solution</span>
-        <ArrowRight size={14} className="transition-transform group-hover/link:translate-x-1" />
-      </Link>
+      {/* Closing proof: the product screenshot */}
+      <div className="aspect-[16/10] w-full">
+        <FloatingScreenshot solution={s} isHovered={hovered} />
+      </div>
     </div>
   )
 }
@@ -222,12 +225,14 @@ export default function ProblemsWeSolve() {
 
         {/* Desktop: two-pane tablist */}
         {isDesktop ? (
-          <div className="grid grid-cols-1 lg:grid-cols-[38%_62%] gap-8 lg:gap-14 items-stretch">
-            {/* Left: problem statements — clickable cards that fill the column height */}
+          <div className="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-10 lg:gap-16 items-start">
+            {/* Left: vertical navigation rail — numbered items with an active accent segment */}
             <div role="tablist" aria-orientation="vertical" aria-label="Problems we solve"
-              onKeyDown={onKeyDown} className="flex flex-col gap-2 h-full">
+              onKeyDown={onKeyDown} className="flex flex-col lg:sticky lg:top-28">
               {solutions.map((s, i) => {
                 const selected = i === active
+                const num = String(i + 1).padStart(2, '0')
+                const isLast = i === solutions.length - 1
                 return (
                   <button
                     key={s.slug}
@@ -238,28 +243,32 @@ export default function ProblemsWeSolve() {
                     aria-controls="problems-panel"
                     tabIndex={selected ? 0 : -1}
                     onClick={() => select(i)}
-                    className="group flex-1 flex items-center gap-3 text-left rounded-xl border-l-2 pl-4 pr-3 py-3.5 cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-dark"
+                    className={`group relative flex items-center gap-3.5 text-left border-l-2 pl-4 pr-2 py-3.5 cursor-pointer transition-all duration-200 focus:outline-none focus-visible:ring-1 focus-visible:ring-inset ${isLast ? '' : 'border-b border-b-white/[0.05]'}`}
                     style={{
-                      borderLeftColor: selected ? s.accent : 'transparent',
-                      background: selected ? `${s.accent}12` : 'rgba(255,255,255,0.02)',
-                      boxShadow: selected ? `inset 0 0 0 1px ${s.accent}2e` : 'inset 0 0 0 1px rgba(255,255,255,0.05)',
+                      borderLeftColor: selected ? s.accent : 'rgba(255,255,255,0.09)',
+                      background: selected ? `linear-gradient(90deg, ${s.accent}14 0%, transparent 92%)` : 'transparent',
                     }}
-                    onMouseEnter={e => { if (!selected) e.currentTarget.style.background = 'rgba(255,255,255,0.045)' }}
-                    onMouseLeave={e => { if (!selected) e.currentTarget.style.background = 'rgba(255,255,255,0.02)' }}
+                    onMouseEnter={e => { if (!selected) e.currentTarget.style.background = 'rgba(255,255,255,0.03)' }}
+                    onMouseLeave={e => { if (!selected) e.currentTarget.style.background = 'transparent' }}
                   >
+                    <span className="font-display font-bold text-[0.7rem] tabular-nums flex-shrink-0 w-5 transition-colors"
+                      style={{ color: selected ? s.accent : 'rgba(255,255,255,0.28)' }}>
+                      {num}
+                    </span>
                     <span className="flex-1 min-w-0">
-                      <span className="block font-display font-semibold text-[1rem] leading-snug"
+                      <span className="block font-display font-semibold text-[0.92rem] leading-snug transition-colors"
                         style={{ color: selected ? s.accent : undefined }}>
-                        <span className={selected ? '' : 'text-text-secondary group-hover:text-white transition-colors'}>{s.problemStatement}</span>
+                        <span className={selected ? '' : 'text-text-secondary group-hover:text-white'}>{s.problemStatement}</span>
                       </span>
                       {selected && (
-                        <span className="block text-xs text-text-muted mt-1">{s.title} · {s.label}</span>
+                        <span className="block text-[0.7rem] text-text-muted mt-1.5 truncate">{s.title}</span>
                       )}
                     </span>
-                    <ArrowRight size={16} className="flex-shrink-0 transition-all duration-200 group-hover:translate-x-0.5"
+                    <ArrowRight size={14} className="flex-shrink-0 transition-all duration-200"
                       style={{
-                        color: selected ? s.accent : 'rgba(255,255,255,0.3)',
-                        transform: selected ? 'translateX(2px)' : undefined,
+                        color: s.accent,
+                        opacity: selected ? 1 : 0,
+                        transform: selected ? 'translateX(0)' : 'translateX(-6px)',
                       }} />
                   </button>
                 )

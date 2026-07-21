@@ -12,14 +12,14 @@ import { useNavigate } from 'react-router-dom'
  * leadership later wants a mid-journey path.
  *
  * Copy is final, supplied by the content team (radiant-ai-landing-copy-spec).
- * Construction rule: eyebrow promises, headline diagnoses. Buyers self-select
- * by symptom, never by a maturity grade.
+ * Hierarchy (per Lam): the verb phrase is the white headline; the diagnosis
+ * line is the subhead beneath it. Buyers self-select by symptom.
  */
 const paths = [
   {
     key: 'plan',
-    eyebrow: 'Plan with confidence',
-    label: 'The pressure is real. The roadmap is not.',
+    headline: 'Plan With Confidence',
+    subhead: 'Start with a map. Cut the risk.',
     blurb: 'A short diagnostic across strategy, data, people, and adoption. You get your stage, your gaps, and the sequence that produces results fastest.',
     cta: 'See where you stand',
     icon: Compass,
@@ -29,8 +29,8 @@ const paths = [
   },
   {
     key: 'deploy',
-    eyebrow: 'Deploy with discipline',
-    label: 'Proof of concept is easy. Production is not.',
+    headline: 'Deploy With Discipline',
+    subhead: 'Get to production. Cut the cost.',
     blurb: 'Accuracy, cost, and integration are where AI projects die. See how precision context and forward deployment get you past them.',
     cta: 'See the approach',
     icon: Rocket,
@@ -76,8 +76,8 @@ export default function PersonaPaths() {
                   <Icon size={22} style={{ color: p.accent }} />
                 </div>
                 <div className="flex-1">
-                  <div className="text-[10px] font-display font-bold uppercase tracking-widest mb-1.5" style={{ color: p.accent }}>{p.eyebrow}</div>
-                  <h3 className="font-display font-bold text-white text-lg leading-snug mb-1.5">{p.label}</h3>
+                  <h3 className="font-display font-bold text-white text-xl lg:text-2xl leading-snug mb-1.5">{p.headline}</h3>
+                  <div className="font-display font-semibold text-sm mb-2.5 text-white/85">{p.subhead}</div>
                   <p className="text-text-secondary text-sm leading-relaxed mb-3">{p.blurb}</p>
                   <span className="inline-flex items-center gap-1.5 font-display font-semibold text-sm" style={{ color: p.accent }}>
                     {p.cta} <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />

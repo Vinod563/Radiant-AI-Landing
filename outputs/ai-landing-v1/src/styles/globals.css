@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  /* Offset anchor-tab jumps (#industries, #differentiator, …) so the target
+     section lands just below the fixed Navbar instead of tucking under it.
+     Applies to both native href anchors and scrollIntoView(). */
+  html { scroll-behavior: smooth; scroll-padding-top: 72px; }
   body {
     background-color: #010F1E;
     color: #F0F4F8;

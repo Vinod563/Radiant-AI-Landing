@@ -4,11 +4,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 const sections = [
   { id: 'hero',           label: 'Hero' },
   { id: 'solutions',      label: 'Problems We Solve' },
-  { id: 'differentiator', label: 'Why Radiant Digital' },
   { id: 'ai-fabric',      label: 'AI Fabric' },
   { id: 'proof',          label: 'Results' },
   { id: 'social-proof',   label: 'Customers' },
   { id: 'industries',     label: 'Industries' },
+  { id: 'differentiator', label: 'Why Radiant Digital' },
   { id: 'assessment',     label: 'Free Assessment' },
   { id: 'platform',       label: 'Platform' },
   { id: 'infrastructure', label: 'Infrastructure' },
