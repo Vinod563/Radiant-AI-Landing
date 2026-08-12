@@ -2,6 +2,19 @@
 
 ---
 
+### 2026-08-12 - Added hello@radiant.digital to Report Email Recipients
+**Action:** Added the shared inbox to the team copy list for all assessment-report and contact-form mail.
+
+**Files:**
+- `outputs/radiant-chat-api/.env` — `MAIL_CC` now: lam.huynh@, alek.nedelkovski@, vinod.mourya@, hello@radiant.digital (backup written as `.env.bak.<timestamp>`)
+- `outputs/radiant-chat-api/utils/mailer.js` — same address added to the hardcoded `TEAM_CC` fallback
+- `outputs/radiant-chat-api/.env.example` — documented `MAIL_CC` with the full list
+
+**Effect:** hello@ is BCC'd on the lead-facing report email and CC'd on internal lead notifications + contact-form submissions.
+**Status:** ✅ SUCCESS (restart the `radiant-chat-api` server to load the new .env)
+
+---
+
 ### 2026-06-24 - Assessment Megamenu, Lead-Gate Redesign, 6-Stage Model, Email CC, Nav & Hero Updates
 **Action:** Multiple UX, content, and backend changes across the `ai-landing-v1` app and `radiant-chat-api`.
 

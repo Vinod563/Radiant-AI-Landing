@@ -36,7 +36,7 @@ const esc = (s = '') => String(s).replace(/[<>&]/g, c => ({ '<': '&lt;', '>': '&
 // Team addresses copied on every send from connect@radiant.digital.
 // Override via MAIL_CC (comma-separated) in .env.
 const TEAM_CC = (process.env.MAIL_CC ||
-  'lam.huynh@radiant.digital, alek.nedelkovski@radiant.digital, vinod.mourya@radiant.digital')
+  'lam.huynh@radiant.digital, alek.nedelkovski@radiant.digital, vinod.mourya@radiant.digital, hello@radiant.digital')
   .split(',').map(s => s.trim()).filter(Boolean)
 
 function respondentHtml({ name, assessment, headline }) {
