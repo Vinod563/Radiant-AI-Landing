@@ -85,7 +85,7 @@ export default function AssessmentResults({ kind, profile, answers }) {
   // respondent and notifies the Radiant team.
   const sendReport = async (lead) => {
     const { getReportPdfBase64 } = await import('../../utils/generateReportPdf.js')
-    const { base64, filename } = getReportPdfBase64({ kind, profile, answers })
+    const { base64, filename } = await getReportPdfBase64({ kind, profile, answers })
     const emailHtml = buildEmailSafeReportHtml({ kind, profile, result })
 
     let delivered = false

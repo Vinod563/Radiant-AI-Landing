@@ -321,8 +321,13 @@ export function generateReportPdf(args) {
   doc.save(filename)
 }
 
-/** Builds the report and returns its base64 (no data-URI prefix) + filename, for emailing. */
-export function getReportPdfBase64(args) {
+/** Builds the report and returns its base64 (no data-URI prefix) + filename, for emailing.
+ *  AI reports render via @react-pdf/renderer (real layout engine); CX stays on jsPDF. */
+export async function getReportPdfBase64(args) {
+  if (args.kind === 'ai') {
+    const { getAiReportPdfBase64 } = await import('./aiReportPdf.jsx')
+    return getAiReportPdfBase64({ profile: args.profile, answers: args.answers })
+  }
   const { doc, filename } = buildReportDoc(args)
   const datauri = doc.output('datauristring')
   const base64 = datauri.substring(datauri.indexOf(',') + 1)

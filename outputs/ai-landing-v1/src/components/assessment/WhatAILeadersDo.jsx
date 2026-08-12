@@ -14,23 +14,23 @@ import { Link } from 'react-router-dom'
 
 export const LEADER_CONTENT = {
   1: {
-    heading: 'What Guided Autonomy organizations did to move forward',
+    heading: 'What Guided Autonomy organizations do to move forward',
     context: 'Organizations that climbed out of Zero Autonomy did one thing consistently: once their data and processes were clean, they let AI start recommending in real time, with a human approving every action, instead of leaving it stuck at data capture.',
     actions: [
       {
-        title: 'Deployed real-time assist where decisions actually happen',
+        title: 'Deploy real-time assist where decisions actually happen',
         body: 'Live agent-assist, next-best-action prompts, and in-the-moment alerts that suggest the move while there\'s still time to make it. AI advises; the human still approves. Faster, better-informed decisions without surrendering control.',
       },
       {
-        title: 'Standardized data capture so recommendations could be trusted',
+        title: 'Standardize data capture so recommendations can be trusted',
         body: 'Auto-transcription, structured data capture, and consistent tagging across every interaction. Recommendations are only as good as the inputs, so they locked the inputs down first.',
       },
       {
-        title: 'Defined explicit approval gates for AI suggestions',
+        title: 'Define explicit approval gates for AI suggestions',
         body: 'A clear rule for every AI prompt: who reviews it, what they\'re checking, and what "approved" means. That turned ad-hoc acceptance into a repeatable, auditable decision step.',
       },
       {
-        title: 'Trained frontline teams to work alongside an AI co-pilot',
+        title: 'Train frontline teams to work alongside an AI co-pilot',
         body: 'Not a vendor demo, but a working session on when to trust the prompt, when to override it, and how to give feedback that makes the next suggestion better.',
       },
     ],
@@ -38,23 +38,23 @@ export const LEADER_CONTENT = {
     statBadge: { value: '67%', label: 'of organizations that standardize data capture reach Guided Autonomy within 12 months' },
   },
   2: {
-    heading: 'What Insight Autonomy organizations did to break through',
-    context: 'The Guided Autonomy ceiling is trust: AI recommends, but a human approves everything. Organizations broke through by letting AI generate intelligence on its own, surfacing insight without being asked, and teaching people to consume it.',
+    heading: 'What Insight Autonomy organizations do to break through',
+    context: 'The Guided Autonomy ceiling is trust: AI recommends, but a human approves everything. Organizations break through by letting AI generate intelligence on its own, surfacing insight without being asked, and teaching people to consume it.',
     actions: [
       {
-        title: 'Automated reporting so no one runs reports by hand',
+        title: 'Automate reporting so no one runs reports by hand',
         body: 'Real-time CSAT and root-cause reporting, performance dashboards that update themselves, and trend detection across every interaction. People consume intelligence instead of assembling it.',
       },
       {
-        title: 'Turned on proactive risk and anomaly flagging',
+        title: 'Turn on proactive risk and anomaly flagging',
         body: 'AI watches continuously and raises churn risk, emerging issues, and outliers before a human would have noticed. The shift is from "pull a report" to "the system tells you."',
       },
       {
-        title: 'Built trust in machine-generated insight',
+        title: 'Build trust in machine-generated insight',
         body: 'Showed the work behind each insight, the signals, the confidence, the source, so leaders learned to act on AI intelligence instead of re-deriving it themselves.',
       },
       {
-        title: 'Picked low-risk decisions to let AI act start to finish',
+        title: 'Pick low-risk decisions to let AI act start to finish',
         body: 'A handful of high-volume, low-risk calls where AI executes and humans audit after the fact. The measured results became the business case for delegating more.',
       },
     ],
@@ -62,23 +62,23 @@ export const LEADER_CONTENT = {
     statBadge: { value: '3×', label: 'faster issue detection when AI surfaces insight proactively instead of on request' },
   },
   3: {
-    heading: 'What Operational Autonomy organizations did to connect insight to action',
-    context: 'At Insight Autonomy AI generates intelligence, but humans still carry it across the organization by hand. The breakthrough is wiring insight directly into cross-functional workflows, with humans supervising the exceptions, not the routine.',
+    heading: 'What Operational Autonomy organizations do to connect insight to action',
+    context: 'At Insight Autonomy, AI generates intelligence, but humans still carry it across the organization by hand. The breakthrough is wiring insight directly into cross-functional workflows, with humans supervising the exceptions, not the routine.',
     actions: [
       {
-        title: 'Auto-synced AI insight into CRM, product, and finance',
-        body: 'Contact-centre and operational intelligence flowed straight into the systems where work happens, CRM records, product roadmaps, revenue models, without a human re-keying it.',
+        title: 'Auto-sync AI insight into CRM, product, and finance',
+        body: 'Contact center and operational intelligence flowed straight into the systems where work happens, CRM records, product roadmaps, revenue models, without a human re-keying it.',
       },
       {
-        title: 'Designed human checkpoints for exceptions only',
+        title: 'Design human checkpoints for exceptions only',
         body: 'Defined which actions run automatically and which pause for a supervisor. People spend their attention on the edge cases that matter, not the routine that doesn\'t.',
       },
       {
-        title: 'Stood up cross-team KPI dashboards driven by AI',
-        body: 'Shared, real-time scorecards fed by AI so sales, service, product, and finance argued from the same numbers, and acted on them automatically.',
+        title: 'Stand up cross-team KPI dashboards driven by AI',
+        body: 'Shared, real-time scorecards fed by AI so sales, service, product, and finance worked from the same numbers, and acted on them automatically.',
       },
       {
-        title: 'Built a governance layer to keep speed and oversight in balance',
+        title: 'Build a governance layer to keep speed and oversight in balance',
         body: 'Clear standards for what triggers a human override, who owns each automated workflow, and how exceptions get reviewed, so automation never outran accountability.',
       },
     ],
@@ -86,7 +86,7 @@ export const LEADER_CONTENT = {
     statBadge: { value: '40%', label: 'reduction in decision-to-action time when insight feeds workflows automatically' },
   },
   4: {
-    heading: 'What Proactive Autonomy organizations do to get ahead of the need',
+    heading: 'How Proactive Autonomy organizations anticipate needs',
     context: 'Operational Autonomy reacts well. Proactive Autonomy anticipates: AI predicts outcomes and prescribes action before humans identify the need, while people move up to strategy and governance.',
     actions: [
       {
@@ -94,16 +94,16 @@ export const LEADER_CONTENT = {
         body: 'Predicted churn launches proactive outreach; a forecasted volume spike adjusts staffing; a detected upsell moment surfaces the offer, all before a human flags it. AI manages the execution triggers.',
       },
       {
-        title: 'Shifted people from execution to strategy and governance',
-        body: 'With AI handling prediction and triggering, leaders spend their time on guardrails, priorities, and the calls that genuinely need judgment, not running the machine.',
+        title: 'Shift people from execution to strategy and governance',
+        body: 'With AI handling prediction and triggering, leaders can spend more time on decisions requiring human judgment: guardrails, priorities, and the calls that carry real consequence.',
       },
       {
-        title: 'Built the governance to trust prediction with action',
+        title: 'Build governance for prediction-driven action',
         body: 'Confidence thresholds, override paths, and audit trails that make it safe for AI to act on a forecast. The advantage compounds only when governance is mature enough to allow it.',
       },
       {
-        title: 'Closed the loop so predictions get sharper over time',
-        body: 'Every predicted-vs-actual outcome fed back into the models, so accuracy improved with each cycle and the organization\'s lead widened.',
+        title: 'Close the loop so predictions get sharper over time',
+        body: 'Feed every predicted-versus-actual outcome back into the models so that accuracy can improve with each cycle.',
       },
     ],
     chatQuery: 'Help us reach Proactive Autonomy: AI that anticipates and prescribes before we ask',
@@ -118,15 +118,15 @@ export const LEADER_CONTENT = {
         body: 'Autonomous workflows that span CRM, billing, and ticketing, resolving the whole issue, not a step of it, with humans involved only when risk crosses a defined threshold.',
       },
       {
-        title: 'Deployed self-improving models that adapt on their own',
+        title: 'Deploy self-improving models that adapt on their own',
         body: 'QA and decision models that learn from new patterns and retrain themselves, so performance improves continuously without a manual rebuild cycle.',
       },
       {
-        title: 'Narrowed human approval to high-risk exceptions only',
+        title: 'Narrow human approval to high-risk exceptions only',
         body: 'Guardrails define what the system may do unattended and what must stop for sign-off. Humans govern the boundaries instead of operating inside them.',
       },
       {
-        title: 'Made governance the core human job',
+        title: 'Make governance the core human job',
         body: 'Autonomous scheduling, real-time workforce rebalancing, and self-running operations mean leadership\'s highest-impact work becomes setting strategy and keeping an autonomous system accountable.',
       },
     ],

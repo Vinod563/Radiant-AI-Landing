@@ -457,7 +457,7 @@ export function buildAiReportHtml(profile, result) {
   <!-- CTA -->
   <div class="cta-block">
     <div class="cta-title">Ready to move from ${suggested.currentPhase} to your next stage?</div>
-    <div class="cta-body">Radiant Digital has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.</div>
+    <div class="cta-body">A 30-minute conversation with Radiant Digital can help you identify the right starting point for your next stage of AI maturity.</div>
     <a href="https://radiant.digital/contact" target="_blank" rel="noopener noreferrer" class="cta-btn">Schedule 30 Minutes with Radiant Digital</a>
     <div class="cta-email">Or email us at hello@radiant.digital</div>
   </div>

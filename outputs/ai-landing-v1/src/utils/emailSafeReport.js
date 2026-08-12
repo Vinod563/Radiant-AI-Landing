@@ -199,7 +199,7 @@ function buildAiEmailHtml(profile, result) {
     (() => {
       const pos = positioningRead({ sectionAverages, stageIndex: stage.index })
       return sectionRow({
-        kicker: 'Competitive Positioning', title: 'Where You Stand vs. the Market',
+        kicker: 'Maturity Positioning', title: 'Where Your Assessment Scores Place You',
         innerHtml: `
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-bottom:12px;">
             <tr>
@@ -300,7 +300,7 @@ function buildAiEmailHtml(profile, result) {
     })(),
     ctaRow({
       title: `Ready to move from ${suggested.currentPhase} to your next stage?`,
-      body: 'Radiant Digital has helped enterprises across 14+ industries move through every stage of AI maturity. A 30-minute conversation is enough to map exactly where to start.',
+      body: 'A 30-minute conversation with Radiant Digital can help you identify the right starting point for your next stage of AI maturity.',
       ctaLabel: 'Schedule 30 Minutes with Radiant Digital',
       ctaHref: 'https://radiant.digital/contact',
     }),

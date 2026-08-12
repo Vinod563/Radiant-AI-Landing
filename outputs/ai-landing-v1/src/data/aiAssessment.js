@@ -55,7 +55,7 @@ export const questionBank = [
   // Section 1: Strategy & Leadership
   {
     id: 'Q1', section: 'Strategy', title: 'AI Strategy', roles: ['all'],
-    context: 'This is where most organizations discover their first gap. A written strategy is different from a stated priority.',
+    context: 'A written strategy is different from a stated priority, and the gap between the two is often the first one to surface.',
     question: 'Has your organization produced a written AI strategy, approved by leadership and actively in use to guide investment decisions?',
     options: opt(
       'No. There is no formal AI strategy.',
@@ -102,7 +102,7 @@ export const questionBank = [
     ),
   },
   {
-    id: 'Q5', section: 'Strategy', title: 'AI Roadmap', roles: ['exec', 'consultant'],
+    id: 'Q5', section: 'Strategy', title: 'AI Roadmap', roles: ['exec', 'consultant'], active: false,
     context: "A roadmap that's never been funded isn't a roadmap. It's a wishlist.",
     question: 'Does your organization have a phased AI transformation roadmap, with milestones, owners, and realistic resource plans?',
     options: opt(
@@ -199,7 +199,7 @@ export const questionBank = [
     ),
   },
   {
-    id: 'Q13', section: 'Data', title: 'MLOps Maturity', roles: ['tech', 'consultant'],
+    id: 'Q13', section: 'Data', title: 'MLOps Maturity', roles: ['tech', 'consultant'], active: false,
     context: 'Manual deployment is the bottleneck between a working model and a working product.',
     question: 'Are your AI model deployment, monitoring, and retraining processes automated and governed, or still largely manual?',
     options: opt(
@@ -225,7 +225,7 @@ export const questionBank = [
   // Section 3: People & Governance
   {
     id: 'Q15', section: 'People', title: 'AI Literacy', roles: ['all'],
-    context: 'This is where Stage 2 organizations consistently get stuck. The builders are building. No one else knows what to do with it.',
+    context: 'This is a common stall point at Stage 2: the builders are building, and the rest of the organization has no framework for using what they build.',
     question: 'Do employees across your organization have access to AI literacy training appropriate to their role, not just technical training for technical staff?',
     options: opt(
       'No AI training exists. Awareness is entirely self-directed.',
@@ -237,7 +237,7 @@ export const questionBank = [
   },
   {
     id: 'Q16', section: 'People', title: 'AI Governance Policy', roles: ['exec', 'consultant'],
-    context: 'Every organization that scaled AI successfully put governance in place before the next deployment, not after.',
+    context: 'Governance is easier to put in place before the next deployment than to retrofit afterwards.',
     question: 'Does your organization have a formal AI governance policy, covering model lifecycle, responsible use, and deployment standards?',
     options: opt(
       'No AI governance policy of any kind.',
@@ -249,7 +249,7 @@ export const questionBank = [
   },
   {
     id: 'Q17', section: 'People', title: 'Responsible AI', roles: ['exec', 'biz', 'consultant'],
-    context: 'Every notable AI failure in the past three years has a governance gap at the root. Not bad models, bad frameworks. This question maps your exposure.',
+    context: 'Governance gaps, rather than model quality, sit behind many of the AI failures that become public. This question maps your exposure.',
     question: 'Has your organization formally adopted a Responsible AI framework, covering fairness, transparency, explainability, and accountability?',
     options: opt(
       'No framework. No formal position.',
@@ -272,7 +272,7 @@ export const questionBank = [
     ),
   },
   {
-    id: 'Q19', section: 'People', title: 'Regulatory Compliance', roles: ['exec', 'biz', 'consultant'],
+    id: 'Q19', section: 'People', title: 'Regulatory Compliance', roles: ['exec', 'biz', 'consultant'], active: false,
     context: 'The regulatory environment shifted materially in 2025-26. Most organizations are behind on mapping their exposure.',
     question: 'Is your organization actively tracking and managing AI regulatory compliance, including the EU AI Act, NIST AI RMF, and sector-specific rules?',
     options: opt(
@@ -284,7 +284,7 @@ export const questionBank = [
     ),
   },
   {
-    id: 'Q20', section: 'People', title: 'Change Management', roles: ['biz', 'exec', 'consultant'],
+    id: 'Q20', section: 'People', title: 'Change Management', roles: ['biz', 'exec', 'consultant'], active: false,
     context: 'The people problem is almost always bigger than the technology problem. And it shows up last.',
     question: 'Is there a structured change management program helping employees adopt AI tools and adapt to AI-driven changes in how work gets done?',
     options: opt(
@@ -358,7 +358,7 @@ export const questionBank = [
   },
   {
     id: 'Q26', section: 'Adoption', title: 'Scaling AI', roles: ['exec', 'tech', 'consultant'],
-    context: 'Most organizations scale their first AI use case by brute force. The second one starts from scratch. A repeatable process is the only thing that separates momentum from permanent pilot mode.',
+    context: 'A first AI use case can be scaled by brute force, but the second one then starts from scratch. A repeatable process is what separates momentum from permanent pilot mode.',
     question: 'Does your organization have a proven, repeatable process for scaling successful AI pilots to enterprise production?',
     options: opt(
       'Pilots never scale. They stay as pilots indefinitely.',
@@ -383,6 +383,9 @@ export const questionBank = [
 ]
 
 // ── Question selection (spec §6) ────────────────────────────────────────────
+// `active: false` retires a question from the served bank. The per-section cap
+// means a question that sits past the cap for every role is never asked, so the
+// four in that position are marked inactive rather than left looking available.
 
 const sectionOrder = ['Strategy', 'Data', 'People', 'Adoption']
 
@@ -391,7 +394,7 @@ export function getAQ(role) {
   const selected = []
   for (const sectionKey of sectionOrder) {
     const eligible = questionBank.filter(
-      q => q.section === sectionKey && (q.roles.includes('all') || q.roles.includes(role)),
+      q => q.section === sectionKey && q.active !== false && (q.roles.includes('all') || q.roles.includes(role)),
     )
     selected.push(...eligible.slice(0, cap))
   }
@@ -416,32 +419,32 @@ export const stages = {
   zero: {
     name: 'Zero Autonomy', index: 1, humanRole: 'Operator',
     tagline: 'AI assists. Humans decide and act on everything.',
-    description: "AI captures, structures, and digitizes the work, but every decision still sits with people. Tools help operators record, standardize, and clean up data, nothing is delegated to AI. The work here is to get the foundations right: clean inputs, standardized processes, and the data quality that everything above this stage depends on.",
+    description: "Your responses place the organization at Stage 1, Zero Autonomy. AI is used to capture, structure, and digitize work, while decisions stay with your people. The priority is to get the foundations right: clean inputs, standardized processes, and the data quality that every stage above this one depends on.",
   },
   guided: {
     name: 'Guided Autonomy', index: 2, humanRole: 'Guide',
     tagline: 'AI recommends in real time. Humans approve every action.',
-    description: "AI works as an intelligent co-pilot, prompting, suggesting, and alerting in real time, but every action still needs explicit human approval before it executes. The value is already real: faster, better-informed decisions. The ceiling is trust. Moving up means letting AI act, not just advise, in the cases where it has earned it.",
+    description: "Your responses place the organization at Stage 2, Guided Autonomy. AI prompts, suggests, and alerts in real time, and people approve actions before they execute. The priority is to build the evidence and approval paths that let AI act, not only advise, in the cases where it has been shown to perform reliably.",
   },
   insight: {
     name: 'Insight Autonomy', index: 3, humanRole: 'Monitor',
     tagline: 'AI generates intelligence on its own. Humans consume and act.',
-    description: "AI no longer waits to be asked. It proactively surfaces insights, trends, and anomalies across functions, and people consume that intelligence rather than running reports themselves. The shift here is cultural: leaders learn to trust and act on machine-generated insight. The stall point is connecting that insight to action across the organization.",
+    description: "Your responses place the organization at Stage 3, Insight Autonomy. AI surfaces insights, trends, and anomalies without being asked, and teams consume that intelligence rather than producing it. The priority is to connect that insight to action, with clear ownership of the decisions it informs.",
   },
   operational: {
     name: 'Operational Autonomy', index: 4, humanRole: 'Supervisor',
     tagline: 'AI insight drives workflows. Humans oversee the exceptions.',
-    description: "AI-generated insight now flows directly into cross-functional decisions and workflows, with humans supervising at key checkpoints. Intelligence feeds CRM, product, and finance systems automatically; people manage the exceptions rather than the routine. The risk is automation outpacing oversight, so the work is designing the checkpoints that keep speed and control in balance.",
+    description: "Your responses place the organization at Stage 4, Operational Autonomy. AI-enabled insights are beginning to support selected decisions and workflows, with people retaining oversight at key checkpoints. The priority is to strengthen governance, approval paths, and exception handling before scaling further.",
   },
   proactive: {
     name: 'Proactive Autonomy', index: 5, humanRole: 'Strategist',
     tagline: 'AI anticipates and prescribes before humans see the need.',
-    description: "AI shifts from reactive to predictive: identifying opportunities, risks, and the right interventions ahead of human awareness, and prescribing action enterprise-wide. People move up to strategy and governance while AI manages the execution triggers. The advantage compounds here, but only for organizations whose governance is mature enough to trust prediction with action.",
+    description: "Your responses place the organization at Stage 5, Proactive Autonomy. AI is used to anticipate outcomes and prescribe action ahead of a request, while people set strategy and guardrails. The priority is to keep prediction inside well-governed workflows, with confidence thresholds, override paths, and audit trails that make acting on a forecast reviewable.",
   },
   full: {
     name: 'Full Autonomy', index: 6, humanRole: 'Orchestrator',
     tagline: 'AI executes, learns, and self-improves. Humans govern.',
-    description: "AI operates as a self-governing system: executing multi-step workflows start to finish, learning from outcomes, and improving without manual retraining. Humans define the guardrails, approve high-risk exceptions, and shape strategic direction. This isn't the end of human involvement; it's the highest-impact version of it. The work is governance, not operation.",
+    description: "Your responses place the organization at Stage 6, Full Autonomy. AI executes multi-step work, learns from outcomes, and improves with limited manual intervention, while people define guardrails and approve high-risk exceptions. Stage 6 is the final stage on this ladder, so the priority is to sustain it: continuous evaluation, current governance, and measured business value.",
   },
 }
 
@@ -484,12 +487,12 @@ export function scoreBarStyle(score) {
 const STRENGTH_MSG = {
   Strategy: { title: 'Executive alignment is real', body: "Leadership has committed to AI and the direction is clear. That's the starting condition for everything else, and a lot of organizations still don't have it." },
   Data: { title: 'Data infrastructure is ahead of the curve', body: 'Quality standards and the underlying platform are in better shape than most organizations at your stage. That removes one of the most common blockers.' },
-  People: { title: 'Governance and literacy are in place', body: "There's a framework for responsible deployment and employees have the training to use AI tools. That's the foundation for scale without compounding risk." },
+  People: { title: 'Governance and literacy are in place', body: "Your responses indicate that a framework for responsible deployment is in place and that your employees have the training to use AI tools. This provides a foundation for scaling AI without compounding risk." },
   Adoption: { title: 'AI is live and generating measurable value', body: "Production deployments are running and impact is being tracked. That's evidence of real execution capability, not just ambition." },
 }
 
 const GAP_VLOW = {
-  Strategy: { title: 'No real AI strategy or ownership', body: 'Investment decisions are being made without a framework. Resources go to whoever makes the loudest case, not where the value actually is.' },
+  Strategy: { title: 'No real AI strategy or ownership', body: 'Investment decisions are being made without a shared framework, so priorities follow whoever requests them rather than documented value and ownership.' },
   Data: { title: "Data isn't ready to support AI", body: "Siloed, inconsistent, unreliable. You can build models on it. You won't be able to trust what comes out, and neither will the people using it." },
   People: { title: 'No governance and no literacy program', body: 'Every deployment is ungoverned. Most employees have no framework for using AI tools responsibly. The exposure compounds with each new tool that goes live.' },
   Adoption: { title: "AI isn't in production yet", body: 'The investment so far is in exploration, not outcomes. Until something is live and measured, the business case for the next investment is guesswork.' },
@@ -498,8 +501,8 @@ const GAP_VLOW = {
 const GAP_MID = {
   Strategy: { title: "AI strategy exists but isn't driving decisions", body: "There's a document. Priorities still shift and ownership is unclear. Without enforcement and accountability, a strategy is just a starting point." },
   Data: { title: 'Data quality is inconsistent', body: "Every new AI project starts with cleanup work before it can begin. That's a constant tax on velocity and a hard ceiling on how fast you can move." },
-  People: { title: 'Governance is informal and literacy is uneven', body: 'Technical teams are ahead. Everyone else is watching from a distance. That gap is what keeps pilots from spreading into the wider organization.' },
-  Adoption: { title: "Pilots aren't scaling", body: "The jump from pilot to production is where most organizations stall. The problem is almost never the technology, it's the absence of a repeatable process for getting there." },
+  People: { title: 'Governance is informal and literacy is uneven', body: 'Governance practices are in place informally rather than formally, and AI literacy varies by role. Clear accountability, documented approval paths, and role-based training are what allow use cases to spread beyond the teams that built them.' },
+  Adoption: { title: "Pilots aren't scaling", body: 'Pilots are running, but there is no repeatable route into production. Without one, each new use case restarts the same work on process ownership, change support, and measurement.' },
 }
 
 const FALLBACK_FINDING = {
@@ -530,7 +533,7 @@ export function buildFindings(sectionAverages) {
 const NEXT_STEP = {
   Strategy: { chat: 'Get the right people aligned on our AI strategy', text: 'Get the right people aligned before the next investment decision. A half-day session to define three specific AI outcomes, with owners and timelines attached, removes more friction than months of planning documents.' },
   Data: { chat: 'Run a data readiness audit', text: 'Run a 60-day data readiness audit before the next deployment. Map what you have, what\'s clean enough to use, and what needs work. The output is a data inventory that makes every future project faster and every AI output more trustworthy.' },
-  People: { chat: 'Draft our AI governance policy', text: 'Draft the governance policy before the next use case goes live. A 30-day sprint to write, socialize, and approve a framework prevents the problems that compound at scale. Every week without it is a week of exposure that grows with each new deployment.' },
+  People: { chat: 'Draft our AI governance policy', text: 'Formalize governance before the next use case goes live. Document decision rights, approval paths, and role-based training, agree who owns each one, and review them on a set cadence. Exposure grows with each new deployment that runs outside a framework.' },
   Adoption: { chat: 'Diagnose why our AI isn\'t scaling', text: "Diagnose why the current work isn't spreading. It's usually one of three things: no change management, no clear process owner, or no ROI measurement to justify the next investment. Identify which one it is, fix that first, and everything else accelerates." },
 }
 

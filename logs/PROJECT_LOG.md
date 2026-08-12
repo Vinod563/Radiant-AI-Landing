@@ -594,3 +594,25 @@
 **Open items flagged (no unapproved copy invented):** trusted band mid-market rewrite (§9.1); exact solution tags[]; assistant stage-inference routing (backend); CX hero secondary link retention.
 
 **Status:** ✅ SUCCESS — staged on branch ai-test-integration, NOT merged. Mockup for Lam's review.
+
+---
+
+## 2026-08-11 — AI Adoption Assessment report: Content QA revision (v2.0)
+
+**Trigger:** `~/Downloads/AI Adoption Assessment_Content_QA.docx` (content team review) — 22 page-level items + 12 system-wide items.
+
+**Target identified:** `src/utils/aiReportPdf.jsx` (@react-pdf/renderer). Delivery path is `AssessmentResults.jsx` → `getReportPdfBase64()` → `aiReportPdf.jsx`. Note: `src/utils/aiExecutiveReport.js` is an unreachable legacy duplicate of the same report and was left untouched — flagged for deletion.
+
+**Files changed:**
+- `src/utils/aiReportPdf.jsx` — hyphenation disabled; tables non-splitting and bound to their headings; Exhibit 1 caption; section 04 renamed Maturity Positioning; Key Takeaways 1–3 rewritten; Leading area / considerations intro gating; per-dimension 60-day plan; sector blocks generalized; CTA copy + `SCHEDULE A CALL`; methodology expanded; conclusion paragraphs 2–4 rewritten; Stage 6 branches.
+- `src/data/reportEditorial.js` — Radiant's Read stage 2/3/4; score-anchored dimension steps; `SIXTY_DAY_PLAN` (4); `SECTOR_COPY` (FS + Healthcare + Government); `scoreSpreadSummary` / `balancedHeadline` / `topVsLowRead` / `conclusionComparison` / `conclusionClosing`; 14+ industries claim removed.
+- `src/data/aiAssessment.js` — all six stage findings rewritten to evidence-bounded wording; gap/next-step copy; absolute claims in question contexts neutralized; Q5/Q13/Q19/Q20 marked `active: false` (served bank 23 of 27).
+- `src/components/assessment/WhatAILeadersDo.jsx` — Stage 4 heading + actions 2 and 3.
+- `src/utils/emailSafeReport.js`, `src/components/assessment/HTMLReportViewer.jsx` — same CTA copy + positioning rename, so web/email/PDF claims match.
+- `docs/ai-assessment-report-copy-variations.md` — catalogue regenerated from this build (version, commit, date, surface map, decisions log).
+
+**Verification:** `npm run build` clean. Three PDFs rendered from source and text-extracted: Stage 4 / Financial Services / Executive, balanced / Healthcare / Technology Leader, Stage 6 / Government / Business Leader. Confirmed no mid-word breaks, no orphaned table headings, no `->` or `...` artifacts, correct band-distribution and Stage 6 copy.
+
+**Open (content team decision):** 5 unsourced web-only benchmark stat badges; leader titles + LinkedIn URLs need production validation.
+
+**Status:** ✅ SUCCESS — on branch ai-test-integration, not committed.
