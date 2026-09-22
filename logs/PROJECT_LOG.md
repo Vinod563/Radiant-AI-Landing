@@ -749,3 +749,19 @@
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: Arun Srinivasan Thiruvengadam photo upgraded
+
+**Change:** `public/images/leadership/arun-thiruvengadam.jpg` replaced with a 1024×1024 studio original, re-normalised to 512×512 JPEG q88.
+
+**Open question — this was not just a resolution swap.** The previous file showed a different, visibly older man (grey hair, black suit, gold tie); the new one is a younger man with rimless glasses. So the original slot-9 photo was the wrong person, not merely a low-res version of the right one.
+
+That matters because slots 9 and 10 (Arun, Vish) were the only two closed by elimination rather than direct confirmation — see the mapping-correction entry above. If slot 9 was wrong, slot 10 is unverified by the same reasoning. The new Arun photo also resembles the man currently on Vish's card, which is consistent with those two having been transposed in the original supply order.
+
+**Displaced photo preserved** at `/tmp/displaced-arun-greyhair.jpg` pending a decision — it is not currently shown anywhere in the grid.
+
+**Action needed:** confirm Vish Tatavarthy's photo directly. Do not close it by elimination a second time.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ⚠️ SUCCESS with open item — Vish unconfirmed.
