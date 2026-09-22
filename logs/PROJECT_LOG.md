@@ -737,3 +737,15 @@
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: Prafull Kumar photo upgraded
+
+**Change:** `public/images/leadership/prafull-kumar.jpg` replaced with a 1024×1024 studio original on a white backdrop, re-normalised to 512×512 JPEG q88.
+
+**Why, given the old one was already decent:** the previous 800px file was sharp enough, but it was shot against a dark grey backdrop — the only one in row 1 that was. Under the duotone the whole card sat darker than its four neighbours. This was a consistency fix rather than a resolution fix, and row 1 is now five studio portraits on light backdrops.
+
+**Remaining originals:** Balaram 282px, Vish 347px, Arun 400px. Seven of ten upgraded. Balaram is now the clear outlier — a darker, busier frame sitting between four light studio portraits in row 2.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS
