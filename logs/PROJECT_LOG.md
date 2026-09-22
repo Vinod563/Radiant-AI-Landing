@@ -779,3 +779,17 @@ That matters because slots 9 and 10 (Arun, Vish) were the only two closed by eli
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS — mapping fully confirmed; Balaram resolution is the only remaining item.
+
+## 2026-09-22 — Leadership section: Balaram Dandu photo upgraded — photo set complete
+
+**Change:** `public/images/leadership/balaram-dandu.jpg` replaced with a 1024×1024 studio original, re-normalised to 512×512 JPEG q88. This was the last remaining original (282px).
+
+**All ten portraits are now studio headshots on light backdrops, at 1024px or better, each individually confirmed against a captioned source.**
+
+**Design note worth revisiting:** the duotone layer was built to solve a problem that no longer exists. Its purpose was to collapse ten unrelated backdrops — studio grey, an office, Times Square at night, a circular crop on light blue — onto one hue and one value. Every source is now the same kind of shot on the same kind of background, so that justification is gone.
+
+It is still worth keeping, for two reasons that are not the original one: it carries the hover micro-interaction (duotone dissolving to true colour), and ten full-colour portraits on white backdrops would sit very bright against the dark navy section. But if the section is ever restyled, the duotone should be re-argued on those grounds rather than inherited as a fix for a problem that has since been solved at the source.
+
+**Verification:** `vite build` clean. 10 files, all distinct by MD5. Screenshots re-captured at 1920×1080, 768×1024, 375×667 plus desktop hover.
+
+**Status:** ✅ COMPLETE — photo set final, mapping fully confirmed, no open items.
