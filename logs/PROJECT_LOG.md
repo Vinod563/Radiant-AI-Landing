@@ -683,3 +683,15 @@
 **Verification:** set still 10 files, all distinct by MD5. Screenshots re-captured; the card reads at the same value as its neighbours rather than brighter.
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: Srinivas Chamarthi photo upgraded
+
+**Change:** `public/images/leadership/srinivas-chamarthi.jpg` replaced with a 2048×2048 studio original (same subject), re-normalised to 512×512 JPEG q88.
+
+**Why:** the previous file was a 400px LinkedIn-style crop and was visibly soft at desktop size. Same studio session as the new Shankar photo, so slots 1 and 2 now read as a matched pair at the head of the grid.
+
+**Note:** this source is framed tighter than the rest — the head fills more of the 4:5 frame with less headroom. Nothing to fix in code (the crop is inherent to the source), but if a looser original exists it would sit more evenly beside its neighbours.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS
