@@ -673,3 +673,13 @@
 **Note for future photo drops:** don't infer identity from supply order. Ask for captioned photos, or verify against a named source file.
 
 **Status:** ✅ SUCCESS — mapping confirmed, no open items.
+
+## 2026-09-22 — Leadership section: Shankar Rachakonda photo upgraded
+
+**Change:** `public/images/leadership/shankar-rachakonda.jpg` replaced with a 2048×2048 studio original (same subject, better source), re-normalised to 512×512 JPEG q88 like the rest of the set.
+
+**Why it matters:** the previous file was a 500px headshot pre-cropped to a circle on a light blue field, so the circular edge showed as an arc in the top corners of the 4:5 frame. The new source is a full-bleed square on a white studio backdrop — the arc is gone and the duotone and vignette now render it as a clean edge-to-edge portrait.
+
+**Verification:** set still 10 files, all distinct by MD5. Screenshots re-captured; the card reads at the same value as its neighbours rather than brighter.
+
+**Status:** ✅ SUCCESS
