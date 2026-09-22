@@ -24,6 +24,7 @@ export default function Navbar() {
     { label: 'Results', href: '#proof' },
     { label: 'Industries', href: '#industries' },
     { label: 'How We Work', href: '#differentiator' },
+    { label: 'Leadership', href: '#leadership' },
     { label: 'Contact', to: CONNECT_CHAT },
   ]
 

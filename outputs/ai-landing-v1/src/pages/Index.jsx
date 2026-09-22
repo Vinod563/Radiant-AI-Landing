@@ -3,6 +3,7 @@ import Footer from '../components/shared/Footer.jsx'
 import SectionNav from '../components/shared/SectionNav.jsx'
 import Hero from '../components/home/Hero.jsx'
 import WhatIsRadiantAI from '../components/home/WhatIsRadiantAI.jsx'
+import Leadership from '../components/home/Leadership.jsx'
 import Platform from '../components/home/Platform.jsx'
 import ProblemsWeSolve from '../components/home/ProblemsWeSolve.jsx'
 import Infrastructure from '../components/home/Infrastructure.jsx'
@@ -38,7 +39,10 @@ export default function Index() {
       {/* 6. Why Radiant Digital (moved below Industries) */}
       <Divider />
       <WhatIsRadiantAI />
-      {/* 7. Free Assessment (moved down from position 2) */}
+      {/* 7. Leadership */}
+      <Divider />
+      <Leadership />
+      {/* 8. Free Assessment (moved down from position 2) */}
       <Divider />
       <AssessmentEntry />
       {/* 7. Platform */}

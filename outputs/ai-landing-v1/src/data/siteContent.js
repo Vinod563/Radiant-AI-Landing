@@ -338,6 +338,25 @@ export const markets = [
   },
 ]
 
+// ─── LEADERSHIP ───────────────────────────────────
+export const leadership = {
+  kicker: 'Leadership',
+  headline: 'Every Outcome\nHas an Owner.',
+  body: 'We don’t hand you a bench — we hand you operators. The people below have scaled AI, cloud and delivery programs inside Fortune 500 enterprises and federal agencies, and they stay accountable to the numbers long after the kickoff deck.',
+  people: [
+    { name: 'Shankar Rachakonda',          role: 'CEO',                                                                                     photo: '/images/leadership/shankar-rachakonda.jpg' },
+    { name: 'Srinivas Chamarthi',          role: 'Senior Vice President & Business Head for TMT Business',                                   photo: '/images/leadership/srinivas-chamarthi.jpg' },
+    { name: 'Srinivas Punnamaraju',        role: 'Senior Vice President, State, Local and Education Markets',                                photo: '/images/leadership/srinivas-punnamaraju.jpg' },
+    { name: 'Sandeep Sawhney',             role: 'Chief Growth Officer',                                                                     photo: '/images/leadership/sandeep-sawhney.jpg' },
+    { name: 'Prafull Kumar',               role: 'Executive Director | Global Head of AI Strategy, Solution Engineering & New Technology Enablement', photo: '/images/leadership/prafull-kumar.jpg' },
+    { name: 'Gil Tadmor',                  role: 'Senior Vice President, Federal Market',                                                    photo: '/images/leadership/gil-tadmor.jpg' },
+    { name: 'Nari Vemuru',                 role: 'Senior Vice President, Client Operations',                                                 photo: '/images/leadership/nari-vemuru.jpg' },
+    { name: 'Balaram Dandu',               role: 'Senior Vice President, Corporate Operations',                                              photo: '/images/leadership/balaram-dandu.jpg' },
+    { name: 'Arun Srinivasan Thiruvengadam', role: 'Executive Director, Solutions and Business Development',                                 photo: '/images/leadership/arun-thiruvengadam.jpg' },
+    { name: 'Vish Tatavarthy',             role: 'Senior Director, Delivery and Growth (DoW and HHS)',                                       photo: '/images/leadership/vish-tatavarthy.jpg' },
+  ],
+}
+
 // ─── CONTACT ──────────────────────────────────────
 export const contact = {
   email: 'hello@radiant.digital',

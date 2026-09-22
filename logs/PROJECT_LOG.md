@@ -629,3 +629,26 @@
 **Open (content team decision):** 5 unsourced web-only benchmark stat badges; leader titles + LinkedIn URLs need production validation.
 
 **Status:** ✅ SUCCESS — on branch ai-test-integration, not committed.
+
+## 2026-09-22 — Homepage: Leadership section (10 portraits)
+
+**Trigger:** Leadership photos + titles supplied by Tushar Hande (email, 4 attachments + 6 pasted). Request: a cohesive leadership section on the homepage with uniform portraits, homepage-native styling, a weighted headline, and a micro-interaction.
+
+**Placement:** `src/pages/Index.jsx` — between `WhatIsRadiantAI` (#differentiator) and `AssessmentEntry` (#assessment), so "why us" is immediately answered by "who us" before the assessment CTA. Registered in `SectionNav.jsx` and `Navbar.jsx` as `#leadership`.
+
+**Files changed:**
+- `public/images/leadership/*.jpg` (new, 10) — every source headshot normalised to 512×512 JPEG q88 via `sips`, so the asset set is uniform regardless of the 200–800px originals.
+- `src/data/siteContent.js` — new `leadership` export (kicker, headline, body, ordered `people[]` with name / role / photo).
+- `src/components/home/Leadership.jsx` (new) — header block reusing the `SocialProof` pattern (`kicker`, `grad-text` headline, `editorial-bg-num`), plus a `grid-cols-2 lg:grid-cols-5` portrait grid. 2 and 5 are the only divisors of 10, so no orphan row at any breakpoint. Framer Motion ripple stagger keyed off row/column index.
+- `src/styles/globals.css` — `.portrait-*` component classes.
+- `src/components/shared/SectionNav.jsx`, `src/components/shared/Navbar.jsx` — nav registration.
+
+**Cohesion approach:** the source photos have unrelated backdrops (studio grey, office, Times Square at night, a blue circular crop). Rather than cut them out, the resting state applies `grayscale(1)` plus a `mix-blend-mode: color` duotone on a single brand ramp, a bottom fade into the card, and a radial vignette — which collapses ten different backdrops onto one value and one hue. Uniform 4:5 frame, 20px radius and card chrome do the rest.
+
+**Micro-interaction:** hover dissolves the duotone to the true photograph (0.7s), lifts the card 8px, sweeps a diagonal sheen across the frame, scales the image to 1.055, and extends the gradient accent rule under the name from 28% to full width. Guarded by `prefers-reduced-motion` — the colour reveal stays, the movement and sheen drop.
+
+**Verification:** `vite build` clean. Playwright screenshots at 1920×1080, 768×1024, 375×667 plus a desktop hover frame, archived under `screenshots/`. All 10 cards render; no console errors from this section; accent rules align across every row; no XSS sinks or unused imports in the new files.
+
+**Open:** photo→name mapping follows the order the photos were pasted and needs a human check against the source email before this goes to production.
+
+**Status:** ✅ SUCCESS — branch `leadership-imagery`.

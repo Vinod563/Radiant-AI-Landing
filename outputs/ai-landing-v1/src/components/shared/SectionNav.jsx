@@ -9,6 +9,7 @@ const sections = [
   { id: 'social-proof',   label: 'Customers' },
   { id: 'industries',     label: 'Industries' },
   { id: 'differentiator', label: 'Why Radiant Digital' },
+  { id: 'leadership',     label: 'Leadership' },
   { id: 'assessment',     label: 'Free Assessment' },
   { id: 'platform',       label: 'Platform' },
   { id: 'infrastructure', label: 'Infrastructure' },
