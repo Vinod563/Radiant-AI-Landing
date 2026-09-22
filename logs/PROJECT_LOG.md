@@ -695,3 +695,13 @@
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: Sandeep Sawhney photo upgraded
+
+**Change:** `public/images/leadership/sandeep-sawhney.jpg` replaced with a 1024×1024 studio original (same subject), re-normalised to 512×512 JPEG q88. Previous file was a 296px crop — the softest in the set.
+
+**Effect:** three of the ten portraits (Shankar, Srinivas Chamarthi, Sandeep) are now studio shots on light backdrops, which anchors the top row. Nari's 200px file is now the weakest remaining source.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS
