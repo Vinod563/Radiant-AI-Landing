@@ -727,3 +727,13 @@
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: Nari Vemuru photo upgraded
+
+**Change:** `public/images/leadership/nari-vemuru.jpg` replaced with a 1024×1024 studio original, re-normalised to 512×512 JPEG q88. Previous file was 200px — the lowest-resolution source in the set, and the one being upscaled hardest to reach 512.
+
+**Remaining originals:** Balaram 282px, Vish 347px, Arun 400px. Six of ten are now studio shots; both rows open on one.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS
