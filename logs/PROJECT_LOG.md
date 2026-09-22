@@ -803,3 +803,26 @@ It is still worth keeping, for two reasons that are not the original one: it car
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints. Dev server restarted on 127.0.0.1:5179 (the previous background process ended with the prior session).
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: four portraits zoomed out for consistent framing
+
+**Trigger:** Raima flagged Prafull, Shankar, Vish and Sandeep as framed tighter than the rest.
+
+**Method:** each re-rendered from its high-res original. The subject is scaled down inside the square and placed so the crown sits at 27px (512-space), the median headroom of the six portraits already framed correctly. The freed margin is filled by edge-pixel replication. Upward that extends the studio backdrop. Downward the torso continues into the card's bottom scrim. The side fill falls outside the 4:5 crop, which holds for any scale ≥ 0.8.
+
+| Portrait | Scale | Crown before → after | Why this scale |
+|---|---|---|---|
+| Prafull Kumar | 0.88 | 10 → 27 | largest head in the set |
+| Sandeep Sawhney | 0.88 | 18 → 27 | largest head in the set |
+| Vish Tatavarthy | 0.90 | ~1 → 27 | hair touched the top edge |
+| Shankar Rachakonda | 0.93 | 24 → 27 | head already small — gentlest touch |
+
+**Vish needed extra handling.** His hair runs to the top edge of the source, so the crown was cropped when the photo was taken. Edge replication stretched that cut hair upward into visible streaks. Instead, his top margin is filled with backdrop only (interpolated from the outer 15% of the top row on each side), and the cut hair edge is feathered into it over 14px with a smoothstep. White hair on a grey backdrop is low contrast, so the blend is effectively invisible. The other three didn't need this because their top rows are pure backdrop.
+
+**Measurement caveat:** automated head-width measurement proved unreliable — grey and white hair against light backdrops defeats simple thresholds, and it ranked Shankar's head smallest even though he was on the list. Headroom was measured, but the choice of *which* portraits to change was Raima's call by eye, and it was followed.
+
+**Known remaining artifact (not introduced here):** several of the studio sources carry a visible Gemini ✦ watermark in the lower right, inside the visible crop. It is faint under the scrim but present on most cards. Needs re-export without the mark, or a decision to accept it.
+
+**Verification:** 10 files, all distinct by MD5. Raw files inspected for fill artifacts; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS — one open item: Gemini watermark.
