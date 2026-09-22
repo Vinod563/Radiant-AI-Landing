@@ -826,3 +826,25 @@ It is still worth keeping, for two reasons that are not the original one: it car
 **Verification:** 10 files, all distinct by MD5. Raw files inspected for fill artifacts; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS — one open item: Gemini watermark.
+
+## 2026-09-22 — Leadership section: Shankar Rachakonda shoulder line aligned
+
+**Trigger:** Raima noted Shankar's shoulders sat higher than the rest of row 1.
+
+**Measured** (row where the jacket first covers 75% of the visible 4:5 band, 512-space): Shankar 275; rest of row 1 331–352, median 341. About 66px (13% of the frame) high.
+
+**Root cause:** his head is the smallest in the set, since his source is shot from further back. With headroom matched to everyone else's, a smaller head means a shorter crown-to-shoulder distance, so the shoulder line lands higher.
+
+**Options considered:**
+- *Translate down only.* Aligning the shoulders this way would push his headroom from 27px to ~90px, leaving his head floating low under an empty band and breaking the headroom consistency set in the previous entry. Rejected.
+- *Enlarge, then place.* Scaling him up brings his head size in line with the others, which drops the shoulders with it. Chosen.
+
+**Applied:** re-rendered from the 2048px original at 1.10× (up from 0.93×), crown placed at 48px, the new `place.py` generalising `zoomout.py` to scales above 1. The 22px top margin is edge-filled backdrop; his source's top row is clean backdrop, so no feathering was needed.
+
+**Result:** shoulder line 275 → 335, inside the row's 331–352 range. Head size now close to Srinivas Chamarthi's beside him, and headroom (48) close to his as well.
+
+**Note:** this partly reverses the 0.93 zoom-out from the previous entry. That entry fixed headroom; this one fixes the shoulder line, and for Shankar the two goals pull in opposite directions because of how his source was shot. Enlarging was the only way to satisfy the shoulders without breaking the headroom.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS — Gemini watermark still open (see previous entry).
