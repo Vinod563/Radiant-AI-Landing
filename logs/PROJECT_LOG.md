@@ -793,3 +793,13 @@ It is still worth keeping, for two reasons that are not the original one: it car
 **Verification:** `vite build` clean. 10 files, all distinct by MD5. Screenshots re-captured at 1920×1080, 768×1024, 375×667 plus desktop hover.
 
 **Status:** ✅ COMPLETE — photo set final, mapping fully confirmed, no open items.
+
+## 2026-09-22 — Leadership section: Srinivas Chamarthi reframed
+
+**Change:** `public/images/leadership/srinivas-chamarthi.jpg` replaced with a second 1024×1024 studio original from the same session, re-normalised to 512×512 JPEG q88.
+
+**Why:** resolves the framing note from the earlier Srinivas Chamarthi entry. The previous studio shot was cropped tight, so his head filled more of the 4:5 frame than anyone else's, with less headroom. This one is framed like the rest, and his head now sits at the same scale and height as the portraits either side of it. That was the last framing inconsistency in the set.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints. Dev server restarted on 127.0.0.1:5179 (the previous background process ended with the prior session).
+
+**Status:** ✅ SUCCESS
