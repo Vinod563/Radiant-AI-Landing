@@ -652,3 +652,24 @@
 **Open:** photo→name mapping follows the order the photos were pasted and needs a human check against the source email before this goes to production.
 
 **Status:** ✅ SUCCESS — branch `leadership-imagery`.
+
+## 2026-09-22 — Leadership section: photo→name mapping corrected
+
+**Trigger:** Resolves the open item from the entry above. The original mapping followed the order the photos were supplied, which turned out not to match the table order; Raima re-sent each headshot captioned with its name.
+
+**Corrections applied** (8 of 10 slots moved; every replacement re-normalised to 512×512 JPEG q88):
+- Shankar Rachakonda ← photo previously on Nari Vemuru
+- Srinivas Chamarthi ← photo previously on Shankar Rachakonda
+- Srinivas Punnamaraju ← photo previously on Balaram Dandu
+- Sandeep Sawhney ← photo previously on Gil Tadmor
+- Prafull Kumar — unchanged, confirmed by hash
+- Gil Tadmor ← photo previously on Srinivas Punnamaraju
+- Nari Vemuru ← photo previously on Sandeep Sawhney
+- Balaram Dandu ← photo previously on Srinivas Chamarthi
+- Arun Srinivasan Thiruvengadam, Vish Tatavarthy — unchanged, correct by elimination
+
+**Verification:** MD5 across `public/images/leadership/*.jpg` after each swap, to catch the transient duplicates a one-at-a-time reassignment creates. Final set: 10 files, all distinct. The eight confirmed names consumed eight distinct photos, leaving exactly the two already on slots 9 and 10 — which is what closes the mapping. Screenshots re-captured at all three breakpoints.
+
+**Note for future photo drops:** don't infer identity from supply order. Ask for captioned photos, or verify against a named source file.
+
+**Status:** ✅ SUCCESS — mapping confirmed, no open items.
