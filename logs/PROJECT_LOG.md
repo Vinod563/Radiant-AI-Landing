@@ -848,3 +848,20 @@ It is still worth keeping, for two reasons that are not the original one: it car
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS — Gemini watermark still open (see previous entry).
+
+## 2026-09-22 — Leadership section: new photo for Nari Vemuru
+
+**Change:** `public/images/leadership/nari-vemuru.jpg` replaced with a new studio photo supplied by Raima (768×1024 source).
+
+**⚠️ Identity check requested.** This photo appears to show a different person from both earlier Nari photos: the original 200px headshot and the studio version that replaced it both showed a younger, clean-shaven man, while this one is visibly older, with grey at the sides and a prominent grey mustache. Applied as instructed, since Raima is the authority on who is who, but flagged for confirmation before production. If it turns out to be a mix-up, the previous version is recoverable from git (`0cb17d2`).
+
+**Processing:**
+- Source is 3:4 portrait, not square. Squared by cropping 768×768 from the top, keeping the head and discarding lower torso the card would never show.
+- Measured at scale 1: head width 194 (in row 2's range), but shoulders at 348 against row 2's 364–384, with headroom already 53 against ~27. Same pattern as Shankar, so the same fix: enlarge, then place.
+- Placed with `place.py` at 1.12× with the crown at 40px. This was a zoom-in, so the result is a pure crop with no synthesised pixels.
+
+**Result:** shoulder line 370 (row 2: 364–384), head width 217 (close to Arun's 222), headroom 40.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ⚠️ SUCCESS pending identity confirmation. Gemini watermark still open.
