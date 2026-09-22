@@ -715,3 +715,15 @@
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: Gil Tadmor photo upgraded
+
+**Change:** `public/images/leadership/gil-tadmor.jpg` replaced with a 1024×1024 studio original, re-normalised to 512×512 JPEG q88.
+
+**Why this one mattered most:** the previous file was a 342px casual street photo (green athletic top, Times Square at night). It was the only non-headshot in the set, so it read as out of place regardless of the duotone treatment — a resolution bump alone would not have fixed it. Now row 2 opens on a studio portrait.
+
+**Remaining originals:** Nari 200px, Balaram 282px, Vish 347px, Arun 400px. Five of ten are now studio shots.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS
