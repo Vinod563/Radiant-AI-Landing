@@ -705,3 +705,13 @@
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: Srinivas Punnamaraju photo upgraded
+
+**Change:** `public/images/leadership/srinivas-punnamaraju.jpg` replaced with a 1024×1024 studio original (same subject), re-normalised to 512×512 JPEG q88. Previous file was a 282px casual shot against a busy interior.
+
+**Effect:** four of the top row's five portraits are now studio shots on light backdrops. The row reads as a commissioned set. The consequence is that the quality gap to row 2 (Gil 342px street photo, Nari 200px, Balaram 282px, Vish 347px) is now the most visible inconsistency in the section — worth closing before production.
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS
