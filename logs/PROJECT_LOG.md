@@ -875,3 +875,21 @@ It is still worth keeping, for two reasons that are not the original one: it car
 **Verification:** rendered order read back from the DOM (`.portrait-name`) and matches; screenshots re-captured. Row 1's shoulder alignment is unaffected, since all four row-1 portraits involved were already inside the same 331–352 band.
 
 **Status:** ✅ SUCCESS
+
+## 2026-09-22 — Leadership section: grid reordered
+
+**Change:** `src/data/siteContent.js` — Prafull Kumar moved from 5th to 8th in `leadership.people`. Gil Tadmor moves up into row 1; Nari and Balaram shift one place left.
+
+**Order now (per Raima):**
+- Row 1: Shankar Rachakonda · Sandeep Sawhney · Srinivas Chamarthi · Srinivas Punnamaraju · Gil Tadmor
+- Row 2: Nari Vemuru · Balaram Dandu · Prafull Kumar · Arun Srinivasan Thiruvengadam · Vish Tatavarthy
+
+**Verification:** rendered order read back from the DOM and matches; screenshots re-captured.
+
+**Side effect on shoulder alignment** (75% jacket coverage, 512-space). Earlier entries aligned shoulders within each row, and moving portraits between rows changes the comparison set:
+- Row 1: Shankar 335, Sandeep 341, Srinivas C 352, Srinivas P 341, **Gil 364** — Gil sits ~12–20px lower than the rest of the row. Minor.
+- Row 2: Nari 370, Balaram 374, **Prafull 331**, Arun 380, Vish 384 — Prafull sits ~45px (≈9% of the frame) higher than his neighbours, visibly. Comparable to the Shankar offset Raima flagged earlier (66px).
+
+Not corrected in this change: the fix would mean enlarging Prafull, which partly reverses the zoom-out Raima asked for on him. Raised with Raima for a decision.
+
+**Status:** ✅ SUCCESS — open: Prafull shoulder offset in row 2 (awaiting decision), Nari identity confirmation, Gemini watermark.
