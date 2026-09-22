@@ -865,3 +865,13 @@ It is still worth keeping, for two reasons that are not the original one: it car
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ⚠️ SUCCESS pending identity confirmation. Gemini watermark still open.
+
+## 2026-09-22 — Leadership section: Sandeep Sawhney moved to second position
+
+**Change:** `src/data/siteContent.js` — Sandeep Sawhney's entry moved from 4th to 2nd in `leadership.people`, directly after Shankar Rachakonda. Srinivas Chamarthi and Srinivas Punnamaraju each shift one place right. No other files touched; the grid renders in array order.
+
+**Order now:** Shankar Rachakonda · Sandeep Sawhney · Srinivas Chamarthi · Srinivas Punnamaraju · Prafull Kumar / Gil Tadmor · Nari Vemuru · Balaram Dandu · Arun Srinivasan Thiruvengadam · Vish Tatavarthy.
+
+**Verification:** rendered order read back from the DOM (`.portrait-name`) and matches; screenshots re-captured. Row 1's shoulder alignment is unaffected, since all four row-1 portraits involved were already inside the same 331–352 band.
+
+**Status:** ✅ SUCCESS
