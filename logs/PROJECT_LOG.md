@@ -765,3 +765,17 @@ That matters because slots 9 and 10 (Arun, Vish) were the only two closed by eli
 **Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
 
 **Status:** ⚠️ SUCCESS with open item — Vish unconfirmed.
+
+## 2026-09-22 — Leadership section: Vish Tatavarthy photo confirmed, slots 9/10 transposition resolved
+
+**Change:** `public/images/leadership/vish-tatavarthy.jpg` replaced with a 1024×1024 studio original, re-normalised to 512×512 JPEG q88.
+
+**Resolves the open item from the entry above.** The supplied photo is the same grey-haired man in pinstripe and gold tie that had been sitting on Arun's card — confirming slots 9 and 10 were transposed in the original supply order. Both are now directly confirmed rather than inferred, and `/tmp/displaced-arun-greyhair.jpg` is no longer orphaned: that person is Vish.
+
+**Root cause, recorded so it is not repeated:** closing the last two slots by elimination was unsound. The argument assumed the eight confirmed names had consumed eight *correctly identified* photos, but a transposition inside the unconfirmed remainder is invisible to a uniqueness check — every file stays distinct, so the MD5 sweep that caught the earlier duplicates could not catch this. Elimination only works when the remaining set is known-good; here it was not.
+
+**All ten photos now individually confirmed against a captioned source, and all ten are studio originals at ≥1024px except Balaram (282px).**
+
+**Verification:** 10 files, all distinct by MD5; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS — mapping fully confirmed; Balaram resolution is the only remaining item.
