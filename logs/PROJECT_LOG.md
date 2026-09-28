@@ -893,3 +893,17 @@ It is still worth keeping, for two reasons that are not the original one: it car
 Not corrected in this change: the fix would mean enlarging Prafull, which partly reverses the zoom-out Raima asked for on him. Raised with Raima for a decision.
 
 **Status:** ✅ SUCCESS — open: Prafull shoulder offset in row 2 (awaiting decision), Nari identity confirmation, Gemini watermark.
+
+## 2026-09-28 — Leadership section: Prafull Kumar designation updated
+
+**Change:** `src/data/siteContent.js` — role updated from "Executive Director | Global Head of AI Strategy, Solution Engineering & New Technology Enablement" to "Vice President | Global Head of AI & Digital Transformation".
+
+**Side effect:** the shorter title wraps to two lines instead of three, so row 2's cards are slightly shorter. No layout work needed — grid rows size to their tallest card.
+
+**⚠️ Surname discrepancy, not actioned.** Raima's instruction named "Prafull Khare"; the entry has read "Prafull Kumar" since the original table supplied by Tushar Hande. Only the designation was changed. Needs confirmation of which surname is correct — the displayed name is unchanged either way until then.
+
+**Verification:** rendered name and role read back from the DOM; screenshots re-captured at all three breakpoints.
+
+**Environment note:** the scratchpad was cleared between sessions, so the image-processing helpers (`place.py`, `zoomout.py`, `measure.py`, `shoulders.py`) are gone. They are not in the repo. Any further reframing means recreating them — worth committing under `outputs/ai-landing-v1/scripts/` if reframing continues. Also, Vite bound to IPv6 `[::1]` on this restart, the opposite of the previous session's IPv4-only bind, so the working dev URL changed.
+
+**Status:** ✅ SUCCESS — open: Prafull surname, Prafull shoulder offset in row 2, Nari identity, Gemini watermark.
