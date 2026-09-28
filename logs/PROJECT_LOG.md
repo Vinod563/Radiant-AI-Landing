@@ -907,3 +907,13 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 **Environment note:** the scratchpad was cleared between sessions, so the image-processing helpers (`place.py`, `zoomout.py`, `measure.py`, `shoulders.py`) are gone. They are not in the repo. Any further reframing means recreating them — worth committing under `outputs/ai-landing-v1/scripts/` if reframing continues. Also, Vite bound to IPv6 `[::1]` on this restart, the opposite of the previous session's IPv4-only bind, so the working dev URL changed.
 
 **Status:** ✅ SUCCESS — open: Prafull surname, Prafull shoulder offset in row 2, Nari identity, Gemini watermark.
+
+## 2026-09-28 — Leadership section: Srinivas Chamarthi designation updated
+
+**Change:** `src/data/siteContent.js` — role updated from "Senior Vice President & Business Head for TMT Business" to "SVP & Business Head - Commercial Markets". Applied verbatim as supplied.
+
+**Style inconsistency, not actioned.** This is the only card using the abbreviation "SVP"; the other four senior VPs read "Senior Vice President, …". It is also the only one using a hyphen separator rather than a comma or pipe. Left as supplied since it was given as explicit copy, but flagged — "Senior Vice President, Commercial Markets" would match the rest of the grid.
+
+**Verification:** rendered roles read back from the DOM for all ten cards; screenshots re-captured at all three breakpoints.
+
+**Status:** ✅ SUCCESS — open: SVP abbreviation style, Prafull surname, Prafull shoulder offset, Nari identity, Gemini watermark.

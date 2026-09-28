@@ -346,7 +346,7 @@ export const leadership = {
   people: [
     { name: 'Shankar Rachakonda',          role: 'CEO',                                                                                     photo: '/images/leadership/shankar-rachakonda.jpg' },
     { name: 'Sandeep Sawhney',             role: 'Chief Growth Officer',                                                                     photo: '/images/leadership/sandeep-sawhney.jpg' },
-    { name: 'Srinivas Chamarthi',          role: 'Senior Vice President & Business Head for TMT Business',                                   photo: '/images/leadership/srinivas-chamarthi.jpg' },
+    { name: 'Srinivas Chamarthi',          role: 'SVP & Business Head - Commercial Markets',                                                photo: '/images/leadership/srinivas-chamarthi.jpg' },
     { name: 'Srinivas Punnamaraju',        role: 'Senior Vice President, State, Local and Education Markets',                                photo: '/images/leadership/srinivas-punnamaraju.jpg' },
     { name: 'Gil Tadmor',                  role: 'Senior Vice President, Federal Market',                                                    photo: '/images/leadership/gil-tadmor.jpg' },
     { name: 'Nari Vemuru',                 role: 'Senior Vice President, Client Operations',                                                 photo: '/images/leadership/nari-vemuru.jpg' },
