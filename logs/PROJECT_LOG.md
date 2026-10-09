@@ -917,3 +917,21 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 **Verification:** rendered roles read back from the DOM for all ten cards; screenshots re-captured at all three breakpoints.
 
 **Status:** ✅ SUCCESS — open: SVP abbreviation style, Prafull surname, Prafull shoulder offset, Nari identity, Gemini watermark.
+
+## 2026-09-28 — Leadership section: new photo for Gil Tadmor
+
+**Change:** `public/images/leadership/gil-tadmor.jpg` replaced with a new studio photo supplied by Raima (2048×2048 source).
+
+**⚠️ Identity check requested.** The previous Gil photo (navy suit, blue tie, swept-back grey hair) and this one (charcoal check suit, patterned tie, lighter white hair, freckled complexion) do not look like the same person. Applied as instructed, but flagged for confirmation before production. The previous version is recoverable from git (`e35a7bc`).
+
+**Processing:**
+- Measured at scale 1 (512-space): crown 6, shoulder line 333. Headroom was far tighter than row 1's (26–50), and the head is large.
+- Placed at 0.92× with the crown at 30px. Top margin is edge-filled white backdrop; side fill falls outside the 4:5 crop; the bottom ~17 rows are replicated jacket under the dark scrim.
+
+**Result:** crown 30, shoulder line 336. Row 1 by the same measure: Shankar 326, Sandeep 324, Srinivas C 352, Srinivas P 339, so Gil is now inside the row's band. The previous photo sat low, at 363.
+
+**Verification:** 10 files, all distinct by MD5; screenshots captured at desktop, tablet, and mobile (`screenshots/*/leadership-gil.png`).
+
+**Known artifact:** this source also carries the Gemini ✦ watermark in the lower right, inside the visible crop. It is faint under the scrim, like the others.
+
+**Status:** ⚠️ SUCCESS pending identity confirmation. Open: Nari identity, Prafull shoulder offset, Gemini watermark.
