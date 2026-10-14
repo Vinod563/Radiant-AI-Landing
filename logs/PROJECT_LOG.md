@@ -935,3 +935,251 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 **Known artifact:** this source also carries the Gemini ✦ watermark in the lower right, inside the visible crop. It is faint under the scrim, like the others.
 
 **Status:** ⚠️ SUCCESS pending identity confirmation. Open: Nari identity, Prafull shoulder offset, Gemini watermark.
+
+## 2026-10-09 — Leadership section: new photo for Arun Srinivasan Thiruvengadam
+
+**Change:** `public/images/leadership/arun-thiruvengadam.jpg` replaced with a new studio photo supplied by Raima (1824×2346 source).
+
+**Processing:**
+- Source is portrait and shot close: at full width (512-space) the crown sits at 37 and the shoulder line at 433, well below row 2, with a head noticeably larger than his neighbours'.
+- Placed at 0.86× with the crown at 30px, using the full-height source so the lower frame is real jacket rather than fill. Top margin (2px) and the side fill are edge-replicated; the side fill falls outside the 4:5 crop.
+
+**Result:** crown 30, shoulder line 371. Row 2 by the same measure: Nari 351, Balaram 374, Prafull 330, Vish 384. The previous Arun photo measured 352.
+
+**Verification:** 10 files, all distinct by MD5; screenshots captured at desktop, tablet, and mobile (`screenshots/*/leadership-arun.png`). Dev server restarted on 127.0.0.1:5179.
+
+**Known artifact:** this source also carries the Gemini ✦ watermark in the lower right, inside the visible crop, faint under the scrim.
+
+**Status:** ✅ SUCCESS — open: Gil and Nari identity confirmation, Prafull shoulder offset, Gemini watermark.
+
+## 2026-10-09 — Leadership section: Lam Huynh and Elizabeth Holland added
+
+**Change:** two people appended to `leadership.people` in `src/data/siteContent.js`, with new portraits `public/images/leadership/lam-huynh.jpg` and `elizabeth-holland.jpg`. Names and photos only; `role` is an empty string for both until Raima supplies designations.
+
+**Photo processing** (sources: Lam 512×512 on a grey-blue backdrop, Elizabeth 480×640 against a blurred office):
+- Subjects cut out with rembg (`birefnet-portrait` model, run locally) and composited onto a flat near-white backdrop (246,247,249). Mattes checked against magenta; hair edges are clean on both. Only the background was replaced — no pixels of either person were generated or retouched.
+- Lam: placed at 1.05× with the crown at 30px. A zoom-in, so a pure crop.
+- Elizabeth: placed at 0.87× (of source pixels), top-aligned. Her hair runs off the top edge of the source, so there is no headroom to give her without inventing hair; she is the one portrait with none. Side fill falls outside the 4:5 crop.
+- Neither source carries the Gemini ✦ watermark.
+
+**Layout** (`src/components/home/Leadership.jsx`):
+- 12 people at 5-up leaves a row of 2. The grid is now a centred flex-wrap with the same column widths and gaps (2-up below lg, 5-up from lg), so the short last row sits centred instead of hanging left. Rows 1 and 2 are unchanged.
+- Cards take `!h-auto` so flex stretch keeps every card in a row the same height (the `.portrait-card` rule's `height: 100%` only worked under grid).
+- When `role` is empty the accent rule and role line are not rendered, and the image alt text is the name alone.
+
+**Verification:** 12 cards in the DOM; per-row card heights equal at desktop (404 / 406 / 354); 12 image files, all distinct by MD5; screenshots at desktop, tablet, and mobile (`screenshots/*/leadership-12.png`).
+
+**Status:** ✅ SUCCESS — open: designations for Lam and Elizabeth, Elizabeth headroom (needs a source with space above the head), Gil and Nari identity confirmation, Prafull shoulder offset, Gemini watermark.
+
+## 2026-10-12 — Leadership section: Elizabeth Holland zoomed out
+
+**Trigger:** Raima flagged Elizabeth's portrait as too zoomed in.
+
+**Change:** `public/images/leadership/elizabeth-holland.jpg` re-rendered from the same cut-out at 0.76× of source pixels (was 0.87×), with the crown at 28px instead of touching the top edge. Head size and headroom now match Lam beside her and the rows above.
+
+**Synthesised pixels (small, disclosed):**
+- *Crown.* Measuring the matte showed the source frame cuts only ~4px off the top of her hair (69px wide at the top row), not the larger amount assumed in the previous entry. That sliver is closed by stretching the top 40 rows of those columns upward along a parabola (max 4.5px), with the end slope matched to the real outline and an anti-aliased edge.
+- *Shoulders.* At this scale the photo is 365px wide, so ~23px of fill is visible on each side of the 4:5 crop. It continues each shoulder's downward slope from the edge column (black blazer on white), and sits under the card's scrim.
+- No other pixels of her are altered.
+
+**Verification:** close-up at 2× and screenshots at desktop, tablet, and mobile (`screenshots/*/leadership-12.png`); 12 files, all distinct by MD5.
+
+**Status:** ✅ SUCCESS — the "Elizabeth headroom" open item from the previous entry is closed. Open: designations for Lam and Elizabeth, Gil and Nari identity confirmation, Prafull shoulder offset, Gemini watermark.
+
+## 2026-10-12 — Leadership section: designations use a hyphen separator
+
+**Change:** `src/data/siteContent.js` — seven roles changed to the "Title - Area" pattern already used for Srinivas Chamarthi ("SVP & Business Head - Commercial Markets"). The comma after the title (and the "|" in Prafull Kumar's) becomes " - ". Wording is otherwise unchanged; CEO and Chief Growth Officer have no area and are untouched.
+
+**Verification:** role text read back from the DOM (`.portrait-role`) and matches.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-12 — Leadership section: cache-bust Elizabeth Holland's portrait
+
+**Trigger:** Raima's screenshot still showed the earlier, tighter crop (hair touching the top edge) after the zoomed-out file was in place.
+
+**Cause:** the file on disk and the one the dev server serves are identical (MD5 match), so the browser was showing a cached copy of the same filename.
+
+**Change:** `src/data/siteContent.js` — photo path is now `/images/leadership/elizabeth-holland.jpg?v=2`, so the browser fetches it fresh. Image file unchanged.
+
+**Verification:** fresh-browser screenshot shows her with headroom matching Lam's.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: Nari Vemuru title updated, Vish Tatavarthy removed
+
+**Changes** (`src/data/siteContent.js`):
+- Nari Vemuru's role: "Senior Vice President - Client Operations" → "Senior Vice President - Client Operations and Federal Market".
+- Vish Tatavarthy's entry removed. His portrait `public/images/leadership/vish-tatavarthy.jpg` is deleted as it is no longer referenced; recoverable from git.
+
+**Layout effect:** 11 people. Desktop: 5 + 5 + 1, with Lam Huynh moving up into row 2 and Elizabeth Holland alone and centred in row 3. Tablet and mobile (2-up): Elizabeth alone and centred in the last row.
+
+**Note:** Gil Tadmor's role is still "Senior Vice President - Federal Market", so "Federal Market" now appears in two titles. Left as is pending confirmation.
+
+**Verification:** 11 cards in the DOM; names and Nari's role read back and match; no remaining references to Vish in `src/`; screenshots at desktop, tablet, and mobile (`screenshots/*/leadership-11.png`).
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: four placeholders added, Gil Tadmor title updated
+
+**Changes:**
+- `src/data/siteContent.js` — Gil Tadmor's role: "Senior Vice President - Federal Market" → "Senior Vice President - Tracklynk". This also resolves the duplicate "Federal Market" noted in the previous entry.
+- `src/data/siteContent.js` — four entries appended with `photo: null` and an empty role: Uma Rani, RK, Alek, Subba Rao.
+- `src/components/home/Leadership.jsx` — when `photo` is null the card renders a `.portrait-placeholder` (Lucide `User` silhouette) instead of the image and duotone layer.
+- `src/styles/globals.css` — `.portrait-placeholder` styles; backdrop tuned to the value of a duotoned studio shot so the cards sit level with the rest under the scrim.
+
+**Layout:** 15 people, 5 + 5 + 5 on desktop. Row 3: Elizabeth Holland · Uma Rani · RK · Alek · Subba Rao. Tablet and mobile (2-up) end with Subba Rao alone and centred.
+
+**Verification:** 15 cards in the DOM, three rows at desktop, no page errors; names and Gil's role read back and match; screenshots at desktop, tablet, and mobile (`screenshots/*/leadership-15.png`).
+
+**Status:** ✅ SUCCESS — open: photos, full names and designations for the four placeholders; designations for Lam and Elizabeth.
+
+## 2026-10-13 — Leadership section: placeholder renamed to Alek Nedelkovski
+
+**Change:** `src/data/siteContent.js` — placeholder name "Alek" → "Alek Nedelkovski". Photo and designation still pending.
+
+**Verification:** dev server serves the updated name.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: placeholder renamed to Rama Kandarpa
+
+**Change:** `src/data/siteContent.js` — placeholder name "RK" → "Rama Kandarpa". Photo and designation still pending.
+
+**Verification:** dev server serves the updated name.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: placeholder renamed to Subba Rao Kambhampalli
+
+**Change:** `src/data/siteContent.js` — placeholder name "Subba Rao" → "Subba Rao Kambhampalli". Photo and designation still pending.
+
+**Verification:** dev server serves the updated name.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: Subba Rao Kambhampalli designation added
+
+**Change:** `src/data/siteContent.js` — role set to "Associate Director" (was empty). Photo still pending.
+
+**Verification:** role text read back from the DOM.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: placeholder renamed to Umarani Rudravarju
+
+**Change:** `src/data/siteContent.js` — placeholder name "Uma Rani" → "Umarani Rudravarju". Photo and designation still pending.
+
+**Verification:** dev server serves the updated name.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: Umarani Rudravarju designation added
+
+**Change:** `src/data/siteContent.js` — role set to "Practice Director - Information Technology" (was empty). Photo still pending.
+
+**Verification:** role text read back from the DOM.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: Alek Nedelkovski designation added
+
+**Change:** `src/data/siteContent.js` — role set to "Manager - Learning and Development" (was empty). Photo still pending.
+
+**Verification:** role text read back from the DOM.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: Lam Huynh designation added
+
+**Change:** `src/data/siteContent.js` — role set to "Practice Director - Digital Experience" (was empty).
+
+**Verification:** role text read back from the DOM.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-13 — Leadership section: Elizabeth A. Holland name and designation
+
+**Change:** `src/data/siteContent.js` — name "Elizabeth Holland" → "Elizabeth A. Holland" (as Raima wrote it); role set to "UX Research Manager - Digital Experience" (was empty).
+
+**Verification:** name and role read back from the DOM.
+
+**Status:** ✅ SUCCESS — open: designation for Rama Kandarpa; photos for the four placeholders.
+
+## 2026-10-14 — Leadership section: Umarani Rudravarju designation changed
+
+**Change:** `src/data/siteContent.js` — role "Practice Director - Information Technology" → "Practice Director - Applications Development and Integration".
+
+**Verification:** role text read back from the DOM.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-14 — Leadership section: Rama Kandarpa designation added
+
+**Change:** `src/data/siteContent.js` — role set to "Practice Director - Data Engineering" (was empty). Every card now has a designation. Photo still pending.
+
+**Verification:** role text read back from the DOM.
+
+**Status:** ✅ SUCCESS — open: photos for Umarani Rudravarju, Rama Kandarpa, Alek Nedelkovski, Subba Rao Kambhampalli.
+
+## 2026-10-14 — Leadership section: Subba Rao Kambhampalli designation extended
+
+**Change:** `src/data/siteContent.js` — role "Associate Director" → "Associate Director - Applications Development and Integration".
+
+**Verification:** role text read back from the DOM.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-14 — Leadership section: Umarani Rudravarjula surname corrected
+
+**Change:** `src/data/siteContent.js` — name "Umarani Rudravarju" → "Umarani Rudravarjula".
+
+**Verification:** name read back from the DOM.
+
+**Status:** ✅ SUCCESS
+
+## 2026-10-14 — Leadership section: photo added for Alek Nedelkovski
+
+**Change:** new `public/images/leadership/alek-nedelkovski.jpg` (from a 1024×1024 studio photo supplied by Raima); his entry in `src/data/siteContent.js` now points to it instead of `photo: null`, so the placeholder silhouette is replaced.
+
+**Brief:** head size proportionate to the other portraits, shoulder line consistent with the rest.
+
+**Reference set** (512-space; crown / shoulder line / head width, men only for head width): shoulders 324–381, median ~345; head widths 186–216, median ~198; crowns mostly 26–30.
+
+**Processing:**
+- At scale 1: crown 11, shoulder 393, head 236 — head ~19% larger than the median and shoulders below the range.
+- 0.85× matched the head (201) but left shoulders at 385, still below the range: his shoulders slope steeply, so the 75%-coverage row sits low.
+- Chosen: **0.82× with the crown at 28**. Head 194 (≈ median), shoulder 370 (inside the range, alongside Arun 371 and Balaram 374), crown 28.
+- Fill: 46px each side (outside the 4:5 crop, which starts at 51); 23px of clean white backdrop at the top; the bottom ~73 rows extend shirt, tie and jacket straight down, under the card's scrim.
+
+**Known artifact:** the source carries the Gemini ✦ watermark in the lower right, inside the visible crop, faint under the scrim, as on the other studio shots.
+
+**Verification:** desktop close-up at 2× including hover state; 12 image files, all distinct by MD5.
+
+**Status:** ✅ SUCCESS — open: photos for Umarani Rudravarjula, Rama Kandarpa, Subba Rao Kambhampalli; Gemini watermark.
+
+## 2026-10-14 — Leadership section: photo added for Rama Kandarpa
+
+**Change:** new `public/images/leadership/rama-kandarpa.jpg` (from a 1024×1032 studio photo supplied by Raima); his entry in `src/data/siteContent.js` now points to it instead of `photo: null`.
+
+**Processing:** squared by cropping 8px off the bottom, then resized to 512. No scaling or placement needed: at scale 1 the source already measures crown 25, shoulder line 354, head width 196, against the set's medians of ~30 / ~345 / ~198. No synthesised pixels.
+
+**Known artifact:** Gemini ✦ watermark in the lower right, faint under the scrim, as on the other studio shots.
+
+**Verification:** row 3 captured at 2× on desktop; 13 image files, all distinct by MD5.
+
+**Status:** ✅ SUCCESS — open: photos for Umarani Rudravarjula and Subba Rao Kambhampalli; Gemini watermark.
+
+## 2026-10-14 — Leadership section: new front-facing photo for Lam Huynh
+
+**Change:** `public/images/leadership/lam-huynh.jpg` replaced with a new front-facing studio photo supplied by Raima (1024×1024, white backdrop), following the earlier request to have him face the camera. The previous cut-out version is recoverable from git history once committed, or from this session's earlier entry. Photo path in `src/data/siteContent.js` is now `lam-huynh.jpg?v=2` so browsers fetch the new file rather than a cached copy.
+
+**Processing:** at scale 1 the source measured crown 33, shoulder line 354, head width 186 (low end of the set's 186–216). Placed at 1.04× with the crown at 30px. A zoom-in, so a pure crop with no synthesised pixels; the backdrop is already white, so no cut-out was needed.
+
+**Result:** crown 30, shoulder line 362, head width 192. Row 2 by the same measure: Nari 351, Balaram 374, Prafull 330, Arun 371.
+
+**Known artifact:** Gemini ✦ watermark in the lower right, faint under the scrim.
+
+**Verification:** row 2 captured at 2× on desktop.
+
+**Status:** ✅ SUCCESS — open: photos for Umarani Rudravarjula and Subba Rao Kambhampalli; Gemini watermark.

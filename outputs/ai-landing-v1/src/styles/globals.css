@@ -319,6 +319,24 @@
     transform: scale(1.055);
   }
 
+  /* Photo pending — same backdrop value as a duotoned studio shot, with a
+     silhouette where the subject would sit */
+  .portrait-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(155deg, #A9B9D6 0%, #9DBBC6 55%, #A8BBA0 100%);
+    color: #0B2A4A;
+  }
+  .portrait-placeholder svg {
+    width: 72%;
+    height: 72%;
+    opacity: 0.5;
+    transform: translateY(-4%);
+  }
+
   /* Duotone — unifies every backdrop onto the brand ramp */
   .portrait-duotone {
     position: absolute;

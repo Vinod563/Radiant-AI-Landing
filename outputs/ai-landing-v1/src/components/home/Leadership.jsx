@@ -1,5 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
+import { User } from 'lucide-react'
 import { leadership } from '../../data/siteContent.js'
 
 const COLS = 5
@@ -48,9 +49,9 @@ export default function Leadership() {
         </motion.div>
 
         {/* ── Portrait grid ── */}
-        {/* 2 and 5 are the only counts that divide 10 evenly — no orphan row
-            at any breakpoint, and the portraits never get cramped */}
-        <div className="grid grid-cols-2 lg:grid-cols-5 gap-4 md:gap-5 lg:gap-6">
+        {/* 2-up below lg, 5-up from lg. Flex rather than grid so a short last
+            row (e.g. 12 people = 5 + 5 + 2) sits centred instead of hanging left */}
+        <div className="flex flex-wrap justify-center gap-4 md:gap-5 lg:gap-6">
           {leadership.people.map((person, i) => (
             <motion.article
               key={person.name}
@@ -62,19 +63,27 @@ export default function Leadership() {
                 // Ripple across each row, then down to the next
                 delay: 0.12 + (i % COLS) * 0.07 + Math.floor(i / COLS) * 0.12,
               }}
-              className="portrait-card"
+              className="portrait-card !h-auto w-[calc((100%-1rem)/2)] md:w-[calc((100%-1.25rem)/2)] lg:w-[calc((100%-6rem)/5)]"
             >
               <div className="portrait-frame">
-                <img
-                  src={person.photo}
-                  alt={`${person.name}, ${person.role}`}
-                  width={512}
-                  height={512}
-                  loading="lazy"
-                  decoding="async"
-                  className="portrait-img"
-                />
-                <div className="portrait-duotone" aria-hidden="true" />
+                {person.photo ? (
+                  <>
+                    <img
+                      src={person.photo}
+                      alt={person.role ? `${person.name}, ${person.role}` : person.name}
+                      width={512}
+                      height={512}
+                      loading="lazy"
+                      decoding="async"
+                      className="portrait-img"
+                    />
+                    <div className="portrait-duotone" aria-hidden="true" />
+                  </>
+                ) : (
+                  <div className="portrait-placeholder" aria-hidden="true">
+                    <User strokeWidth={1} />
+                  </div>
+                )}
                 <div className="portrait-scrim" aria-hidden="true" />
                 <div className="portrait-sheen" aria-hidden="true" />
               </div>
@@ -83,10 +92,14 @@ export default function Leadership() {
                 <h3 className="portrait-name font-display font-bold text-text-primary leading-snug text-[13px] lg:text-sm">
                   {person.name}
                 </h3>
-                <span className="portrait-rule" aria-hidden="true" />
-                <p className="portrait-role text-[11px] leading-snug">
-                  {person.role}
-                </p>
+                {person.role && (
+                  <>
+                    <span className="portrait-rule" aria-hidden="true" />
+                    <p className="portrait-role text-[11px] leading-snug">
+                      {person.role}
+                    </p>
+                  </>
+                )}
               </div>
             </motion.article>
           ))}

@@ -347,13 +347,20 @@ export const leadership = {
     { name: 'Shankar Rachakonda',          role: 'CEO',                                                                                     photo: '/images/leadership/shankar-rachakonda.jpg' },
     { name: 'Sandeep Sawhney',             role: 'Chief Growth Officer',                                                                     photo: '/images/leadership/sandeep-sawhney.jpg' },
     { name: 'Srinivas Chamarthi',          role: 'SVP & Business Head - Commercial Markets',                                                photo: '/images/leadership/srinivas-chamarthi.jpg' },
-    { name: 'Srinivas Punnamaraju',        role: 'Senior Vice President, State, Local and Education Markets',                                photo: '/images/leadership/srinivas-punnamaraju.jpg' },
-    { name: 'Gil Tadmor',                  role: 'Senior Vice President, Federal Market',                                                    photo: '/images/leadership/gil-tadmor.jpg' },
-    { name: 'Nari Vemuru',                 role: 'Senior Vice President, Client Operations',                                                 photo: '/images/leadership/nari-vemuru.jpg' },
-    { name: 'Balaram Dandu',               role: 'Senior Vice President, Corporate Operations',                                              photo: '/images/leadership/balaram-dandu.jpg' },
-    { name: 'Prafull Kumar',               role: 'Vice President | Global Head of AI & Digital Transformation',                             photo: '/images/leadership/prafull-kumar.jpg' },
-    { name: 'Arun Srinivasan Thiruvengadam', role: 'Executive Director, Solutions and Business Development',                                 photo: '/images/leadership/arun-thiruvengadam.jpg' },
-    { name: 'Vish Tatavarthy',             role: 'Senior Director, Delivery and Growth (DoW and HHS)',                                       photo: '/images/leadership/vish-tatavarthy.jpg' },
+    { name: 'Srinivas Punnamaraju',        role: 'Senior Vice President - State, Local and Education Markets',                                photo: '/images/leadership/srinivas-punnamaraju.jpg' },
+    { name: 'Gil Tadmor',                  role: 'Senior Vice President - Tracklynk',                                                    photo: '/images/leadership/gil-tadmor.jpg' },
+    { name: 'Nari Vemuru',                 role: 'Senior Vice President - Client Operations and Federal Market',                                                 photo: '/images/leadership/nari-vemuru.jpg' },
+    { name: 'Balaram Dandu',               role: 'Senior Vice President - Corporate Operations',                                              photo: '/images/leadership/balaram-dandu.jpg' },
+    { name: 'Prafull Kumar',               role: 'Vice President - Global Head of AI & Digital Transformation',                             photo: '/images/leadership/prafull-kumar.jpg' },
+    { name: 'Arun Srinivasan Thiruvengadam', role: 'Executive Director - Solutions and Business Development',                                 photo: '/images/leadership/arun-thiruvengadam.jpg' },
+    // Designations pending — the card omits the role line while `role` is empty
+    { name: 'Lam Huynh',                   role: 'Practice Director - Digital Experience', photo: '/images/leadership/lam-huynh.jpg?v=2' },
+    { name: 'Elizabeth A. Holland',        role: 'UX Research Manager - Digital Experience', photo: '/images/leadership/elizabeth-holland.jpg?v=2' },
+    // Placeholders — no photo yet; the card shows a silhouette while `photo` is null
+    { name: 'Umarani Rudravarjula',        role: 'Practice Director - Applications Development and Integration', photo: null },
+    { name: 'Rama Kandarpa',               role: 'Practice Director - Data Engineering', photo: '/images/leadership/rama-kandarpa.jpg' },
+    { name: 'Alek Nedelkovski',            role: 'Manager - Learning and Development', photo: '/images/leadership/alek-nedelkovski.jpg' },
+    { name: 'Subba Rao Kambhampalli',      role: 'Associate Director - Applications Development and Integration',                                                                    photo: null },
   ],
 }
 
