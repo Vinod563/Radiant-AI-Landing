@@ -609,7 +609,7 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'Find out exactly where you stand',
-        body: 'We have two free, self-serve diagnostics. The AI Maturity Assessment is a role-adaptive diagnostic across strategy, data, people, and adoption: it places you on our 6-stage Enterprise AI Autonomy model (Zero → Guided → Insight → Operational → Proactive → Full), with per-dimension scores, specific findings, and a recommended next step. The CX Maturity Assessment evaluates your customer experience across vision, governance, and culture. No signup. Results in minutes.',
+        body: 'We have two free, self-serve diagnostics. The AI Maturity Assessment is a role-adaptive diagnostic across strategy, data, people, and adoption: it places you on our 6-stage Enterprise AI Autonomy model (Zero → Guided → Insight → Operational → Proactive → Full), with per-dimension scores, specific findings, and a recommended next step. The CX Maturity Assessment is a role-adaptive diagnostic across strategy, insight, design, and accountability: it places you on a 5-stage CX maturity model (Reactive → Listening → Managing → Anticipating → Embedded). No signup. Results in minutes.',
         accent: '#91C46B',
       },
       {
@@ -620,7 +620,7 @@ const knowledgeBase = [
         clickable: true,
         items: [
           { icon: 'Brain', title: 'AI Maturity Assessment', accent: '#91C46B', desc: 'Role-adaptive diagnostic across strategy, data, people, and adoption. Get your stage and a prioritized roadmap.', link: '/assessment/ai', cta: 'Start · 10-15 min' },
-          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Evaluate CX across vision, governance, and culture. Get your maturity level and a recommended solution.', link: '/assessment/cx', cta: 'Start · 3-5 min' },
+          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Role-adaptive diagnostic across strategy, insight, design, and accountability. Get your stage and a prioritized next step.', link: '/assessment/cx', cta: 'Start · 10-12 min' },
         ],
       },
     ],
@@ -639,7 +639,7 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'Measure your CX maturity',
-        body: 'The CX Maturity Assessment evaluates your organization across three dimensions: Vision & Strategy, Governance & Metrics, and Organizational Culture. You get a personalized maturity level, a breakdown by dimension, and a recommended solution to reach the next level. Takes 3-5 minutes, no signup.',
+        body: 'The CX Maturity Assessment evaluates your organization across four dimensions: Strategy & Leadership, Insight & Understanding, Design & Delivery, and Culture & Accountability. Your role tailors the 12 questions you see. You get your stage on a five-stage model (Reactive to Embedded), a breakdown by dimension, specific findings, and a recommended next step. Takes 10-12 minutes, no signup.',
         accent: '#596AE0',
       },
       {
@@ -649,7 +649,7 @@ const knowledgeBase = [
         columns: 2,
         clickable: true,
         items: [
-          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Vision, governance, and culture: your maturity level and a tailored next step.', link: '/assessment/cx', cta: 'Start · 3-5 min' },
+          { icon: 'Target', title: 'CX Maturity Assessment', accent: '#596AE0', desc: 'Strategy, insight, design, and accountability: your stage and a prioritized next step.', link: '/assessment/cx', cta: 'Start · 10-12 min' },
           { icon: 'Brain', title: 'AI Maturity Assessment', accent: '#91C46B', desc: 'Prefer to benchmark AI readiness? Role-adaptive diagnostic with a stage and roadmap.', link: '/assessment/ai', cta: 'Start · 10-15 min' },
         ],
       },

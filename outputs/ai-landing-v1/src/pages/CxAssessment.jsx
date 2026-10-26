@@ -6,24 +6,33 @@ import Footer from '../components/shared/Footer'
 import ProfileForm from '../components/assessment/ProfileForm'
 import QuestionRunner from '../components/assessment/QuestionRunner'
 import AssessmentResults from '../components/assessment/AssessmentResults'
-import { cxSections, cxSampleAnswers } from '../data/cxAssessment.js'
+import { roles, departments, getCxQuestions, sectionMeta, sampleProfile, sampleAnswers } from '../data/cxAssessment.js'
+
+const ACCENT = '#596AE0'
 
 export default function CxAssessment() {
   const [searchParams] = useSearchParams()
   const isSample = searchParams.get('view') === 'sample'
 
   const [step, setStep] = useState(isSample ? 'results' : 'profile')
-  const [answers, setAnswers] = useState(isSample ? cxSampleAnswers : {})
-  const [profile, setProfile] = useState(null)
+  const [profile, setProfile] = useState(isSample ? sampleProfile : null)
+  const [answers, setAnswers] = useState(isSample ? sampleAnswers : {})
 
   useEffect(() => { window.scrollTo(0, 0) }, [step])
 
-  const questions = useMemo(
-    () => cxSections.flatMap(s => s.questions.map(q => ({ ...q, sectionLabel: s.label, accent: s.accent }))),
-    [],
-  )
+  const trackLabel = profile ? roles.find(r => r.key === profile.role)?.track : ''
 
-  const reset = () => { setAnswers({}); setProfile(null); setStep('profile') }
+  const questions = useMemo(() => {
+    if (!profile) return []
+    return getCxQuestions(profile.role).map(q => ({
+      ...q,
+      sectionLabel: sectionMeta[q.section].label,
+      accent: sectionMeta[q.section].accent,
+      trackLabel,
+    }))
+  }, [profile, trackLabel])
+
+  const reset = () => { setProfile(null); setAnswers({}); setStep('profile') }
 
   return (
     <div className="bg-brand-dark min-h-screen">
@@ -35,9 +44,9 @@ export default function CxAssessment() {
 
           {step === 'profile' && (
             <ProfileForm
-              showRole={false}
-              heading="First, a little context"
-              subtext="A few details so we can tailor your results. Everything stays confidential, this is a diagnostic, not a sales pitch."
+              roles={roles}
+              departments={departments}
+              accent={ACCENT}
               onSubmit={(p) => { setProfile(p); setStep('questions') }}
             />
           )}
@@ -49,10 +58,11 @@ export default function CxAssessment() {
               onAnswer={(id, score) => setAnswers(prev => ({ ...prev, [id]: score }))}
               onComplete={() => setStep('results')}
               onBackToStart={() => setStep('profile')}
+              scaleHint="1 = least mature · 5 = most mature"
             />
           )}
 
-          {step === 'results' && (
+          {step === 'results' && profile && (
             <div className="space-y-5">
               <AssessmentResults kind="cx" profile={profile} answers={answers} />
               <div className="flex justify-center pt-2 no-print">

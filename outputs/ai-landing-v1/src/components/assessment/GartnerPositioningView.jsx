@@ -25,18 +25,24 @@ import { useMemo } from 'react'
  *   stageIndex       1..6 (the respondent's computed stage; falls back to position)
  *   companyName      string (optional)
  *   accent           string hex
+ *   read             optional precomputed { x, y, group, meansText } (CX passes
+ *                    cxPositioningRead); when absent the AI model below is used
+ *   clusters         optional band layout [{ id, label, sublabel, cx, cy, rd, color }]
+ *                    (color null = accent); required with `read`
+ *   subtitle         optional line under the kicker
  */
-export default function GartnerPositioningView({ sectionAverages = {}, stageIndex, companyName = 'Your Organization', accent = '#91C46B' }) {
+export default function GartnerPositioningView({ sectionAverages = {}, stageIndex, companyName = 'Your Organization', accent = '#91C46B', read, clusters: clusterLayout, subtitle }) {
   const { x, y } = useMemo(() => {
+    if (read) return { x: read.x, y: read.y }
     const execX = ((sectionAverages.Data || 0) + (sectionAverages.Adoption || 0)) / 2 / 5
     const stratY = ((sectionAverages.Strategy || 0) + (sectionAverages.People || 0)) / 2 / 5
     return { x: execX, y: stratY }
-  }, [sectionAverages])
+  }, [sectionAverages, read])
 
   // Stage band (1-2 / 3-4 / 5-6). Use the computed stage when provided; otherwise
   // fall back to the dot's diagonal position so the two never disagree.
   const sIdx = stageIndex ?? (((x + y) / 2 < 0.466) ? 2 : ((x + y) / 2 < 0.734) ? 4 : 6)
-  const group = sIdx <= 2 ? 'early' : sIdx <= 4 ? 'progress' : 'leaders'
+  const group = read ? read.group : sIdx <= 2 ? 'early' : sIdx <= 4 ? 'progress' : 'leaders'
 
   // Interpretation: one stage-band sentence + one tilt sentence (strategy vs
   // execution balance). Single string, so the branches can never double up.
@@ -50,7 +56,7 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
     : x - y > 0.15
       ? ' Your execution is ahead of your strategy: add governance and a scalable framework so you build the right things.'
       : ' Strategy and execution are well balanced.'
-  const meansText = bandText + tilt
+  const meansText = read ? read.meansText : bandText + tilt
 
   // Wide 160 x 72 viewBox so the chart fills the full row instead of a centered square.
   // Plot region: data domain 0..1 maps into these bounds; Y is flipped for SVG.
@@ -67,11 +73,12 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
   // Centers sit at the midpoint of each stage band's overall-score range, so the
   // dot (whose diagonal position = overall/5) lands inside its own stage cloud.
   // The respondent's own band is emphasized.
-  const clusters = [
+  const clusters = (clusterLayout || [
     { id: 'early', label: 'Early Movers', sublabel: 'Stage 1-2', cx: 0.30, cy: 0.30, rd: 0.16, color: '#64748B' },
     { id: 'progress', label: 'Progressing', sublabel: 'Stage 3-4', cx: 0.58, cy: 0.58, rd: 0.15, color: '#2DD4BF' },
     { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 5-6', cx: 0.84, cy: 0.84, rd: 0.14, color: accent },
-  ].map(c => ({ ...c, active: c.id === group, opacity: c.id === group ? 0.4 : 0.18 }))
+  ]).map(c => ({ ...c, color: c.color || accent, active: c.id === group, opacity: c.id === group ? 0.4 : 0.18 }))
+  const target = clusters.find(c => c.id === 'leaders') || clusters[clusters.length - 1]
 
   return (
     <div className="mag-card p-8 lg:p-10">
@@ -80,7 +87,7 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
         <span className="text-[10px] text-text-muted font-medium">Based on your scores</span>
       </div>
       <p className="text-text-muted text-xs mb-6 leading-relaxed">
-        Where your organization sits relative to AI leaders and the broader market.
+        {subtitle || 'Where your organization sits relative to AI leaders and the broader market.'}
       </p>
 
       <div className="flex gap-6 items-start">
@@ -140,7 +147,7 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
             {group !== 'leaders' && (
               <motion.line
                 x1={dotX} y1={dotY}
-                x2={toSvgX(0.84)} y2={toSvgY(0.84)}
+                x2={toSvgX(target.cx)} y2={toSvgY(target.cy)}
                 stroke={accent} strokeOpacity="0.25" strokeWidth="0.5"
                 strokeDasharray="1.6,1.2"
                 initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}

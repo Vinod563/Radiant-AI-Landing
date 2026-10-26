@@ -1183,3 +1183,9 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 **Verification:** row 2 captured at 2× on desktop.
 
 **Status:** ✅ SUCCESS — open: photos for Umarani Rudravarjula and Subba Rao Kambhampalli; Gemini watermark.
+
+## 2026-10-26 — CX Maturity Assessment rebuilt to mirror the AI assessment
+- **Action:** Rebuilt /assessment/cx from radiant-cx-maturity-assessment.md: 2 role tracks (Executive, Practitioner), 12 questions on a 1-5 scale, 4 dimensions, 5-stage ladder (Reactive → Embedded), findings, next step, positioning (Strategic Maturity / Execution Readiness), What CX Leaders Do, and a 9-section executive briefing PDF.
+- **Files:** src/data/cxAssessment.js (rewritten), src/data/cxReportEditorial.js (new), src/utils/cxReportPdf.jsx (new), src/pages/CxAssessment.jsx, src/pages/Chat.jsx, src/pages/AssessmentHub.jsx, src/components/assessment/{AssessmentResults,ProfileForm,ScoreBars,GartnerPositioningView,WhatAILeadersDo,LockedReport}.jsx, src/utils/{generateReportPdf,emailSafeReport,aiReportPdf}.js(x), src/data/{assessmentContent,knowledgeBase}.js
+- **AI assessment:** unchanged behaviour (shared components gained optional props with AI defaults; aiReportPdf only gained `export` keywords).
+- **Result:** ✅ build passes; scoring verified at all stage boundaries; web + PDF + email HTML verified for the Meridian Outfitters sample.

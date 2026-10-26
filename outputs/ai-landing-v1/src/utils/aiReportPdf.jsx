@@ -19,10 +19,11 @@ import { ICONS } from './reportIcons.js'
    AI Adoption Assessment — Executive Edition, rendered with @react-pdf/renderer.
    Real flexbox layout engine: spacing is margins/gap, not hand-computed y offsets.
    Runs client-side, so it drops into the existing emailed-PDF flow.
+   Layout primitives are exported for the CX briefing (cxReportPdf.jsx).
    ──────────────────────────────────────────────────────────────────────────── */
 
 // Brand palette (radiant-onepager system)
-const C = {
+export const C = {
   navy: '#074661', teal: '#0596ae', green: '#91C36C', cream: '#E6E1CC',
   coral: '#e46240', ink: '#231f20', body: '#4a5568', muted: '#838ea0',
   hair: '#e4e8ee', tintB: '#edf5f7', tintG: '#f2f7ec', white: '#ffffff',
@@ -30,9 +31,9 @@ const C = {
 }
 
 // One spacing scale, applied as real margins (engine handles the rest).
-const SP = { xs: 4, sm: 8, md: 12, lg: 16, xl: 22, section: 26 }
+export const SP = { xs: 4, sm: 8, md: 12, lg: 16, xl: 22, section: 26 }
 
-const clean = (s = '') => String(s)
+export const clean = (s = '') => String(s)
   .replace(/→/g, '->').replace(/←/g, '<-')
   .replace(/[‘’‛]/g, "'").replace(/[“”]/g, '"')
   .replace(/[–—]/g, '-').replace(/…/g, '...').replace(/ /g, ' ')
@@ -45,9 +46,9 @@ Font.registerHyphenationCallback(word => [word])
 const ROLE_LABEL = { exec: 'Executive', tech: 'Technology Leader', biz: 'Business Leader', consultant: 'AI Practitioner' }
 // Title-case user-entered names/company: uppercase the first letter of each word,
 // leave the rest as typed (so "vinod"->"Vinod", "rj"->"Rj", "IBM" stays "IBM").
-const titleCase = (s = '') => String(s).trim().replace(/\b\w/g, c => c.toUpperCase())
-const firstSentence = (s = '') => { const m = String(s).match(/^.*?[.!?](\s|$)/); return (m ? m[0] : String(s)).trim() }
-const lc = (s = '') => s.charAt(0).toLowerCase() + s.slice(1)
+export const titleCase = (s = '') => String(s).trim().replace(/\b\w/g, c => c.toUpperCase())
+export const firstSentence = (s = '') => { const m = String(s).match(/^.*?[.!?](\s|$)/); return (m ? m[0] : String(s)).trim() }
+export const lc = (s = '') => s.charAt(0).toLowerCase() + s.slice(1)
 
 const LADDER = [
   { n: 1, name: 'Zero', sub: 'AI assists, humans act' },
@@ -84,9 +85,9 @@ const ICON_MAP = [
   [/cloud|migrat|infrastructure/i, 'cloud'],
   [/build|tooling|deploy/i, 'wrench_gear'],
 ]
-const pickIcon = (t = '') => { for (const [re, n] of ICON_MAP) if (re.test(t)) return n; return 'gear' }
+export const pickIcon = (t = '') => { for (const [re, n] of ICON_MAP) if (re.test(t)) return n; return 'gear' }
 
-const st = StyleSheet.create({
+export const st = StyleSheet.create({
   // page
   cover: { fontFamily: 'Helvetica', fontSize: 10.5, color: C.body, paddingTop: 44, paddingBottom: 40, paddingHorizontal: 54 },
   page: { fontFamily: 'Helvetica', fontSize: 10.5, color: C.body, paddingTop: 92, paddingBottom: 52, paddingHorizontal: 54 },
@@ -182,46 +183,46 @@ const st = StyleSheet.create({
 })
 
 /* ── small presentational helpers ─────────────────────────────────────────── */
-const T = ({ style, children }) => <Text style={style}>{clean(String(children))}</Text>
+export const T = ({ style, children }) => <Text style={style}>{clean(String(children))}</Text>
 
-const Icon = ({ name, style }) => <Image src={ICONS[name] || ICONS.gear} style={style} />
+export const Icon = ({ name, style }) => <Image src={ICONS[name] || ICONS.gear} style={style} />
 
 // Section: a rule + generous top space for every major section except the first.
 // keepTogether (for compact sections led by a big indivisible visual, e.g. the
 // positioning chart) moves the whole section — rule included — to the next page
 // rather than orphaning its title. Tall sections must NOT keepTogether: they wrap.
-const Section = ({ id, first, minRoom = 90, keepTogether, children }) => (
+export const Section = ({ id, first, minRoom = 90, keepTogether, children }) => (
   <View id={id} break={first} wrap={!keepTogether} style={{ marginTop: first ? 0 : SP.section }}>
     {!first && <View style={st.sectionRule} />}
     {keepTogether ? children : <View minPresenceAhead={minRoom}>{children}</View>}
   </View>
 )
 
-const Kicker = ({ children }) => <T style={st.kicker}>{String(children).toUpperCase()}</T>
+export const Kicker = ({ children }) => <T style={st.kicker}>{String(children).toUpperCase()}</T>
 
-const NumberedTitle = ({ num, children }) => (
+export const NumberedTitle = ({ num, children }) => (
   <View style={[st.numRow, { marginBottom: SP.lg }]}>
     <Text style={st.numPrefix}>{num}</Text>
     <Text style={st.h2}>{clean(String(children))}</Text>
   </View>
 )
 // eyebrow + title unit (non-numbered sections)
-const TitleBlock = ({ eyebrow, children, mb = SP.lg }) => (
+export const TitleBlock = ({ eyebrow, children, mb = SP.lg }) => (
   <View style={{ marginBottom: mb }}>
     <Kicker>{eyebrow}</Kicker>
     <T style={st.h2}>{children}</T>
   </View>
 )
 
-const P = ({ children, style }) => <Text style={[st.p, { marginBottom: SP.md }, style]}>{clean(String(children))}</Text>
+export const P = ({ children, style }) => <Text style={[st.p, { marginBottom: SP.md }, style]}>{clean(String(children))}</Text>
 
 // Sub-heading: marginTop separates it from the block above; small marginBottom
 // couples it to the block below. With a real box model these behave correctly.
-const SubHead = ({ children, first }) => (
+export const SubHead = ({ children, first }) => (
   <Text style={[st.h3, { marginTop: first ? 0 : SP.xl, marginBottom: SP.sm }]}>{clean(String(children))}</Text>
 )
 
-const Callout = ({ label, title, body, accent = C.green, tint = C.tintG, labelColor = C.teal }) => (
+export const Callout = ({ label, title, body, accent = C.green, tint = C.tintG, labelColor = C.teal }) => (
   <View wrap={false} style={[st.callout, { backgroundColor: tint, marginBottom: SP.md }]}>
     <View style={[st.calloutAccent, { backgroundColor: accent }]} />
     <View style={st.calloutBody}>
@@ -232,7 +233,7 @@ const Callout = ({ label, title, body, accent = C.green, tint = C.tintG, labelCo
   </View>
 )
 
-const NumberCard = ({ n, icon, title, body }) => (
+export const NumberCard = ({ n, icon, title, body }) => (
   <View wrap={false} style={[st.card, { marginBottom: SP.md }]}>
     {icon
       ? <View style={st.cardIconTile}><Icon name={icon} style={st.cardIcon} /></View>
@@ -246,7 +247,7 @@ const NumberCard = ({ n, icon, title, body }) => (
 
 // Tables in this report are short (3-4 rows), so they move to the next page as a
 // unit rather than orphaning a row from its title and column headers.
-const Tbl = ({ cols, rows, headColor = C.body }) => (
+export const Tbl = ({ cols, rows, headColor = C.body }) => (
   <View wrap={false} style={{ marginBottom: SP.md }}>
     <View style={st.tHead}>
       {cols.map((c, i) => <Text key={i} style={[st.tHeadCell, { width: c.width, flex: c.flex }]}>{clean(c.header).toUpperCase()}</Text>)}
@@ -261,7 +262,7 @@ const Tbl = ({ cols, rows, headColor = C.body }) => (
 
 // A table travels with its own heading: a heading stranded at the foot of one
 // page, with the column labels overleaf, leaves the rows without their context.
-const TableBlock = ({ title, cols, rows }) => (
+export const TableBlock = ({ title, cols, rows }) => (
   <View wrap={false}>
     <SubHead>{title}</SubHead>
     <Tbl cols={cols} rows={rows} />
@@ -332,7 +333,7 @@ function Quadrant({ execPct, stratPct }) {
 }
 
 /* ── chrome (runs on every content page) ──────────────────────────────────── */
-const Chrome = ({ yr }) => (
+export const Chrome = ({ yr }) => (
   <>
     <View fixed style={st.topbar} />
     <View fixed style={st.runHead}>

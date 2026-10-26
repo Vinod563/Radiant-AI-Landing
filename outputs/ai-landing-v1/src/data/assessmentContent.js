@@ -46,9 +46,9 @@ export const assessments = [
     route: '/assessment/cx',
     eyebrow: 'CX Maturity Assessment',
     title: 'How mature is your customer experience?',
-    desc: 'Evaluate CX maturity across vision & strategy, governance & metrics, and culture. Get your maturity level and practical insights to guide your next steps.',
-    duration: '3-5 min',
-    meta: ['3 dimensions', 'Maturity level', 'Tailored solution'],
+    desc: 'A role-adaptive diagnostic across strategy, insight, design, and accountability. Get your stage, per-dimension scores, specific findings, and a recommended next step.',
+    duration: '10-12 min',
+    meta: ['Role-adaptive', '5 stages', 'Instant report'],
     chatQuery: 'Assess my CX maturity',
   },
 ]

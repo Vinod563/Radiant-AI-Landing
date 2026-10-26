@@ -1,11 +1,12 @@
 import { motion } from 'framer-motion'
-import { scoreBarStyle, sections } from '../../data/aiAssessment.js'
+import { scoreBarStyle, sections as aiSections } from '../../data/aiAssessment.js'
 
 /**
- * Per-dimension score bars for the AI assessment.
+ * Per-dimension score bars, shared by both assessments.
  * Props: sectionAverages { [sectionKey]: number 0..5 }
+ *        sections [{ key, label }] (default: AI dimensions)
  */
-export default function ScoreBars({ sectionAverages }) {
+export default function ScoreBars({ sectionAverages, sections = aiSections }) {
   return (
     <div className="mag-card p-8 lg:p-10">
       <span className="kicker mb-6">Scores by Dimension</span>

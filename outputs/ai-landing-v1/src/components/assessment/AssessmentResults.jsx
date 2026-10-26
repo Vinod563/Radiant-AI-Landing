@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { FileText, X } from 'lucide-react'
 import StageReveal from './StageReveal'
 import ScoreBars from './ScoreBars'
-import DimensionTable from './DimensionTable'
 import { STAGES as AI_STAGES } from './MaturityStaircase'
 import GartnerPositioningView from './GartnerPositioningView'
 import WhatAILeadersDo from './WhatAILeadersDo'
@@ -12,19 +11,34 @@ import LockedReport from './LockedReport'
 import { buildEmailSafeReportHtml } from '../../utils/emailSafeReport.js'
 import { getAQ, scoreAssessment, buildFindings, recommendNextStep } from '../../data/aiAssessment.js'
 import { suggestedNextSteps } from '../../data/reportEditorial.js'
-import { scoreCx, cxLevels } from '../../data/cxAssessment.js'
+import {
+  getCxQuestions, scoreCx, buildCxFindings, recommendCxNextStep, cxPositioningRead,
+  sections as cxSections, departments as cxDepartments, STAGE_LADDER as CX_STAGES, TOTAL_STAGES as CX_TOTAL, CX_POSITION_CLUSTERS,
+} from '../../data/cxAssessment.js'
+import { cxSuggestedNextSteps, CX_LEADER_CONTENT } from '../../data/cxReportEditorial.js'
 
-// CX maturity levels as a staircase (same visual as the AI stage staircase)
-const CX_STAGES = Object.values(cxLevels)
-  .map(l => ({ key: l.name, index: l.index, name: l.name, tagline: l.tagline }))
-  .sort((a, b) => a.index - b.index)
+// Lead-form copy per assessment (the CX list mirrors the AI one).
+const LEAD_BULLETS = {
+  ai: [
+    'Full findings: your top 3 strengths and top 3 gaps by dimension',
+    'Radiant Digital\'s strategic read, editorial perspective on your stage',
+    'One prioritized next step with rationale',
+    'Competitive positioning vs. AI leaders in your sector',
+  ],
+  cx: [
+    'Full findings: your strengths and gaps across all four CX dimensions',
+    'Radiant Digital\'s strategic read, editorial perspective on your stage',
+    'One prioritized next step, with a 60-day sprint plan',
+    'Competitive positioning vs. CX leaders',
+  ],
+}
 
 /**
  * AssessmentResults: shared results component for both AI Maturity and CX Maturity.
  *
  * FREE preview (visible to all):
- *   AI:  StageReveal (with inline stage staircase) → ScoreBars → GartnerPositioningView → WhatAILeadersDo → teaser → gate
- *   CX:  StageReveal (level) → DimensionTable → teaser → gate
+ *   Both: StageReveal (with inline stage staircase) → ScoreBars → GartnerPositioningView → WhatAILeadersDo → gate
+ *   (CX passes its own stages, dimensions, positioning read, and leader content)
  *
  * GATED (unlocked after lead form):
  *   - PDF generated client-side and downloaded immediately (primary, guaranteed delivery,
@@ -64,18 +78,18 @@ export default function AssessmentResults({ kind, profile, answers }) {
         }),
       }
     }
-    const scored = scoreCx(answers)
-    const lvl = cxLevels[scored.overallKey]
+    const scored = scoreCx(answers, getCxQuestions(profile.role))
     return {
       ...scored,
-      reveal: { name: lvl.name, index: lvl.index, tagline: lvl.tagline, description: lvl.description },
+      findings: buildCxFindings(scored.sectionAverages),
+      nextStep: recommendCxNextStep(scored.sectionAverages),
+      suggested: cxSuggestedNextSteps({ sectionAverages: scored.sectionAverages }),
+      positioning: cxPositioningRead({ sectionAverages: scored.sectionAverages, stageIndex: scored.stage.index }),
     }
   }, [isAi, profile, answers])
 
   const assessment = isAi ? 'AI Maturity' : 'CX Maturity'
-  const headline = isAi
-    ? `Your result: Stage ${result.stage.index}, ${result.stage.name}.`
-    : `Your result: ${result.overallLevel}.`
+  const headline = `Your result: Stage ${result.stage.index}, ${result.stage.name}.`
 
   // ── Report delivery (email-only) ──────────────────────────────────────────
   // The full report is delivered by email as a well-formatted PDF (the vector
@@ -131,7 +145,7 @@ export default function AssessmentResults({ kind, profile, answers }) {
         {/* Header */}
         <div className="flex items-center justify-between no-print">
           <span className="text-text-muted text-xs font-display font-semibold uppercase tracking-widest">
-            {isAi ? 'AI Maturity Assessment' : 'CX Maturity Report'}
+            {isAi ? 'AI Maturity Assessment' : 'CX Maturity Assessment'}
           </span>
           {!submitted && (
             <button
@@ -147,34 +161,42 @@ export default function AssessmentResults({ kind, profile, answers }) {
 
         {/* ── FREE PREVIEW ─────────────────────────────────────────────── */}
 
-        {/* Card 1: maturity reveal (AI shows the ascending stage staircase inline) */}
+        {/* Card 1: maturity reveal with the ascending stage staircase inline */}
         {isAi
           ? <StageReveal stage={result.stage} accent={ACCENT} stages={AI_STAGES} />
-          : <StageReveal stage={result.reveal} accent={ACCENT} stages={CX_STAGES} kicker="Your CX Maturity Level" prefix="" noun="Level"
-              note={result.reveal.index < CX_STAGES.length
-                ? `Most organizations take 6-12 months to move from Level ${result.reveal.index} to Level ${result.reveal.index + 1}.`
+          : <StageReveal stage={result.stage} accent={ACCENT} stages={CX_STAGES} kicker="Your CX Maturity"
+              note={result.stage.index < CX_TOTAL
+                ? `Most organizations take 6-12 months to move from Stage ${result.stage.index} to Stage ${result.stage.index + 1}.`
                 : "You're at the top of the CX maturity curve: the focus now is sustaining and compounding the advantage."} />}
 
         {/* Card 2: score breakdown */}
         {isAi
           ? <ScoreBars sectionAverages={result.sectionAverages} />
-          : <DimensionTable dimensions={result.dimensions} compact />}
+          : <ScoreBars sectionAverages={result.sectionAverages} sections={cxSections} />}
 
-        {/* AI-only: Positioning + Leader Guidance */}
-        {isAi && (
-          <>
-            {/* Card 3: Gartner positioning */}
-            <GartnerPositioningView
+        {/* Card 3: Gartner positioning */}
+        {isAi
+          ? <GartnerPositioningView
               sectionAverages={result.sectionAverages}
               stageIndex={result.stage.index}
               companyName={profile?.companyName || 'Your Organization'}
               accent={ACCENT}
             />
+          : <GartnerPositioningView
+              sectionAverages={result.sectionAverages}
+              stageIndex={result.stage.index}
+              companyName={profile?.companyName || 'Your Organization'}
+              accent={ACCENT}
+              read={result.positioning}
+              clusters={CX_POSITION_CLUSTERS}
+              subtitle="Where your organization sits relative to CX leaders and the broader market."
+            />}
 
-            {/* Card 4: What AI leaders do */}
-            <WhatAILeadersDo currentIndex={result.stage.index} accent={ACCENT} />
-          </>
-        )}
+        {/* Card 4: What leaders at the next stage do */}
+        {isAi
+          ? <WhatAILeadersDo currentIndex={result.stage.index} accent={ACCENT} />
+          : <WhatAILeadersDo currentIndex={result.stage.index} accent={ACCENT}
+              content={CX_LEADER_CONTENT} kicker="What CX Leaders Do" maxStage={CX_TOTAL} />}
 
         {/* ── LOCKED FULL REPORT (blurred → modal form → unlocked) ──────── */}
         <div ref={gateRef} className="scroll-mt-24">
@@ -189,29 +211,12 @@ export default function AssessmentResults({ kind, profile, answers }) {
               <AssessmentLeadForm
                 accent={ACCENT}
                 title="Unlock your full PDF report"
-                body={
-                  isAi
-                    ? "Enter your details and we'll email you the complete PDF: your strengths and gaps dimension by dimension, Radiant Digital's read on your stage, and your prioritized next step."
-                    : "Enter your details and we'll email you the complete PDF: dimension-level analysis, your recommended solution, and case studies matched to your context."
-                }
-                bullets={
-                  isAi
-                    ? [
-                        'Full findings: your top 3 strengths and top 3 gaps by dimension',
-                        'Radiant Digital\'s strategic read, editorial perspective on your stage',
-                        'One prioritized next step with rationale',
-                        'Competitive positioning vs. AI leaders in your sector',
-                      ]
-                    : [
-                        'Per-dimension breakdown: Vision, Governance, Culture',
-                        'Radiant Digital\'s read at your maturity level',
-                        'Experience AI recommendation tailored to where you are',
-                        'Relevant case studies matched to your context',
-                      ]
-                }
+                body="Enter your details and we'll email you the complete PDF: your strengths and gaps dimension by dimension, Radiant Digital's read on your stage, and your prioritized next step."
+                bullets={LEAD_BULLETS[kind]}
                 defaults={defaults}
                 submitLabel="Unlock & email me the PDF"
                 onSend={sendReport}
+                {...(isAi ? {} : { departments: cxDepartments })}
                 bare
               />
             }
@@ -244,31 +249,12 @@ export default function AssessmentResults({ kind, profile, answers }) {
               <AssessmentLeadForm
                 accent={ACCENT}
                 title="Get your full assessment report"
-                body={
-                  isAi
-                    ? "We'll email you a complete read of your AI maturity: your specific strengths, gap analysis, Radiant Digital's strategic perspective, and the highest-impact action to take next."
-                    : "We'll email you a complete read of your CX maturity: dimension-level analysis, recommended solution, and case studies matched to your context."
-                }
-                bullets={
-                  isAi
-                    ? [
-                        'Full findings: your top 3 strengths and top 3 gaps by dimension',
-                        'Radiant Digital\'s strategic read, editorial perspective on your stage',
-                        'One prioritized next step with rationale',
-                        'Competitive positioning vs. AI leaders in your sector',
-                        'Delivered to your inbox as a PDF',
-                      ]
-                    : [
-                        'Per-dimension breakdown: Vision, Governance, Culture',
-                        'Radiant Digital\'s read at your maturity level',
-                        'Experience AI recommendation tailored to where you are',
-                        'Relevant case studies matched to your context',
-                        'Delivered to your inbox as a PDF',
-                      ]
-                }
+                body={`We'll email you a complete read of your ${isAi ? 'AI' : 'CX'} maturity: your specific strengths, gap analysis, Radiant Digital's strategic perspective, and the highest-impact action to take next.`}
+                bullets={[...LEAD_BULLETS[kind], 'Delivered to your inbox as a PDF']}
                 defaults={defaults}
                 submitLabel="Email me my full report"
                 onSend={sendReport}
+                {...(isAi ? {} : { departments: cxDepartments })}
               />
             </motion.div>
           </motion.div>

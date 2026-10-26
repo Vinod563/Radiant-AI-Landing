@@ -24,8 +24,14 @@
  *   buildEmailSafeReportHtml({ kind, profile, result }) -> string
  */
 
-import { positioningRead, suggestedNextSteps } from '../data/reportEditorial.js'
+import { positioningRead, suggestedNextSteps, conclusionComparison } from '../data/reportEditorial.js'
 import { LEADER_CONTENT } from '../components/assessment/WhatAILeadersDo.jsx'
+import {
+  sections as cxSections, cxPositioningRead, recommendCxNextStep, TOTAL_STAGES,
+} from '../data/cxAssessment.js'
+import {
+  cxSuggestedNextSteps, cxRadiantRead, CX_LEADER_CONTENT, cxConclusionClosing,
+} from '../data/cxReportEditorial.js'
 
 const FONT = "Arial, Helvetica, sans-serif"
 const INK = '#0f172a'
@@ -311,59 +317,144 @@ function buildAiEmailHtml(profile, result) {
 }
 
 // ── CX report ────────────────────────────────────────────────────────────────
+// Same section order as the AI email; content from cxAssessment / cxReportEditorial.
 
 function buildCxEmailHtml(profile, result) {
-  if (!result?.overallLevel) return wrapDocument({ title: 'CX Maturity Report', bodyHtml: '<tr><td style="padding:32px;">Report data unavailable.</td></tr>' })
+  if (!result?.stage) return wrapDocument({ title: 'CX Maturity Assessment', bodyHtml: '<tr><td style="padding:32px;">Report data unavailable.</td></tr>' })
 
-  const { dimensions = [], overallLevel, overallKey } = result
-  const levelColor = { Foundational: '#F0974E', Developing: '#596AE0', Advanced: '#91C46B' }
-  const color = levelColor[overallLevel] || '#91C46B'
-  const levelIndex = { Foundational: 1, Developing: 2, Advanced: 3 }[overallLevel] || 1
+  const { stage, sectionAverages = {}, findings = {} } = result
+  const pos = result.positioning || cxPositioningRead({ sectionAverages, stageIndex: stage.index })
+  const suggested = result.suggested || cxSuggestedNextSteps({ sectionAverages })
+  const nextStep = result.nextStep || recommendCxNextStep(sectionAverages)
+  const barColor = (v) => (v < 2 ? '#EF4444' : v < 3 ? '#F59E0B' : v < 4 ? '#06B6D4' : '#22C55E')
+  const barLabel = (v) => (v < 2 ? 'Needs attention' : v < 3 ? 'Below target' : v < 4 ? 'On track' : 'Strong')
+  const pgraph = (t) => `<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:12px;">${t}</div>`
 
-  const dimRows = dimensions.map(d => `
-    <div style="padding:14px 0;border-bottom:1px solid ${HAIR};">
-      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"><tr>
-        <td style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};">${d.label}</td>
-        <td align="right" style="font-family:${FONT};font-size:11px;font-weight:bold;color:${levelColor[d.level] || color};">${d.level}</td>
-      </tr></table>
-      <div style="font-family:${FONT};font-size:12px;color:${BODY};line-height:1.6;margin-top:6px;">${d.blurb || ''}</div>
-    </div>`).join('')
+  const scoreRows = cxSections.map(s => {
+    const v = sectionAverages[s.key] || 0
+    return `
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:16px;">
+      <tr>
+        <td style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};">${s.label.replace('&', '&amp;')}</td>
+        <td align="right" style="font-family:${FONT};font-size:12px;font-weight:bold;color:${barColor(v)};">${v ? v.toFixed(1) : '--'} / 5 &middot; ${barLabel(v)}</td>
+      </tr>
+      <tr><td colspan="2" style="padding-top:6px;">${bar((v / 5) * 100, barColor(v))}</td></tr>
+    </table>`
+  }).join('')
 
-  const radiantRead = overallKey === 'Foundational'
-    ? 'The biggest unlock at this stage is making customer insight a repeatable process rather than a one-time project.'
-    : overallKey === 'Developing'
-      ? 'You have the foundation. The gap to Advanced is closing the loop between customer data and strategic decisions.'
-      : 'At Advanced maturity, the focus shifts from building CX capability to compounding it: continuous, real-time customer intelligence.'
+  const finding = (f, mark) => `
+    <div style="margin-bottom:12px;">
+      <div style="font-family:${FONT};font-size:10px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:${MUTED};">${f.section}</div>
+      <div style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};margin:2px 0;">${mark} ${f.title}</div>
+      <div style="font-family:${FONT};font-size:12px;color:${BODY};line-height:1.6;">${f.body}</div>
+    </div>`
+  const strengths = (findings.strengths || []).map(f => finding(f, '&#10003;')).join('')
+  const gaps = (findings.gaps || []).map(f => finding(f, '&#9888;')).join('')
+  const fallback = findings.fallback ? finding({ section: 'All dimensions', ...findings.fallback }, '&#10003;') : ''
+
+  const leaders = CX_LEADER_CONTENT[stage.index] || CX_LEADER_CONTENT[TOTAL_STAGES]
+  const ranked = cxSections.map(s => ({ label: s.label, v: sectionAverages[s.key] || 0 })).sort((a, b) => b.v - a.v)
+  const topC = ranked[0], lowC = ranked[ranked.length - 1]
+  const who = profile?.companyName || (profile?.fullName ? `${profile.fullName}'s organization` : 'Your organization')
+  const bandPhrase = pos.group === 'leaders' ? 'in or near the CX Leaders group' : `in the ${pos.groupLabel} group`
+  const finalStage = stage.index >= TOTAL_STAGES
+  const stepList = suggested.steps.map((s, i) => `${i + 1}) ${s.title.charAt(0).toLowerCase() + s.title.slice(1)}`).join(', ')
 
   const body = [
     headerRow({
-      eyebrow: 'CX Maturity Report, Full Version',
-      headline: overallLevel,
+      eyebrow: 'CX Maturity Assessment, Full Version',
+      headline: `Stage ${stage.index}: ${stage.name}`,
       metaLine: new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }),
     }),
     sectionRow({
-      kicker: 'Your CX Maturity Level', title: 'Overall Maturity',
-      innerHtml: pipStrip(levelIndex, 3, color),
+      kicker: 'Your CX Maturity',
+      title: stage.tagline || '',
+      innerHtml: `${pipStrip(stage.index, TOTAL_STAGES, '#91C46B')}<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;">${stage.description || ''}</div>`,
     }),
-    sectionRow({ kicker: 'Dimension Breakdown', title: 'How You Scored Across Three Dimensions', innerHtml: dimRows, alt: true }),
+    sectionRow({ kicker: 'Scores by Dimension', title: 'How You Scored', innerHtml: scoreRows, alt: true }),
     sectionRow({
-      kicker: 'Recommended Solution', title: 'Experience AI by Radiant Digital',
-      innerHtml: `<div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;margin-bottom:14px;">To help you progress to the next maturity level, Radiant Digital recommends Experience AI, our qualitative + quantitative insight engine.</div>
-      <div style="background:#f0f7ea;border:1px solid #cfe6b8;border-radius:10px;padding:16px 18px;">
-        <div style="font-family:${FONT};font-size:10px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:#5c8a39;margin-bottom:6px;">Why this matters at the ${overallLevel} level</div>
-        <div style="font-family:${FONT};font-size:13px;color:#33422a;line-height:1.7;">${radiantRead}</div>
+      kicker: 'Competitive Positioning', title: 'Where You Sit Relative to CX Leaders',
+      innerHtml: `
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;margin-bottom:12px;">
+          <tr>
+            <td style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};padding:6px 0;">Execution Readiness</td>
+            <td align="right" style="font-family:${FONT};font-size:13px;font-weight:bold;color:#5a8a32;padding:6px 0;">${pos.execPct} / 100</td>
+          </tr>
+          <tr>
+            <td style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};padding:6px 0;border-top:1px solid ${HAIR};">Strategic Maturity</td>
+            <td align="right" style="font-family:${FONT};font-size:13px;font-weight:bold;color:#5a8a32;padding:6px 0;border-top:1px solid ${HAIR};">${pos.stratPct} / 100</td>
+          </tr>
+        </table>
+        <div style="font-family:${FONT};font-size:11px;font-weight:bold;text-transform:uppercase;letter-spacing:0.5px;color:#5a8a32;margin-bottom:6px;">${pos.groupLabel} &middot; ${pos.stageRange}</div>
+        <div style="font-family:${FONT};font-size:13px;color:${BODY};line-height:1.7;">${pos.meansText}</div>`,
+    }),
+    sectionRow({ kicker: 'What We See', title: 'Your Strengths &amp; Gaps', innerHtml: `${strengths}${gaps}${fallback}` }),
+    (() => {
+      const stepsHtml = suggested.steps.map((s, i) => `
+        <div style="background:${DARK};border-radius:10px;padding:16px 18px;border-left:3px solid #91C46B;margin-bottom:10px;">
+          <div style="font-family:${FONT};font-weight:bold;font-size:13px;color:#ffffff;margin-bottom:4px;">${i + 1}. ${s.title}</div>
+          <div style="font-family:${FONT};font-size:12px;color:#cfd8e3;line-height:1.7;">${s.why}</div>
+        </div>`).join('')
+      const sprintRows = suggested.sprint.rows.map(([phase, weeks, focus]) => `
+        <tr>
+          <td valign="top" style="font-family:${FONT};font-weight:bold;font-size:12px;color:${INK};padding:8px 8px 8px 0;border-top:1px solid ${HAIR};">${phase}</td>
+          <td valign="top" style="font-family:${FONT};font-size:12px;color:${BODY};padding:8px 8px;border-top:1px solid ${HAIR};white-space:nowrap;">Weeks ${weeks}</td>
+          <td valign="top" style="font-family:${FONT};font-size:12px;color:${BODY};line-height:1.6;padding:8px 0 8px 8px;border-top:1px solid ${HAIR};">${focus}</td>
+        </tr>`).join('')
+      return sectionRow({
+        kicker: 'Your Recommended Next Step', title: `Priority: ${nextStep.section.replace('&', '&amp;')}`, alt: true,
+        innerHtml: `${pgraph(nextStep.text)}
+          <div style="font-family:${FONT};font-size:11px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:${MUTED};margin:6px 0 10px;">Recommended sequence</div>
+          ${stepsHtml}
+          <div style="font-family:${FONT};font-size:11px;font-weight:bold;letter-spacing:0.5px;text-transform:uppercase;color:${MUTED};margin:16px 0 4px;">Illustrative 60-day breakdown: the ${suggested.sprint.name}</div>
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">${sprintRows}</table>`,
+      })
+    })(),
+    sectionRow({
+      kicker: "Radiant Digital's Read", title: `Our Perspective on Stage ${stage.index} Organizations`,
+      innerHtml: `<div style="background:#f0f7ea;border:1px solid #cfe6b8;border-radius:10px;padding:16px 18px;">
+        <div style="font-family:${FONT};font-size:13px;color:#33422a;line-height:1.7;">${cxRadiantRead[stage.index] || cxRadiantRead[TOTAL_STAGES]}</div>
       </div>`,
     }),
+    (() => {
+      const acts = leaders.actions.map((a, i) => `
+        <div style="margin-bottom:12px;">
+          <div style="font-family:${FONT};font-weight:bold;font-size:13px;color:${INK};margin-bottom:2px;">${i + 1}. ${a.title}</div>
+          <div style="font-family:${FONT};font-size:12px;color:${BODY};line-height:1.6;">${a.body}</div>
+        </div>`).join('')
+      return sectionRow({
+        kicker: 'What CX Leaders Do', title: leaders.heading, alt: true,
+        innerHtml: `
+          ${pgraph(leaders.context)}
+          ${leaders.benchmark ? `<div style="font-family:${FONT};font-size:12px;color:#33422a;line-height:1.6;background:#f0f7ea;border:1px solid #cfe6b8;border-radius:8px;padding:12px 14px;margin-bottom:14px;"><b>${leaders.benchmark.label}.</b> ${leaders.benchmark.body}</div>` : ''}
+          ${acts}`,
+      })
+    })(),
+    sectionRow({
+      kicker: 'Conclusion', title: "Where You Stand, and What's Next",
+      innerHtml:
+        pgraph(`${who} sits at Stage ${stage.index} of ${TOTAL_STAGES}, ${stage.name}, ${bandPhrase}. Execution Readiness scores ${pos.execPct} of 100 and Strategic Maturity ${pos.stratPct} of 100.`)
+        + (topC.v && lowC.v ? pgraph(conclusionComparison({ topLabel: topC.label, topScore: topC.v, lowLabel: lowC.label, lowScore: lowC.v })) : '')
+        + pgraph(`The recommended sequence follows directly: ${stepList}. Executed in order along Radiant Digital's Assess &rarr; Train &rarr; Adopt &rarr; Scale &rarr; Sustain model, these moves convert today's position into durable, compounding advantage.`)
+        + pgraph(cxConclusionClosing({ stageIndex: stage.index, lowKey: cxSections.find(s => s.label === lowC.label)?.key, lowScore: lowC.v })),
+    }),
+    sectionRow({
+      kicker: 'Get in Touch', title: 'Speak With the Team Behind This Assessment', alt: true,
+      innerHtml: `${pgraph('Speak directly with the Radiant Digital team behind this assessment. They can map exactly where to start and what the next stage looks like for your organization.')}
+        <div style="font-family:${FONT};font-weight:bold;font-size:14px;color:${INK};">Radiant Digital CX Practice</div>
+        <div style="font-family:${FONT};font-size:12px;color:${BODY};margin:2px 0 4px;">Customer Experience Research &amp; Strategy</div>
+        <a href="mailto:hello@radiant.digital" style="font-family:${FONT};font-size:12px;font-weight:bold;color:#5a8a32;text-decoration:none;">hello@radiant.digital</a>`,
+    }),
     ctaRow({
-      title: "Let's build your CX roadmap.",
-      body: "Radiant Digital's CX practice has helped enterprises across financial services, healthcare, and technology improve CSAT by 20%+ within 90 days.",
-      ctaLabel: 'Schedule a CX Strategy Session',
+      title: finalStage ? 'Sustaining an embedded CX operating model?' : `Ready to move to Stage ${stage.index + 1}?`,
+      body: 'Radiant Digital has helped organizations across the public and private sectors mature how they understand and serve their customers. A 30-minute conversation is enough to map exactly where to start.',
+      ctaLabel: 'Schedule 30 Minutes with Radiant Digital',
       ctaHref: 'https://radiant.digital/contact',
     }),
     footerRow(),
   ].join('')
 
-  return wrapDocument({ title: `CX Maturity Report, ${profile?.fullName || 'Assessment'}`, bodyHtml: body })
+  return wrapDocument({ title: `CX Maturity Assessment, ${profile?.fullName || 'Assessment'}`, bodyHtml: body })
 }
 
 // ── Public entry point ──────────────────────────────────────────────────────

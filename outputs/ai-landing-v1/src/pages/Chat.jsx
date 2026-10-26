@@ -53,7 +53,9 @@ import ProfileForm from '../components/assessment/ProfileForm'
 import AssessmentQuestionCard from '../components/assessment/AssessmentQuestionCard'
 import AssessmentResults from '../components/assessment/AssessmentResults'
 import { getAQ, sectionMeta, roles } from '../data/aiAssessment.js'
-import { cxSections } from '../data/cxAssessment.js'
+import {
+  getCxQuestions, sectionMeta as cxSectionMeta, roles as cxRoles, departments as cxDepartments,
+} from '../data/cxAssessment.js'
 
 // Queries whose answer is known up front, resolved locally with no LLM wait.
 const INSTANT_TRIGGERS = new Set([
@@ -82,7 +84,10 @@ function buildAssessmentQuestions(kind, profile) {
       ...q, sectionLabel: sectionMeta[q.section].label, accent: sectionMeta[q.section].accent, trackLabel: track,
     }))
   }
-  return cxSections.flatMap(s => s.questions.map(q => ({ ...q, sectionLabel: s.label, accent: s.accent })))
+  const track = cxRoles.find(r => r.key === profile.role)?.track
+  return getCxQuestions(profile.role).map(q => ({
+    ...q, sectionLabel: cxSectionMeta[q.section].label, accent: cxSectionMeta[q.section].accent, trackLabel: track,
+  }))
 }
 
 function assessmentQuestionMessage(kind, questions, idx) {
@@ -93,11 +98,8 @@ function assessmentQuestionMessage(kind, questions, idx) {
 }
 
 function assessmentProfileSummary(kind, profile) {
-  if (kind === 'ai') {
-    const roleName = roles.find(r => r.key === profile.role)?.name
-    return `${profile.fullName} · ${roleName} · ${profile.companyName}`
-  }
-  return `${profile.fullName} · ${profile.companyName}`
+  const roleName = (kind === 'ai' ? roles : cxRoles).find(r => r.key === profile.role)?.name
+  return `${profile.fullName} · ${roleName} · ${profile.companyName}`
 }
 
 // Match a typed reply to one of a question's options (by number or by text).
@@ -313,7 +315,7 @@ export default function Chat() {
       {
         role: 'assistant', id: `assess-profile-${kind}`, followUp: [],
         message: kind === 'cx'
-          ? "Let's measure your CX maturity. First, a little context, share a few details below and we'll begin."
+          ? "Let's measure your CX maturity. First, a little context, share a few details below and I'll tailor your questions to your role."
           : "Let's find out how AI-ready you are. First, a little context, share a few details below and I'll tailor your questions to your role.",
         cards: [{ type: 'assessment-profile', kind }],
       },
@@ -331,9 +333,7 @@ export default function Chat() {
         { role: 'user', content: assessmentProfileSummary(kind, profile) },
         {
           role: 'assistant', id: `assess-intro-${kind}`, cards: [], followUp: [],
-          message: kind === 'cx'
-            ? "Thanks. Here are 9 quick questions across three dimensions: answer each as it best fits your organization today."
-            : `Thanks. Based on your role, here are ${questions.length} questions across four dimensions: answer each as it best fits your organization today.`,
+          message: `Thanks. Based on your role, here are ${questions.length} questions across four dimensions: answer each as it best fits your organization today.`,
         },
         assessmentQuestionMessage(kind, questions, 0),
       ]
@@ -1357,11 +1357,9 @@ function AssessmentProfileCard({ card, onSubmit }) {
   return (
     <ProfileForm
       wrapperClass="max-w-2xl"
-      showRole={card.kind === 'ai'}
       heading="First, a little context"
-      subtext={card.kind === 'ai'
-        ? "Your role tailors the questions you'll see. Everything stays confidential, this is a diagnostic, not a sales pitch."
-        : 'A few details so we can tailor your results. Everything stays confidential, this is a diagnostic, not a sales pitch.'}
+      subtext="Your role tailors the questions you'll see. Everything stays confidential, this is a diagnostic, not a sales pitch."
+      {...(card.kind === 'cx' ? { roles: cxRoles, departments: cxDepartments, accent: '#596AE0' } : {})}
       onSubmit={(p) => onSubmit(card.kind, p)}
     />
   )

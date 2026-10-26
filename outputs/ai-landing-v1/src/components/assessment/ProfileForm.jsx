@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Briefcase, Cpu, TrendingUp, Compass } from 'lucide-react'
-import { roles, sectors, orgSizes, departments, personalDomainBlocklist } from '../../data/aiAssessment.js'
+import { ArrowRight, Briefcase, Cpu, TrendingUp, Compass, Users } from 'lucide-react'
+import { roles as aiRoles, sectors, orgSizes, departments as aiDepartments, personalDomainBlocklist } from '../../data/aiAssessment.js'
 import Dropdown from './Dropdown'
 
-const ACCENT = '#91C46B'
-
-const roleIcons = { exec: Briefcase, tech: Cpu, biz: TrendingUp, consultant: Compass }
+const roleIcons = { exec: Briefcase, tech: Cpu, biz: TrendingUp, consultant: Compass, practitioner: Users }
 
 const fieldStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }
 const inputCls = 'w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-white/30'
@@ -23,8 +21,13 @@ function isPersonalEmail(email) {
  *   onSubmit(profile)
  *   showRole   - whether to show the role picker (default true; CX sets false)
  *   heading / subtext - optional copy overrides
+ *   roles / departments - option lists (default: AI assessment; CX passes its own)
+ *   accent     - selection colour (default brand green)
  */
-export default function ProfileForm({ onSubmit, showRole = true, heading, subtext, wrapperClass = 'max-w-2xl mx-auto' }) {
+export default function ProfileForm({
+  onSubmit, showRole = true, heading, subtext, wrapperClass = 'max-w-2xl mx-auto',
+  roles = aiRoles, departments = aiDepartments, accent: ACCENT = '#91C46B',
+}) {
   const [profile, setProfile] = useState({
     role: '', fullName: '', workEmail: '', companyName: '',
     sector: '', orgSize: '', department: '', website: '', // website = honeypot

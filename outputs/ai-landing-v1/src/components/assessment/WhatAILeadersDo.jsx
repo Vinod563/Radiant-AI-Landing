@@ -159,18 +159,23 @@ export const LEADER_CONTENT = {
   },
 }
 
-export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B' }) {
-  const content = LEADER_CONTENT[currentIndex] || LEADER_CONTENT[6]
+/**
+ * Also used by the CX assessment, which passes its own `content` map (keyed by
+ * stage 1..maxStage), `kicker`, and `maxStage`. An entry may carry `statBadge`
+ * (numeric stat) or `benchmark` ({ label, body }, text-only callout), or neither.
+ */
+export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B', content: contentMap = LEADER_CONTENT, kicker = 'What AI Leaders Do', maxStage = 6 }) {
+  const content = contentMap[currentIndex] || contentMap[maxStage]
 
   return (
     <div className="mag-card p-8 lg:p-10">
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-2">
-        <span className="kicker">What AI Leaders Do</span>
+        <span className="kicker">{kicker}</span>
         <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold"
           style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}30` }}>
           <Zap size={10} />
-          Stage {Math.min(currentIndex + 1, 6)} Playbook
+          Stage {Math.min(currentIndex + 1, maxStage)} Playbook
         </div>
       </div>
 
@@ -180,13 +185,28 @@ export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B' }
       <p className="text-text-secondary text-sm leading-relaxed mb-6">{content.context}</p>
 
       {/* Stat badge */}
-      <div className="flex items-start gap-3 p-4 rounded-xl mb-7"
-        style={{ background: `${accent}0e`, border: `1px solid ${accent}20` }}>
-        <div className="font-display font-black text-2xl flex-shrink-0" style={{ color: accent }}>
-          {content.statBadge.value}
+      {content.statBadge && (
+        <div className="flex items-start gap-3 p-4 rounded-xl mb-7"
+          style={{ background: `${accent}0e`, border: `1px solid ${accent}20` }}>
+          <div className="font-display font-black text-2xl flex-shrink-0" style={{ color: accent }}>
+            {content.statBadge.value}
+          </div>
+          <p className="text-text-secondary text-xs leading-relaxed pt-1">{content.statBadge.label}</p>
         </div>
-        <p className="text-text-secondary text-xs leading-relaxed pt-1">{content.statBadge.label}</p>
-      </div>
+      )}
+
+      {/* Text-only benchmark callout */}
+      {content.benchmark && (
+        <div className="p-4 rounded-xl mb-7"
+          style={{ background: `${accent}0e`, border: `1px solid ${accent}20` }}>
+          <div className="text-[10px] font-display font-bold uppercase tracking-widest mb-1.5" style={{ color: accent }}>
+            {content.benchmark.label}
+          </div>
+          <p className="text-text-secondary text-xs leading-relaxed">{content.benchmark.body}</p>
+        </div>
+      )}
+
+      {!content.statBadge && !content.benchmark && <div className="mb-1" />}
 
       {/* Actions */}
       <div className="space-y-5">

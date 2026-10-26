@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
 import Dropdown from './Dropdown'
-import { sectors, orgSizes, departments, personalDomainBlocklist } from '../../data/aiAssessment.js'
+import { sectors, orgSizes, departments as aiDepartments, personalDomainBlocklist } from '../../data/aiAssessment.js'
 
 const fieldStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }
 const inputCls = 'w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-white/30'
@@ -18,7 +18,7 @@ function isPersonalEmail(email) {
  *
  * Props: accent, title, body, bullets, defaults, onSend, submitLabel
  */
-export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bullets = [], defaults = {}, onSend, submitLabel = 'Email me the full report', bare = false }) {
+export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bullets = [], defaults = {}, onSend, submitLabel = 'Email me the full report', bare = false, departments = aiDepartments }) {
   const [form, setForm] = useState({
     name: defaults.name || '', email: defaults.email || '', company: defaults.company || '',
     sector: defaults.sector || '', orgSize: defaults.orgSize || '', department: defaults.department || '',

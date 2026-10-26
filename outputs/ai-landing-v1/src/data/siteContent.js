@@ -351,7 +351,7 @@ export const leadership = {
     { name: 'Gil Tadmor',                  role: 'Senior Vice President - Tracklynk',                                                    photo: '/images/leadership/gil-tadmor.jpg' },
     { name: 'Nari Vemuru',                 role: 'Senior Vice President - Client Operations and Federal Market',                                                 photo: '/images/leadership/nari-vemuru.jpg' },
     { name: 'Balaram Dandu',               role: 'Senior Vice President - Corporate Operations',                                              photo: '/images/leadership/balaram-dandu.jpg' },
-    { name: 'Prafull Kumar',               role: 'Vice President - Global Head of AI & Digital Transformation',                             photo: '/images/leadership/prafull-kumar.jpg' },
+    { name: 'Prafull Khare',               role: 'Vice President - Global Head of AI & Digital Transformation',                             photo: '/images/leadership/prafull-kumar.jpg' },
     { name: 'Arun Srinivasan Thiruvengadam', role: 'Executive Director - Solutions and Business Development',                                 photo: '/images/leadership/arun-thiruvengadam.jpg' },
     // Designations pending — the card omits the role line while `role` is empty
     { name: 'Lam Huynh',                   role: 'Practice Director - Digital Experience', photo: '/images/leadership/lam-huynh.jpg?v=2' },
