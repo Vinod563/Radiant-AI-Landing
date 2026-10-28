@@ -1,4 +1,4 @@
-import { ArrowRight, Compass, Rocket } from 'lucide-react'
+import { ArrowRight, Compass, Rocket, HeartHandshake } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 
 /**
@@ -8,8 +8,9 @@ import { useNavigate } from 'react-router-dom'
  * pushing everyone to the assessment: beginners take the assessment; mature
  * users skip it and jump to the Context Engine / solutions narrative.
  *
- * Data-driven: add a third entry to `paths` (and it flows to 3 columns) if
- * leadership later wants a mid-journey path.
+ * Data-driven: three entries flow to 3 columns on desktop (stacked below lg).
+ * The third card routes to the CX Maturity Assessment (replaces the old
+ * "Take the CX Maturity Assessment" text link).
  *
  * Copy is final, supplied by the content team (radiant-ai-landing-copy-spec).
  * Hierarchy (per Lam): the verb phrase is the white headline; the diagnosis
@@ -38,6 +39,17 @@ const paths = [
     action: 'scroll',
     target: 'differentiator', // How We Work / Context Engine section
   },
+  {
+    key: 'cx',
+    headline: 'Lead With Experience',
+    subhead: 'Find the friction. Fix the journey.',
+    blurb: 'A short diagnostic across strategy, insight, design, and accountability. You get your CX stage, your gaps, and the moves that lift loyalty fastest.',
+    cta: 'See how your CX measures up',
+    icon: HeartHandshake,
+    accent: '#F0974E',        // brand-orange
+    action: 'route',
+    target: '/assessment/cx',
+  },
 ]
 
 export default function PersonaPaths() {
@@ -48,16 +60,16 @@ export default function PersonaPaths() {
     else document.getElementById(p.target)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
-  const cols = paths.length === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2'
+  const grid = paths.length === 3 ? 'lg:grid-cols-3' : 'sm:grid-cols-2'
 
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className={`grid gap-4 sm:grid-cols-2 ${cols} text-left`}>
+    <div className={paths.length === 3 ? 'xl:-mx-16' : 'max-w-4xl mx-auto'}>
+      <div className={`grid gap-4 ${grid} text-left`}>
         {paths.map(p => {
           const Icon = p.icon
           return (
             <button key={p.key} onClick={() => onSelect(p)}
-              className="group block rounded-2xl p-6 lg:p-7 relative overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-pointer w-full text-left"
+              className="group flex flex-col rounded-2xl p-6 lg:p-7 relative overflow-hidden transition-all duration-300 hover:-translate-y-1 cursor-pointer w-full text-left"
               style={{
                 background: 'rgba(8,20,36,0.72)',
                 border: `1px solid ${p.accent}59`,
@@ -70,16 +82,16 @@ export default function PersonaPaths() {
             >
               <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
                 style={{ background: `radial-gradient(ellipse at 30% 0%, ${p.accent}1f 0%, transparent 65%)` }} />
-              <div className="relative z-10 flex items-start gap-4">
+              <div className="relative z-10 flex flex-1 items-start gap-4">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                   style={{ background: `${p.accent}26`, border: `1px solid ${p.accent}4d` }}>
                   <Icon size={22} style={{ color: p.accent }} />
                 </div>
-                <div className="flex-1">
-                  <h3 className="font-display font-bold text-white text-xl lg:text-2xl leading-snug mb-1.5">{p.headline}</h3>
+                <div className="flex-1 flex flex-col self-stretch">
+                  <h3 className={`font-display font-bold text-white text-xl leading-snug mb-1.5 ${paths.length === 3 ? "" : "lg:text-2xl"}`}>{p.headline}</h3>
                   <div className="font-display font-semibold text-sm mb-2.5 text-white/85">{p.subhead}</div>
                   <p className="text-text-secondary text-sm leading-relaxed mb-3">{p.blurb}</p>
-                  <span className="inline-flex items-center gap-1.5 font-display font-semibold text-sm" style={{ color: p.accent }}>
+                  <span className="mt-auto inline-flex items-center gap-1.5 font-display font-semibold text-sm" style={{ color: p.accent }}>
                     {p.cta} <ArrowRight size={14} className="transition-transform group-hover:translate-x-1" />
                   </span>
                 </div>
@@ -88,15 +100,6 @@ export default function PersonaPaths() {
           )
         })}
       </div>
-
-      {/* Secondary path: CX is a separate diagnostic, kept low-key below the primary AI-maturity paths */}
-      <p className="text-white/55 text-sm mt-5">
-        Focused on customer experience?{' '}
-        <button onClick={() => navigate('/assessment/cx')}
-          className="font-display font-semibold text-brand-purple hover:underline cursor-pointer inline-flex items-center gap-1">
-          Take the CX Maturity Assessment <ArrowRight size={13} />
-        </button>
-      </p>
     </div>
   )
 }

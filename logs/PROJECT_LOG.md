@@ -1189,3 +1189,25 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Files:** src/data/cxAssessment.js (rewritten), src/data/cxReportEditorial.js (new), src/utils/cxReportPdf.jsx (new), src/pages/CxAssessment.jsx, src/pages/Chat.jsx, src/pages/AssessmentHub.jsx, src/components/assessment/{AssessmentResults,ProfileForm,ScoreBars,GartnerPositioningView,WhatAILeadersDo,LockedReport}.jsx, src/utils/{generateReportPdf,emailSafeReport,aiReportPdf}.js(x), src/data/{assessmentContent,knowledgeBase}.js
 - **AI assessment:** unchanged behaviour (shared components gained optional props with AI defaults; aiReportPdf only gained `export` keywords).
 - **Result:** ✅ build passes; scoring verified at all stage boundaries; web + PDF + email HTML verified for the Meridian Outfitters sample.
+
+## 2026-10-28 — Telecom data-governance case studies added (business + technical)
+- **Action:** Added the two case studies from Verizon_Case_Study_Final_Updated.pdf (client kept anonymous as "Fortune 500 Telecom Provider"). Business version: compact card in the homepage "Proof, Not Promises" section + chat entry `cs-data-governance`. Technical version: chat deep dive `cs-data-governance-technical`, cross-linked from the business entry. Both listed in the proof / all / telecom case-study grids and the CDO persona path; technical version in the CTO persona path. PDF CTAs route to the contact card. Both added to the chat backend's LLM context (CS-T6, CS-T7).
+- **Files:** outputs/ai-landing-v1/src/components/home/CaseStudy.jsx, outputs/ai-landing-v1/src/data/knowledgeBase.js, outputs/radiant-chat-api/knowledge/radiantContext.js
+- **Result:** ✅ build passes; chat routing verified for new and existing entries; homepage card checked at desktop and mobile widths.
+
+## 2026-10-28: Hero: CX Maturity card + header CTA update
+- **Action:** Replaced the hero "Take the CX Maturity Assessment" text link with a third persona card ("Lead With Experience" → /assessment/cx, opens the CX profile form). Equal-height cards with bottom-aligned CTAs; 3 columns at lg+, stacked below. Header CTA renamed "Assess Your AI and CX Readiness" and now smooth-scrolls to #assessment (from other routes: navigates to /#assessment, Index scrolls on hash).
+- **Files:** outputs/ai-landing-v1/src/components/home/PersonaPaths.jsx, src/components/shared/Navbar.jsx, src/pages/Index.jsx
+- **Verified:** vite build OK; Playwright at 1920/1280/768/375; CX card → /assessment/cx profile step; CTA scroll on home and from /assessment/cx.
+- **Status:** ✅ Complete
+
+## 2026-10-28: Hero CX card CTA copy
+- **Action:** CX card CTA "Take the CX assessment" → "See how your CX measures up" (aligns with "See where you stand"); still routes to /assessment/cx.
+- **Files:** outputs/ai-landing-v1/src/components/home/PersonaPaths.jsx
+- **Status:** ✅ Complete (vite build OK)
+
+## 2026-10-28: Governance case study moved off homepage
+- **Action:** Removed the "Governing unstructured & structured data" card from the homepage Proof, Not Promises section (CaseStudy.jsx restored to last commit). Case study remains on the inner case-studies view (/chat?q=Show+me+all+case+studies) as a grid card opening the full cs-data-governance detail. Grid thumbnail changed to /images/ai-agents-photo.jpg to avoid duplicating the adjacent Revenue Assurance image.
+- **Files:** outputs/ai-landing-v1/src/components/home/CaseStudy.jsx, src/data/knowledgeBase.js
+- **Verified:** vite build OK; Playwright: homepage has no governance card; View More → grid card → detail view renders.
+- **Status:** ✅ Complete

@@ -281,6 +281,22 @@ Solution: 98% billing accuracy with AI FinOps and anomaly detection.
 Results: 5% Revenue Leakage Recovered | 98% Billing Accuracy
 Image: /images/analytics-dashboard.jpg
 
+[CS-T6] Governing Unstructured & Structured Data by Its Contents (business audience: CXOs, directors, business decision makers)
+Client: Fortune 500 Telecom Provider (do not name the client) | Industry: Telecom | Theme: Data & AI Governance
+Challenge: A data estate of hundreds of thousands of columns, in about 100,000 tables across thousands of schemas and more than 100 Google Cloud projects, was being brought into analytics. Approximately 250 governance policies decide who can see each column. Unstructured data (chat transcripts, JSON blobs, free form notes) could not be inspected, so it was locked at the highest restriction level. Structured data was classified by column names and descriptions, right only about 75 to 85% of the time, with the governance team correcting manually. Thousands of operational databases have not yet been analyzed.
+Solution: Classify data by what it contains, not its name. Use the simplest method that works (faster methods for clear cases, a language model only for hard ones). Use manual review when needed (confidence scores, reasoning, audit trail). Applied first to unstructured data, then extended to structured data inside the provider's existing onboarding workflow. No solution existed, so Radiant Digital built one, applied the provider's own algorithms, used AI across the full SDLC, and validated results with the provider's governance analysts.
+Results: 93% Confirmed Classification Accuracy after governance analyst review | 15,000+ Unique Columns Tested | 80-82% Average Detection Accuracy for unstructured data (reported separately from the 93%) | Column-level governance replaces one blanket restriction | Governance by exception | Confirmed results feed back daily; new policies added through configuration, no code changes
+CTA: Ask Radiant Digital to examine data restricted by default and identify which governance policies apply to its contents.
+Image: /images/analytics-dashboard.jpg
+
+[CS-T7] Classifying Unstructured & Structured Data by Its Contents (technical audience: operational, data governance, and technical leaders; same engagement as CS-T6)
+Client: Fortune 500 Telecom Provider (do not name the client) | Industry: Telecom | Theme: Data & AI Governance
+Challenge: Columns were classified from table and column definitions, with an AI model assigning a policy and people correcting it (accurate about 75 to 85% of the time). Non-standard naming and missing descriptions caused misclassification; thousands of catalog columns relied on SME review; reference data had known quality gaps; unstructured columns were blanket tagged at the highest restriction level.
+Solution: Tiered classification on actual data values. Unstructured: pattern matching (SSNs, card numbers, IP addresses), entity recognition for context dependent fields, a language model only for ambiguous cases. Structured: reads values across six data types and maps each column against ~250 policies; each column moves through pattern matching, keyword lookup, and semantic similarity before a language model, exiting at the first step that meets the confidence threshold. Returns confidence score, detection method, reasoning, and review flag; audit logging records every decision. Policies change through configuration, not code. Stack: Aho Corasick pattern matching, GLiNER entity recognition, sentence transformer embeddings for semantic search, FastAPI services on Cloud Run, BigQuery (source data, results, audit logs), Cloud SQL for PostgreSQL with PGVector; parallel processing and batched language model calls; Responsible AI documentation prepared for the provider.
+Results: 93% Confirmed Classification Accuracy after reconciliation with governance analysts | 100% classification success at every tested load (10 to 500 columns) | ~0.47 sec average processing time per column | 15,000+ unique columns tested | 80-82% average unstructured detection accuracy | Unstructured capability in production; structured classifier moving into production within the existing workflow
+CTA: Ask Radiant Digital to test column classifications against actual data values and identify where classification based on names leads to incorrect policy assignments.
+Image: /images/server-room.jpg
+
 ── HEALTHCARE & LIFE SCIENCES ──
 
 [CS-H1] STARTing Strong: HIV Treatment Adherence Platform

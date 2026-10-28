@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Menu, X, ArrowRight } from 'lucide-react'
 import RadiantLogo from './RadiantLogo'
 
@@ -7,6 +7,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [mobileOpen, setMobileOpen] = useState(false)
   const location = useLocation()
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fn = () => setScrolled(window.scrollY > 48)
@@ -16,6 +17,18 @@ export default function Navbar() {
 
   // Close mobile menu on route change
   useEffect(() => { setMobileOpen(false) }, [location.pathname])
+
+  // Header CTA: smooth-scroll to the "Where does your enterprise stand?" section.
+  // From other routes, go home first; Index picks up the hash and scrolls.
+  const goToAssessment = (e) => {
+    e.preventDefault()
+    setMobileOpen(false)
+    if (location.pathname === '/') {
+      document.getElementById('assessment')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    } else {
+      navigate('/#assessment')
+    }
+  }
 
   const CONNECT_CHAT = '/chat?q=Connect%20with%20our%20team'
 
@@ -56,10 +69,10 @@ export default function Navbar() {
           </nav>
 
           <div className="hidden md:flex items-center gap-3">
-            <Link to="/assessment/ai"
+            <a href="/#assessment" onClick={goToAssessment}
               className="btn-primary !py-2.5 !px-5 !text-[0.78rem] flex items-center gap-1.5">
-              Assess Your AI Readiness <ArrowRight size={13} />
-            </Link>
+              Assess Your AI and CX Readiness <ArrowRight size={13} />
+            </a>
           </div>
 
           <button onClick={() => setMobileOpen(!mobileOpen)}
@@ -85,11 +98,10 @@ export default function Navbar() {
               )
             ))}
 
-            <Link to="/assessment/ai"
-              onClick={() => setMobileOpen(false)}
+            <a href="/#assessment" onClick={goToAssessment}
               className="btn-primary w-fit mt-3 !py-3 !px-6">
-              Assess Your AI Readiness
-            </Link>
+              Assess Your AI and CX Readiness
+            </a>
           </div>
         )}
       </div>

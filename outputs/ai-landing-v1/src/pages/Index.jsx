@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+import { useLocation } from 'react-router-dom'
 import Navbar from '../components/shared/Navbar.jsx'
 import Footer from '../components/shared/Footer.jsx'
 import SectionNav from '../components/shared/SectionNav.jsx'
@@ -17,6 +19,17 @@ import AssessmentEntry from '../components/home/AssessmentEntry.jsx'
 const Divider = () => <div className="divider" />
 
 export default function Index() {
+  const { hash } = useLocation()
+
+  // Arriving via /#section (e.g. header CTA from another page): scroll once rendered.
+  useEffect(() => {
+    if (!hash) return
+    const t = setTimeout(() => {
+      document.getElementById(hash.slice(1))?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }, 100)
+    return () => clearTimeout(t)
+  }, [hash])
+
   return (
     <div className="bg-brand-dark min-h-screen">
       <Navbar />

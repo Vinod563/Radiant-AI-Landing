@@ -375,6 +375,7 @@ const knowledgeBase = [
           { name: 'Industrial IoT with AI-Accelerated Delivery', metric: '60% Faster Launch', detail: 'AI-driven accelerators cut dev cycles from 4 weeks to 6 days: 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
           { name: 'AI-Driven Outage Response & Integration', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack for Fortune 15 telecom: 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
           { name: 'AI-Driven Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'Governing Telecom Data by Its Contents', metric: '93% Confirmed Accuracy', detail: 'Content-based classification of unstructured & structured data for a Fortune 500 telecom: 15,000+ columns tested, governance by exception.', industry: 'Telecom', accent: '#596AE0', image: '/images/ai-agents-photo.jpg' },
           { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with Full-Stack Observability and self-healing systems: 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
         ],
         accent: '#596AE0',
@@ -579,7 +580,7 @@ const knowledgeBase = [
   },
   {
     id: 'contact',
-    keywords: ['contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'real person', 'talk to a real person', 'rather talk', 'speak to someone', 'schedule', 'book a meeting', 'email', 'phone number', 'address', 'office', 'how much does it cost', 'pricing information', 'cost of services', 'how much do you charge', 'connect with our team', 'connect with us', 'connect with radiant'],
+    keywords: ['ask radiant digital to examine data restricted by default', 'ask radiant digital to test our column classifications against actual data values', 'contact', 'demo', 'talk', 'call', 'meeting', 'get started', 'pricing', 'consultation', 'reach out', 'real person', 'talk to a real person', 'rather talk', 'speak to someone', 'schedule', 'book a meeting', 'email', 'phone number', 'address', 'office', 'how much does it cost', 'pricing information', 'cost of services', 'how much do you charge', 'connect with our team', 'connect with us', 'connect with radiant'],
     question: 'How can I get started?',
     cards: [
       {
@@ -668,7 +669,7 @@ const knowledgeBase = [
       {
         type: 'text',
         title: 'AI-Driven Transformation: Proof Across Industries',
-        body: 'Radiant Digital has delivered AI-driven transformation engagements across telecom, hospitality, web services, IoT, and enterprise operations. Here are our AI case studies with measurable outcomes.',
+        body: 'Radiant Digital has delivered AI-driven transformation engagements across telecom, data governance, hospitality, web services, IoT, and enterprise operations. Here are our AI case studies with measurable outcomes.',
         accent: '#91C46B',
       },
       {
@@ -682,6 +683,7 @@ const knowledgeBase = [
           { name: 'Industrial IoT with AI Delivery', metric: '60% Faster Launch', detail: 'AI-driven accelerators cut dev cycles from 4 weeks to 6 days: 45% cost reduction, 40% fewer post-prod issues.', industry: 'IoT', accent: '#2DD4BF', image: '/images/iot-technology.jpg' },
           { name: 'AI-Driven Outage Response', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack for Fortune 15 telecom: 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
           { name: 'AI-Driven Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'Governing Telecom Data by Its Contents', metric: '93% Confirmed Accuracy', detail: 'Content-based classification of unstructured & structured data for a Fortune 500 telecom: 15,000+ columns tested, governance by exception.', industry: 'Telecom', accent: '#596AE0', image: '/images/ai-agents-photo.jpg' },
           { name: 'Revenue Assurance & Billing Intelligence', metric: '5% Leakage Recovered', detail: '98% billing accuracy with AI FinOps for a leading telecom company.', industry: 'Telecom', accent: '#91C46B', image: '/images/analytics-dashboard.jpg' },
           { name: 'Touchless Operations for Financial Services', metric: '80% Alert Reduction', detail: 'AI Ops with Full-Stack Observability and self-healing systems: 70% faster incident resolution, 50% auto-resolved.', industry: 'Financial Services', accent: '#F0974E', image: '/images/corporate-building.jpg' },
         ],
@@ -709,11 +711,13 @@ const knowledgeBase = [
       {
         type: 'case-study-grid',
         title: 'Telecom Engagements',
-        subtitle: 'From revenue assurance to network operations to sales velocity.',
+        subtitle: 'From revenue assurance to network operations to data governance.',
         items: [
           { name: 'Scaling Telecom Service Capacity 5x', metric: '5x Capacity', detail: 'AI and RPA-driven platform: 18% MTTR reduction, 22% fewer missed SLAs, 10x processing speed.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
           { name: 'AI-Driven Outage Response & Integration', metric: '40% Faster Resolution', detail: 'Unified outage management on MERN stack: 35% better notifications, 45% more scalable.', industry: 'Telecom', accent: '#596AE0', image: '/images/telecom-network.jpg' },
           { name: 'AI-Driven Network Intelligence', metric: '70% Less Dev Time', detail: '50+ screens in under 3 weeks using Design-to-Code Accelerator: IDG CIO 100 Award winner.', industry: 'Telecom', accent: '#596AE0', image: '/images/network-cables.jpg' },
+          { name: 'Governing Telecom Data by Its Contents', metric: '93% Confirmed Accuracy', detail: 'Content-based classification of unstructured & structured data for a Fortune 500 telecom: 15,000+ columns tested, governance by exception.', industry: 'Telecom', accent: '#596AE0', image: '/images/ai-agents-photo.jpg' },
+          { name: 'Classifying Telecom Data by Its Contents', metric: '0.47 sec per Column', detail: 'Technical deep dive: tiered pattern, entity, and semantic classification on Google Cloud, with a language model only for ambiguous cases.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
           { name: 'Optimizing Application Development', metric: '50% Faster Releases', detail: 'Agile methodologies, CI/CD pipelines, and automated testing for a leading telecom provider.', industry: 'Telecom', accent: '#596AE0', image: '/images/team-collaboration.jpg' },
         ],
         accent: '#596AE0',
@@ -898,6 +902,112 @@ const knowledgeBase = [
       'Tell me about the Enabling Network Intelligence case study',
       'What have you done for telecom?',
       'What solutions does Radiant Digital offer?',
+    ],
+  },
+  {
+    id: 'cs-data-governance',
+    keywords: ['governing telecom data by its contents', 'data governance', 'data classification', 'governance policies', 'unstructured data', 'structured data', 'column-level governance', 'classify data by content', 'data restricted by default', 'governance by exception', 'pii classification', 'sensitive data', 'fortune 500 telecom', 'data and ai governance', 'governance case study'],
+    question: 'Tell me about the Governing Telecom Data by Its Contents case study',
+    cards: [
+      {
+        type: 'case-study',
+        title: 'Governing Unstructured & Structured Data by Its Contents',
+        subtitle: 'A Fortune 500 telecommunications provider was bringing a data estate of hundreds of thousands of columns, in about 100,000 tables across thousands of schemas and more than 100 Google Cloud projects, into analytics. Every column had to be governed by policies that decide who can see it. Its unstructured data could not be inspected, so it stayed locked at the highest restriction level, and its structured data was classified by column names, an approach that was right only about 75 to 85% of the time. Radiant Digital changed the approach by classifying data according to what it contains and using manual review when needed.',
+        client: 'Fortune 500 Telecom Provider',
+        clientDetail: 'Telecommunications · Data & AI Governance',
+        metrics: [
+          { value: '93%', label: 'Confirmed classification accuracy after governance analyst review' },
+          { value: '15,000+', label: 'Unique columns tested' },
+          { value: '80–82%', label: 'Average detection accuracy for unstructured data' },
+        ],
+        accent: '#596AE0',
+      },
+      {
+        type: 'text',
+        title: 'Governing data manually and by name could not keep pace',
+        body: "The provider's approximately 250 governance policies decide how information is handled and who can see it, from social security numbers and card numbers to dates of birth and personal email addresses. At this scale, three problems stood in the way.\nData that could not be seen was locked away. Chat transcripts, JSON blobs, and free form notes could not be inspected, so they were tagged at the highest restriction level, and legitimate users lost access to data that was often harmless.\nData that could be seen relied heavily on its label. Policies were assigned mainly from column names and descriptions, and when a classification was questioned, the governance team inspected and corrected it manually.\nMuch of the estate was still unexamined. Thousands of operational databases have not yet been analyzed.",
+        accent: '#596AE0',
+      },
+      {
+        type: 'grid',
+        kicker: "Radiant Digital's Approach",
+        title: 'Profile the data, not just the name',
+        subtitle: 'Applied first to the unstructured data the provider had no way to inspect, then extended to structured data inside its existing onboarding workflow.',
+        items: [
+          { icon: 'Search', title: 'Classify by content', desc: 'Instead of trusting column names, the solution reads the actual data and maps what it finds to the policies that apply.', accent: '#596AE0' },
+          { icon: 'Zap', title: 'Use the simplest method that works', desc: 'Faster methods handle the clear cases, and a language model is used only for the hard ones, which keeps cost down.', accent: '#2DD4BF' },
+          { icon: 'Users', title: 'Use manual review when needed', desc: 'Confidence scores, reasoning, and an audit trail help the governance team identify classifications that require a closer look.', accent: '#91C46B' },
+          { icon: 'Rocket', title: 'Build what did not exist', desc: "There was no existing solution for the unstructured data, so Radiant Digital created one: applying the provider's own algorithms, using AI across the full software development lifecycle, and validating results with its governance analysts.", accent: '#F0974E' },
+        ],
+      },
+      {
+        type: 'text',
+        title: 'More usable data, less manual work, and results the team can trust',
+        body: "93% confirmed classification accuracy after review with the provider's governance analysts, with more than 15,000 unique columns tested. Separately, unstructured data detection reached 80 to 82% average accuracy.\nThe solution supports column-level governance across structured and unstructured data. For unstructured data previously locked by default, this replaces one blanket restriction, and it gives the governance team a repeatable, auditable way to focus manual review on the classifications that need it.\nConfirmed results feed back into the system every day, so accuracy keeps improving. New policies can be added through configuration without code changes. What began as a solution to one governance gap is now a foundation for governing unstructured and structured data at scale.",
+        accent: '#91C46B',
+      },
+    ],
+    followUp: [
+      'Tell me about the Classifying Telecom Data by Its Contents case study',
+      'Ask Radiant Digital to examine data restricted by default',
+      'What have you done for telecom?',
+      "I'd rather talk to a real person.",
+    ],
+  },
+  {
+    id: 'cs-data-governance-technical',
+    keywords: ['classifying telecom data by its contents', 'technical deep dive', 'tiered classification', 'aho corasick', 'gliner', 'entity recognition', 'pattern matching', 'semantic similarity', 'sentence transformer', 'pgvector', 'cloud run', 'fastapi', 'bigquery', 'classifier architecture', 'classification pipeline', 'data governance architecture'],
+    question: 'Tell me about the Classifying Telecom Data by Its Contents case study',
+    cards: [
+      {
+        type: 'case-study',
+        title: 'Classifying Unstructured & Structured Data by Its Contents',
+        subtitle: 'A Fortune 500 telecommunications provider was classifying each column of an analytics estate, hundreds of thousands of columns across thousands of schemas and more than 100 Google Cloud projects, against approximately 250 governance policies using column names, manual review, and expert correction. Unstructured columns could not be inspected at all, so they were blanket restricted. Radiant Digital designed a tiered classification approach that examines actual data values and uses manual review when needed. In testing, it classified every column across the tested loads of 10 to 500 columns and averaged about 0.47 seconds per column.',
+        client: 'Fortune 500 Telecom Provider',
+        clientDetail: 'Telecommunications · Technical deep dive',
+        metrics: [
+          { value: '93%', label: 'Confirmed classification accuracy after governance analyst review' },
+          { value: '0.47 sec', label: 'Average processing time per column in classification tests' },
+          { value: '80–82%', label: 'Average detection accuracy for unstructured data' },
+          { value: '100%', label: 'Classification success at every tested load, 10 to 500 columns' },
+        ],
+        accent: '#596AE0',
+      },
+      {
+        type: 'text',
+        title: 'Classification based on names left accuracy gaps at scale',
+        body: 'As data was onboarded to Google Cloud for analytics, structured columns were classified from table and column definitions, with an AI model assigning a policy and people correcting it where needed. That approach was accurate about 75 to 85% of the time.\nNon-standard naming and missing descriptions caused misclassification, thousands of catalog columns relied on subject matter expert review, and the reference data used to measure accuracy had known quality gaps of its own.\nChat transcripts, JSON blobs, and free form notes had no way to be inspected, so they were blanket tagged at the highest restriction level and legitimate access was over restricted.',
+        accent: '#596AE0',
+      },
+      {
+        type: 'grid',
+        kicker: 'Design Choices',
+        title: 'Designed for content, cost, and human judgment',
+        items: [
+          { icon: 'Search', title: 'Profile the data, not just the name', desc: 'For unstructured data, pattern matching catches well defined formats such as social security numbers, card numbers, and IP addresses; entity recognition handles context dependent fields; a language model handles only ambiguous cases. For structured data, the classifier reads actual values across six data types and maps each column against approximately 250 policies.', accent: '#596AE0' },
+          { icon: 'Zap', title: 'Run the simplest method first', desc: 'Each column moves through pattern matching, keyword lookup, and semantic similarity before a language model is considered, and exits at the first step that meets the confidence threshold.', accent: '#2DD4BF' },
+          { icon: 'Shield', title: 'Use manual review when needed', desc: 'The classifier returns a confidence score, detection method, reasoning, and review flag, so uncertain results can be examined. Audit logging records how each classification was reached.', accent: '#91C46B' },
+          { icon: 'RefreshCw', title: 'Change policies through configuration, not code', desc: 'New policies can be added without code changes, so the policy set can grow without new development.', accent: '#F0974E' },
+        ],
+      },
+      {
+        type: 'text',
+        title: 'It fits inside the workflow the team already uses',
+        body: "When the provider's existing onboarding process is uncertain about a structured column's policy, Radiant Digital's classifier examines the values in that column. Across both capabilities, Radiant brings together Aho Corasick pattern matching, GLiNER entity recognition, semantic search using sentence transformer embeddings, and a language model for ambiguous cases.\nBoth capabilities run as FastAPI services on Cloud Run within the provider's Google Cloud environment, with BigQuery holding source data, structured classification results, and audit logs, and Cloud SQL for PostgreSQL with PGVector supporting semantic search. Parallel processing and batched language model calls support efficient structured data classification, and Radiant Digital prepared Responsible AI documentation for the provider's review.\nWith scarce test data and slow manual validation, the team built its own methods to check each mapping. Many mismatches against the reference data turned out to be more specific classifications, not errors, and reviewing results with the provider's governance analysts made the accuracy benchmark defensible.",
+        accent: '#2DD4BF',
+      },
+      {
+        type: 'text',
+        title: 'Results confirmed in load tests and expert review',
+        body: "93% confirmed classification accuracy after reconciliation with the provider's governance analysts, reported separately from the 80 to 82% average detection accuracy for unstructured data. 100% classification success at every load tested volume, from 10 to 500 columns, at about 0.47 seconds average processing time per column, with more than 15,000 unique columns tested.\nThe unstructured data capability is in production: access can now be classified column by column instead of through one blanket restriction. The structured data classifier is moving into production within the provider's existing workflow.\nConfirmed results feed back into the system every day, and the semantic search foundation built for unstructured data now also powers structured data classification. The provider has a governance foundation that can grow with its data, not a one-time fix.",
+        accent: '#91C46B',
+      },
+    ],
+    followUp: [
+      'Tell me about the Governing Telecom Data by Its Contents case study',
+      'Ask Radiant Digital to test our column classifications against actual data values',
+      'What is the Radiant Digital AI Platform?',
+      "I'd rather talk to a real person.",
     ],
   },
   {
@@ -1575,6 +1685,15 @@ const knowledgeBase = [
           },
         ],
       },
+      {
+        type: 'case-study-grid',
+        title: 'Engineering Proof',
+        subtitle: 'A tiered, content-based classifier built where no solution existed, running on Google Cloud.',
+        items: [
+          { name: 'Classifying Telecom Data by Its Contents', metric: '0.47 sec per Column', detail: 'Technical deep dive: tiered pattern, entity, and semantic classification on Google Cloud, with a language model only for ambiguous cases.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
+        ],
+        accent: '#596AE0',
+      },
     ],
     followUp: [
       'What is the Radiant Digital AI Platform?',
@@ -1621,6 +1740,16 @@ const knowledgeBase = [
             details: ['Integrated sales, returns, quality and customer data', 'Device launch risk prediction and scoring', 'AI-driven root cause identification', 'Go/no-go recommendations pre and post launch'],
           },
         ],
+      },
+      {
+        type: 'case-study-grid',
+        title: 'Proof for Data Leaders',
+        subtitle: 'How Radiant Digital moved a Fortune 500 telecom from governing data by its name to governing it by its contents.',
+        items: [
+          { name: 'Governing Telecom Data by Its Contents', metric: '93% Confirmed Accuracy', detail: 'Content-based classification of unstructured & structured data for a Fortune 500 telecom: 15,000+ columns tested, governance by exception.', industry: 'Telecom', accent: '#596AE0', image: '/images/ai-agents-photo.jpg' },
+          { name: 'Classifying Telecom Data by Its Contents', metric: '0.47 sec per Column', detail: 'Technical deep dive: tiered pattern, entity, and semantic classification on Google Cloud, with a language model only for ambiguous cases.', industry: 'Telecom', accent: '#596AE0', image: '/images/server-room.jpg' },
+        ],
+        accent: '#91C46B',
       },
     ],
     followUp: [
