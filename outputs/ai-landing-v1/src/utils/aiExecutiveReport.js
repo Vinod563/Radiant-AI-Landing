@@ -678,7 +678,7 @@ export function buildAiExecutiveReportDoc({ profile = {}, answers = {} }) {
   numberedH2('12', 'Get in Touch')
   para('Speak directly with the Radiant Digital experts behind your assessment. They can help you identify where to start and what the next stage could look like for your organization.', { color: BODY, lead: 7 })
   const people = [
-    { photo: PRAFULL_PHOTO, name: 'Prafull Khare', title: 'Executive Director | Global Head of AI Strategy, Solution Engineering, & New Technology Enablement', org: 'Radiant Digital', email: 'prafull.khare@radiant.digital', linkedin: 'linkedin.com/in/prafull-khare' },
+    { photo: PRAFULL_PHOTO, name: 'Prafull Khare', title: 'Vice President - Global Head of AI & Digital Transformation', org: 'Radiant Digital', email: 'prafull.khare@radiant.digital', linkedin: 'linkedin.com/in/prafull-khare' },
     { photo: SRINIVAS_PHOTO, name: 'Srinivas Chamarthi', title: 'SVP & Business Head', org: 'Radiant Digital', email: 'srinivas.chamarthi@radiant.digital', linkedin: 'linkedin.com/in/srinivaschamarthi' },
   ]
   const gapP = 20, pcw = (maxW - gapP) / 2

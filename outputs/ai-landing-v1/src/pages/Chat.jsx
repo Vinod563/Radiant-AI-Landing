@@ -1060,6 +1060,8 @@ function CardRenderer({ card, index, onSubmit, onAssessment, onAssessmentProfile
       {card.type === 'screenshot' && <ScreenshotCard card={card} />}
       {card.type === 'service-grid' && <ServiceGridCard card={card} />}
       {card.type === 'comparison-table' && <ComparisonTableCard card={card} />}
+      {card.type === 'numbered-points' && <NumberedPointsCard card={card} />}
+      {card.type === 'before-after' && <BeforeAfterCard card={card} />}
       {card.type === 'chart' && <AmChartCard card={card} />}
     </motion.div>
   )
@@ -1097,7 +1099,7 @@ function HeroCard({ card }) {
           style={{ fontSize: 'clamp(2rem, 4vw, 3.2rem)' }}>
           {card.title}
         </h3>
-        <p className="text-text-secondary text-lg leading-relaxed max-w-2xl">
+        <p className="text-text-secondary text-lg leading-relaxed">
           {card.subtitle}
         </p>
       </div>
@@ -1329,7 +1331,7 @@ function TextCard({ card }) {
           <div className="w-1.5 h-12 rounded-full" style={{ background: card.accent }} />
           <h3 className="font-display font-black text-xl lg:text-2xl text-white tracking-tight">{card.title}</h3>
         </div>
-        <div className="text-text-secondary text-base lg:text-lg leading-[1.9] max-w-2xl space-y-3">
+        <div className="text-text-secondary text-base lg:text-lg leading-[1.9] space-y-3">
           {card.body.split('\n').filter(Boolean).map((line, i) => (
             <p key={i}>{line}</p>
           ))}
@@ -1377,7 +1379,7 @@ function GridCard({ card, onSubmit, onAssessment }) {
           {card.title}
         </h3>
         {card.subtitle && (
-          <p className="text-text-secondary text-base max-w-lg mx-auto">{card.subtitle}</p>
+          <p className="text-text-secondary text-base max-w-3xl mx-auto">{card.subtitle}</p>
         )}
       </div>
 
@@ -1623,19 +1625,23 @@ function CaseStudyCard({ card }) {
           style={{ fontSize: 'clamp(1.4rem, 3.5vw, 2.5rem)' }}>
           {card.title}
         </h3>
-        <p className="text-text-secondary text-sm sm:text-base mb-8 sm:mb-10 max-w-2xl leading-relaxed">{card.subtitle}</p>
+        <p className="text-text-secondary text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed">{card.subtitle}</p>
 
         {/* Metrics, large editorial tiles like CaseStudy */}
-        <div className={`grid gap-3 sm:gap-4 mb-8 sm:mb-10 ${card.metrics.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`}>
+        <div className={`grid gap-3 sm:gap-4 ${card.quote ? 'mb-8 sm:mb-10' : ''} ${card.metrics.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`}>
           {card.metrics.map((m, i) => {
             const metricColors = ['grad-text', 'text-brand-green', 'grad-text', 'text-brand-orange']
+            // "0.47 sec": render a trailing unit word smaller so the value stays on one line
+            const unitMatch = /^([\d.,]+)\s+([a-z]+)$/i.exec(m.value)
             return (
               <div key={m.label} className="mag-card p-4 sm:p-6 lg:p-8 text-center overflow-hidden">
                 <div className={`font-display font-black leading-tight mb-2 sm:mb-3 ${metricColors[i % metricColors.length]}`}
                   style={{ fontSize: 'clamp(1.3rem, 4vw, 2.4rem)' }}>
-                  {m.value}
+                  {unitMatch ? (
+                    <span className="whitespace-nowrap">{unitMatch[1]}<span className="text-[0.5em] ml-1">{unitMatch[2]}</span></span>
+                  ) : m.value}
                 </div>
-                <div className="text-text-muted text-[10px] sm:text-xs leading-snug line-clamp-2">{m.label}</div>
+                <div className="text-text-muted text-[10px] sm:text-xs leading-snug">{m.label}</div>
               </div>
             )
           })}
@@ -2334,6 +2340,138 @@ function ServiceGridCard({ card }) {
    comparing approaches, services, or options.
    Gemma 4 populates this when intent = comparison.
    ═══════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   NUMBERED POINTS CARD: case-study Problem / Outcomes.
+   Large numbered tiles in the section accent, full width.
+   ═══════════════════════════════════════════════ */
+function NumberedPointsCard({ card }) {
+  const accent = card.accent || '#91C46B'
+  const n = card.items.length
+  const cols = n === 3 ? 'lg:grid-cols-3' : (n % 3 === 0 ? 'sm:grid-cols-2 lg:grid-cols-3' : 'sm:grid-cols-2')
+  return (
+    <div className="mag-card p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: `linear-gradient(90deg, transparent 5%, ${accent}60 50%, transparent 95%)` }} />
+      <div className="absolute inset-0 pointer-events-none"
+        style={{ background: `radial-gradient(ellipse at 0% 0%, ${accent}0d 0%, transparent 55%)` }} />
+      <div className="relative z-10">
+        <p className="font-body text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: accent }}>{card.kicker}</p>
+        <h3 className="font-display font-black text-2xl lg:text-3xl text-white tracking-tight mb-4">{card.title}</h3>
+        {card.subtitle && <p className="text-text-secondary text-base lg:text-lg leading-relaxed mb-8 lg:mb-10">{card.subtitle}</p>}
+
+        <div className={`grid grid-cols-1 ${cols} gap-4 lg:gap-5`}>
+          {card.items.map((item, i) => (
+            <motion.div key={item.title}
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.06 }}
+              className="rounded-2xl p-6 lg:p-7 relative"
+              style={{ background: `${accent}08`, border: `1px solid ${accent}26` }}>
+              <div className="font-display font-black leading-none mb-4 text-5xl lg:text-6xl" style={{ color: accent }}>
+                {String(i + 1).padStart(2, '0')}
+              </div>
+              <h4 className="font-display font-bold text-white text-lg leading-snug mb-2.5">
+                {item.highlight && <span style={{ color: accent }}>{item.highlight} </span>}
+                {item.title}
+              </h4>
+              <p className="text-text-secondary text-sm leading-relaxed">{item.desc}</p>
+            </motion.div>
+          ))}
+        </div>
+
+        {card.footnote && (
+          <div className="mt-6 rounded-xl px-5 py-4 text-sm leading-relaxed text-text-secondary"
+            style={{ background: 'rgba(255,255,255,0.025)', borderLeft: `3px solid ${accent}` }}>
+            <span className="font-display font-bold text-white">{card.footnote.label}: </span>{card.footnote.text}
+          </div>
+        )}
+      </div>
+    </div>
+  )
+}
+
+/* ═══════════════════════════════════════════════
+   BEFORE / AFTER CARD: one featured transformation,
+   supporting comparisons below. Always Before → After.
+   ═══════════════════════════════════════════════ */
+function BeforeAfterCard({ card }) {
+  const accent = card.accent || '#91C46B'
+  const muted = 'rgba(255,255,255,0.45)'
+  const f = card.featured
+  const Side = ({ kind, data, big }) => {
+    const isAfter = kind === 'after'
+    return (
+      <div className={`rounded-2xl ${big ? 'p-5 sm:p-6 lg:p-8' : 'p-5'} h-full`}
+        style={isAfter
+          ? { background: `${accent}0d`, border: `1px solid ${accent}4d` }
+          : { background: 'rgba(255,255,255,0.025)', border: '1px solid rgba(255,255,255,0.08)' }}>
+        <p className="font-body text-[0.65rem] font-semibold tracking-widest uppercase mb-3" style={{ color: isAfter ? accent : muted }}>
+          {isAfter ? 'After' : 'Before'}
+        </p>
+        {data.stat && (
+          <div className="font-display font-black leading-none mb-3 text-4xl sm:text-5xl lg:text-6xl whitespace-nowrap" style={{ color: isAfter ? accent : muted }}>{(() => { const u = /^([\d.,]+)\s+([a-z]+)$/i.exec(data.stat); return u ? <>{u[1]}<span className="text-[0.5em] ml-1">{u[2]}</span></> : data.stat })()}</div>
+        )}
+        {data.title && (
+          <h4 className={`font-display font-bold leading-snug mb-2 ${big ? 'text-lg lg:text-xl' : 'text-base'} ${isAfter ? 'text-white' : 'text-white/70'}`}>{data.title}</h4>
+        )}
+        {data.title ? (
+          <p className={`text-sm leading-relaxed ${isAfter ? 'text-text-secondary' : 'text-text-muted'}`}>{data.desc}</p>
+        ) : (
+          /* Single-line comparison (no sub-title): the statement itself carries the weight */
+          <p className={`font-medium leading-relaxed ${big ? 'text-base lg:text-lg' : 'text-sm sm:text-base'} ${isAfter ? 'text-white/90' : 'text-white/60'}`}>{data.desc}</p>
+        )}
+      </div>
+    )
+  }
+  const Arrow = ({ size = 18 }) => (
+    <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+      style={{ background: `${accent}1a`, border: `1px solid ${accent}4d` }}>
+      <ArrowRight size={size} className="rotate-90 lg:rotate-0" style={{ color: accent }} />
+    </div>
+  )
+  return (
+    <div className="mag-card p-6 sm:p-10 lg:p-12 relative overflow-hidden">
+      <div className="absolute top-0 left-0 right-0 h-px"
+        style={{ background: `linear-gradient(90deg, transparent 5%, ${accent}60 50%, transparent 95%)` }} />
+      <div className="relative z-10">
+        <p className="font-body text-xs font-semibold tracking-widest uppercase mb-3" style={{ color: accent }}>{card.kicker || 'Before and After'}</p>
+        <h3 className="font-display font-black text-2xl lg:text-3xl text-white tracking-tight mb-8 lg:mb-10">{card.title}</h3>
+
+        {/* Featured transformation */}
+        <div className="rounded-3xl p-3 sm:p-6 lg:p-8 mb-6"
+          style={{ background: 'rgba(255,255,255,0.02)', border: `1px solid ${accent}33` }}>
+          <p className="font-display font-bold text-white text-sm uppercase tracking-wider mb-5">{f.label}</p>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_auto_1fr] gap-4 items-stretch">
+            <Side kind="before" data={f.before} big />
+            <div className="flex items-center justify-center"><Arrow /></div>
+            <Side kind="after" data={f.after} big />
+          </div>
+          {f.change && (
+            <p className="mt-5 text-sm sm:text-base leading-relaxed text-text-secondary">
+              <span className="font-display font-bold" style={{ color: accent }}>What changed: </span>{f.change}
+            </p>
+          )}
+        </div>
+
+        {/* Supporting comparisons */}
+        {/* md+: subgrid keeps labels, Before boxes, arrows and After boxes on shared rows */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-x-4 gap-y-8 md:gap-y-3">
+          {card.items.map((it, i) => (
+            <motion.div key={it.label}
+              initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="grid gap-3 md:grid-rows-subgrid md:row-span-4">
+              <p className="font-display font-bold text-white text-sm uppercase tracking-wider">{it.label}</p>
+              <Side kind="before" data={it.before} />
+              <div className="flex justify-center"><ArrowRight size={16} className="rotate-90" style={{ color: accent }} /></div>
+              <Side kind="after" data={it.after} />
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 function ComparisonTableCard({ card }) {
   const accent = card.accent || '#596AE0'
   const [col1, col2, col3] = card.headers || ['Feature', 'Radiant Digital', 'Traditional']

@@ -415,7 +415,7 @@ function ReportDoc({ profile, answers }) {
     ['12', 'Get in Touch', 'touch'],
   ]
   const people = [
-    { photo: PRAFULL_PHOTO, name: 'Prafull Khare', title: 'Executive Director | Global Head of AI Strategy, Solution Engineering, & New Technology Enablement  ·  Radiant Digital', email: 'prafull.khare@radiant.digital', linkedin: 'linkedin.com/in/prafull-khare' },
+    { photo: PRAFULL_PHOTO, name: 'Prafull Khare', title: 'Vice President - Global Head of AI & Digital Transformation  ·  Radiant Digital', email: 'prafull.khare@radiant.digital', linkedin: 'linkedin.com/in/prafull-khare' },
     { photo: SRINIVAS_PHOTO, name: 'Srinivas Chamarthi', title: 'SVP & Business Head  ·  Radiant Digital', email: 'srinivas.chamarthi@radiant.digital', linkedin: 'linkedin.com/in/srinivaschamarthi' },
   ]
 

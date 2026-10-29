@@ -357,7 +357,7 @@ export function buildAiReportHtml(profile, result) {
   const people = [
     {
       initials: 'PK', name: 'Prafull Khare',
-      title: 'Executive Director | Global Head of AI Strategy, Solution Engineering, &amp; New Technology Enablement',
+      title: 'Vice President - Global Head of AI &amp; Digital Transformation',
       org: 'Radiant Digital', email: 'prafull.khare@radiant.digital',
     },
     {

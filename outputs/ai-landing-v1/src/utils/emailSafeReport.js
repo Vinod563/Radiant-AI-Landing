@@ -283,7 +283,7 @@ function buildAiEmailHtml(profile, result) {
     })(),
     (() => {
       const people = [
-        { initials: 'PK', name: 'Prafull Khare', title: 'Executive Director | Global Head of AI Strategy, Solution Engineering, &amp; New Technology Enablement', org: 'Radiant Digital', email: 'prafull.khare@radiant.digital' },
+        { initials: 'PK', name: 'Prafull Khare', title: 'Vice President - Global Head of AI &amp; Digital Transformation', org: 'Radiant Digital', email: 'prafull.khare@radiant.digital' },
         { initials: 'SC', name: 'Srinivas Chamarthi', title: 'SVP &amp; Business Head', org: 'Radiant Digital', email: 'srinivas.chamarthi@radiant.digital' },
       ]
       const cards = people.map(p => `

@@ -1211,3 +1211,35 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Files:** outputs/ai-landing-v1/src/components/home/CaseStudy.jsx, src/data/knowledgeBase.js
 - **Verified:** vite build OK; Playwright: homepage has no governance card; View More → grid card → detail view renders.
 - **Status:** ✅ Complete
+
+## 2026-10-28: Prafull Khare title in AI assessment contact cards
+- **Action:** Title "Executive Director | Global Head of AI Strategy, Solution Engineering, & New Technology Enablement" → "Vice President - Global Head of AI & Digital Transformation" (matches Leadership section).
+- **Files:** outputs/ai-landing-v1/src/components/assessment/HTMLReportViewer.jsx, src/utils/aiReportPdf.jsx, src/utils/aiExecutiveReport.js, src/utils/emailSafeReport.js; outputs/ai-assessment-executive-pdf/index.html
+- **Status:** ✅ Complete (vite build OK; no old title remains)
+
+## 2026-10-29: Governance case studies merged into one
+- **Action:** Replaced the two governance case studies (business "Governing Telecom Data by Its Contents" + technical "Classifying Telecom Data by Its Contents") with one: "Governing Unstructured and Structured Data by Its Contents", content verbatim from the updated PDF (exec summary + 4 key results, problem, 4-principle solution, technical deep dive, outcomes + deployment status, before/after comparison table, closing + CTA). Unstructured accuracy now 82% (was 80–82%). All grids point to the single case study; old names kept as keywords so earlier links still resolve. Chat API context CS-T6/CS-T7 merged into CS-T6.
+- **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js; outputs/radiant-chat-api/knowledge/radiantContext.js
+- **Verified:** vite build OK; Playwright: all-case-studies grid shows one card, all 7 sections render; no mobile page overflow.
+- **Status:** ✅ Complete
+
+## 2026-10-29: Governance case study moved to first position
+- **Action:** "Governing Unstructured and Structured Data by Its Contents" moved to the first card in every case-study grid it shares (View More / all case studies, proof grid, telecom grid).
+- **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js
+- **Status:** ✅ Complete (vite build OK; Playwright confirms first card)
+
+## 2026-10-29: Case study metric tiles: unit sizing + full labels
+- **Action:** Case-study metric values ending in a unit word (e.g. "0.47 sec") render the unit at half size on the same line; metric labels no longer truncated (line-clamp removed) so all tiles show full text and stay row-aligned.
+- **Files:** outputs/ai-landing-v1/src/pages/Chat.jsx (CaseStudyCard)
+- **Status:** ✅ Complete (vite build OK; Playwright desktop 1440 + mobile 375)
+
+## 2026-10-29: Case study layout & hierarchy redesign (governance case study)
+- **Action:** Full-width content: removed max-width caps on case-study header subtitle, hero subtitle, text-card body; widened grid subtitles; removed empty space under metrics when no quote. New `numbered-points` card (large 01/02/03 numbers, accent highlight, optional footnote) used for The Problem (orange) and Outcomes (green, 6 points + Deployment Status). New `before-after` card: Before → After order, featured Classification transformation (75–85% → 93%, "What changed" line built from existing facts) plus 3 supporting comparisons aligned via subgrid. Content wording unchanged.
+- **Files:** outputs/ai-landing-v1/src/pages/Chat.jsx, src/data/knowledgeBase.js
+- **Verified:** vite build OK; Playwright 1440/768/375, no horizontal overflow. Screenshots: screenshots/{desktop,tablet,mobile}/cs-governance-*.png
+- **Status:** ✅ Complete
+
+## 2026-10-29: Governance case study: refined Before & After content
+- **Action:** Updated from revised PDF. Pages 1–4 unchanged (verified identical). Before & After replaced: title "From Name Based Classification to Content Based Governance"; rows Classification Accuracy (featured, 75–85% → 93%), Unstructured Data Governance, Data Classification Scale, Processing Efficiency. Removed old sub-titled rows (Governance Review, Coverage) and the composed "What changed" line. Before/After boxes now support single-statement sides; unit word in stats ("sec") rendered at half size to match metric tiles. Chat API context updated to match.
+- **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js, src/pages/Chat.jsx; outputs/radiant-chat-api/knowledge/radiantContext.js
+- **Status:** ✅ Complete (vite build OK; Playwright 1440/768/375, no overflow)
