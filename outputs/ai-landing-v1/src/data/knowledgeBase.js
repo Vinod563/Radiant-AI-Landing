@@ -585,7 +585,7 @@ const knowledgeBase = [
     cards: [
       {
         type: 'contact-details',
-        title: 'Let\'s Start a Conversation',
+        title: 'Let\'s Discuss Your Data Challenges',
         body: 'Reach out directly: our team is ready to discuss how AI can transform your enterprise operations.',
         email: contactData.email,
         phone: contactData.phone,
@@ -981,19 +981,19 @@ const knowledgeBase = [
         accent: '#91C46B',
         featured: {
           label: 'Classification Accuracy',
-          before: { stat: '75–85%', desc: '75 to 85% reported accuracy using column names and descriptions' },
-          after: { stat: '93%', desc: '93% confirmed accuracy after governance analyst review' },
+          before: { stat: '85%', desc: 'Reported accuracy using column names and descriptions' },
+          after: { stat: '93%', desc: 'Confirmed accuracy after governance analyst review' },
         },
         items: [
-          { label: 'Unstructured Data Governance', before: { desc: 'Data could not be inspected and was restricted at the highest level' }, after: { stat: '82%', desc: '82% average detection accuracy, enabling column level classification' } },
-          { label: 'Data Classification Scale', before: { desc: 'Thousands of operational databases remained unexamined' }, after: { stat: '15,000+', desc: '15,000+ unique columns tested' } },
-          { label: 'Processing Efficiency', before: { desc: 'Relied on metadata and manual corrections' }, after: { stat: '0.47 sec', desc: '0.47 seconds average processing time per column in structured data testing' } },
+          { label: 'Unstructured Data Governance', before: { desc: 'Data could not be inspected and was restricted at the highest level' }, after: { stat: '82%', desc: 'Average detection accuracy, enabling column level classification' } },
+          { label: 'Data Classification Scale', before: { desc: 'Thousands of operational databases remained unexamined' }, after: { stat: '15,000+', desc: 'Unique columns tested' } },
+          { label: 'Processing Efficiency', before: { desc: 'Relied on metadata and manual corrections' }, after: { stat: '0.47 sec', desc: 'Average processing time per column in structured data testing' } },
         ],
       },
       {
         type: 'text',
         title: 'Built to Keep Learning and Scale',
-        body: 'Confirmed results feed back into the system daily to support ongoing improvement. The shared semantic search foundation supports both structured and unstructured data classification, while configurable policies and a scalable architecture enable future expansion.\nAsk Radiant Digital to examine data restricted by default and identify which governance policies apply to its contents.',
+        body: 'Confirmed results feed back into the system daily to support ongoing improvement. The shared semantic search foundation supports both structured and unstructured data classification, while configurable policies and a scalable architecture enable future expansion.',
         accent: '#91C46B',
       },
     ],

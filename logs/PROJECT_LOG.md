@@ -1243,3 +1243,61 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Action:** Updated from revised PDF. Pages 1–4 unchanged (verified identical). Before & After replaced: title "From Name Based Classification to Content Based Governance"; rows Classification Accuracy (featured, 75–85% → 93%), Unstructured Data Governance, Data Classification Scale, Processing Efficiency. Removed old sub-titled rows (Governance Review, Coverage) and the composed "What changed" line. Before/After boxes now support single-statement sides; unit word in stats ("sec") rendered at half size to match metric tiles. Chat API context updated to match.
 - **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js, src/pages/Chat.jsx; outputs/radiant-chat-api/knowledge/radiantContext.js
 - **Status:** ✅ Complete (vite build OK; Playwright 1440/768/375, no overflow)
+
+## 2026-10-29: LinkedIn links on Leadership cards
+- **Action:** Added `linkedin` URLs for 13 leaders (Shankar, Sandeep, Prafull, Srinivas Chamarthi, Arun, Balaram, Srinivas Punnamaraju, Lam, Elizabeth (Beth) Holland, Umarani, Rama, Alek, Nari); LinkedIn badge (top-right of portrait, opens in new tab, rel="noopener noreferrer", aria-label) renders only when a URL exists. Gil Tadmor and Subba Rao Kambhampalli have no URL yet, so no badge.
+- **Files:** outputs/ai-landing-v1/src/data/siteContent.js, src/components/home/Leadership.jsx
+- **Status:** ✅ Complete (vite build OK; Playwright verified all 13 hrefs)
+
+## 2026-10-29: Before & After: no repeated numbers in supporting text
+- **Action:** Supporting text under each stat no longer repeats the figure: "Reported accuracy using column names and descriptions" (75–85%), "Confirmed accuracy after governance analyst review" (93%), "Average detection accuracy, enabling column level classification" (82%), "Unique columns tested" (15,000+), "Average processing time per column in structured data testing" (0.47 sec). Stats unchanged.
+- **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js
+- **Status:** ✅ Complete (vite build OK)
+
+## 2026-10-29: Before & After featured stat 75–85% → 85%
+- **Action:** Classification Accuracy "Before" stat shows "85%" (was "75–85%") per user request. Supporting text unchanged.
+- **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js
+- **Status:** ✅ Complete (vite build OK)
+
+## 2026-10-29: LinkedIn link for Gil Tadmor
+- **Action:** Added https://www.linkedin.com/in/gtadmor/ to Gil Tadmor's leadership card (badge now shows).
+- **Files:** outputs/ai-landing-v1/src/data/siteContent.js
+- **Status:** ✅ Complete (vite build OK)
+
+## 2026-10-30: Leadership: LinkedIn on names (Lam's feedback)
+- **Action:** Removed the LinkedIn badge from the portrait images (image markup back to committed state). Each leader's name is now the LinkedIn link (new tab, rel="noopener noreferrer", aria-label), with a small muted LinkedIn icon after the name; name + icon turn brand-green on hover/focus. Subba Rao Kambhampalli has no URL, so his name stays plain text.
+- **Files:** outputs/ai-landing-v1/src/components/home/Leadership.jsx
+- **Status:** ✅ Complete (vite build OK; Playwright verified 14 name links, 0 links inside images)
+
+## 2026-10-30: Leadership: LinkedIn icon as the link, right-aligned
+- **Action:** Names back to plain text. LinkedIn icon (14px, muted → brand-green on hover/focus) is the link, in the name row, right-aligned at the card's padding; icon box is one name-line tall so it aligns with the first line on wrapped names. New tab, rel="noopener noreferrer", aria-label. Images untouched. No icon for Subba Rao Kambhampalli (no URL).
+- **Files:** outputs/ai-landing-v1/src/components/home/Leadership.jsx
+- **Verified:** vite build OK; Playwright 1440/768/375: 14 correct hrefs, icon top = name top, 17px right inset on every card, no overlap. Screenshots: screenshots/{desktop,tablet,mobile}/leadership-linkedin.png
+- **Status:** ✅ Complete
+
+## 2026-10-30: Leadership: explicit two-line names + rule alignment fix
+- **Action:** Added `nameLines` (display-only) so "Umarani / Rudravarjula" and "Subba Rao / Kambhampalli" break onto two lines; `name` unchanged for alt text, aria-labels, keys. Fixed pre-existing 1.5px misalignment on two-line names (lg:text-sm reset line-height to 20px vs 2.75em min-height) by pinning lg:leading-snug on name + LinkedIn icon box; all 15 cards now 38.5px name block, accent rules level.
+- **Files:** outputs/ai-landing-v1/src/data/siteContent.js, src/components/home/Leadership.jsx
+- **Status:** ✅ Complete (vite build OK; Playwright measured equal rule offsets)
+
+## 2026-10-30: Case study table of contents (section dots)
+- **Action:** SectionNav made configurable (sections, scrollRoot, revealAfter, visibilityClass, ariaLabel); homepage defaults unchanged (11 dots verified). Chat shows the same dot nav when the latest answer is a case study (first card type 'case-study'): sections built from the answer's own cards: Overview, Key Results, Client Voice (if quote), then each later card's kicker/title. Anchors added to case-study card, metrics, quote and each card; nav tracks the chat's scroll panel. Shown xl+ (≥1280px) so it never overlaps the chat column.
+- **Files:** outputs/ai-landing-v1/src/components/shared/SectionNav.jsx, src/pages/Chat.jsx
+- **Verified:** vite build OK; Playwright: governance = 8 dots, clicks jump + active state follows; hospitality = 2 dots; non-case-study answer = no nav; homepage = 11 dots.
+- **Note:** chat API (radiant-chat-api/handlers/staticHandler.js) has its own KB copy without the governance case study; production answers may differ from the local KB.
+- **Status:** ✅ Complete
+
+## 2026-10-30: Governance case study: closing CTA line removed
+- **Action:** Removed "Ask Radiant Digital to examine data restricted by default and identify which governance policies apply to its contents." from the "Built to Keep Learning and Scale" card. Follow-up chip unchanged.
+- **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js
+- **Status:** ✅ Complete (vite build OK)
+
+## 2026-10-30: Contact card CTA heading (Lam's feedback)
+- **Action:** "Let's Start a Conversation" → "Let's Talk About Your Data" on the contact-details card. Updated in site KB and both chat-API copies (staticHandler + cardBuilder prompt example) so all paths match. Body, form, and layout unchanged.
+- **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js; outputs/radiant-chat-api/handlers/staticHandler.js, utils/cardBuilder.js
+- **Status:** ✅ Complete (vite build OK; API files syntax-checked)
+
+## 2026-10-30: Contact card heading → "Let's Discuss Your Data Challenges"
+- **Action:** Replaced "Let's Talk About Your Data" with "Let's Discuss Your Data Challenges" in site KB and both chat-API copies.
+- **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js; outputs/radiant-chat-api/handlers/staticHandler.js, utils/cardBuilder.js
+- **Status:** ✅ Complete (vite build OK)

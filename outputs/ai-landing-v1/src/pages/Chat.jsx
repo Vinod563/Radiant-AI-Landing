@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useLayoutEffect, useCallback, useId } from 'react'
+import { useState, useRef, useEffect, useLayoutEffect, useCallback, useId, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useNavigate, useSearchParams, Link } from 'react-router-dom'
 import {
@@ -48,6 +48,7 @@ import {
 } from 'lucide-react'
 import { findAnswer, suggestions, mainMenuItems } from '../data/knowledgeBase.js'
 import RadiantLogo from '../components/shared/RadiantLogo'
+import SectionNav from '../components/shared/SectionNav'
 import ContactForm from '../components/shared/ContactForm'
 import ProfileForm from '../components/assessment/ProfileForm'
 import AssessmentQuestionCard from '../components/assessment/AssessmentQuestionCard'
@@ -69,6 +70,27 @@ const INSTANT_TRIGGERS = new Set([
   'how ai-ready is my organization',
   'assess my cx maturity',
 ])
+
+// ── Case-study table of contents ─────────────────────────────────────────────
+// An answer is a case-study page when its first card is a 'case-study' card.
+// Sections come from the answer's own cards: the case-study card yields
+// Overview / Key Results / Client Voice; every later card uses its kicker or title.
+const isCaseStudyAnswer = (cards) => Array.isArray(cards) && cards[0]?.type === 'case-study'
+const csAnchor = (msgIdx, part) => `cs-${msgIdx}-${part}`
+function buildCaseStudyToc(cards, msgIdx) {
+  const toc = []
+  cards.forEach((card, i) => {
+    if (i === 0) {
+      toc.push({ id: csAnchor(msgIdx, 'overview'), label: 'Overview' })
+      if (card.metrics?.length) toc.push({ id: csAnchor(msgIdx, 'results'), label: 'Key Results' })
+      if (card.quote) toc.push({ id: csAnchor(msgIdx, 'quote'), label: 'Client Voice' })
+      return
+    }
+    const label = card.kicker || card.title
+    if (label) toc.push({ id: csAnchor(msgIdx, `card-${i}`), label })
+  })
+  return toc
+}
 
 function getInstantAnswer(raw) {
   const n = raw.trim().toLowerCase().replace(/[‘’ʼ`]/g, "'")
@@ -373,6 +395,13 @@ export default function Chat() {
 
   const hasMessages = messages.length > 0
 
+  // Section dots for the latest answer when it is a case study
+  const lastAssistantIdx = messages.map(m => m.role).lastIndexOf('assistant')
+  const lastAssistant = messages[lastAssistantIdx]
+  const caseStudyToc = useMemo(() => (lastAssistant && isCaseStudyAnswer(lastAssistant.cards)
+    ? buildCaseStudyToc(lastAssistant.cards, lastAssistantIdx) : []), [lastAssistant, lastAssistantIdx])
+  const caseStudyTocKey = `cs-toc-${lastAssistantIdx}`
+
   return (
     <div className="h-[100dvh] bg-[#010F1E] flex flex-col relative overflow-hidden">
       {/* Full-page gradient background, layered radial gradients covering entire viewport */}
@@ -422,6 +451,12 @@ export default function Chat() {
           </div>
         </div>
       </header>
+
+      {/* Case-study section dots (same component as the homepage nav) */}
+      {caseStudyToc.length > 1 && (
+        <SectionNav key={caseStudyTocKey} sections={caseStudyToc} scrollRoot={mainRef} revealAfter={0}
+          visibilityClass="hidden xl:flex" ariaLabel="Case study sections" />
+      )}
 
       {/* Messages area */}
       <main ref={mainRef} className="flex-1 overflow-y-auto overflow-x-hidden flex flex-col">
@@ -710,7 +745,7 @@ export default function Chat() {
                 {msg.role === 'user' ? (
                   <UserBubble content={msg.content} />
                 ) : (
-                  <AssistantCards message={msg.message} cards={msg.cards} onSubmit={handleSubmit}
+                  <AssistantCards message={msg.message} cards={msg.cards} msgIdx={isCaseStudyAnswer(msg.cards) ? i : null} onSubmit={handleSubmit}
                     onAssessment={startAssessment} onAssessmentProfile={submitAssessmentProfile} onAssessmentAnswer={answerAssessment} />
                 )}
               </motion.div>
@@ -1001,7 +1036,7 @@ function ThinkingIndicator() {
 }
 
 /* ── Assistant Card Renderer ── */
-function AssistantCards({ message, cards, onSubmit, onAssessment, onAssessmentProfile, onAssessmentAnswer }) {
+function AssistantCards({ message, cards, msgIdx = null, onSubmit, onAssessment, onAssessmentProfile, onAssessmentAnswer }) {
   return (
     <div className="flex gap-4 items-start">
       <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 mt-1"
@@ -1015,7 +1050,10 @@ function AssistantCards({ message, cards, onSubmit, onAssessment, onAssessmentPr
         {cards && cards.length > 0 && (
           <div className="space-y-6">
             {cards.map((card, i) => (
-              <CardRenderer key={i} card={card} index={i} onSubmit={onSubmit} onAssessment={onAssessment}
+              <CardRenderer key={i} card={card} index={i}
+                anchorId={msgIdx === null ? undefined : csAnchor(msgIdx, i === 0 ? 'overview' : `card-${i}`)}
+                anchorPrefix={msgIdx === null ? undefined : `cs-${msgIdx}`}
+                onSubmit={onSubmit} onAssessment={onAssessment}
                 onAssessmentProfile={onAssessmentProfile} onAssessmentAnswer={onAssessmentAnswer} />
             ))}
           </div>
@@ -1026,9 +1064,11 @@ function AssistantCards({ message, cards, onSubmit, onAssessment, onAssessmentPr
 }
 
 /* ── Card Router ── */
-function CardRenderer({ card, index, onSubmit, onAssessment, onAssessmentProfile, onAssessmentAnswer }) {
+function CardRenderer({ card, index, anchorId, anchorPrefix, onSubmit, onAssessment, onAssessmentProfile, onAssessmentAnswer }) {
   return (
     <motion.div
+      id={anchorId}
+      className={anchorId ? 'scroll-mt-6' : undefined}
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.18 }}
@@ -1048,7 +1088,7 @@ function CardRenderer({ card, index, onSubmit, onAssessment, onAssessmentProfile
       )}
       {card.type === 'list' && <ListCard card={card} onItemClick={onSubmit} />}
       {card.type === 'case-study-grid' && <CaseStudyGridCard card={card} onItemClick={onSubmit} />}
-      {card.type === 'case-study' && <CaseStudyCard card={card} />}
+      {card.type === 'case-study' && <CaseStudyCard card={card} anchorPrefix={anchorPrefix} />}
       {card.type === 'partners' && <PartnersCard card={card} />}
       {card.type === 'main-menu' && <MainMenuCard card={card} onSubmit={onSubmit} />}
       {card.type === 'contact-details' && <ContactDetailsCard card={card} />}
@@ -1584,7 +1624,7 @@ function ListCard({ card }) {
    client badge, editorial metrics, colorful orb
    background, pull quote, rainbow stripe
    ═══════════════════════════════════════════════ */
-function CaseStudyCard({ card }) {
+function CaseStudyCard({ card, anchorPrefix }) {
   return (
     <div className="rounded-[20px] overflow-hidden relative"
       style={{ background: 'rgba(255,255,255,0.02)', border: '1px solid rgba(255,255,255,0.07)' }}>
@@ -1628,7 +1668,7 @@ function CaseStudyCard({ card }) {
         <p className="text-text-secondary text-sm sm:text-base mb-8 sm:mb-10 leading-relaxed">{card.subtitle}</p>
 
         {/* Metrics, large editorial tiles like CaseStudy */}
-        <div className={`grid gap-3 sm:gap-4 ${card.quote ? 'mb-8 sm:mb-10' : ''} ${card.metrics.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`}>
+        <div id={anchorPrefix ? `${anchorPrefix}-results` : undefined} className={`scroll-mt-6 grid gap-3 sm:gap-4 ${card.quote ? 'mb-8 sm:mb-10' : ''} ${card.metrics.length <= 3 ? 'grid-cols-3' : 'grid-cols-2 lg:grid-cols-4'}`}>
           {card.metrics.map((m, i) => {
             const metricColors = ['grad-text', 'text-brand-green', 'grad-text', 'text-brand-orange']
             // "0.47 sec": render a trailing unit word smaller so the value stays on one line
@@ -1649,7 +1689,7 @@ function CaseStudyCard({ card }) {
 
         {/* Pull quote like CaseStudy */}
         {card.quote && (
-          <div className="relative pl-6 border-l-2" style={{ borderColor: `${card.accent}40` }}>
+          <div id={anchorPrefix ? `${anchorPrefix}-quote` : undefined} className="relative pl-6 border-l-2 scroll-mt-6" style={{ borderColor: `${card.accent}40` }}>
             <Quote size={20} className="absolute -top-1 -left-2.5" style={{ color: card.accent }} />
             <p className="text-white/85 text-base lg:text-lg italic font-light leading-relaxed">
               &ldquo;{card.quote}&rdquo;

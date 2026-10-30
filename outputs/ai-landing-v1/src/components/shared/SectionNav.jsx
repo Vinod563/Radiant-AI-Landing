@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-const sections = [
+const HOME_SECTIONS = [
   { id: 'hero',           label: 'Hero' },
   { id: 'solutions',      label: 'Problems We Solve' },
   { id: 'ai-fabric',      label: 'AI Fabric' },
@@ -15,53 +15,70 @@ const sections = [
   { id: 'infrastructure', label: 'Infrastructure' },
 ]
 
-export default function SectionNav() {
-  const [active, setActive] = useState('hero')
+/**
+ * Right-hand dot navigation. Defaults reproduce the homepage exactly; the chat
+ * case-study view passes its own `sections`, the scrolling element
+ * (`scrollRoot`, a ref) and `revealAfter={0}` so it shows straight away.
+ */
+export default function SectionNav({
+  sections = HOME_SECTIONS,
+  scrollRoot = null,
+  revealAfter = 300,
+  visibilityClass = 'hidden lg:flex',
+  ariaLabel = 'Section navigation',
+}) {
+  const [active, setActive] = useState(sections[0]?.id)
   const [hovered, setHovered] = useState(null)
   const [visible, setVisible] = useState(false)
 
-  const activeIdx = useMemo(() => sections.findIndex(s => s.id === active), [active])
+  const activeIdx = useMemo(() => Math.max(0, sections.findIndex(s => s.id === active)), [active, sections])
   const progress = ((activeIdx + 1) / sections.length) * 100
 
   const handleScroll = useCallback(() => {
-    const scrollY = window.scrollY
-    const viewportH = window.innerHeight
-    setVisible(scrollY > 300)
+    const root = scrollRoot?.current
+    const scrollY = root ? root.scrollTop : window.scrollY
+    const rootRect = root ? root.getBoundingClientRect() : { top: 0, height: window.innerHeight }
+    const viewTop = rootRect.top
+    const viewportH = rootRect.height
+    setVisible(scrollY >= revealAfter)
 
-    let current = sections[0].id
+    let current = sections[0]?.id
     for (const s of sections) {
       const el = document.getElementById(s.id)
       if (!el) continue
       const rect = el.getBoundingClientRect()
-      if (rect.top < viewportH * 0.55 && rect.bottom > viewportH * 0.3) {
+      if (rect.top < viewTop + viewportH * 0.55 && rect.bottom > viewTop + viewportH * 0.3) {
         current = s.id
       }
     }
     setActive(current)
-  }, [])
+  }, [scrollRoot, revealAfter, sections])
 
   useEffect(() => {
-    window.addEventListener('scroll', handleScroll, { passive: true })
+    const target = scrollRoot?.current || window
+    target.addEventListener('scroll', handleScroll, { passive: true })
     handleScroll()
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [handleScroll])
+    return () => target.removeEventListener('scroll', handleScroll)
+  }, [handleScroll, scrollRoot])
 
   const scrollTo = (id) => {
     const el = document.getElementById(id)
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
   }
 
+  if (!sections.length) return null
+
   return (
     <AnimatePresence>
       {visible && (
-        <div className="fixed right-6 top-0 bottom-0 z-50 hidden lg:flex items-center">
+        <div className={`fixed right-6 top-0 bottom-0 z-50 ${visibilityClass} items-center pointer-events-none`}>
         <motion.nav
           initial={{ opacity: 0, x: 24 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: 24 }}
           transition={{ duration: 0.4, ease: 'easeOut' }}
-          className="flex flex-col items-center"
-          aria-label="Section navigation"
+          className="flex flex-col items-center pointer-events-auto"
+          aria-label={ariaLabel}
         >
           {/* Glass backdrop pill */}
           <div

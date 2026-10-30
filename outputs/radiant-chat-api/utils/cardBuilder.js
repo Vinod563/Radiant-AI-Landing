@@ -111,7 +111,7 @@ Rule: 3–7 rows. Keep cell text short (max 6 words per cell).
 8. CONTACT-DETAILS — contact information, getting started, demo request
 {
   "type": "contact-details",
-  "title": "Let's Start a Conversation",
+  "title": "Let's Discuss Your Data Challenges",
   "body": "Our team is ready to discuss how AI can transform your enterprise.",
   "email": "info@radiant.digital",
   "phone": "+1 (703) 348-1000",

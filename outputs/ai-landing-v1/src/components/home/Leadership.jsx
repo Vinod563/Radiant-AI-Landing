@@ -1,6 +1,6 @@
 import { useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
-import { User } from 'lucide-react'
+import { User, Linkedin } from 'lucide-react'
 import { leadership } from '../../data/siteContent.js'
 
 const COLS = 5
@@ -89,9 +89,29 @@ export default function Leadership() {
               </div>
 
               <div className="portrait-meta">
-                <h3 className="portrait-name font-display font-bold text-text-primary leading-snug text-[13px] lg:text-sm">
-                  {person.name}
-                </h3>
+                {/* Name (plain text) + LinkedIn icon on the same row. The icon box is
+                    exactly one name-line tall, so on a wrapped name it stays level
+                    with the first line. */}
+                <div className="flex items-start gap-2">
+                  <h3 className="portrait-name flex-1 min-w-0 font-display font-bold text-text-primary leading-snug text-[13px] lg:text-sm lg:leading-snug">
+                    {/* nameLines: explicit line break for long names (display only) */}
+                    {person.nameLines
+                      ? person.nameLines.map(line => <span key={line} className="block">{line}</span>)
+                      : person.name}
+                  </h3>
+                  {person.linkedin && (
+                    <a
+                      href={person.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={`${person.name} on LinkedIn (opens in a new tab)`}
+                      className="flex-shrink-0 inline-flex items-center justify-center w-5 text-[13px] lg:text-sm lg:leading-snug text-text-muted hover:text-brand-green focus-visible:text-brand-green transition-colors duration-300"
+                      style={{ height: '1.375em' }}
+                    >
+                      <Linkedin size={14} aria-hidden="true" />
+                    </a>
+                  )}
+                </div>
                 {person.role && (
                   <>
                     <span className="portrait-rule" aria-hidden="true" />

@@ -327,7 +327,7 @@ const knowledgeBase = [
     cards: [
       {
         type: 'contact-details',
-        title: "Let's Start a Conversation",
+        title: "Let's Discuss Your Data Challenges",
         body: 'Reach out directly — our team is ready to discuss how AI can transform your enterprise operations.',
         email: contactData.email,
         phone: contactData.phone,
