@@ -3,7 +3,8 @@
  *
  * Pure logic, no React. Mirrors aiAssessment.js so the CX flow runs through the
  * same components. Questions, stages, scoring bands, findings and next steps are
- * verbatim from radiant-cx-maturity-assessment.md (September 2026 draft).
+ * from radiant-cx-maturity-assessment.md (September 2026 draft); question stems
+ * and answer options were simplified and made sector-neutral in review.
  * Role-adaptive: getCxQuestions(role) selects the 12 questions a respondent sees.
  */
 
@@ -34,7 +35,7 @@ export const sections = [
 
 export const sectionMeta = Object.fromEntries(sections.map(s => [s.key, s]))
 
-// ── Question bank (spec §4–5, verbatim) ─────────────────────────────────────
+// ── Question bank (spec §4–5, simplified) ────────────────────────────────────
 // roles: 'all' = shared by both tracks (one per dimension, used for
 // perception-gap analysis); otherwise the track that receives the question.
 // Order within a section is the order respondents see.
@@ -49,10 +50,10 @@ export const questionBank = [
     question: 'Does your organization have a written CX strategy that leadership uses to guide decisions?',
     options: opt(
       'No. There is no formal CX strategy.',
-      "There's a shared belief that experience matters, but nothing is written down or approved.",
-      "A draft is in progress. It hasn't been approved or acted on yet.",
-      "Yes. Leadership has approved it and it's guiding our priorities.",
-      'Yes, board-endorsed, tied to financial planning, and reviewed at least annually.',
+      'Experience is seen as important, but nothing is written down.',
+      "A draft exists but hasn't been approved yet.",
+      'Yes. Leadership approved it and it guides our priorities.',
+      "Yes. It's tied to budget planning and reviewed every year.",
     ),
   },
   {
@@ -60,11 +61,11 @@ export const questionBank = [
     context: "The constraint we see most often: customer experience is everyone's priority and no one's job.",
     question: 'Is one senior leader accountable for customer experience and measured on it?',
     options: opt(
-      'No. Accountability is unclear or distributed.',
-      'Marketing or service leadership handles it informally alongside other responsibilities.',
-      'A senior leader has a partial CX mandate.',
-      'A dedicated CX executive has a clear charter and budget ownership.',
-      'CEO-led, with a CX executive and a cross-functional governance body that has authority to act.',
+      'No. Accountability is unclear or spread across teams.',
+      'Service, communications, or marketing leaders handle it informally.',
+      'A senior leader owns part of the CX agenda.',
+      'A dedicated CX executive has a clear charter and budget.',
+      'Led from the top, with a CX executive and cross-functional authority to act.',
     ),
   },
   {
@@ -73,10 +74,10 @@ export const questionBank = [
     question: 'Is there a dedicated budget for improving customer experience?',
     options: opt(
       'No dedicated CX funding.',
-      'CX work is funded opportunistically from marketing or operations budgets.',
-      "An informal fund exists, but there's no formal tracking.",
-      'A formal CX budget line exists with a clear owner and reporting.',
-      'Multi-year experience investment portfolio with defined ROI targets and board-level visibility.',
+      'CX work is funded ad hoc from other budgets.',
+      'An informal fund exists without formal tracking.',
+      'A formal CX budget exists with a clear owner and reporting.',
+      'Multi-year CX funding with outcome targets, reviewed by senior leadership.',
     ),
   },
   {
@@ -84,11 +85,11 @@ export const questionBank = [
     context: 'Without a selection process, improvement resources go to whoever escalates loudest, not the friction that costs the most.',
     question: 'Do you have a clear process for deciding which experience improvements to pursue?',
     options: opt(
-      'No process. Improvements are chosen reactively based on complaints or executive requests.',
-      'Informal criteria exist but nothing is documented or applied consistently.',
-      'A framework exists but is used inconsistently across teams.',
-      'A formal process weighing customer and business impact guides most decisions.',
-      'A governed improvement portfolio with impact scoring, value tracking, and regular leadership review.',
+      'No process. Complaints or leadership requests decide what gets fixed.',
+      "Informal criteria exist but aren't documented or applied consistently.",
+      'A framework exists but teams use it inconsistently.',
+      'A formal process weighing customer and organizational impact guides most decisions.',
+      'A managed improvement portfolio, tracked for impact and reviewed by leadership.',
     ),
   },
   {
@@ -96,11 +97,11 @@ export const questionBank = [
     context: 'Tie experience work to a number and an owner and it becomes a strategy.',
     question: 'Are CX initiatives tied to business or mission outcomes beyond satisfaction scores?',
     options: opt(
-      'No. CX is treated as a goodwill effort with no business case.',
-      "There's a loose connection to business goals, but nothing formal.",
-      'Some initiatives have business targets attached.',
-      'Most CX investments have measurable business KPIs defined at the start.',
-      'CX outcomes are embedded in executive scorecards and reported to the board.',
+      'No. CX is treated as goodwill, with no defined value.',
+      'CX is informally linked to business or mission goals.',
+      'Some initiatives have business or mission targets.',
+      'Most CX investments have measurable targets set at the start.',
+      'CX outcomes are part of leadership scorecards and top-level reviews.',
     ),
   },
   // Insight & Understanding
@@ -109,11 +110,11 @@ export const questionBank = [
     context: 'Most organizations have more feedback than they can use and less understanding than they need.',
     question: 'Do you listen to customers across channels (surveys, interviews, support contacts, reviews, usage data) in a consistent way?',
     options: opt(
-      'No systematic listening. We hear about problems through complaints and anecdotes.',
-      'An annual or occasional survey runs. Little else is captured deliberately.',
-      'Multiple feedback channels exist, but each is owned and reviewed separately.',
-      'A managed VoC program combines survey, support, and behavioral signals with regular review.',
-      'An always-on listening system integrates solicited and unsolicited signals, with insights routed to owners automatically.',
+      'No systematic listening. We hear about problems through complaints.',
+      'An occasional or annual survey is our main source.',
+      'Several feedback channels exist, each reviewed separately.',
+      'A managed program combines survey, support, and usage data with regular review.',
+      'Always-on listening combines all signals and routes insights to owners automatically.',
     ),
   },
   {
@@ -121,11 +122,11 @@ export const questionBank = [
     context: "The test of a listening program isn't the data it collects. It's the decisions it changes.",
     question: 'Does customer insight reach leaders before major decisions are made?',
     options: opt(
-      'No. Decisions are made on operational and financial data alone.',
-      'Insight is presented occasionally, usually after decisions are made.',
-      'Leadership reviews CX data regularly, but it rarely changes a decision.',
-      'Customer insight is a standing input to major decisions, with clear examples of changed outcomes.',
-      'No major customer-facing decision proceeds without customer evidence, and leaders ask for it unprompted.',
+      'No. Decisions rely on operational and financial data alone.',
+      'Insight is shared occasionally, usually after decisions are made.',
+      'Leadership reviews CX data regularly, but it rarely changes decisions.',
+      'Customer insight is a standard input to major decisions and has changed outcomes.',
+      'No major customer-facing decision goes ahead without customer evidence.',
     ),
   },
   {
@@ -133,11 +134,11 @@ export const questionBank = [
     context: 'A connected view of the customer is the difference between measuring experience and managing it.',
     question: 'Can you connect what customers say with what they do and what it costs?',
     options: opt(
-      'No. Feedback, operational, and financial data live in separate systems with separate owners.',
-      'Connecting them requires manual, one-off analysis.',
+      'No. Feedback, operational, and financial data sit in separate systems.',
+      'Connecting them takes manual, one-off analysis.',
       "Some journeys have linked data. Most don't.",
-      'An integrated customer view exists for major journeys, and analysis routinely combines the sources.',
-      'A unified customer data foundation links experience, behavior, and value, and feeds both analytics and frontline tools.',
+      'Major journeys have an integrated customer view used in routine analysis.',
+      'Unified customer data links feedback, behavior, and cost, and feeds frontline tools.',
     ),
   },
   {
@@ -146,10 +147,10 @@ export const questionBank = [
     question: 'Beyond surveys, do you do qualitative research such as interviews, usability testing, or observation?',
     options: opt(
       'No qualitative research happens.',
-      'Occasional ad hoc interviews or tests, usually vendor-run and rarely revisited.',
-      'Qualitative research happens for major projects, but practice is inconsistent and depends on the team.',
-      'A skilled research practice runs mixed-methods work with defined standards and a regular cadence.',
-      'Research is a managed discipline: trained researchers, method standards, ethics protocols, and demand from across the business.',
+      'Occasional interviews or tests, usually run by vendors.',
+      'Major projects include qualitative research, but practice varies by team.',
+      'A skilled research team runs mixed-methods work on a regular cadence.',
+      'Research is a managed discipline with trained researchers, standards, and organization-wide demand.',
     ),
   },
   {
@@ -157,11 +158,11 @@ export const questionBank = [
     context: 'Research that lives in a slide deck dies in a slide deck. Infrastructure is what makes insight cumulative.',
     question: 'Do teams have shared tools for storing and reusing research, such as a findings repository?',
     options: opt(
-      'No infrastructure. Findings live in decks and inboxes and are lost within months.',
+      'No shared tools. Findings sit in decks and inboxes and get lost.',
       "Some teams keep their own files. There's no shared system.",
-      'A repository or dashboard exists, but adoption is low and content goes stale.',
-      'A maintained insight repository and research ops practices support most teams.',
-      'Enterprise-grade insight infrastructure: searchable repository, governed participant panels, self-service dashboards, and reuse as the norm.',
+      'A repository exists, but adoption is low and content goes stale.',
+      'A maintained repository and research operations support most teams.',
+      'A searchable, organization-wide repository and self-service tools make reuse the norm.',
     ),
   },
   // Design & Delivery
@@ -171,10 +172,10 @@ export const questionBank = [
     question: 'Are your key customer journeys mapped, kept current, and owned by someone?',
     options: opt(
       'No journeys are mapped.',
-      'Some journeys were mapped for past projects. The maps are out of date.',
-      'Key journeys are mapped and referenced, but no one owns them.',
-      'Priority journeys have owners, current maps, and active improvement backlogs.',
-      'Journey management is the operating model: owners, metrics, funded backlogs, and regular performance reviews for every priority journey.',
+      'Some journeys were mapped for past projects and are now outdated.',
+      'Key journeys are mapped, but no one owns them.',
+      'Priority journeys have owners, current maps, and improvement backlogs.',
+      'Every priority journey has an owner, metrics, funding, and regular reviews.',
     ),
   },
   {
@@ -182,11 +183,11 @@ export const questionBank = [
     context: 'Customers experience the whole journey. Organizations manage the silos. That mismatch is where most experience failures live.',
     question: 'Does anyone own the full customer journey across departments, with authority to change how other teams work?',
     options: opt(
-      'No. Each department manages its own touchpoints independently.',
-      'Cross-functional coordination happens informally when problems get big enough.',
-      'Journey teams or councils exist but have influence, not authority.',
-      'Named journey owners have a mandate, and escalation paths, that cross functions.',
-      'The operating model is organized around journeys, with funding, targets, and authority aligned to them.',
+      'No. Each department manages its own touchpoints.',
+      'Departments coordinate informally when problems get big enough.',
+      'Journey teams or councils exist but can only advise.',
+      'Named journey owners have a mandate that crosses departments.',
+      'The organization is structured around journeys, with funding and authority to match.',
     ),
   },
   {
@@ -194,11 +195,11 @@ export const questionBank = [
     context: 'The cheapest time to fix an experience problem is before it ships. Most organizations pay retail.',
     question: 'Is customer experience input part of major decisions (new products, policies, or systems) before launch?',
     options: opt(
-      'No. Changes launch and we handle the customer fallout afterward.',
-      'CX teams hear about changes late, usually to help with communication.',
+      'No. Changes launch and we handle customer fallout afterward.',
+      'CX teams hear about changes late, mostly to help with messaging.',
       'Experience input is sought for some changes, depending on the leader.',
-      'An experience review is a standard step for major customer-facing changes.',
-      'Experience impact assessment is a governed gate, with authority to delay or modify launches.',
+      'An experience review is a standard step for major changes.',
+      'Experience review is a formal gate that can delay or change launches.',
     ),
   },
   {
@@ -206,11 +207,11 @@ export const questionBank = [
     context: 'Testing with customers before launch is cheaper than learning from them after. Every time.',
     question: 'Do teams prototype and test with customers before launching changes?',
     options: opt(
-      'No. Changes are built and launched. Customers find the problems.',
+      'No. Changes are built and launched, and customers find the problems.',
       'Design methods are used occasionally, when a project leader insists.',
-      'Prototyping and testing happen for major digital projects but not consistently.',
-      'Design practice is standard for customer-facing work, with testing before launch the norm.',
-      'Human-centered design is how the organization builds: embedded designers, standard methods, and no major launch without customer evidence.',
+      'Prototyping and testing happen on some major digital projects.',
+      'Testing with customers before launch is standard for customer-facing work.',
+      'Human-centered design is embedded, and nothing major launches without customer evidence.',
     ),
   },
   {
@@ -218,11 +219,11 @@ export const questionBank = [
     context: "Feedback that doesn't trigger action trains customers to stop giving it.",
     question: 'When feedback surfaces a problem, is there a process to fix both the individual case and the root cause?',
     options: opt(
-      'No. Feedback is collected but nothing systematic happens with it.',
-      "Individual complaints get handled. Patterns aren't analyzed or acted on.",
-      'An inner loop exists for following up with individual customers, but structural fixes are rare.',
-      'Both loops run: individual follow-up plus a process that routes systemic issues to owners.',
-      'Closed-loop is fully operational: tracked resolution rates, funded root-cause programs, and customers told what changed because of their feedback.',
+      'No. Feedback is collected, and nothing systematic follows.',
+      "Individual complaints get handled. Patterns aren't acted on.",
+      'Individual customers get follow-up; root-cause fixes are rare.',
+      'Individual follow-up happens, and systemic issues go to owners to fix.',
+      'Fixes are tracked and funded, and customers hear what changed.',
     ),
   },
   // Culture & Accountability
@@ -232,10 +233,10 @@ export const questionBank = [
     question: 'Are your CX metrics assigned to owners who are expected to act on them?',
     options: opt(
       'No consistent CX metrics exist.',
-      'A survey score is collected and reported. Little happens because of it.',
-      'Metrics exist for major touchpoints, but accountability for moving them is unclear.',
-      'A metrics framework links journey and touchpoint measures to named owners with targets.',
-      'Experience metrics are tiered from board to frontline, linked to financial outcomes, with owners, targets, and consequences.',
+      'A survey score is reported, and little happens because of it.',
+      'Major touchpoints have metrics, but no one is accountable for moving them.',
+      'Journey and touchpoint metrics have named owners and targets.',
+      'Metrics cascade from leadership to frontline and tie to business or mission outcomes.',
     ),
   },
   {
@@ -243,11 +244,11 @@ export const questionBank = [
     context: 'What leadership is measured on is what the organization becomes.',
     question: 'Do CX metrics appear in executive scorecards with real consequences?',
     options: opt(
-      'No. Executive performance is measured on financial and operational results only.',
-      'CX metrics are visible to leadership but carry no weight.',
-      'Some leaders include CX measures in their goals voluntarily.',
-      'CX metrics are standard in executive scorecards across customer-facing functions.',
-      'Experience outcomes affect compensation and advancement at the executive level, enterprise-wide.',
+      'No. Leaders are measured on financial and operational results only.',
+      'Leadership sees CX metrics, but they carry no weight.',
+      'Some leaders choose to include CX measures in their goals.',
+      'CX metrics are standard in scorecards for customer-facing leaders.',
+      'CX outcomes affect performance reviews and advancement for every senior leader.',
     ),
   },
   {
@@ -255,11 +256,11 @@ export const questionBank = [
     context: 'Stage is a proxy. Value is what actually matters.',
     question: 'Has CX work produced measurable business or mission results?',
     options: opt(
-      'No measurable business impact from CX work to date.',
-      'Marginal or anecdotal improvements. Nothing quantified.',
-      'Moderate improvements have been documented in select areas.',
-      'Significant attributable business value has been delivered across multiple journeys or functions.',
-      'Experience is a primary driver of growth and competitive advantage, with the financial linkage modeled and tracked.',
+      'No measurable impact from CX work to date.',
+      'Small or anecdotal improvements, nothing quantified.',
+      'Moderate improvements are documented in some areas.',
+      'Significant results, clearly attributed to CX, across multiple journeys or functions.',
+      'CX is a primary driver of business or mission results, with impact tracked.',
     ),
   },
   {
@@ -268,10 +269,10 @@ export const questionBank = [
     question: 'Can frontline employees resolve routine customer issues without escalating?',
     options: opt(
       'No. Staff follow scripts and escalate anything unusual.',
-      'Training covers process compliance, not customer outcomes.',
-      'Some teams have latitude to resolve issues; policy and tooling limit most.',
-      'Frontline staff have training, customer context, and defined authority to resolve most issues.',
-      'Employees at every level are equipped and trusted to act, with employee experience managed as a driver of customer experience.',
+      'Training covers process steps only.',
+      'Some teams can resolve issues, but policy and tools limit most.',
+      'Frontline staff have the training, context, and authority to resolve most issues.',
+      'Everyone is trusted to act, and employee experience is managed to improve CX.',
     ),
   },
   {
@@ -280,10 +281,10 @@ export const questionBank = [
     question: 'Do teams use customer insight in their regular planning and reviews?',
     options: opt(
       'Most teams never see customer insight in their normal work.',
-      'Insight appears in occasional all-hands or annual planning.',
-      "Some teams review customer data in their routines; most don't.",
-      'Customer insight is a standing element in planning and review cycles for most customer-facing teams.',
-      "Customer evidence opens leadership meetings, shapes sprint planning, and every team can name the customer problems it's working on.",
+      'Insight shows up in occasional all-hands or annual planning.',
+      "Some teams review customer data routinely. Most don't.",
+      'Customer insight is a standing part of planning for most customer-facing teams.',
+      "Customer evidence shapes all planning, and every team knows its customers' problems.",
     ),
   },
 ]
