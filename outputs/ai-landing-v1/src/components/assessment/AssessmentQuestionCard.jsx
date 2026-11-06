@@ -16,24 +16,21 @@ export default function AssessmentQuestionCard({ card, onAnswer }) {
   return (
     <div>
       {/* Progress line */}
-      <div className="flex items-center justify-between mb-2 text-[11px] font-display font-semibold">
-        <span className="uppercase tracking-widest" style={{ color: accent }}>{q.sectionLabel}</span>
-        <span className="text-text-muted">Question {qIndex + 1} of {total}</span>
+      <div className="flex items-center justify-between mb-2 text-[13px] font-display font-semibold">
+        <span className="uppercase tracking-wider" style={{ color: accent }}>{q.sectionLabel}</span>
+        <span className="text-text-secondary">Question {qIndex + 1} of {total}</span>
       </div>
-      <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden mb-4">
+      <div className="h-1 rounded-full bg-white/[0.06] overflow-hidden mb-4"
+        role="progressbar" aria-label="Assessment progress" aria-valuemin={0} aria-valuemax={100}
+        aria-valuenow={pct} aria-valuetext={`${pct}% complete, question ${qIndex + 1} of ${total}`}>
         <div className="h-full rounded-full transition-all duration-500" style={{ background: accent, width: `${pct}%` }} />
       </div>
 
       {q.title && (
-        <div className="text-[11px] font-display font-bold uppercase tracking-widest mb-1.5" style={{ color: accent }}>{q.title}</div>
+        <div className="text-[13px] font-display font-bold uppercase tracking-wider mb-1.5" style={{ color: accent }}>{q.title}</div>
       )}
-      <h3 className="font-display font-bold text-white text-base lg:text-lg leading-snug tracking-tight mb-2">{q.question}</h3>
+      <h3 className="font-display font-bold text-white text-lg lg:text-xl leading-[1.4] lg:leading-[1.4] tracking-normal mb-4">{q.question}</h3>
 
-      {q.context && (
-        <p className="text-text-muted text-xs leading-relaxed mb-4 max-w-2xl">
-          <span className="font-semibold text-white/70">Why this matters: </span>{q.context}
-        </p>
-      )}
 
       <div role="radiogroup" aria-label={q.question} className="space-y-2.5">
         {q.options.map(opt => {
@@ -48,18 +45,25 @@ export default function AssessmentQuestionCard({ card, onAnswer }) {
                 border: `1px solid ${active ? `${accent}66` : 'rgba(255,255,255,0.07)'}`,
               }}
             >
-              <span className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-display font-bold leading-none"
+              <span className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-display font-bold leading-none"
                 style={{ background: active ? accent : 'rgba(255,255,255,0.06)', color: active ? '#021018' : '#94A3B8' }}>
                 {opt.score}
               </span>
-              <span className={`text-sm leading-relaxed ${active ? 'text-white' : 'text-text-secondary'}`}>{opt.label}</span>
+              <span className={`text-base leading-relaxed ${active ? 'text-white' : 'text-white/85'}`}>{opt.label}</span>
             </button>
           )
         })}
       </div>
 
+      {/* Context below the options so the question and answers read together */}
+      {q.context && (
+        <p className="text-text-secondary text-sm leading-relaxed mt-4 max-w-2xl">
+          <span className="font-semibold text-white/70">Why this matters: </span>{q.context}
+        </p>
+      )}
+
       {!answered && (
-        <p className="text-text-muted text-[11px] mt-3">
+        <p className="text-text-secondary text-[13px] mt-3">
           Tap an option above, or reply with the number ({q.options.map(o => o.score).join('/')}) or the answer text.
         </p>
       )}

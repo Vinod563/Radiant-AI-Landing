@@ -12,14 +12,17 @@ import { ArrowRight, ArrowLeft, Info } from 'lucide-react'
  *   onComplete  - () => void   (called after the last question is answered + Next)
  *   onBackToStart - () => void (called when Back is pressed on the first question)
  *   scaleHint   - optional text shown under options (e.g. "1 = least mature · 5 = most mature")
+ *   initialIndex  - question to start on (resume after "Save and exit")
+ *   onIndexChange - (index) => void, so the page can save the current question
  */
-export default function QuestionRunner({ questions, answers, onAnswer, onComplete, onBackToStart, scaleHint }) {
-  const [index, setIndex] = useState(0)
+export default function QuestionRunner({ questions, answers, onAnswer, onComplete, onBackToStart, scaleHint, initialIndex = 0, onIndexChange }) {
+  const [index, setIndex] = useState(() => Math.min(Math.max(initialIndex, 0), questions.length - 1))
   const [error, setError] = useState(false)
 
   // Scroll to top whenever the question changes so the new question is in view
   // (on short viewports the next question would otherwise load below the fold).
   useEffect(() => { window.scrollTo({ top: 0, behavior: 'smooth' }) }, [index])
+  useEffect(() => { onIndexChange?.(index) }, [index]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const q = questions[index]
   const total = questions.length
@@ -44,19 +47,26 @@ export default function QuestionRunner({ questions, answers, onAnswer, onComplet
     <div className="max-w-2xl mx-auto">
       {/* Progress bar */}
       <div className="mb-8">
-        <div className="flex items-center justify-between mb-2 text-xs font-display font-semibold">
-          <span className="uppercase tracking-widest" style={{ color: accent }}>{q.sectionLabel}</span>
-          <span className="text-text-muted">{pct}% complete</span>
+        <div className="flex items-center justify-between mb-2 text-[13px] font-display font-semibold">
+          <span className="uppercase tracking-wider" style={{ color: accent }}>{q.sectionLabel}</span>
+          <span className="text-text-secondary">{pct}% complete</span>
         </div>
-        <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden">
+        <div className="h-1.5 rounded-full bg-white/[0.06] overflow-hidden"
+          role="progressbar" aria-label="Assessment progress" aria-valuemin={0} aria-valuemax={100}
+          aria-valuenow={pct} aria-valuetext={`${pct}% complete, question ${index + 1} of ${total}`}>
           <motion.div className="h-full rounded-full" style={{ background: accent }}
             initial={false} animate={{ width: `${pct}%` }} transition={{ duration: 0.4 }} />
         </div>
-        <div className="mt-2 text-[11px] text-text-muted font-medium">
+        <div className="mt-2 text-[13px] text-text-secondary font-medium">
           {q.trackLabel && <span>{q.trackLabel} · </span>}
           Question {index + 1} of {total}
         </div>
       </div>
+
+      {/* Screen readers: announce the new question after Next / Back */}
+      <p className="sr-only" aria-live="polite" aria-atomic="true">
+        {`Question ${index + 1} of ${total}. ${q.question}`}
+      </p>
 
       <AnimatePresence mode="wait">
         <motion.div key={q.id}
@@ -64,23 +74,16 @@ export default function QuestionRunner({ questions, answers, onAnswer, onComplet
           transition={{ duration: 0.3 }}
         >
           {q.title && (
-            <div className="text-[11px] font-display font-bold uppercase tracking-widest mb-3" style={{ color: accent }}>
+            <div className="text-[13px] font-display font-bold uppercase tracking-wider mb-3" style={{ color: accent }}>
               {q.title}
             </div>
           )}
-          <h2 className="font-display font-black text-white text-xl lg:text-2xl leading-snug tracking-tight mb-4">
+          <h1 className="font-display font-bold text-white text-xl lg:text-2xl leading-[1.4] lg:leading-[1.4] tracking-normal mb-6">
             {q.question}
-          </h2>
+          </h1>
 
-          {q.context && (
-            <div className="flex items-start gap-2.5 mb-7 rounded-xl px-4 py-3"
-              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-              <Info size={14} className="mt-0.5 flex-shrink-0" style={{ color: accent }} />
-              <p className="text-text-secondary text-sm leading-relaxed"><span className="font-semibold text-white/80">Why this matters: </span>{q.context}</p>
-            </div>
-          )}
 
-          {scaleHint && <p className="text-text-muted text-[11px] mb-4 font-medium">{scaleHint}</p>}
+          {scaleHint && <p className="text-text-secondary text-[13px] mb-4 font-medium">{scaleHint}</p>}
 
           {/* Options */}
           <div role="radiogroup" aria-label={q.question}
@@ -96,17 +99,26 @@ export default function QuestionRunner({ questions, answers, onAnswer, onComplet
                     border: `1px solid ${active ? `${accent}66` : 'rgba(255,255,255,0.07)'}`,
                   }}
                 >
-                  <span className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-xs font-display font-bold leading-none"
+                  <span className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-[13px] font-display font-bold leading-none"
                     style={{ background: active ? accent : 'rgba(255,255,255,0.06)', color: active ? '#021018' : '#94A3B8' }}>
                     {opt.score}
                   </span>
-                  <span className={`text-sm leading-relaxed ${active ? 'text-white' : 'text-text-secondary'}`}>{opt.label}</span>
+                  <span className={`text-base leading-relaxed ${active ? 'text-white' : 'text-white/85'}`}>{opt.label}</span>
                 </button>
               )
             })}
           </div>
 
-          {error && <p className="text-red-400 text-xs font-medium mt-3">Please select an answer to continue.</p>}
+          {error && <p className="text-red-400 text-[13px] font-medium mt-3">Please select an answer to continue.</p>}
+
+          {/* Context sits below the options so the question and answers read together */}
+          {q.context && (
+            <div className="flex items-start gap-2.5 mt-6 rounded-xl px-4 py-3"
+              style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <Info size={14} className="mt-0.5 flex-shrink-0" style={{ color: accent }} />
+              <p className="text-text-secondary text-sm leading-relaxed"><span className="font-semibold text-white/80">Why this matters: </span>{q.context}</p>
+            </div>
+          )}
         </motion.div>
       </AnimatePresence>
 
@@ -116,7 +128,8 @@ export default function QuestionRunner({ questions, answers, onAnswer, onComplet
           className="flex items-center gap-2 text-text-muted hover:text-white transition-colors text-sm font-display font-semibold px-4 py-2.5 rounded-lg hover:bg-white/[0.04]">
           <ArrowLeft size={15} /> Back
         </button>
-        <button onClick={next} className="btn-primary !px-8 !py-3">
+        <button onClick={next} disabled={!selected}
+          className="btn-primary !px-8 !py-3 disabled:opacity-40 disabled:cursor-not-allowed disabled:pointer-events-none">
           {index + 1 < total ? 'Next' : 'See results'} <ArrowRight size={15} />
         </button>
       </div>

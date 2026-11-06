@@ -46,7 +46,7 @@ export const questionBank = [
   {
     id: 'Q1', section: 'Strategy', title: 'CX Strategy', roles: ['all'],
     context: 'This is where most organizations discover their first gap. A written strategy is different from a stated commitment to customers.',
-    question: 'Has your organization produced a written CX strategy, approved by leadership and actively in use to guide investment and prioritization decisions?',
+    question: 'Does your organization have a written CX strategy that leadership uses to guide decisions?',
     options: opt(
       'No. There is no formal CX strategy.',
       "There's a shared belief that experience matters, but nothing is written down or approved.",
@@ -58,7 +58,7 @@ export const questionBank = [
   {
     id: 'Q2E', section: 'Strategy', title: 'Executive Accountability', roles: ['exec'],
     context: "The constraint we see most often: customer experience is everyone's priority and no one's job.",
-    question: 'Is there a named senior executive who is accountable for customer experience, not just interested in it but measured on it?',
+    question: 'Is one senior leader accountable for customer experience and measured on it?',
     options: opt(
       'No. Accountability is unclear or distributed.',
       'Marketing or service leadership handles it informally alongside other responsibilities.',
@@ -70,7 +70,7 @@ export const questionBank = [
   {
     id: 'Q3E', section: 'Strategy', title: 'CX Investment', roles: ['exec'],
     context: 'Budget tells you what an organization actually believes about its customers, not what it says.',
-    question: 'Does your organization have dedicated funding for experience improvement, separate from marketing campaigns and routine operations?',
+    question: 'Is there a dedicated budget for improving customer experience?',
     options: opt(
       'No dedicated CX funding.',
       'CX work is funded opportunistically from marketing or operations budgets.',
@@ -82,7 +82,7 @@ export const questionBank = [
   {
     id: 'Q2P', section: 'Strategy', title: 'Improvement Prioritization', roles: ['practitioner'],
     context: 'Without a selection process, improvement resources go to whoever escalates loudest, not the friction that costs the most.',
-    question: 'Does your organization have a defined process for identifying, prioritizing, and selecting which experience improvements to pursue?',
+    question: 'Do you have a clear process for deciding which experience improvements to pursue?',
     options: opt(
       'No process. Improvements are chosen reactively based on complaints or executive requests.',
       'Informal criteria exist but nothing is documented or applied consistently.',
@@ -94,7 +94,7 @@ export const questionBank = [
   {
     id: 'Q3P', section: 'Strategy', title: 'Business Alignment', roles: ['practitioner'],
     context: 'Tie experience work to a number and an owner and it becomes a strategy.',
-    question: 'Are your CX initiatives tied to specific business outcomes, such as retention, conversion, or cost to serve, not just satisfaction scores?',
+    question: 'Are CX initiatives tied to business or mission outcomes beyond satisfaction scores?',
     options: opt(
       'No. CX is treated as a goodwill effort with no business case.',
       "There's a loose connection to business goals, but nothing formal.",
@@ -107,7 +107,7 @@ export const questionBank = [
   {
     id: 'Q4', section: 'Insight', title: 'Voice of the Customer', roles: ['all'],
     context: 'Most organizations have more feedback than they can use and less understanding than they need.',
-    question: 'Does your organization systematically listen to customers across channels: surveys, interviews, support contacts, reviews, and behavioral data?',
+    question: 'Do you listen to customers across channels (surveys, interviews, support contacts, reviews, usage data) in a consistent way?',
     options: opt(
       'No systematic listening. We hear about problems through complaints and anecdotes.',
       'An annual or occasional survey runs. Little else is captured deliberately.',
@@ -119,7 +119,7 @@ export const questionBank = [
   {
     id: 'Q5E', section: 'Insight', title: 'Insight to Decision', roles: ['exec'],
     context: "The test of a listening program isn't the data it collects. It's the decisions it changes.",
-    question: 'Does customer insight reach leadership decisions, pricing, product, policy, and investment, while those decisions are still open?',
+    question: 'Does customer insight reach leaders before major decisions are made?',
     options: opt(
       'No. Decisions are made on operational and financial data alone.',
       'Insight is presented occasionally, usually after decisions are made.',
@@ -131,7 +131,7 @@ export const questionBank = [
   {
     id: 'Q6E', section: 'Insight', title: 'Customer Data Integration', roles: ['exec'],
     context: 'A connected view of the customer is the difference between measuring experience and managing it.',
-    question: 'Can your organization connect feedback data to operational and financial data, seeing what customers said alongside what they did and what it cost?',
+    question: 'Can you connect what customers say with what they do and what it costs?',
     options: opt(
       'No. Feedback, operational, and financial data live in separate systems with separate owners.',
       'Connecting them requires manual, one-off analysis.',
@@ -143,7 +143,7 @@ export const questionBank = [
   {
     id: 'Q5P', section: 'Insight', title: 'Research Depth', roles: ['practitioner'],
     context: 'Surveys tell you what happened. Research tells you why. Most organizations are overweight on the first and starved of the second.',
-    question: 'Does your organization conduct qualitative research, interviews, usability testing, contextual observation, beyond surveys and scores?',
+    question: 'Beyond surveys, do you do qualitative research such as interviews, usability testing, or observation?',
     options: opt(
       'No qualitative research happens.',
       'Occasional ad hoc interviews or tests, usually vendor-run and rarely revisited.',
@@ -155,7 +155,7 @@ export const questionBank = [
   {
     id: 'Q6P', section: 'Insight', title: 'Insight Infrastructure', roles: ['practitioner'],
     context: 'Research that lives in a slide deck dies in a slide deck. Infrastructure is what makes insight cumulative.',
-    question: 'Do teams have infrastructure for research and insight, a findings repository, participant access, self-service tools, so knowledge compounds instead of evaporating?',
+    question: 'Do teams have shared tools for storing and reusing research, such as a findings repository?',
     options: opt(
       'No infrastructure. Findings live in decks and inboxes and are lost within months.',
       "Some teams keep their own files. There's no shared system.",
@@ -168,7 +168,7 @@ export const questionBank = [
   {
     id: 'Q7', section: 'Design', title: 'Journey Management', roles: ['all'],
     context: 'A journey map on a wall is documentation. A journey with an owner, metrics, and a backlog is management.',
-    question: 'Are your key customer journeys mapped, current, and actively managed, with owners and improvement backlogs, not just documented once?',
+    question: 'Are your key customer journeys mapped, kept current, and owned by someone?',
     options: opt(
       'No journeys are mapped.',
       'Some journeys were mapped for past projects. The maps are out of date.',
@@ -180,7 +180,7 @@ export const questionBank = [
   {
     id: 'Q8E', section: 'Design', title: 'End-to-End Ownership', roles: ['exec'],
     context: 'Customers experience the whole journey. Organizations manage the silos. That mismatch is where most experience failures live.',
-    question: "Is there accountability for end-to-end customer journeys that crosses departmental lines, with authority to change what happens in other teams' territory?",
+    question: 'Does anyone own the full customer journey across departments, with authority to change how other teams work?',
     options: opt(
       'No. Each department manages its own touchpoints independently.',
       'Cross-functional coordination happens informally when problems get big enough.',
@@ -192,7 +192,7 @@ export const questionBank = [
   {
     id: 'Q9E', section: 'Design', title: 'Experience in Change Decisions', roles: ['exec'],
     context: 'The cheapest time to fix an experience problem is before it ships. Most organizations pay retail.',
-    question: 'When your organization makes major changes, new products, policies, pricing, or systems, is customer experience input built into the decision before launch?',
+    question: 'Is customer experience input part of major decisions (new products, policies, or systems) before launch?',
     options: opt(
       'No. Changes launch and we handle the customer fallout afterward.',
       'CX teams hear about changes late, usually to help with communication.',
@@ -204,7 +204,7 @@ export const questionBank = [
   {
     id: 'Q8P', section: 'Design', title: 'Design Practice', roles: ['practitioner'],
     context: 'Testing with customers before launch is cheaper than learning from them after. Every time.',
-    question: 'Do teams use design methods, prototyping, usability testing, iterative refinement, before customer-facing changes launch?',
+    question: 'Do teams prototype and test with customers before launching changes?',
     options: opt(
       'No. Changes are built and launched. Customers find the problems.',
       'Design methods are used occasionally, when a project leader insists.',
@@ -216,7 +216,7 @@ export const questionBank = [
   {
     id: 'Q9P', section: 'Design', title: 'Closed Loop', roles: ['practitioner'],
     context: "Feedback that doesn't trigger action trains customers to stop giving it.",
-    question: 'When feedback identifies a problem, does a defined process turn it into action, both resolving the individual case and addressing the root cause?',
+    question: 'When feedback surfaces a problem, is there a process to fix both the individual case and the root cause?',
     options: opt(
       'No. Feedback is collected but nothing systematic happens with it.',
       "Individual complaints get handled. Patterns aren't analyzed or acted on.",
@@ -229,7 +229,7 @@ export const questionBank = [
   {
     id: 'Q10', section: 'Culture', title: 'CX Measurement', roles: ['all'],
     context: 'A score you report is a thermometer. A measurement system that assigns ownership is a steering wheel.',
-    question: 'Does your organization have a CX measurement framework that connects experience metrics to owners and actions, not just a score that gets reported?',
+    question: 'Are your CX metrics assigned to owners who are expected to act on them?',
     options: opt(
       'No consistent CX metrics exist.',
       'A survey score is collected and reported. Little happens because of it.',
@@ -241,7 +241,7 @@ export const questionBank = [
   {
     id: 'Q11E', section: 'Culture', title: 'Executive Scorecards', roles: ['exec'],
     context: 'What leadership is measured on is what the organization becomes.',
-    question: 'Do customer experience metrics appear in executive scorecards and performance goals, with real consequences attached?',
+    question: 'Do CX metrics appear in executive scorecards with real consequences?',
     options: opt(
       'No. Executive performance is measured on financial and operational results only.',
       'CX metrics are visible to leadership but carry no weight.',
@@ -253,7 +253,7 @@ export const questionBank = [
   {
     id: 'Q12E', section: 'Culture', title: 'Business Value', roles: ['exec'],
     context: 'Stage is a proxy. Value is what actually matters.',
-    question: 'Has CX work contributed measurable, attributable improvements to retention, revenue, cost to serve, or operational efficiency?',
+    question: 'Has CX work produced measurable business or mission results?',
     options: opt(
       'No measurable business impact from CX work to date.',
       'Marginal or anecdotal improvements. Nothing quantified.',
@@ -265,7 +265,7 @@ export const questionBank = [
   {
     id: 'Q11P', section: 'Culture', title: 'Employee Enablement', roles: ['practitioner'],
     context: "Frontline employees can't deliver an experience the organization hasn't equipped them to deliver.",
-    question: 'Are employees trained, equipped, and authorized to act on customer needs, including resolving routine issues without escalating?',
+    question: 'Can frontline employees resolve routine customer issues without escalating?',
     options: opt(
       'No. Staff follow scripts and escalate anything unusual.',
       'Training covers process compliance, not customer outcomes.',
@@ -277,7 +277,7 @@ export const questionBank = [
   {
     id: 'Q12P', section: 'Culture', title: 'Insight in the Routine', roles: ['practitioner'],
     context: "Culture isn't what the values poster says. It's what teams do on an ordinary Tuesday.",
-    question: "Is customer insight part of teams' regular working rhythms, planning, reviews, retrospectives, not something encountered only in special presentations?",
+    question: 'Do teams use customer insight in their regular planning and reviews?',
     options: opt(
       'Most teams never see customer insight in their normal work.',
       'Insight appears in occasional all-hands or annual planning.',

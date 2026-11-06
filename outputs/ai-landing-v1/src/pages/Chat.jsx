@@ -1083,7 +1083,7 @@ function CardRenderer({ card, index, anchorId, anchorPrefix, onSubmit, onAssessm
       )}
       {card.type === 'assessment-report' && (
         <div className="w-full min-w-0 overflow-x-hidden">
-          <AssessmentResults kind={card.kind} profile={card.profile} answers={card.answers} />
+          <AssessmentResults kind={card.kind} profile={card.profile} answers={card.answers} headingAs="h2" />
         </div>
       )}
       {card.type === 'list' && <ListCard card={card} onItemClick={onSubmit} />}
@@ -1399,6 +1399,7 @@ function AssessmentProfileCard({ card, onSubmit }) {
   return (
     <ProfileForm
       wrapperClass="max-w-2xl"
+      headingAs="h2"
       heading="First, a little context"
       subtext="Your role tailors the questions you'll see. Everything stays confidential, this is a diagnostic, not a sales pitch."
       {...(card.kind === 'cx' ? { roles: cxRoles, departments: cxDepartments, accent: '#596AE0' } : {})}

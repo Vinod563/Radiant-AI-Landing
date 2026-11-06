@@ -1301,3 +1301,35 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Action:** Replaced "Let's Talk About Your Data" with "Let's Discuss Your Data Challenges" in site KB and both chat-API copies.
 - **Files:** outputs/ai-landing-v1/src/data/knowledgeBase.js; outputs/radiant-chat-api/handlers/staticHandler.js, utils/cardBuilder.js
 - **Status:** ✅ Complete (vite build OK)
+
+## 2026-11-05: CX Maturity Assessment: question stems rewritten (Part 2 review)
+- **Action:** Replaced all 20 question stems with the reviewer's "Suggested" wording (P1–P12 practitioner, E1–E12 executive; shared P1/E1, P4/E4, P7/E7, P10/E10). Fixes: comma lists → parentheses/"such as", one ask per stem, "not just X" endings removed. Avg stem length ~19 → 12.8 words. "Why this matters" lines, answer options, scoring, track selection unchanged. AI assessment (similar wording) not touched.
+- **Not yet applied (needs wording sign-off):** reviewer's two notes: trim heavy level 5 options; neutralise commercial-only answer language (board, revenue, ROI, marketing budgets, compensation, competitive advantage) for federal respondents.
+- **Files:** outputs/ai-landing-v1/src/data/cxAssessment.js
+- **Verified:** vite build OK; node check of all 20 stems + 12 questions per track; Playwright walkthrough (practitioner + executive) shows new Q1 wording.
+- **Status:** ✅ Stems complete
+
+## 2026-11-05: CX Maturity Assessment: answer options trimmed + sector-neutral
+- **Action:** Applied reviewer's two notes. (1) All 20 level-5 options trimmed and de-jargoned (avg 15.4 → 12.1 words, in line with level 4 at 12.3), each still a clear step above level 4. (2) Commercial-only language made sector-neutral for federal/public respondents: board → senior/top leadership, ROI → outcome targets, compensation → performance reviews, growth/competitive advantage → business or mission results, marketing budgets → program or operations budgets; P3 ladder and E12 L1/L4 aligned to "business or mission". 27 options changed in total. Question stems, "Why this matters", scoring untouched.
+- **Files:** outputs/ai-landing-v1/src/data/cxAssessment.js (47 lines total with the stem rewrite)
+- **Verified:** vite build OK; scan finds no remaining board/revenue/ROI/compensation/competitive-advantage terms in options; Playwright executive walkthrough shows new L5 text.
+- **Status:** ✅ Complete (drafts: pending reviewer sign-off)
+
+## 2026-11-05: CX answer-option changes reverted (drafts kept for team review)
+- **Action:** Per user, reverted all 27 answer-option edits; live CX assessment answers are back to their original wording. Only the 20 question stems from the screenshot remain changed. Drafts saved for team review at docs/cx-assessment-answer-options-draft.md (not applied).
+- **Files:** outputs/ai-landing-v1/src/data/cxAssessment.js (diff vs HEAD = 20 question lines only); docs/cx-assessment-answer-options-draft.md (new)
+- **Status:** ✅ Complete (vite build OK)
+
+## 2026-11-05: Assessment readability (Part 1 review), AI + CX
+- **Action:** Applied review fixes in the shared components so both assessments (standalone + in-chat) stay consistent. Headings: Poppins 900 → 700, letter-spacing -0.6/-0.75px → normal, line-height 1.33 → 1.4 (questions) / 1.2 → 1.3 (profile). Labels 11–12px → 13px min (section label, % complete, track/question count, question title, scale legend, "Your role/details", role descriptions, "Optional: add now or later", errors, option numbers), muted grey → secondary grey. Answer options 14px grey → 16px near-white (white/85) as the reference; chat "Why this matters" 12px → 14px.
+- **Files:** outputs/ai-landing-v1/src/components/assessment/{ProfileForm,QuestionRunner,AssessmentQuestionCard}.jsx
+- **Verified:** vite build OK; Playwright computed styles on AI + CX profile and question screens and in-chat question: no text < 13px, no 900 weight. Before/after screenshots: screenshots/desktop/assessment-readability-*.png
+- **Status:** ✅ Complete
+
+## 2026-11-05: Assessment flow + accessibility (Parts 3, 4, small stuff), AI + CX
+- **Flow:** Next disabled until an answer is selected. Marketing nav replaced during the assessment by a stripped header (logo + "Exit" on intro / "Save and exit" during questions); full nav returns on results. Progress now saved in the browser while answering (resume at same question with "Welcome back… Start over" notice; cleared on intro/results; storage access guarded). "Why this matters" moved below the options (standalone + chat). Role choice: "Required" tag, radiogroup semantics, 2px accent border + glow + check icon when selected, divider separating it from optional details.
+- **Accessibility:** One h1 per screen (intro heading, question, results heading; h2 inside chat). Progress bars have role=progressbar + aria-valuenow/min/max/valuetext (standalone + chat). Polite live region announces "Question N of 12. <question>" after Next/Back.
+- **Small stuff:** Tab titles "AI Maturity Assessment | Radiant AI" / "CX Maturity Assessment | Radiant AI". og:title / twitter:title now "Radiant AI – Enterprise AI Solutions" (matches <title>).
+- **Files:** src/components/assessment/{AssessmentHeader (new),ProfileForm,QuestionRunner,AssessmentQuestionCard,AssessmentResults}.jsx, src/utils/assessmentProgress.js (new), src/pages/{AiAssessment,CxAssessment,Chat}.jsx, index.html
+- **Verified:** vite build OK; Playwright end-to-end on both assessments (header, h1, title, Next disabled/enabled, progressbar, live region, why-below-options, save/exit/resume, results nav + cleared progress) and chat regression. Screenshots: screenshots/desktop/assessment-flow-*.png
+- **Status:** ✅ Complete

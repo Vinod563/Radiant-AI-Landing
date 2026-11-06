@@ -52,7 +52,7 @@ const LEAD_BULLETS = {
  *
  * Props: kind ('ai'|'cx'), profile, answers
  */
-export default function AssessmentResults({ kind, profile, answers }) {
+export default function AssessmentResults({ kind, profile, answers, headingAs: Heading = 'h1' }) {
   const isAi = kind === 'ai'
   const ACCENT = isAi ? '#91C46B' : '#596AE0'
 
@@ -144,9 +144,10 @@ export default function AssessmentResults({ kind, profile, answers }) {
       <div className="space-y-5">
         {/* Header */}
         <div className="flex items-center justify-between no-print">
-          <span className="text-text-muted text-xs font-display font-semibold uppercase tracking-widest">
-            {isAi ? 'AI Maturity Assessment' : 'CX Maturity Assessment'}
-          </span>
+          {/* Page heading (h1 on the standalone page, h2 inside the chat) */}
+          <Heading className="text-text-secondary text-[13px] font-display font-semibold uppercase tracking-wider">
+            {isAi ? 'AI Maturity Assessment' : 'CX Maturity Assessment'}: Your Results
+          </Heading>
           {!submitted && (
             <button
               type="button"

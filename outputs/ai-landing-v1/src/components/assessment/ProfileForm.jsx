@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useId } from 'react'
 import { motion } from 'framer-motion'
-import { ArrowRight, Briefcase, Cpu, TrendingUp, Compass, Users } from 'lucide-react'
+import { ArrowRight, Briefcase, Cpu, TrendingUp, Compass, Users, CheckCircle2 } from 'lucide-react'
 import { roles as aiRoles, sectors, orgSizes, departments as aiDepartments, personalDomainBlocklist } from '../../data/aiAssessment.js'
 import Dropdown from './Dropdown'
 
@@ -23,16 +23,18 @@ function isPersonalEmail(email) {
  *   heading / subtext - optional copy overrides
  *   roles / departments - option lists (default: AI assessment; CX passes its own)
  *   accent     - selection colour (default brand green)
+ *   headingAs  - heading element: 'h1' on the standalone page (default), 'h2' inside the chat
  */
 export default function ProfileForm({
   onSubmit, showRole = true, heading, subtext, wrapperClass = 'max-w-2xl mx-auto',
-  roles = aiRoles, departments = aiDepartments, accent: ACCENT = '#91C46B',
+  roles = aiRoles, departments = aiDepartments, accent: ACCENT = '#91C46B', headingAs: Heading = 'h1',
 }) {
   const [profile, setProfile] = useState({
     role: '', fullName: '', workEmail: '', companyName: '',
     sector: '', orgSize: '', department: '', website: '', // website = honeypot
   })
   const [errors, setErrors] = useState({})
+  const roleLabelId = useId()
 
   const set = (k, v) => setProfile(p => ({ ...p, [k]: v }))
 
@@ -56,40 +58,49 @@ export default function ProfileForm({
     if (validate()) onSubmit(profile)
   }
 
-  const Err = ({ k }) => errors[k] ? <p className="text-red-400 text-xs font-medium mt-1.5">{errors[k]}</p> : null
+  const Err = ({ k }) => errors[k] ? <p className="text-red-400 text-[13px] font-medium mt-1.5">{errors[k]}</p> : null
 
   return (
     <motion.form onSubmit={submit}
       initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
       className={wrapperClass}>
-      <span className="kicker mb-3">About You</span>
-      <h2 className="font-display font-black text-white text-2xl lg:text-3xl tracking-tight mb-2">
+      <span className="kicker mb-3" style={{ fontSize: 13 }}>About You</span>
+      <Heading className="font-display font-bold text-white text-2xl lg:text-3xl leading-[1.3] lg:leading-[1.3] tracking-normal mb-2">
         {heading || 'First, a little context'}
-      </h2>
+      </Heading>
       <p className="text-text-secondary text-sm leading-relaxed mb-8 max-w-lg">
         {subtext || "Your role tailors the questions you'll see. Everything stays confidential: this is a diagnostic, not a sales pitch."}
       </p>
 
-      {/* Role selection */}
+      {/* Role selection: the one required choice, set apart from the optional details */}
       {showRole && (
-        <div className="mb-7">
-          <label className="text-text-muted text-[11px] font-display font-semibold uppercase tracking-widest mb-3 block">Your role</label>
-          <div className="grid sm:grid-cols-2 gap-3">
+        <div className="mb-9">
+          <div className="flex items-center gap-2.5 mb-3">
+            <span id={roleLabelId} className="text-text-secondary text-[13px] font-display font-semibold uppercase tracking-wider">Your role</span>
+            <span className="text-[12px] font-display font-semibold px-2 py-0.5 rounded-full"
+              style={{ color: ACCENT, background: `${ACCENT}1a`, border: `1px solid ${ACCENT}40` }}>Required</span>
+          </div>
+          <div role="radiogroup" aria-labelledby={roleLabelId} aria-required="true" className="grid sm:grid-cols-2 gap-3">
             {roles.map(r => {
               const active = profile.role === r.key
               const Icon = roleIcons[r.key] || Briefcase
               return (
-                <button type="button" key={r.key} onClick={() => set('role', r.key)}
-                  className="text-left rounded-xl px-4 py-3.5 transition-all duration-200 flex items-center gap-3.5"
-                  style={{ background: active ? `${ACCENT}14` : 'rgba(255,255,255,0.025)', border: `1px solid ${active ? `${ACCENT}66` : 'rgba(255,255,255,0.07)'}` }}>
+                <button type="button" key={r.key} role="radio" aria-checked={active} onClick={() => set('role', r.key)}
+                  className="relative text-left rounded-xl px-4 py-3.5 transition-all duration-200 flex items-center gap-3.5"
+                  style={{
+                    background: active ? `${ACCENT}26` : 'rgba(255,255,255,0.025)',
+                    border: active ? `2px solid ${ACCENT}` : '2px solid rgba(255,255,255,0.07)',
+                    boxShadow: active ? `0 0 0 4px ${ACCENT}1f` : 'none',
+                  }}>
                   <span className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
                     style={{ background: active ? ACCENT : 'rgba(255,255,255,0.05)', border: `1px solid ${active ? ACCENT : 'rgba(255,255,255,0.08)'}` }}>
                     <Icon size={18} style={{ color: active ? '#021018' : '#94A3B8' }} />
                   </span>
-                  <span>
+                  <span className="flex-1 min-w-0">
                     <span className="block font-display font-bold text-white text-sm">{r.name}</span>
-                    <span className="block text-text-muted text-xs mt-0.5">{r.desc}</span>
+                    <span className="block text-text-secondary text-[13px] mt-0.5">{r.desc}</span>
                   </span>
+                  {active && <CheckCircle2 size={20} aria-hidden="true" className="flex-shrink-0" style={{ color: ACCENT }} />}
                 </button>
               )
             })}
@@ -98,9 +109,11 @@ export default function ProfileForm({
         </div>
       )}
 
+      {showRole && <div className="border-t border-white/[0.08] mb-7" aria-hidden="true" />}
+
       <div className="flex items-center justify-between mb-3">
-        <label className="text-text-muted text-[11px] font-display font-semibold uppercase tracking-widest">Your details</label>
-        <span className="text-text-muted text-[11px]">Optional: add now or later</span>
+        <label className="text-text-secondary text-[13px] font-display font-semibold uppercase tracking-wider">Your details</label>
+        <span className="text-text-secondary text-[13px]">Optional: add now or later</span>
       </div>
       <div className="grid sm:grid-cols-2 gap-4">
         <div>
