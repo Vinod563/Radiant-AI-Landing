@@ -52,7 +52,7 @@ export default function LockedReport({ kind, result, accent = '#91C46B', unlocke
         <div className="absolute inset-0" style={{ backdropFilter: 'blur(2px)', WebkitBackdropFilter: 'blur(2px)' }} />
         {/* translucent overlay: clearer at top & bottom, ~75-80% behind the form so the report stays visible */}
         <div className="absolute inset-0"
-          style={{ background: 'linear-gradient(180deg, rgba(1,15,30,0.04) 0%, rgba(1,15,30,0.28) 16%, rgba(1,15,30,0.78) 28%, rgba(1,15,30,0.92) 40%, rgba(1,15,30,0.92) 100%)' }} />
+          style={{ background: 'linear-gradient(180deg, rgba(11,26,44,0.04) 0%, rgba(11,26,44,0.28) 16%, rgba(11,26,44,0.78) 28%, rgba(11,26,44,0.92) 40%, rgba(11,26,44,0.92) 100%)' }} />
       </div>
 
       {/* Clear band that lets the top of the PDF page show through */}

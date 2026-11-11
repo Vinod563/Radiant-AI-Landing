@@ -38,7 +38,7 @@ For each question, read the five new answers in order and check:
 | Level | Before | After |
 |---|---|---|
 | 1 | No. Accountability is unclear or distributed. | No. Accountability is unclear or spread across teams. |
-| 2 | Marketing or service leadership handles it informally alongside other responsibilities. | Service, communications, or marketing leaders handle it informally. |
+| 2 | Marketing or service leadership handles it informally alongside other responsibilities. | Leaders in service, marketing, IT, or other teams handle it informally. |
 | 3 | A senior leader has a partial CX mandate. | A senior leader owns part of the CX agenda. |
 | 4 | A dedicated CX executive has a clear charter and budget ownership. | A dedicated CX executive has a clear charter and budget. |
 | 5 | CEO-led, with a CX executive and a cross-functional governance body that has authority to act. | Led from the top, with a CX executive and cross-functional authority to act. |

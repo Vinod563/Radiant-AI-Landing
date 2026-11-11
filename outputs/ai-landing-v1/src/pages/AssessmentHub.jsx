@@ -73,7 +73,7 @@ export default function AssessmentHub() {
   const headerInView = useInView(headerRef, { once: true, margin: '-60px' })
 
   return (
-    <div className="bg-brand-dark min-h-screen">
+    <div className="bg-assessment-bg min-h-screen">
       <Navbar />
       <main className="pt-32 pb-28 lg:pt-40 lg:pb-36 relative overflow-hidden">
         {/* Background glow */}

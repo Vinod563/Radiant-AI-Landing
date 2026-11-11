@@ -36,7 +36,7 @@ export default function AiAssessment() {
   const reset = startOver
 
   return (
-    <div className="bg-brand-dark min-h-screen">
+    <div className="bg-assessment-bg min-h-screen">
       {/* Full marketing nav only on results; while answering, a stripped header with exit */}
       {step === 'results' ? <Navbar /> : <AssessmentHeader exitLabel={step === 'questions' ? 'Save and exit' : 'Exit'} />}
       <main className="pt-28 pb-28 lg:pt-36 lg:pb-36 relative overflow-hidden">

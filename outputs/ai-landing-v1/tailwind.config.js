@@ -5,6 +5,7 @@ export default {
     extend: {
       colors: {
         'brand-dark':      '#010F1E',
+        'assessment-bg':   '#0B1A2C', // lifted navy for assessment pages
         'brand-secondary': '#051A30',
         'brand-deep':      '#000A14',
         'brand-green':     '#91C46B',

@@ -1344,3 +1344,14 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Action:** Applied 5 QA fixes: Q3P L1 (sector-neutral "no defined value"), Q11P L2 and L5 (restore training gap and EX→CX link), Q8P L5 (restore "human-centered design"), Q12E L4 (restore attribution to CX). Q11P L5 trimmed to 13 words ("Everyone is trusted to act...").
 - **Files:** outputs/ai-landing-v1/src/data/cxAssessment.js; docs/cx-assessment-answer-options-review.md
 - **Status:** ✅ Complete (vite build OK)
+
+## 2026-11-11: Light/Dark theme parked; lighter assessment background kept
+- **Action:** Removed the Light/Dark theme system and toggle from the working branch. All theme work (three passes from today, plus docs/theme-system.md) is saved on branch `theme-light-dark` (commit 080c480) to bring back later. Kept only the lifted navy background (#010F1E → #0B1A2C) on the assessment hub, AI and CX assessments, including the assessment header and the locked-report fade. Homepage and Chat are back to their committed state.
+- **Files:** outputs/ai-landing-v1/tailwind.config.js (new `assessment-bg` colour), src/pages/{AssessmentHub,AiAssessment,CxAssessment}.jsx, src/components/assessment/{AssessmentHeader,LockedReport}.jsx
+- **Verified:** vite build OK; Playwright: /assessment and /assessment/ai render on rgb(11,26,44), no theme toggle present.
+- **Status:** ✅ Complete
+
+## 2026-11-11: CX Q2E option 2 broadened (stakeholder feedback)
+- **Action:** Per Lam Huynh's review, option 2 named only specific teams, so respondents whose CX sits elsewhere (e.g. IT) had no fit. Changed "Service, communications, or marketing leaders handle it informally." → "Leaders in service, marketing, IT, or other teams handle it informally." Scoring unchanged.
+- **Files:** outputs/ai-landing-v1/src/data/cxAssessment.js; docs/cx-assessment-answer-options-review.md
+- **Status:** ✅ Complete (vite build OK)

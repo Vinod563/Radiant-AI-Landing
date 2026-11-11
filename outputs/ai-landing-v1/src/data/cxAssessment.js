@@ -62,7 +62,7 @@ export const questionBank = [
     question: 'Is one senior leader accountable for customer experience and measured on it?',
     options: opt(
       'No. Accountability is unclear or spread across teams.',
-      'Service, communications, or marketing leaders handle it informally.',
+      'Leaders in service, marketing, IT, or other teams handle it informally.',
       'A senior leader owns part of the CX agenda.',
       'A dedicated CX executive has a clear charter and budget.',
       'Led from the top, with a CX executive and cross-functional authority to act.',
