@@ -8,6 +8,7 @@ import GartnerPositioningView from './GartnerPositioningView'
 import WhatAILeadersDo from './WhatAILeadersDo'
 import AssessmentLeadForm from './AssessmentLeadForm'
 import LockedReport from './LockedReport'
+import { c, alpha, ACCENTS } from '../../theme/tokens'
 import { buildEmailSafeReportHtml } from '../../utils/emailSafeReport.js'
 import { getAQ, scoreAssessment, buildFindings, recommendNextStep } from '../../data/aiAssessment.js'
 import { suggestedNextSteps } from '../../data/reportEditorial.js'
@@ -54,7 +55,7 @@ const LEAD_BULLETS = {
  */
 export default function AssessmentResults({ kind, profile, answers, headingAs: Heading = 'h1' }) {
   const isAi = kind === 'ai'
-  const ACCENT = isAi ? '#91C46B' : '#596AE0'
+  const ACCENT = isAi ? ACCENTS.ai : ACCENTS.cx
 
   const [submitted, setSubmitted] = useState(false)
   const [unlockOpen, setUnlockOpen] = useState(false)
@@ -153,9 +154,9 @@ export default function AssessmentResults({ kind, profile, answers, headingAs: H
               type="button"
               onClick={() => setUnlockOpen(true)}
               className="inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-display font-semibold transition-colors"
-              style={{ background: `${ACCENT}1a`, border: `1px solid ${ACCENT}40`, color: ACCENT }}
+              style={{ background: alpha(ACCENT, 10), border: `1px solid ${alpha(ACCENT, 45)}`, color: ACCENT }}
             >
-              <FileText size={15} /> Get full report
+              <FileText size={15} aria-hidden="true" /> Get full report
             </button>
           )}
         </div>
@@ -232,7 +233,7 @@ export default function AssessmentResults({ kind, profile, answers, headingAs: H
             className="fixed inset-0 z-[100] flex items-start justify-center overflow-y-auto p-4 sm:p-6"
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}
           >
-            <div className="absolute inset-0 bg-black/75 backdrop-blur-sm" onClick={() => setUnlockOpen(false)} />
+            <div className="absolute inset-0 backdrop-blur-sm" style={{ background: c('scrim') }} onClick={() => setUnlockOpen(false)} />
             <motion.div
               className="relative z-10 w-full max-w-2xl my-auto"
               initial={{ y: 24, opacity: 0 }} animate={{ y: 0, opacity: 1 }} exit={{ y: 16, opacity: 0 }}
@@ -241,8 +242,8 @@ export default function AssessmentResults({ kind, profile, answers, headingAs: H
               <button
                 type="button"
                 onClick={() => setUnlockOpen(false)}
-                className="absolute -top-2 -right-2 z-20 w-9 h-9 rounded-full flex items-center justify-center text-white transition-colors"
-                style={{ background: 'rgba(2,16,30,0.95)', border: '1px solid rgba(255,255,255,0.16)' }}
+                className="absolute -top-2 -right-2 z-20 w-9 h-9 rounded-full flex items-center justify-center text-ink transition-colors"
+                style={{ background: c('surface-raised'), border: `1px solid ${c('border-strong')}` }}
                 aria-label="Close"
               >
                 <X size={16} />

@@ -3,11 +3,13 @@ import { motion } from 'framer-motion'
 import { ArrowRight, Briefcase, Cpu, TrendingUp, Compass, Users, CheckCircle2 } from 'lucide-react'
 import { roles as aiRoles, sectors, orgSizes, departments as aiDepartments, personalDomainBlocklist } from '../../data/aiAssessment.js'
 import Dropdown from './Dropdown'
+import { c, tone, alpha } from '../../theme/tokens'
 
 const roleIcons = { exec: Briefcase, tech: Cpu, biz: TrendingUp, consultant: Compass, practitioner: Users }
 
-const fieldStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }
-const inputCls = 'w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-white/30'
+// Control boundary uses border-strong (≥3:1, WCAG 1.4.11)
+const fieldStyle = { background: c('surface-2'), border: `1px solid ${c('border-strong')}` }
+const inputCls = 'w-full rounded-xl px-4 py-3 text-sm text-ink font-medium placeholder:text-text-muted outline-none transition-all duration-200 focus:border-ink/40'
 
 function isPersonalEmail(email) {
   const domain = email.split('@')[1]?.toLowerCase() || ''
@@ -27,8 +29,9 @@ function isPersonalEmail(email) {
  */
 export default function ProfileForm({
   onSubmit, showRole = true, heading, subtext, wrapperClass = 'max-w-2xl mx-auto',
-  roles = aiRoles, departments = aiDepartments, accent: ACCENT = '#91C46B', headingAs: Heading = 'h1',
+  roles = aiRoles, departments = aiDepartments, accent = '#91C46B', headingAs: Heading = 'h1',
 }) {
+  const ACCENT = tone(accent)
   const [profile, setProfile] = useState({
     role: '', fullName: '', workEmail: '', companyName: '',
     sector: '', orgSize: '', department: '', website: '', // website = honeypot
@@ -58,14 +61,14 @@ export default function ProfileForm({
     if (validate()) onSubmit(profile)
   }
 
-  const Err = ({ k }) => errors[k] ? <p className="text-red-400 text-[13px] font-medium mt-1.5">{errors[k]}</p> : null
+  const Err = ({ k }) => errors[k] ? <p className="text-danger text-[13px] font-medium mt-1.5">{errors[k]}</p> : null
 
   return (
     <motion.form onSubmit={submit}
       initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
       className={wrapperClass}>
       <span className="kicker mb-3" style={{ fontSize: 13 }}>About You</span>
-      <Heading className="font-display font-bold text-white text-2xl lg:text-3xl leading-[1.3] lg:leading-[1.3] tracking-normal mb-2">
+      <Heading className="font-display font-bold text-ink text-2xl lg:text-3xl leading-[1.3] lg:leading-[1.3] tracking-normal mb-2">
         {heading || 'First, a little context'}
       </Heading>
       <p className="text-text-secondary text-sm leading-relaxed mb-8 max-w-lg">
@@ -78,7 +81,7 @@ export default function ProfileForm({
           <div className="flex items-center gap-2.5 mb-3">
             <span id={roleLabelId} className="text-text-secondary text-[13px] font-display font-semibold uppercase tracking-wider">Your role</span>
             <span className="text-[12px] font-display font-semibold px-2 py-0.5 rounded-full"
-              style={{ color: ACCENT, background: `${ACCENT}1a`, border: `1px solid ${ACCENT}40` }}>Required</span>
+              style={{ color: ACCENT, background: alpha(ACCENT, 10), border: `1px solid ${alpha(ACCENT, 40)}` }}>Required</span>
           </div>
           <div role="radiogroup" aria-labelledby={roleLabelId} aria-required="true" className="grid sm:grid-cols-2 gap-3">
             {roles.map(r => {
@@ -88,16 +91,16 @@ export default function ProfileForm({
                 <button type="button" key={r.key} role="radio" aria-checked={active} onClick={() => set('role', r.key)}
                   className="relative text-left rounded-xl px-4 py-3.5 transition-all duration-200 flex items-center gap-3.5"
                   style={{
-                    background: active ? `${ACCENT}26` : 'rgba(255,255,255,0.025)',
-                    border: active ? `2px solid ${ACCENT}` : '2px solid rgba(255,255,255,0.07)',
-                    boxShadow: active ? `0 0 0 4px ${ACCENT}1f` : 'none',
+                    background: active ? alpha(ACCENT, 15) : c('surface-1'),
+                    border: active ? `2px solid ${ACCENT}` : `2px solid ${c('border')}`,
+                    boxShadow: active ? `0 0 0 4px ${alpha(ACCENT, 12)}` : 'none',
                   }}>
                   <span className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 transition-colors"
-                    style={{ background: active ? ACCENT : 'rgba(255,255,255,0.05)', border: `1px solid ${active ? ACCENT : 'rgba(255,255,255,0.08)'}` }}>
-                    <Icon size={18} style={{ color: active ? '#021018' : '#94A3B8' }} />
+                    style={{ background: active ? ACCENT : c('surface-2'), border: `1px solid ${active ? ACCENT : c('border')}` }}>
+                    <Icon size={18} aria-hidden="true" style={{ color: active ? c('on-accent') : c('text-secondary') }} />
                   </span>
                   <span className="flex-1 min-w-0">
-                    <span className="block font-display font-bold text-white text-sm">{r.name}</span>
+                    <span className="block font-display font-bold text-ink text-sm">{r.name}</span>
                     <span className="block text-text-secondary text-[13px] mt-0.5">{r.desc}</span>
                   </span>
                   {active && <CheckCircle2 size={20} aria-hidden="true" className="flex-shrink-0" style={{ color: ACCENT }} />}
@@ -109,7 +112,7 @@ export default function ProfileForm({
         </div>
       )}
 
-      {showRole && <div className="border-t border-white/[0.08] mb-7" aria-hidden="true" />}
+      {showRole && <div className="border-t border-line mb-7" aria-hidden="true" />}
 
       <div className="flex items-center justify-between mb-3">
         <label className="text-text-secondary text-[13px] font-display font-semibold uppercase tracking-wider">Your details</label>

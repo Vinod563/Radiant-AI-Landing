@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { useMemo } from 'react'
+import { c, tone } from '../../theme/tokens'
 
 /**
  * GartnerPositioningView: 2D positioning chart, aligned to the 6-stage model.
@@ -31,7 +32,8 @@ import { useMemo } from 'react'
  *                    (color null = accent); required with `read`
  *   subtitle         optional line under the kicker
  */
-export default function GartnerPositioningView({ sectionAverages = {}, stageIndex, companyName = 'Your Organization', accent = '#91C46B', read, clusters: clusterLayout, subtitle }) {
+export default function GartnerPositioningView({ sectionAverages = {}, stageIndex, companyName = 'Your Organization', accent: accentProp = '#91C46B', read, clusters: clusterLayout, subtitle }) {
+  const accent = tone(accentProp)
   const { x, y } = useMemo(() => {
     if (read) return { x: read.x, y: read.y }
     const execX = ((sectionAverages.Data || 0) + (sectionAverages.Adoption || 0)) / 2 / 5
@@ -77,14 +79,14 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
     { id: 'early', label: 'Early Movers', sublabel: 'Stage 1-2', cx: 0.30, cy: 0.30, rd: 0.16, color: '#64748B' },
     { id: 'progress', label: 'Progressing', sublabel: 'Stage 3-4', cx: 0.58, cy: 0.58, rd: 0.15, color: '#2DD4BF' },
     { id: 'leaders', label: 'AI Leaders', sublabel: 'Stage 5-6', cx: 0.84, cy: 0.84, rd: 0.14, color: accent },
-  ]).map(c => ({ ...c, color: c.color || accent, active: c.id === group, opacity: c.id === group ? 0.4 : 0.18 }))
-  const target = clusters.find(c => c.id === 'leaders') || clusters[clusters.length - 1]
+  ]).map(cl => ({ ...cl, color: tone(cl.color) || accent, active: cl.id === group, opacity: cl.id === group ? 0.4 : 0.2 }))
+  const target = clusters.find(cl => cl.id === 'leaders') || clusters[clusters.length - 1]
 
   return (
     <div className="mag-card p-8 lg:p-10">
       <div className="flex items-start justify-between mb-2">
         <span className="kicker">Competitive Positioning</span>
-        <span className="text-[10px] text-text-muted font-medium">Based on your scores</span>
+        <span className="text-[11px] text-text-muted font-medium">Based on your scores</span>
       </div>
       <p className="text-text-muted text-xs mb-6 leading-relaxed">
         {subtitle || 'Where your organization sits relative to AI leaders and the broader market.'}
@@ -98,47 +100,47 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
             {[25, 50, 75].map(v => (
               <g key={v}>
                 <line x1={PX0} y1={toSvgY(v / 100)} x2={PX1} y2={toSvgY(v / 100)}
-                  stroke="rgba(255,255,255,0.04)" strokeWidth="0.4" />
+                  stroke={c('chart-grid')} strokeWidth="0.4" />
                 <line x1={toSvgX(v / 100)} y1={PY1} x2={toSvgX(v / 100)} y2={PY0}
-                  stroke="rgba(255,255,255,0.04)" strokeWidth="0.4" />
+                  stroke={c('chart-grid')} strokeWidth="0.4" />
               </g>
             ))}
 
             {/* Axes */}
-            <line x1={PX0} y1={PY0} x2={PX1} y2={PY0} stroke="rgba(255,255,255,0.18)" strokeWidth="0.6" />
-            <line x1={PX0} y1={PY1} x2={PX0} y2={PY0} stroke="rgba(255,255,255,0.18)" strokeWidth="0.6" />
+            <line x1={PX0} y1={PY0} x2={PX1} y2={PY0} stroke={c('chart-axis')} strokeWidth="0.6" />
+            <line x1={PX0} y1={PY1} x2={PX0} y2={PY0} stroke={c('chart-axis')} strokeWidth="0.6" />
             {/* Arrowheads */}
-            <polygon points={`${PX1},${PY0 - 1.3} ${PX1 + 2},${PY0} ${PX1},${PY0 + 1.3}`} fill="rgba(255,255,255,0.18)" />
-            <polygon points={`${PX0 - 1.3},${PY1} ${PX0},${PY1 - 2} ${PX0 + 1.3},${PY1}`} fill="rgba(255,255,255,0.18)" />
+            <polygon points={`${PX1},${PY0 - 1.3} ${PX1 + 2},${PY0} ${PX1},${PY0 + 1.3}`} fill={c('chart-axis')} />
+            <polygon points={`${PX0 - 1.3},${PY1} ${PX0},${PY1 - 2} ${PX0 + 1.3},${PY1}`} fill={c('chart-axis')} />
 
             {/* Axis labels */}
-            <text x={toSvgX(0.5)} y={PY0 + 9} textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="600" letterSpacing="0.2">
+            <text x={toSvgX(0.5)} y={PY0 + 9} textAnchor="middle" fill={c('text-secondary')} fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="600" letterSpacing="0.2">
               Execution Readiness →
             </text>
-            <text x={PX0 - 9} y={toSvgY(0.5)} textAnchor="middle" fill="rgba(255,255,255,0.45)" fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="600" letterSpacing="0.2"
+            <text x={PX0 - 9} y={toSvgY(0.5)} textAnchor="middle" fill={c('text-secondary')} fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="600" letterSpacing="0.2"
               transform={`rotate(-90, ${PX0 - 9}, ${toSvgY(0.5)})`}>
               Strategic Maturity →
             </text>
 
             {/* Stage-band blobs along the maturity diagonal, each labeled with its
                 stage. The respondent's own band is outlined and brightened. */}
-            {clusters.map(c => (
-              <g key={c.id}>
+            {clusters.map(cl => (
+              <g key={cl.id}>
                 <motion.ellipse
-                  cx={toSvgX(c.cx)} cy={toSvgY(c.cy)} rx={c.rd * RX} ry={c.rd * RY}
-                  fill={c.color} fillOpacity={c.opacity}
-                  stroke={c.active ? c.color : 'none'} strokeOpacity={c.active ? 0.6 : 0} strokeWidth={c.active ? 0.5 : 0}
+                  cx={toSvgX(cl.cx)} cy={toSvgY(cl.cy)} rx={cl.rd * RX} ry={cl.rd * RY}
+                  fill={cl.color} fillOpacity={cl.opacity}
+                  stroke={cl.active ? cl.color : 'none'} strokeOpacity={cl.active ? 0.8 : 0} strokeWidth={cl.active ? 0.5 : 0}
                   initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }}
-                  transition={{ duration: 0.7, delay: 0.2 + clusters.findIndex(cl => cl.id === c.id) * 0.1 }}
-                  style={{ transformOrigin: `${toSvgX(c.cx)}px ${toSvgY(c.cy)}px` }}
+                  transition={{ duration: 0.7, delay: 0.2 + clusters.findIndex(o => o.id === cl.id) * 0.1 }}
+                  style={{ transformOrigin: `${toSvgX(cl.cx)}px ${toSvgY(cl.cy)}px` }}
                 />
                 <motion.text
-                  x={toSvgX(c.cx)} y={toSvgY(c.cy) - c.rd * RY - 1.6} textAnchor="middle"
-                  fill={c.active ? '#fff' : 'rgba(255,255,255,0.4)'} fontSize="3" fontFamily="Inter,sans-serif"
-                  fontWeight={c.active ? '800' : '700'}
-                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 + clusters.findIndex(cl => cl.id === c.id) * 0.1 }}
+                  x={toSvgX(cl.cx)} y={toSvgY(cl.cy) - cl.rd * RY - 1.6} textAnchor="middle"
+                  fill={cl.active ? c('ink') : c('text-muted')} fontSize="3" fontFamily="Inter,sans-serif"
+                  fontWeight={cl.active ? '800' : '700'}
+                  initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 + clusters.findIndex(o => o.id === cl.id) * 0.1 }}
                 >
-                  {c.label}
+                  {cl.label}
                 </motion.text>
               </g>
             ))}
@@ -148,7 +150,7 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
               <motion.line
                 x1={dotX} y1={dotY}
                 x2={toSvgX(target.cx)} y2={toSvgY(target.cy)}
-                stroke={accent} strokeOpacity="0.25" strokeWidth="0.5"
+                stroke={accent} strokeOpacity="0.5" strokeWidth="0.5"
                 strokeDasharray="1.6,1.2"
                 initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
                 transition={{ duration: 1, delay: 0.8 }}
@@ -161,7 +163,7 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
               fill={accent}
               initial={{ scale: 0 }} animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 300, delay: 0.6 }}
-              style={{ filter: `drop-shadow(0 0 3px ${accent}80)`, transformOrigin: `${dotX}px ${dotY}px` }}
+              style={{ filter: `drop-shadow(0 0 3px color-mix(in srgb, ${accent} 50%, transparent))`, transformOrigin: `${dotX}px ${dotY}px` }}
             />
             <motion.circle
               cx={dotX} cy={dotY} r="4.6"
@@ -178,7 +180,7 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
               x={Math.min(Math.max(dotX, PX0 + 16), PX1 - 16)}
               y={dotY > PY0 - 8 ? dotY - 5 : dotY + 7}
               textAnchor="middle"
-              fill="white" fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="700"
+              fill={c('ink')} fontSize="3.2" fontFamily="Inter,sans-serif" fontWeight="700"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.8 }}
             >
               {companyName.length > 18 ? companyName.slice(0, 16) + '…' : companyName}
@@ -191,44 +193,45 @@ export default function GartnerPositioningView({ sectionAverages = {}, stageInde
           <div className="text-[11px] font-display font-bold uppercase tracking-wider text-text-muted mb-3">
             Maturity Stages
           </div>
-          {clusters.map(c => (
-            <div key={c.id} className="flex items-start gap-2.5" style={{ opacity: c.active ? 1 : 0.5 }}>
+          {/* Inactive rows are de-emphasised by weight and a lighter dot, never by
+              fading the text below AA contrast */}
+          {clusters.map(cl => (
+            <div key={cl.id} className="flex items-start gap-2.5">
               <div className="w-3 h-3 rounded-full mt-0.5 flex-shrink-0"
-                style={{ background: c.color, opacity: 0.85, boxShadow: c.active ? `0 0 5px ${c.color}90` : 'none' }} />
+                style={{ background: cl.color, opacity: cl.active ? 1 : 0.55, boxShadow: cl.active ? `0 0 5px color-mix(in srgb, ${cl.color} 56%, transparent)` : 'none' }} />
               <div>
-                <div className="text-white text-xs font-semibold leading-tight">
-                  {c.label}{c.active && <span className="ml-1.5 text-[10px] font-bold" style={{ color: accent }}>· you</span>}
+                <div className={`text-xs leading-tight ${cl.active ? 'text-ink font-bold' : 'text-text-secondary font-semibold'}`}>
+                  {cl.label}{cl.active && <span className="ml-1.5 text-[11px] font-bold" style={{ color: accent }}>· you</span>}
                 </div>
-                <div className="text-text-muted text-[11px] leading-snug">{c.sublabel}</div>
+                <div className="text-text-muted text-[11px] leading-snug">{cl.sublabel}</div>
               </div>
             </div>
           ))}
 
-          <div className="pt-3 border-t border-white/[0.06]">
+          <div className="pt-3 border-t border-line">
             <div className="flex items-center gap-2.5">
-              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: accent, boxShadow: `0 0 5px ${accent}90` }} />
-              <div className="text-xs font-semibold text-white">Your Org</div>
+              <div className="w-3 h-3 rounded-full flex-shrink-0" style={{ background: accent, boxShadow: `0 0 5px color-mix(in srgb, ${accent} 56%, transparent)` }} />
+              <div className="text-xs font-semibold text-ink">Your Org</div>
             </div>
           </div>
 
           {/* Axis scores (normalized 0-100, not population percentiles) */}
-          <div className="pt-3 border-t border-white/[0.06] space-y-2.5">
+          <div className="pt-3 border-t border-line space-y-2.5">
             <div className="text-[11px] text-text-muted">
               <span className="block font-semibold text-text-secondary mb-0.5">Execution Readiness</span>
-              <span className="text-white font-display font-bold text-sm">{Math.round(x * 100)}</span> / 100
+              <span className="text-ink font-display font-bold text-sm">{Math.round(x * 100)}</span> / 100
             </div>
             <div className="text-[11px] text-text-muted">
               <span className="block font-semibold text-text-secondary mb-0.5">Strategic Maturity</span>
-              <span className="text-white font-display font-bold text-sm">{Math.round(y * 100)}</span> / 100
+              <span className="text-ink font-display font-bold text-sm">{Math.round(y * 100)}</span> / 100
             </div>
           </div>
         </div>
       </div>
 
       {/* Interpretation note */}
-      <div className="mt-4 p-3 rounded-xl text-xs text-text-muted leading-relaxed"
-        style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.06)' }}>
-        <span className="font-semibold text-text-secondary">What this means: </span>
+      <div className="mt-4 p-3 rounded-xl text-xs text-text-secondary leading-relaxed bg-surface-2 border border-line">
+        <span className="font-semibold text-ink">What this means: </span>
         {meansText}
       </div>
     </div>

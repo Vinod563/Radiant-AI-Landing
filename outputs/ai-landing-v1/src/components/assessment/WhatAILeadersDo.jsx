@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { ArrowRight, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { tone, alpha } from '../../theme/tokens'
 
 /**
  * WhatAILeadersDo: stage-specific guidance showing what organizations
@@ -164,7 +165,8 @@ export const LEADER_CONTENT = {
  * stage 1..maxStage), `kicker`, and `maxStage`. An entry may carry `statBadge`
  * (numeric stat) or `benchmark` ({ label, body }, text-only callout), or neither.
  */
-export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B', content: contentMap = LEADER_CONTENT, kicker = 'What AI Leaders Do', maxStage = 6 }) {
+export default function WhatAILeadersDo({ currentIndex = 1, accent: accentProp = '#91C46B', content: contentMap = LEADER_CONTENT, kicker = 'What AI Leaders Do', maxStage = 6 }) {
+  const accent = tone(accentProp)
   const content = contentMap[currentIndex] || contentMap[maxStage]
 
   return (
@@ -172,14 +174,14 @@ export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B', 
       {/* Header */}
       <div className="flex items-start justify-between gap-4 mb-2">
         <span className="kicker">{kicker}</span>
-        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold"
-          style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}30` }}>
-          <Zap size={10} />
+        <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold flex-shrink-0"
+          style={{ background: alpha(accent, 9), color: accent, border: `1px solid ${alpha(accent, 30)}` }}>
+          <Zap size={10} aria-hidden="true" />
           Stage {Math.min(currentIndex + 1, maxStage)} Playbook
         </div>
       </div>
 
-      <h3 className="font-display font-black text-white text-lg lg:text-xl tracking-tight mb-2 leading-tight">
+      <h3 className="font-display font-black text-ink text-lg lg:text-xl tracking-tight mb-2 leading-tight">
         {content.heading}
       </h3>
       <p className="text-text-secondary text-sm leading-relaxed mb-6">{content.context}</p>
@@ -187,7 +189,7 @@ export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B', 
       {/* Stat badge */}
       {content.statBadge && (
         <div className="flex items-start gap-3 p-4 rounded-xl mb-7"
-          style={{ background: `${accent}0e`, border: `1px solid ${accent}20` }}>
+          style={{ background: alpha(accent, 6), border: `1px solid ${alpha(accent, 22)}` }}>
           <div className="font-display font-black text-2xl flex-shrink-0" style={{ color: accent }}>
             {content.statBadge.value}
           </div>
@@ -198,7 +200,7 @@ export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B', 
       {/* Text-only benchmark callout */}
       {content.benchmark && (
         <div className="p-4 rounded-xl mb-7"
-          style={{ background: `${accent}0e`, border: `1px solid ${accent}20` }}>
+          style={{ background: alpha(accent, 6), border: `1px solid ${alpha(accent, 22)}` }}>
           <div className="text-[10px] font-display font-bold uppercase tracking-widest mb-1.5" style={{ color: accent }}>
             {content.benchmark.label}
           </div>
@@ -220,11 +222,11 @@ export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B', 
           >
             {/* Step number */}
             <div className="w-7 h-7 rounded-lg flex-shrink-0 flex items-center justify-center font-display font-black text-xs"
-              style={{ background: `${accent}18`, color: accent, border: `1px solid ${accent}25` }}>
+              style={{ background: alpha(accent, 9), color: accent, border: `1px solid ${alpha(accent, 25)}` }}>
               {i + 1}
             </div>
             <div>
-              <h4 className="font-display font-bold text-white text-sm leading-snug mb-1">{action.title}</h4>
+              <h4 className="font-display font-bold text-ink text-sm leading-snug mb-1">{action.title}</h4>
               <p className="text-text-secondary text-sm leading-relaxed">{action.body}</p>
             </div>
           </motion.div>
@@ -232,12 +234,12 @@ export default function WhatAILeadersDo({ currentIndex = 1, accent = '#91C46B', 
       </div>
 
       {/* CTA */}
-      <div className="mt-8 pt-6 border-t border-white/[0.06]">
+      <div className="mt-8 pt-6 border-t border-line">
         <Link
           to={`/chat?q=${encodeURIComponent(content.chatQuery)}`}
           target="_blank" rel="noopener noreferrer"
           className="inline-flex items-center gap-2 font-display font-bold text-sm no-underline transition-all duration-200 hover:-translate-y-0.5 px-5 py-3 rounded-xl"
-          style={{ background: `${accent}15`, border: `1px solid ${accent}35`, color: accent }}
+          style={{ background: alpha(accent, 8), border: `1px solid ${alpha(accent, 45)}`, color: accent }}
         >
           {content.chatQuery}
           <ArrowRight size={14} />

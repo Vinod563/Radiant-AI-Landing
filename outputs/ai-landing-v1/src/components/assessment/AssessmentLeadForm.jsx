@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { ArrowRight, Check } from 'lucide-react'
 import Dropdown from './Dropdown'
+import { c, tone, alpha } from '../../theme/tokens'
 import { sectors, orgSizes, departments as aiDepartments, personalDomainBlocklist } from '../../data/aiAssessment.js'
 
-const fieldStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }
-const inputCls = 'w-full rounded-xl px-4 py-3 text-sm text-white font-medium placeholder:text-white/50 outline-none transition-all duration-200 focus:border-white/30'
+// Control boundary uses border-strong (≥3:1, WCAG 1.4.11)
+const fieldStyle = { background: c('surface-2'), border: `1px solid ${c('border-strong')}` }
+const inputCls = 'w-full rounded-xl px-4 py-3 text-sm text-ink font-medium placeholder:text-text-muted outline-none transition-all duration-200 focus:border-ink/40'
 
 function isPersonalEmail(email) {
   const root = (email.split('@')[1]?.toLowerCase() || '').split('.')[0]
@@ -18,7 +20,8 @@ function isPersonalEmail(email) {
  *
  * Props: accent, title, body, bullets, defaults, onSend, submitLabel
  */
-export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bullets = [], defaults = {}, onSend, submitLabel = 'Email me the full report', bare = false, departments = aiDepartments }) {
+export default function AssessmentLeadForm({ accent: accentProp = '#91C46B', title, body, bullets = [], defaults = {}, onSend, submitLabel = 'Email me the full report', bare = false, departments = aiDepartments }) {
+  const accent = tone(accentProp)
   const [form, setForm] = useState({
     name: defaults.name || '', email: defaults.email || '', company: defaults.company || '',
     sector: defaults.sector || '', orgSize: defaults.orgSize || '', department: defaults.department || '',
@@ -58,13 +61,13 @@ export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bu
     }
   }
 
-  const Err = ({ k }) => errors[k] ? <p className="text-red-400 text-xs font-medium mt-1.5">{errors[k]}</p> : null
+  const Err = ({ k }) => errors[k] ? <p className="text-danger text-xs font-medium mt-1.5">{errors[k]}</p> : null
 
   return (
     <div className={bare ? '' : 'rounded-3xl p-8 lg:p-10'}
-      style={bare ? undefined : { background: 'rgba(255,255,255,0.025)', border: `1px solid ${accent}26` }}>
+      style={bare ? undefined : { background: c('surface-1'), border: `1px solid ${alpha(accent, 15)}`, boxShadow: c('card-shadow') }}>
       <span className="kicker mb-4">Get the full report</span>
-      <h3 className="font-display font-black text-white text-xl lg:text-2xl tracking-tight mb-2">{title}</h3>
+      <h3 className="font-display font-black text-ink text-xl lg:text-2xl tracking-tight mb-2">{title}</h3>
       {body && <p className="text-text-secondary text-sm leading-relaxed max-w-2xl mb-6">{body}</p>}
 
       {bullets.length > 0 && (
@@ -99,11 +102,11 @@ export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bu
         </div>
 
         {/* Consent */}
-        <button type="button" onClick={() => set('consent', !form.consent)}
+        <button type="button" role="checkbox" aria-checked={form.consent} onClick={() => set('consent', !form.consent)}
           className="flex items-start gap-3 mt-5 text-left w-full">
           <span className="w-5 h-5 rounded-md flex items-center justify-center mt-0.5 flex-shrink-0 transition-colors"
-            style={{ background: form.consent ? accent : 'rgba(255,255,255,0.05)', border: `1px solid ${form.consent ? accent : 'rgba(255,255,255,0.15)'}` }}>
-            {form.consent && <Check size={13} className="text-[#021018]" />}
+            style={{ background: form.consent ? accent : c('surface-2'), border: `1px solid ${form.consent ? accent : c('border-strong')}` }}>
+            {form.consent && <Check size={13} className="text-on-accent" />}
           </span>
           <span className="text-text-secondary text-xs leading-relaxed">
             I'd like Radiant Digital to follow up with relevant insights and offers based on my results.
@@ -115,13 +118,13 @@ export default function AssessmentLeadForm({ accent = '#91C46B', title, body, bu
           value={form.website} onChange={e => set('website', e.target.value)}
           style={{ position: 'absolute', left: '-9999px', width: 1, height: 1, opacity: 0 }} />
 
-        {error && <p className="text-red-400 text-xs font-medium mt-4">{error}</p>}
+        {error && <p className="text-danger text-xs font-medium mt-4">{error}</p>}
 
         <button type="submit" disabled={sending}
           className="btn-primary !px-8 !py-3.5 mt-6 w-full sm:w-auto justify-center disabled:opacity-60 disabled:cursor-not-allowed">
           {sending ? 'Sending…' : <>{submitLabel} <ArrowRight size={15} /></>}
         </button>
-        <p className="text-text-muted text-[10px] mt-3">We'll email your report as a PDF. By submitting you agree to be contacted by Radiant Digital.</p>
+        <p className="text-text-muted text-[11px] mt-3">We'll email your report as a PDF. By submitting you agree to be contacted by Radiant Digital.</p>
       </form>
     </div>
   )

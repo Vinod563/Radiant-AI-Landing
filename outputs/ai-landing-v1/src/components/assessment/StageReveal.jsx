@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { c, tone, alpha } from '../../theme/tokens'
 
 /**
  * Maturity reveal panel: name, tagline, description, and a progression visual.
@@ -17,8 +18,12 @@ import { motion } from 'framer-motion'
  *   stages  optional [{ index, name, tagline }]: when present, render the staircase
  *   noun    word used in the staircase footnote/aria ("Stage" for AI, "Level" for CX)
  *   note    optional override for the staircase footnote text
+ *
+ * Stage states are distinguished by fill, border and weight. Every label stays at
+ * text-muted or stronger (≥4.5:1); dimming text with opacity failed AA.
  */
-export default function StageReveal({ stage, accent = '#91C46B', total = 5, kicker = 'Your AI Maturity', prefix, stages, noun = 'Stage', note }) {
+export default function StageReveal({ stage, accent: accentProp = '#91C46B', total = 5, kicker = 'Your AI Maturity', prefix, stages, noun = 'Stage', note }) {
+  const accent = tone(accentProp)
   const head = prefix === undefined ? `Stage ${stage.index}` : prefix
   const useStaircase = Array.isArray(stages) && stages.length > 0
 
@@ -28,11 +33,11 @@ export default function StageReveal({ stage, accent = '#91C46B', total = 5, kick
       className="mag-card p-8 lg:p-10 relative overflow-hidden"
     >
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: `radial-gradient(ellipse at 0% 0%, ${accent}10 0%, transparent 55%)` }} />
+        style={{ background: `radial-gradient(ellipse at 0% 0%, ${alpha(accent, 6)} 0%, transparent 55%)` }} />
       <div className="relative z-10">
         <span className="kicker mb-4">{kicker}</span>
         <div className="flex flex-wrap items-end gap-x-4 gap-y-2 mb-5">
-          <h2 className="font-display font-black text-white tracking-tight leading-[0.9]"
+          <h2 className="font-display font-black text-ink tracking-tight leading-[0.9]"
             style={{ fontSize: 'clamp(2.4rem, 5vw, 3.6rem)' }}>
             {head ? `${head}: ` : ''}<span style={{ color: accent }}>{stage.name}</span>
           </h2>
@@ -57,7 +62,7 @@ function PipMeter({ index, total, accent }) {
         <motion.div key={n}
           initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ delay: 0.1 * n, duration: 0.4 }}
           className="h-2.5 flex-1 rounded-full origin-left"
-          style={{ background: n <= index ? accent : 'rgba(255,255,255,0.08)' }} />
+          style={{ background: n <= index ? accent : c('track') }} />
       ))}
     </div>
   )
@@ -108,23 +113,23 @@ function Staircase({ stages, currentIndex, accent, noun = 'Stage', note }) {
                   style={{
                     height: barH,
                     background: isCurrent
-                      ? `linear-gradient(180deg, ${accent}33 0%, ${accent}1a 100%)`
-                      : isPast ? 'rgba(145,196,107,0.10)' : 'rgba(255,255,255,0.04)',
-                    border: `1px solid ${isCurrent ? accent + '55' : isPast ? accent + '24' : 'rgba(255,255,255,0.07)'}`,
+                      ? `linear-gradient(180deg, ${alpha(accent, 22)} 0%, ${alpha(accent, 12)} 100%)`
+                      : isPast ? alpha(accent, 9) : c('surface-2'),
+                    border: `1px solid ${isCurrent ? accent : isPast ? alpha(accent, 35) : c('border')}`,
                     borderBottom: 'none',
                   }}
                 >
                   {isCurrent && (
                     <div className="absolute inset-0 pointer-events-none"
-                      style={{ background: `linear-gradient(180deg, ${accent}10 0%, transparent 60%)` }} />
+                      style={{ background: `linear-gradient(180deg, ${alpha(accent, 6)} 0%, transparent 60%)` }} />
                   )}
                   <div className="relative z-10 text-center px-1">
                     <div className="font-display font-black text-lg leading-none mb-0.5"
-                      style={{ color: isCurrent ? accent : isPast ? accent + '70' : 'rgba(255,255,255,0.22)' }}>
+                      style={{ color: isCurrent || isPast ? accent : c('text-muted') }}>
                       {s.index}
                     </div>
                     <div className="font-display font-bold text-xs leading-tight"
-                      style={{ color: isCurrent ? '#fff' : isPast ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.2)' }}>
+                      style={{ color: isCurrent ? c('ink') : isPast ? c('text-secondary') : c('text-muted') }}>
                       {s.name}
                     </div>
                   </div>
@@ -139,8 +144,8 @@ function Staircase({ stages, currentIndex, accent, noun = 'Stage', note }) {
           {stages.map((s) => {
             const isCurrent = s.index === currentIndex
             return (
-              <p key={s.key || s.index} className="flex-1 text-[9px] leading-tight text-center px-0.5"
-                style={{ color: isCurrent ? 'rgba(255,255,255,0.55)' : 'rgba(255,255,255,0.2)' }}>
+              <p key={s.key || s.index} className={`flex-1 text-[11px] leading-snug text-center px-0.5 ${isCurrent ? 'font-semibold' : ''}`}
+                style={{ color: isCurrent ? c('text-secondary') : c('text-muted') }}>
                 {s.tagline}
               </p>
             )
@@ -158,25 +163,25 @@ function Staircase({ stages, currentIndex, accent, noun = 'Stage', note }) {
               initial={{ opacity: 0, x: -16 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: i * 0.06 }}
               className="flex items-center gap-3 p-3 rounded-xl"
               style={{
-                background: isCurrent ? `${accent}15` : 'rgba(255,255,255,0.03)',
-                border: `1px solid ${isCurrent ? accent + '40' : 'rgba(255,255,255,0.06)'}`,
+                background: isCurrent ? alpha(accent, 10) : c('surface-2'),
+                border: `1px solid ${isCurrent ? accent : c('border')}`,
               }}
             >
               <div className="w-8 h-8 rounded-lg flex items-center justify-center font-display font-black text-sm flex-shrink-0"
                 style={{
-                  background: isCurrent ? accent + '25' : isPast ? accent + '12' : 'rgba(255,255,255,0.05)',
-                  color: isCurrent ? accent : isPast ? accent + '80' : 'rgba(255,255,255,0.2)',
+                  background: isCurrent ? alpha(accent, 18) : isPast ? alpha(accent, 9) : c('surface-1'),
+                  color: isCurrent || isPast ? accent : c('text-muted'),
                 }}>
                 {s.index}
               </div>
               <div className="flex-1">
                 <div className="font-display font-bold text-sm"
-                  style={{ color: isCurrent ? '#fff' : isPast ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.2)' }}>
+                  style={{ color: isCurrent ? c('ink') : isPast ? c('text-secondary') : c('text-muted') }}>
                   {s.name}
-                  {isCurrent && <span className="ml-2 text-[9px] font-bold uppercase tracking-wider" style={{ color: accent }}>← You</span>}
+                  {isCurrent && <span className="ml-2 text-[11px] font-bold uppercase tracking-wider" style={{ color: accent }}>← You</span>}
                 </div>
                 {s.tagline && (
-                  <div className="text-[10px] mt-0.5" style={{ color: isCurrent ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.18)' }}>
+                  <div className="text-[12px] mt-0.5" style={{ color: isCurrent ? c('text-secondary') : c('text-muted') }}>
                     {s.tagline}
                   </div>
                 )}

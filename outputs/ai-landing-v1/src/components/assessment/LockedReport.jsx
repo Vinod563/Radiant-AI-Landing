@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion'
 import { CheckCircle2, Mail } from 'lucide-react'
+import { c, tone, alpha } from '../../theme/tokens'
 
 /**
  * LockedReport: the gated full report.
@@ -11,8 +12,8 @@ import { CheckCircle2, Mail } from 'lucide-react'
  *
  * Props: kind, result, accent, unlocked, form, emailDelivered, sentTo
  */
-export default function LockedReport({ kind, result, accent = '#91C46B', unlocked, form, emailDelivered, sentTo }) {
-  const isAi = kind === 'ai'
+export default function LockedReport({ kind, result, accent: accentProp = '#91C46B', unlocked, form, emailDelivered, sentTo }) {
+  const accent = tone(accentProp)
 
   if (unlocked) {
     // Report is intentionally NOT shown here: it's delivered by email only.
@@ -22,16 +23,16 @@ export default function LockedReport({ kind, result, accent = '#91C46B', unlocke
         className="mag-card p-8 lg:p-10 text-center"
       >
         <div className="w-14 h-14 rounded-full mx-auto mb-5 flex items-center justify-center"
-          style={{ background: `${accent}1f`, border: `1px solid ${accent}40` }}>
+          style={{ background: alpha(accent, 12), border: `1px solid ${alpha(accent, 40)}` }}>
           {emailDelivered ? <CheckCircle2 size={26} style={{ color: accent }} /> : <Mail size={26} style={{ color: accent }} />}
         </div>
-        <h3 className="font-display font-black text-white text-xl lg:text-2xl tracking-tight mb-2">
+        <h3 className="font-display font-black text-ink text-xl lg:text-2xl tracking-tight mb-2">
           {emailDelivered ? 'Your report is on its way' : 'Thanks, we have your details'}
         </h3>
         <p className="text-text-secondary text-sm leading-relaxed max-w-md mx-auto">
           {emailDelivered
-            ? <>We've emailed your full report{sentTo ? <> to <span className="text-white font-semibold">{sentTo}</span></> : ''}. Check your inbox in the next few minutes, and your spam folder, just in case.</>
-            : <>We've recorded your details{sentTo ? <> for <span className="text-white font-semibold">{sentTo}</span></> : ''} and our team will make sure your full report reaches you shortly.</>}
+            ? <>We've emailed your full report{sentTo ? <> to <span className="text-ink font-semibold">{sentTo}</span></> : ''}. Check your inbox in the next few minutes, and your spam folder, just in case.</>
+            : <>We've recorded your details{sentTo ? <> for <span className="text-ink font-semibold">{sentTo}</span></> : ''} and our team will make sure your full report reaches you shortly.</>}
         </p>
         <p className="text-text-muted text-xs leading-relaxed max-w-md mx-auto mt-3">
           Have a question about your results? Just reply to that email, it comes straight to our team.
@@ -52,7 +53,7 @@ export default function LockedReport({ kind, result, accent = '#91C46B', unlocke
         <div className="absolute inset-0" style={{ backdropFilter: 'blur(2px)', WebkitBackdropFilter: 'blur(2px)' }} />
         {/* translucent overlay: clearer at top & bottom, ~75-80% behind the form so the report stays visible */}
         <div className="absolute inset-0"
-          style={{ background: 'linear-gradient(180deg, rgba(11,26,44,0.04) 0%, rgba(11,26,44,0.28) 16%, rgba(11,26,44,0.78) 28%, rgba(11,26,44,0.92) 40%, rgba(11,26,44,0.92) 100%)' }} />
+          style={{ background: `linear-gradient(180deg, ${c('bg', 0.04)} 0%, ${c('bg', 0.28)} 16%, ${c('bg', 0.82)} 28%, ${c('bg', 0.94)} 40%, ${c('bg', 0.94)} 100%)` }} />
       </div>
 
       {/* Clear band that lets the top of the PDF page show through */}
@@ -71,7 +72,7 @@ export default function LockedReport({ kind, result, accent = '#91C46B', unlocke
 
 /**
  * PdfPreview: a generic, on-brand mock of the first page of the emailed PDF.
- * Intentionally light ("paper") so it reads unmistakably as a document.
+ * Drawn on the theme's --rd-paper sheet so it reads as a document in both modes.
  */
 function PdfPreview({ kind, result, accent }) {
   const isAi = kind === 'ai'
@@ -96,17 +97,17 @@ function PdfPreview({ kind, result, accent }) {
       ]
 
   return (
-    <div className="h-full flex flex-col" style={{ background: '#0a1d33', minHeight: '100%' }}>
+    <div className="h-full flex flex-col" style={{ background: c('paper'), minHeight: '100%' }}>
       <div className="max-w-5xl mx-auto w-full px-8 lg:px-12 py-7 lg:py-9 flex-1 flex flex-col">
         {/* header */}
-        <div className="flex items-center justify-between pb-3 mb-6" style={{ borderBottom: '1px solid rgba(255,255,255,0.10)' }}>
+        <div className="flex items-center justify-between pb-3 mb-6" style={{ borderBottom: `1px solid ${c('border')}` }}>
           <div className="flex items-center gap-2">
-            <div className="w-5 h-5 rounded" style={{ background: '#91C46B' }} />
-            <span className="font-display font-black text-[13px] tracking-tight" style={{ color: '#ffffff' }}>
-              RADIANT <span style={{ color: '#91C46B' }}>AI</span>
+            <div className="w-5 h-5 rounded" style={{ background: c('green') }} />
+            <span className="font-display font-black text-[13px] tracking-tight" style={{ color: c('ink') }}>
+              RADIANT <span style={{ color: c('green') }}>AI</span>
             </span>
           </div>
-          <span className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: 'rgba(255,255,255,0.40)' }}>
+          <span className="text-[9px] font-bold uppercase tracking-[0.14em]" style={{ color: c('text-muted') }}>
             {isAi ? 'AI Maturity Assessment' : 'CX Maturity Assessment'} · What's inside
           </span>
         </div>
@@ -115,20 +116,20 @@ function PdfPreview({ kind, result, accent }) {
         <div className="flex-1 flex flex-col justify-between gap-7">
           {sections.map((s, i) => (
             <div key={s.tag} className="flex gap-4">
-              <div className="font-display font-black text-2xl flex-shrink-0 w-7" style={{ color: 'rgba(255,255,255,0.16)' }}>{i + 1}</div>
+              <div className="font-display font-black text-2xl flex-shrink-0 w-7" style={{ color: c('ink', 0.18) }}>{i + 1}</div>
               <div className="flex-1 min-w-0">
-                <span className="text-[9px] font-bold uppercase tracking-[0.16em]" style={{ color: '#91C46B' }}>{s.tag}</span>
-                <h3 className="font-display font-black tracking-tight mt-0.5 mb-2.5" style={{ color: '#ffffff', fontSize: '1.15rem' }}>{s.heading}</h3>
+                <span className="text-[9px] font-bold uppercase tracking-[0.16em]" style={{ color: c('green') }}>{s.tag}</span>
+                <h3 className="font-display font-black tracking-tight mt-0.5 mb-2.5" style={{ color: c('ink'), fontSize: '1.15rem' }}>{s.heading}</h3>
                 <div className="space-y-2 mb-3">
                   {s.lines.map((w, j) => (
-                    <div key={j} className="h-2 rounded-full" style={{ width: `${w * 100}%`, background: 'rgba(255,255,255,0.08)' }} />
+                    <div key={j} className="h-2 rounded-full" style={{ width: `${w * 100}%`, background: c('track') }} />
                   ))}
                 </div>
                 {s.chips.length > 0 && (
                   <div className="flex flex-wrap gap-1.5">
-                    {s.chips.map(c => (
-                      <span key={c} className="text-[10px] font-semibold px-2 py-1 rounded-md"
-                        style={{ background: 'rgba(145,196,107,0.10)', color: '#91C46B', border: '1px solid rgba(145,196,107,0.22)' }}>{c}</span>
+                    {s.chips.map(chip => (
+                      <span key={chip} className="text-[10px] font-semibold px-2 py-1 rounded-md"
+                        style={{ background: c('green', 0.1), color: c('green'), border: `1px solid ${c('green', 0.22)}` }}>{chip}</span>
                     ))}
                   </div>
                 )}

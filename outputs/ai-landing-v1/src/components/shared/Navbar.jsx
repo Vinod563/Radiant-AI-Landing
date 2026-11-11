@@ -47,7 +47,7 @@ export default function Navbar() {
     }`}>
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center no-underline">
+          <Link to="/" className="flex items-center no-underline" aria-label="Radiant AI home">
             <RadiantLogo height={22} />
           </Link>
 

@@ -1355,3 +1355,19 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Action:** Per Lam Huynh's review, option 2 named only specific teams, so respondents whose CX sits elsewhere (e.g. IT) had no fit. Changed "Service, communications, or marketing leaders handle it informally." → "Leaders in service, marketing, IT, or other teams handle it informally." Scoring unchanged.
 - **Files:** outputs/ai-landing-v1/src/data/cxAssessment.js; docs/cx-assessment-answer-options-review.md
 - **Status:** ✅ Complete (vite build OK)
+
+## 2026-11-11: Light/Dark theme reverted again
+- **Action:** Reverted the restored Light/Dark theme and toggle. The working tree is back to commit 2d4d9fe: no toggle, original site colours, and assessments on the lighter navy (#0B1A2C) as committed. The latest theme state (site-wide toggle plus the assessments' original dark background override) is saved on branch `theme-light-dark` as commit 6bda18c for later.
+- **Files:** none changed relative to 2d4d9fe (apart from this log)
+- **Status:** ✅ Complete
+
+## 2026-11-11: Assessment readability pass (AI + CX + hub, dark only, no toggle)
+- **Action:** Improved readability across both assessments without a theme toggle. Measured real text contrast (computed colour × opacity over composited backgrounds) and adjusted colour values rather than opacity alone. Assessment palette (scoped `.rd-assessment`): page #0B1A2C; opaque card and option surfaces (#11233A / #182C44) instead of 2.5–6% white; off-white text #E6EDF4 (less glare); secondary #BAC6D4; muted floor #9DACBE; CX purple text #7C8FEB; control borders #64778E (≥3:1); tracks #26405C; 2px focus ring. Answer options get distinct default, hover, selected (2px edge, tint and solid badge) and focus states. Reused the token-converted assessment components from branch `theme-light-dark`, minus the toggle and light mode. The site-wide `:root` tokens keep the original palette, so the homepage and Chat are unchanged. Added accessible names to the logo and social links in the shared Navbar and Footer (no visual change). Glows, gradients, layouts, content, questions and scoring are unchanged.
+- **Files:** outputs/ai-landing-v1/src/styles/theme.css (new), src/theme/tokens.js (new), src/main.jsx, tailwind.config.js, src/pages/{AssessmentHub,AiAssessment,CxAssessment}.jsx, src/components/assessment/{AssessmentHeader,AssessmentLeadForm,AssessmentQuestionCard,AssessmentResults,Dropdown,GartnerPositioningView,LockedReport,ProfileForm,QuestionRunner,ResultsContact,ScoreBars,StageReveal,WhatAILeadersDo}.jsx, src/components/shared/{Navbar,Footer}.jsx (aria-labels only); docs/assessment-readability.md (new)
+- **Verified:** vite build OK. Text below AA: 51 → 0 (hub, profile, questions, results, unlock modal; AI and CX). axe-core: 0 violations across all screens and states (dropdown, form errors, modal). No overflow at 1440/768/375. Homepage pixel-identical to HEAD; Chat differs only in its animated orb. Screenshots: screenshots/{desktop,tablet,mobile}/assessment-readability-*.png
+- **Status:** ✅ Complete
+
+### 2026-11-11 — Assessment headings softened
+- **Action:** Lowered assessment heading/primary text from #E6EDF4 to #D6DEE8 (feedback: "What … organizations do" headline too bright). Still 11.7:1+ on cards, well above AA, and above secondary text (#BAC6D4) so hierarchy holds.
+- **Files:** outputs/ai-landing-v1/src/styles/theme.css, docs/assessment-readability.md
+- **Status:** ✅ Verified on CX results (computed colour rgb(214,222,232))

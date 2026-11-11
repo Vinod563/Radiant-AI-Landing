@@ -11,15 +11,17 @@ import RadiantLogo from '../shared/RadiantLogo'
  */
 export default function AssessmentHeader({ exitLabel = 'Exit' }) {
   return (
-    <header className="fixed top-0 inset-x-0 z-50 py-4 bg-[rgba(11,26,44,0.96)] backdrop-blur-2xl border-b border-white/[0.07]">
+    <header className="fixed top-0 inset-x-0 z-50 py-4 bg-brand-dark/[0.96] backdrop-blur-2xl border-b border-line">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 flex items-center justify-between">
         <Link to="/" className="flex items-center no-underline" aria-label="Radiant AI home">
           <RadiantLogo height={22} />
         </Link>
-        <Link to="/"
-          className="inline-flex items-center gap-2 text-sm font-display font-semibold text-text-secondary hover:text-white transition-colors no-underline px-3 py-2 rounded-lg hover:bg-white/[0.04]">
-          {exitLabel} <LogOut size={15} aria-hidden="true" />
-        </Link>
+        <div className="flex items-center gap-2 sm:gap-3">
+          <Link to="/"
+            className="inline-flex items-center gap-2 text-sm font-display font-semibold text-text-secondary hover:text-ink transition-colors no-underline px-3 py-2 rounded-lg hover:bg-ink/[0.04]">
+            {exitLabel} <LogOut size={15} aria-hidden="true" />
+          </Link>
+        </div>
       </div>
     </header>
   )

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Clock, Brain, Sparkles, CheckCircle2, BarChart3, Users, Target, TrendingUp, Shield } from 'lucide-react'
 import Navbar from '../components/shared/Navbar'
 import Footer from '../components/shared/Footer'
+import { ACCENTS, alpha } from '../theme/tokens'
 
 // ── Assessment definitions ──────────────────────────────────────────────────
 
@@ -11,8 +12,7 @@ const ASSESSMENTS = [
   {
     key: 'ai',
     route: '/assessment/ai',
-    accent: '#91C46B',
-    secondaryAccent: '#C7DD75',
+    accent: ACCENTS.ai,
     icon: Brain,
     eyebrow: 'AI Maturity Assessment',
     title: 'How AI-ready is your organization?',
@@ -34,13 +34,12 @@ const ASSESSMENTS = [
       "A gated full report with findings, recommended next steps, and Radiant Digital's read",
     ],
     forWho: ['C-Suite / VP / Director', 'CTO / Data / Engineering leads', 'Ops / Finance / HR / Sales leads', 'AI Practitioners & External Advisors'],
-    sampleStage: { index: 3, name: 'Insight Autonomy', color: '#91C46B' },
+    sampleStage: { index: 3, name: 'Insight Autonomy', color: ACCENTS.ai },
   },
   {
     key: 'cx',
     route: '/assessment/cx',
-    accent: '#596AE0',
-    secondaryAccent: '#7C8FEB',
+    accent: ACCENTS.cx,
     icon: Sparkles,
     eyebrow: 'CX Maturity Assessment',
     title: 'How mature is your customer experience?',
@@ -62,7 +61,7 @@ const ASSESSMENTS = [
       "A gated full report with findings, recommended next steps, and Radiant Digital's read",
     ],
     forWho: ['C-Suite / VP / Director', 'CX & Customer Success leads', 'Research & Design teams', 'Service Operations leads'],
-    sampleStage: { index: 3, name: 'Managing', color: '#596AE0' },
+    sampleStage: { index: 3, name: 'Managing', color: ACCENTS.cx },
   },
 ]
 
@@ -73,12 +72,12 @@ export default function AssessmentHub() {
   const headerInView = useInView(headerRef, { once: true, margin: '-60px' })
 
   return (
-    <div className="bg-assessment-bg min-h-screen">
+    <div className="rd-assessment bg-brand-dark min-h-screen">
       <Navbar />
       <main className="pt-32 pb-28 lg:pt-40 lg:pb-36 relative overflow-hidden">
         {/* Background glow */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(145,196,107,0.06) 0%, transparent 55%)' }} />
+          style={{ background: 'radial-gradient(ellipse at 50% 0%, rgb(var(--rd-green) / calc(0.06 * var(--rd-glow-strength))) 0%, transparent 55%)' }} />
 
         <div className="max-w-6xl mx-auto px-6 lg:px-8 relative z-10">
 
@@ -93,7 +92,7 @@ export default function AssessmentHub() {
               initial={{ opacity: 0, y: 28 }}
               animate={headerInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="font-display font-black text-white leading-[0.95] tracking-tight mt-4 mb-5"
+              className="font-display font-black text-ink leading-[0.95] tracking-tight mt-4 mb-5"
               style={{ fontSize: 'clamp(2.4rem, 5.5vw, 4rem)' }}>
               Know exactly <span className="grad-text">where you stand.</span>
             </motion.h1>
@@ -111,12 +110,11 @@ export default function AssessmentHub() {
               initial={{ opacity: 0, y: 16 }}
               animate={headerInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="mt-6 inline-flex items-center gap-3 px-4 py-2.5 rounded-full text-xs text-text-muted"
-              style={{ background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <span style={{ color: '#91C46B' }}>● AI Maturity</span>
-              <span className="text-white/20">|</span>
-              <span style={{ color: '#596AE0' }}>● CX Maturity</span>
-              <span className="text-white/20">|</span>
+              className="mt-6 inline-flex flex-wrap justify-center items-center gap-3 px-4 py-2.5 rounded-full text-xs text-text-muted bg-surface-2 border border-line">
+              <span style={{ color: ACCENTS.ai }}>● AI Maturity</span>
+              <span className="text-text-muted" aria-hidden="true">|</span>
+              <span style={{ color: ACCENTS.cx }}>● CX Maturity</span>
+              <span className="text-text-muted" aria-hidden="true">|</span>
               <span>Two different questions. One platform.</span>
             </motion.div>
           </div>
@@ -161,17 +159,17 @@ function AssessmentCard({ assessment: a, delay }) {
       animate={inView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
       className="flex flex-col rounded-3xl overflow-hidden relative group"
-      style={{ background: 'rgba(255,255,255,0.025)', border: `1px solid ${a.accent}20` }}>
+      style={{ background: 'var(--rd-surface-1)', border: `1px solid ${alpha(a.accent, 25)}`, boxShadow: 'var(--rd-card-shadow)' }}>
 
       {/* Hover glow */}
       <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-3xl"
-        style={{ background: `radial-gradient(ellipse at 50% 0%, ${a.accent}0e 0%, transparent 65%)` }} />
+        style={{ background: `radial-gradient(ellipse at 50% 0%, ${alpha(a.accent, 6)} 0%, transparent 65%)` }} />
 
       {/* Card header */}
       <div className="p-8 lg:p-10 pb-6 relative z-10">
         <div className="flex items-start justify-between mb-6">
           <div className="w-14 h-14 rounded-2xl flex items-center justify-center"
-            style={{ background: `${a.accent}18`, border: `1px solid ${a.accent}33` }}>
+            style={{ background: alpha(a.accent, 9), border: `1px solid ${alpha(a.accent, 20)}` }}>
             <Icon size={26} style={{ color: a.accent }} />
           </div>
           <div className="flex items-center gap-1.5 text-xs text-text-muted">
@@ -183,7 +181,7 @@ function AssessmentCard({ assessment: a, delay }) {
         <div className="text-[11px] font-display font-bold uppercase tracking-widest mb-2" style={{ color: a.accent }}>
           {a.eyebrow}
         </div>
-        <h2 className="font-display font-black text-white text-2xl lg:text-3xl leading-tight tracking-tight mb-3">
+        <h2 className="font-display font-black text-ink text-2xl lg:text-3xl leading-tight tracking-tight mb-3">
           {a.title}
         </h2>
         <p className="text-text-muted text-sm leading-relaxed mb-5">{a.subtitle}</p>
@@ -192,7 +190,7 @@ function AssessmentCard({ assessment: a, delay }) {
         <div className="flex flex-wrap gap-1.5">
           {a.meta.map(m => (
             <span key={m} className="text-[10px] font-display font-semibold px-2.5 py-1 rounded-full"
-              style={{ background: `${a.accent}12`, color: a.accent, border: `1px solid ${a.accent}25` }}>
+              style={{ background: alpha(a.accent, 7), color: a.accent, border: `1px solid ${alpha(a.accent, 25)}` }}>
               {m}
             </span>
           ))}
@@ -200,7 +198,7 @@ function AssessmentCard({ assessment: a, delay }) {
       </div>
 
       {/* Divider */}
-      <div className="mx-8 lg:mx-10" style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
+      <div className="mx-8 lg:mx-10 h-px bg-line" />
 
       {/* Dimensions */}
       <div className="px-8 lg:px-10 py-5 relative z-10">
@@ -212,9 +210,9 @@ function AssessmentCard({ assessment: a, delay }) {
             const DIcon = d.icon
             return (
               <div key={d.label} className="flex items-start gap-2.5">
-                <DIcon size={13} className="mt-0.5 flex-shrink-0" style={{ color: a.accent, opacity: 0.7 }} />
+                <DIcon size={13} className="mt-0.5 flex-shrink-0" style={{ color: a.accent }} aria-hidden="true" />
                 <div>
-                  <span className="text-white text-xs font-semibold">{d.label}</span>
+                  <span className="text-ink text-xs font-semibold">{d.label}</span>
                   <span className="text-text-muted text-xs">, {d.desc}</span>
                 </div>
               </div>
@@ -224,7 +222,7 @@ function AssessmentCard({ assessment: a, delay }) {
       </div>
 
       {/* Divider */}
-      <div className="mx-8 lg:mx-10" style={{ height: '1px', background: 'rgba(255,255,255,0.06)' }} />
+      <div className="mx-8 lg:mx-10 h-px bg-line" />
 
       {/* What you get */}
       <div className="px-8 lg:px-10 py-5 relative z-10">
@@ -248,8 +246,7 @@ function AssessmentCard({ assessment: a, delay }) {
         </div>
         <div className="flex flex-wrap gap-1.5">
           {a.forWho.map(w => (
-            <span key={w} className="text-[10px] text-text-muted px-2 py-0.5 rounded-full"
-              style={{ background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.07)' }}>
+            <span key={w} className="text-[11px] text-text-secondary px-2 py-0.5 rounded-full bg-surface-2 border border-line">
               {w}
             </span>
           ))}
@@ -260,7 +257,7 @@ function AssessmentCard({ assessment: a, delay }) {
       <div className="px-8 lg:px-10 py-6 mt-auto relative z-10">
         <Link to={`${a.route}?start=1`}
           className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl font-display font-bold text-sm transition-all duration-200 no-underline hover:-translate-y-0.5 active:translate-y-0"
-          style={{ background: `${a.accent}18`, border: `1px solid ${a.accent}40`, color: a.accent }}>
+          style={{ background: alpha(a.accent, 9), border: `1px solid ${alpha(a.accent, 45)}`, color: a.accent }}>
           Start the {a.key === 'ai' ? 'AI Maturity' : 'CX Maturity'} Assessment
           <ArrowRight size={15} className="group-hover:translate-x-0.5 transition-transform" />
         </Link>

@@ -29,7 +29,7 @@ export default function Footer({ variant = 'home' }) {
         <div className="py-14 grid grid-cols-1 md:grid-cols-12 gap-12">
           {/* Brand */}
           <div className="md:col-span-4">
-            <Link to="/" className="block mb-5 no-underline">
+            <Link to="/" className="block mb-5 no-underline" aria-label="Radiant AI home">
               <RadiantLogo height={24} />
             </Link>
             <p className="text-white/70 text-sm font-semibold mb-2">
@@ -44,9 +44,9 @@ export default function Footer({ variant = 'home' }) {
                 { Icon: Linkedin, label: 'LinkedIn' },
                 { Icon: Youtube, label: 'YouTube' },
               ].map(({ Icon, label }) => (
-                <a key={label} href={socialLinks[label]} target="_blank" rel="noopener noreferrer"
+                <a key={label} href={socialLinks[label]} target="_blank" rel="noopener noreferrer" aria-label={`Radiant Digital on ${label}`}
                   className="w-8 h-8 rounded-full bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-text-muted hover:text-brand-green hover:border-brand-green/30 transition-all">
-                  <Icon size={13} />
+                  <Icon size={13} aria-hidden="true" />
                 </a>
               ))}
             </div>

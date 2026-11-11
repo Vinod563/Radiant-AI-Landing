@@ -1,9 +1,11 @@
 import { useState, useRef, useEffect, useLayoutEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, Check } from 'lucide-react'
+import { c } from '../../theme/tokens'
 
-const fieldStyle = { background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)' }
-const baseCls = 'w-full rounded-xl px-4 py-3 text-sm text-white font-medium outline-none transition-all duration-200 focus:border-white/30'
+// Control boundary uses border-strong (≥3:1, WCAG 1.4.11)
+const fieldStyle = { background: c('surface-2'), border: `1px solid ${c('border-strong')}` }
+const baseCls = 'w-full rounded-xl px-4 py-3 text-sm text-ink font-medium outline-none transition-all duration-200 focus:border-ink/40'
 const PANEL_MAX = 240 // matches max-h-60
 const GAP = 8
 
@@ -58,7 +60,7 @@ export default function Dropdown({ value, onChange, placeholder, options }) {
     <div className="relative" ref={ref}>
       <button type="button" onClick={() => setOpen(o => !o)}
         aria-haspopup="listbox" aria-expanded={open}
-        className={`${baseCls} flex items-center justify-between gap-2 text-left ${value ? '' : 'text-white/50'}`}
+        className={`${baseCls} flex items-center justify-between gap-2 text-left ${value ? '' : 'text-text-muted'}`}
         style={fieldStyle}>
         <span className="truncate">{value || placeholder}</span>
         <ChevronDown size={16} className={`flex-shrink-0 text-text-muted transition-transform duration-200 ${open ? 'rotate-180' : ''}`} />
@@ -70,13 +72,13 @@ export default function Dropdown({ value, onChange, placeholder, options }) {
             initial={{ opacity: 0, y: placement.up ? 6 : -6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: placement.up ? 6 : -6 }}
             transition={{ duration: 0.15 }}
             className={`absolute left-0 right-0 z-50 rounded-xl overflow-hidden overflow-y-auto list-none p-1 ${placement.up ? 'bottom-full mb-2' : 'top-full mt-2'}`}
-            style={{ maxHeight: placement.maxH, background: 'rgba(8,20,34,0.98)', border: '1px solid rgba(255,255,255,0.1)', boxShadow: '0 16px 48px rgba(0,0,0,0.5)', backdropFilter: 'blur(12px)' }}>
+            style={{ maxHeight: placement.maxH, background: c('surface-raised'), border: `1px solid ${c('border-strong')}`, boxShadow: `0 16px 48px ${c('hover-shadow')}`, backdropFilter: 'blur(12px)' }}>
             {options.map(o => {
               const active = value === o
               return (
                 <li key={o} role="option" aria-selected={active}>
                   <button type="button" onClick={() => { onChange(o); setOpen(false) }}
-                    className={`w-full text-left px-3.5 py-2.5 rounded-lg text-sm flex items-center justify-between gap-2 transition-colors ${active ? 'bg-brand-green/10 text-white' : 'text-text-secondary hover:bg-white/[0.06] hover:text-white'}`}>
+                    className={`w-full text-left px-3.5 py-2.5 rounded-lg text-sm flex items-center justify-between gap-2 transition-colors ${active ? 'bg-brand-green/10 text-ink font-semibold' : 'text-text-secondary hover:bg-ink/[0.06] hover:text-ink'}`}>
                     <span>{o}</span>
                     {active && <Check size={14} className="text-brand-green flex-shrink-0" />}
                   </button>
