@@ -1333,3 +1333,14 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Files:** src/components/assessment/{AssessmentHeader (new),ProfileForm,QuestionRunner,AssessmentQuestionCard,AssessmentResults}.jsx, src/utils/assessmentProgress.js (new), src/pages/{AiAssessment,CxAssessment,Chat}.jsx, index.html
 - **Verified:** vite build OK; Playwright end-to-end on both assessments (header, h1, title, Next disabled/enabled, progressbar, live region, why-below-options, save/exit/resume, results nav + cleared progress) and chat regression. Screenshots: screenshots/desktop/assessment-flow-*.png
 - **Status:** ✅ Complete
+
+## 2026-11-06: CX answer options simplified and made sector-neutral (applied)
+- **Action:** Per Lam's direction, rewrote all 100 CX assessment answer options: simplified wording, removed "X, not Y" contrast tails, replaced commercial-only terms (board, ROI, compensation, competitive advantage, marketing budgets) with sector-neutral wording. Level averages now 8.2–11.4 words (level 5 was 15.4). Scores and question selection unchanged. Fixed swapped E12 level 1/4 rows from the earlier draft. "Why this matters" lines unchanged; 4 with contrast phrasing flagged in the review doc.
+- **Files:** outputs/ai-landing-v1/src/data/cxAssessment.js; docs/cx-assessment-answer-options-review.md (before/after + QA checklist, replaces the -draft doc)
+- **Verified:** vite build OK
+- **Status:** ✅ Complete (pending Raima's QA pass)
+
+## 2026-11-06: CX answer QA fixes
+- **Action:** Applied 5 QA fixes: Q3P L1 (sector-neutral "no defined value"), Q11P L2 and L5 (restore training gap and EX→CX link), Q8P L5 (restore "human-centered design"), Q12E L4 (restore attribution to CX). Q11P L5 trimmed to 13 words ("Everyone is trusted to act...").
+- **Files:** outputs/ai-landing-v1/src/data/cxAssessment.js; docs/cx-assessment-answer-options-review.md
+- **Status:** ✅ Complete (vite build OK)
