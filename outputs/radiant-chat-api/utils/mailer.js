@@ -39,6 +39,35 @@ const TEAM_CC = (process.env.MAIL_CC ||
   'lam.huynh@radiant.digital, alek.nedelkovski@radiant.digital, vinod.mourya@radiant.digital, hello@radiant.digital')
   .split(',').map(s => s.trim()).filter(Boolean)
 
+// Fixed, per-assessment recipients for report emails (keyed by the assessment
+// name the frontend sends). Not overridable from .env, so the live server can't
+// drift from what was agreed. The sender is still MAIL_FROM (connect@radiant.digital).
+const LEADS_TEAM = [
+  'lam.huynh@radiant.digital',
+  'alek.nedelkovski@radiant.digital',
+  'vinod.mourya@radiant.digital',
+]
+const REPORT_ROUTING = {
+  'AI Maturity': {
+    respondentBcc: LEADS_TEAM,                                         // copied on the respondent's PDF email
+    teamTo: ['connect@radiant.digital', 'hello@radiant.digital'],      // "New AI Maturity lead — [name]"
+    teamCc: LEADS_TEAM,
+  },
+  'CX Maturity': {
+    respondentBcc: [                                                   // copied on the respondent's PDF email
+      'lam.huynh@radiant.digital',
+      'elizabeth.holland@radiant.digital',
+    ],
+    teamTo: ['connect@radiant.digital', 'hello@radiant.digital'],      // "New CX Maturity lead — [name]"
+    teamCc: [
+      'lam.huynh@radiant.digital',
+      'elizabeth.holland@radiant.digital',
+      'tushar.hande@radiant.digital',
+      'deena.bhattacharjee@radiant.digital',
+    ],
+  },
+}
+
 function respondentHtml({ name, assessment, headline }) {
   return `
   <div style="font-family:Arial,Helvetica,sans-serif;background:#010f1e;color:#e8eef5;padding:32px;border-radius:16px;max-width:560px;margin:auto">
@@ -85,6 +114,29 @@ function teamHtml(lead) {
 export async function sendReportEmail(lead, pdfBuffer, filename) {
   const t = getTransport()
   const attachments = [{ filename: filename || 'Radiant-Report.pdf', content: pdfBuffer, contentType: 'application/pdf' }]
+  const routing = REPORT_ROUTING[lead.assessment]
+
+  // Assessments with fixed routing (see REPORT_ROUTING) always notify the team;
+  // others keep the env-driven behaviour.
+  if (routing) {
+    await t.sendMail({
+      from: process.env.MAIL_FROM,
+      to: lead.email,
+      bcc: routing.respondentBcc,
+      subject: `Your ${lead.assessment} report from Radiant Digital`,
+      html: respondentHtml(lead),
+      attachments,
+    })
+    await t.sendMail({
+      from: process.env.MAIL_FROM,
+      to: routing.teamTo,
+      cc: routing.teamCc,
+      subject: `New ${lead.assessment} lead — ${lead.name || lead.email}`,
+      html: teamHtml(lead),
+      attachments,
+    }).catch(err => console.error('Team notification failed:', err?.message || err))
+    return
+  }
 
   await t.sendMail({
     from: process.env.MAIL_FROM,

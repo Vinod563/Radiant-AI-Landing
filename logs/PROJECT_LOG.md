@@ -1371,3 +1371,13 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Action:** Lowered assessment heading/primary text from #E6EDF4 to #D6DEE8 (feedback: "What … organizations do" headline too bright). Still 11.7:1+ on cards, well above AA, and above secondary text (#BAC6D4) so hierarchy holds.
 - **Files:** outputs/ai-landing-v1/src/styles/theme.css, docs/assessment-readability.md
 - **Status:** ✅ Verified on CX results (computed colour rgb(214,222,232))
+
+### 2026-11-12 — AI Maturity report email recipients fixed
+- **Action:** Hard-set AI Maturity routing in the chat API mailer (no longer depends on MAIL_CC / REPORT_NOTIFY_EMAIL). Respondent email: from MAIL_FROM (connect@radiant.digital), BCC Lam Huynh, Alek Nedelkovski, Vinod Mourya. Team email "New AI Maturity lead — [name]": To connect@ + hello@radiant.digital, CC the same three. CX unchanged (still env-driven) pending its own decision.
+- **Files:** outputs/radiant-chat-api/utils/mailer.js
+- **Status:** ✅ Verified with a fake mail transport (no real email sent). Needs backend redeploy to take effect.
+
+### 2026-11-12 — CX Maturity report email recipients fixed
+- **Action:** Added fixed CX Maturity routing in the chat API mailer. Respondent email: from MAIL_FROM (connect@radiant.digital), BCC Lam Huynh, Elizabeth (Beth) Holland. Team email "New CX Maturity lead — [name]": To connect@ + hello@radiant.digital, CC Lam Huynh, Beth Holland, Tushar Hande, Deena Bhattacharjee. AI routing unchanged.
+- **Files:** outputs/radiant-chat-api/utils/mailer.js
+- **Status:** ✅ Verified with a fake mail transport (no real email sent). Needs backend redeploy.
