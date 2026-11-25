@@ -1381,3 +1381,9 @@ Not corrected in this change: the fix would mean enlarging Prafull, which partly
 - **Action:** Added fixed CX Maturity routing in the chat API mailer. Respondent email: from MAIL_FROM (connect@radiant.digital), BCC Lam Huynh, Elizabeth (Beth) Holland. Team email "New CX Maturity lead — [name]": To connect@ + hello@radiant.digital, CC Lam Huynh, Beth Holland, Tushar Hande, Deena Bhattacharjee. AI routing unchanged.
 - **Files:** outputs/radiant-chat-api/utils/mailer.js
 - **Status:** ✅ Verified with a fake mail transport (no real email sent). Needs backend redeploy.
+
+### 2026-11-12 — AI & CX assessment deployment package
+- **Action:** Built an assessment-only release on baseline `614ad16` (2026-08-12, last deployment per git/.env backup): CX assessment rebuild + content updates, AI assessment updates, flow/a11y/readability pass, hero "Lead With Experience" card + "Assess Your AI and CX Readiness" CTA, fixed AI/CX email routing. Excluded leadership section, governance case study, contact heading, theme work. Added PHP port of `/api/assessment-report` (Option B, not executed: no PHP runtime available) and Apache reference config. Found and fixed: header CTA scroll stopped short below 1024px (hidden SectionNav mounting → Framer Motion scroll restore); fix applied to release and, uncommitted, to working branch (SectionNav.jsx, Chat.jsx).
+- **Files:** deploy/radiant-assessments-deploy-2026-11-12.zip (new); outputs/ai-landing-v1/src/components/shared/SectionNav.jsx, src/pages/Chat.jsx (uncommitted fix)
+- **Verified:** vite build OK; Playwright E2E 122/123 on release build (5 full submissions via Node API → STARTTLS test SMTP sink, recipients/BCC/subjects/PDF checked; axe 0 violations on all assessment screens). Remaining failure = homepage axe findings identical to the Aug 12 build. Homepage text diff vs baseline = hero card, header CTA, CX card copy only.
+- **Status:** ✅ Package ready; open items listed in package README §7.

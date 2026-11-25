@@ -25,6 +25,7 @@ export default function SectionNav({
   scrollRoot = null,
   revealAfter = 300,
   visibilityClass = 'hidden lg:flex',
+  minWidth = 1024, // keep in step with visibilityClass (lg = 1024, xl = 1280)
   ariaLabel = 'Section navigation',
 }) {
   const [active, setActive] = useState(sections[0]?.id)
@@ -40,7 +41,10 @@ export default function SectionNav({
     const rootRect = root ? root.getBoundingClientRect() : { top: 0, height: window.innerHeight }
     const viewTop = rootRect.top
     const viewportH = rootRect.height
-    setVisible(scrollY >= revealAfter)
+    // Only mount at widths where the nav is shown. Mounted while display:none,
+    // Framer Motion measures the hidden height:% bar and restores scrollY, which
+    // cancels in-progress programmatic scrolls (e.g. the header CTA) on mobile/tablet.
+    setVisible(scrollY >= revealAfter && window.matchMedia(`(min-width: ${minWidth}px)`).matches)
 
     let current = sections[0]?.id
     for (const s of sections) {
@@ -52,7 +56,7 @@ export default function SectionNav({
       }
     }
     setActive(current)
-  }, [scrollRoot, revealAfter, sections])
+  }, [scrollRoot, revealAfter, sections, minWidth])
 
   useEffect(() => {
     const target = scrollRoot?.current || window

@@ -455,7 +455,7 @@ export default function Chat() {
       {/* Case-study section dots (same component as the homepage nav) */}
       {caseStudyToc.length > 1 && (
         <SectionNav key={caseStudyTocKey} sections={caseStudyToc} scrollRoot={mainRef} revealAfter={0}
-          visibilityClass="hidden xl:flex" ariaLabel="Case study sections" />
+          visibilityClass="hidden xl:flex" minWidth={1280} ariaLabel="Case study sections" />
       )}
 
       {/* Messages area */}
